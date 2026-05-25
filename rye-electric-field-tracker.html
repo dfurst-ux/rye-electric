@@ -645,6 +645,9 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
         <select id="archive-week-sel" style="height:28px;font-size:10px;padding:0 6px;border-radius:6px;background:var(--black);border:1px solid var(--border);color:var(--t2)" onchange="if(this.value)loadArchivedWeek(this.value)">
           <option value="">View past week...</option>
         </select>
+        <button class="btn btn-g btn-sm" onclick="syncFromSupabase()" style="font-size:10px;color:var(--green);border-color:rgba(76,175,125,.3)">
+          Sync cloud
+        </button>
         <button class="btn btn-g btn-sm" onclick="clearThisWeek()" style="font-size:10px;color:var(--red);border-color:rgba(224,90,90,.3)">
           Clear week
         </button>
@@ -1666,6 +1669,9 @@ function logUnit(){
   document.getElementById('inp-notes').value='';
 
   saveToStorage();
+  // Save to cloud
+  saveUnitToCloud(unitLogs[unitLogs.length-1]);
+  saveDailyToCloud(dailyLogs[dailyLogs.length-1]);
   renderTodayLog();
   renderDLStats();
   toast('Unit '+unit+' '+currentPhase+' logged for '+worker);
@@ -2996,6 +3002,7 @@ function saveDJR(){
   const data = collectDJRData();
   djrReports[job+'|'+date] = data;
   saveDJRToStorage();
+  saveDJRToCloud(job+'|'+date, data);
   const msg = document.getElementById('djr-saved-msg');
   if(msg){ msg.style.display='block'; setTimeout(()=>msg.style.display='none',3000); }
   toast('Daily report saved');
@@ -3654,6 +3661,8 @@ function saveSignIn(){
     savedAt: new Date().toISOString()
   };
   saveSIToStorage();
+  var siKey=document.getElementById("si-job").value+"|"+document.getElementById("si-date").value;
+  if(siData[siKey]) saveSignInToCloud(siKey.split("|")[0], siKey.split("|")[1], siData[siKey]);
 }
 
 function printSignIn(){
@@ -4124,6 +4133,7 @@ function saveWBEntry(){
   });
 
   saveToStorage();
+  saveDailyToCloud(dailyLogs[dailyLogs.length-1]);
   renderDLStats();
   renderDailyLogView();
 
@@ -4139,6 +4149,193 @@ function saveWBEntry(){
   document.getElementById('wb-notes').value  = '';
 
   toast('Entry saved for ' + worker);
+}
+
+
+/* ======================================================
+   SUPABASE LIVE SYNC
+   All data saves to cloud + localStorage for offline
+====================================================== */
+const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+
+// Generate a unique device ID for this browser
+function getDeviceId(){
+  let id = localStorage.getItem('rye_device_id');
+  if(!id){
+    id = 'dev_' + Math.random().toString(36).slice(2,10) + '_' + Date.now();
+    localStorage.setItem('rye_device_id', id);
+  }
+  return id;
+}
+
+async function sbInsert(table, data){
+  try{
+    const resp = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
+      method: 'POST',
+      headers:{
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(data)
+    });
+    if(!resp.ok){
+      const err = await resp.text();
+      console.warn('Supabase insert error:', err);
+    }
+  } catch(e){
+    console.warn('Supabase offline, saved locally:', e.message);
+  }
+}
+
+async function sbFetch(table, filter){
+  try{
+    let url = SUPABASE_URL + '/rest/v1/' + table + '?order=created_at.asc';
+    if(filter) url += '&' + filter;
+    const resp = await fetch(url, {
+      headers:{
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    });
+    if(resp.ok) return await resp.json();
+  } catch(e){
+    console.warn('Supabase fetch error:', e.message);
+  }
+  return null;
+}
+
+async function syncFromSupabase(){
+  try{
+    toast('Syncing from cloud...');
+
+    // Fetch all data
+    const [unitData, dailyData, signinRows, djrRows] = await Promise.all([
+      sbFetch('unit_logs'),
+      sbFetch('daily_logs'),
+      sbFetch('signin_data'),
+      sbFetch('djr_reports')
+    ]);
+
+    if(unitData && unitData.length > 0){
+      unitLogs = unitData.map(function(r){
+        return {
+          id: r.id, ts: r.ts, worker: r.worker, job: r.job,
+          bldg: r.bldg, unit: r.unit, phase: r.phase,
+          costcode: r.costcode, boxes: r.boxes, lights: r.lights,
+          hrs: r.hrs, notes: r.notes
+        };
+      });
+      localStorage.setItem(STORAGE_KEY_UNITS, JSON.stringify(unitLogs));
+    }
+
+    if(dailyData && dailyData.length > 0){
+      dailyLogs = dailyData.map(function(r){
+        return {
+          id: r.id, date: r.entry_date, worker: r.worker, job: r.job,
+          phaseCode: r.phase_code, phaseDesc: r.phase_desc,
+          hours: r.hours, units: r.units, notes: r.notes
+        };
+      });
+      localStorage.setItem(STORAGE_KEY_DAILY, JSON.stringify(dailyLogs));
+    }
+
+    if(signinRows && signinRows.length > 0){
+      siData = {};
+      signinRows.forEach(function(r){
+        siData[r.job + '|' + r.entry_date] = {
+          rows: r.rows, supervisor: r.supervisor,
+          supComments: r.sup_comments, savedAt: r.saved_at
+        };
+      });
+      localStorage.setItem(SI_STORAGE_KEY, JSON.stringify(siData));
+    }
+
+    if(djrRows && djrRows.length > 0){
+      djrReports = {};
+      djrRows.forEach(function(r){
+        djrReports[r.job + '|' + r.entry_date] = {
+          job: r.job, date: r.entry_date, tempAM: r.temp_am,
+          tempPM: r.temp_pm, weather: r.weather, workforce: r.workforce,
+          yn: r.yn, detailValues: r.detail_values, delays: r.delays,
+          extra: r.extra, other: r.other,
+          superintendent: r.superintendent, title: r.title
+        };
+      });
+      localStorage.setItem(DJR_STORAGE_KEY, JSON.stringify(djrReports));
+    }
+
+    renderTodayLog();
+    renderDLStats();
+    toast('Synced from cloud - ' + (dailyLogs.length + unitLogs.length) + ' entries');
+  } catch(e){
+    console.error('Sync error:', e);
+    toast('Sync failed - working offline');
+  }
+}
+
+// Save unit log to Supabase
+async function saveUnitToCloud(entry){
+  await sbInsert('unit_logs', {
+    device_id: getDeviceId(),
+    ts: entry.ts, worker: entry.worker, job: entry.job,
+    bldg: entry.bldg, unit: entry.unit, phase: entry.phase,
+    costcode: entry.costcode, boxes: entry.boxes,
+    lights: entry.lights, hrs: entry.hrs, notes: entry.notes
+  });
+}
+
+// Save daily log to Supabase
+async function saveDailyToCloud(entry){
+  await sbInsert('daily_logs', {
+    device_id: getDeviceId(),
+    entry_date: entry.date, worker: entry.worker, job: entry.job,
+    phase_code: entry.phaseCode, phase_desc: entry.phaseDesc,
+    hours: entry.hours, units: entry.units, notes: entry.notes
+  });
+}
+
+// Save sign-in to Supabase
+async function saveSignInToCloud(job, date, data){
+  // Upsert by deleting old then inserting new
+  try{
+    await fetch(SUPABASE_URL + '/rest/v1/signin_data?job=eq.' + encodeURIComponent(job) + '&entry_date=eq.' + date, {
+      method: 'DELETE',
+      headers:{ 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+  } catch(e){}
+  await sbInsert('signin_data', {
+    device_id: getDeviceId(),
+    job: job, entry_date: date,
+    supervisor: data.supervisor||'',
+    rows: data.rows||[],
+    sup_comments: data.supComments||'',
+    saved_at: data.savedAt||new Date().toISOString()
+  });
+}
+
+// Save DJR to Supabase
+async function saveDJRToCloud(key, data){
+  const job = key.split('|')[0];
+  const date = key.split('|')[1];
+  try{
+    await fetch(SUPABASE_URL + '/rest/v1/djr_reports?job=eq.' + encodeURIComponent(job) + '&entry_date=eq.' + date, {
+      method: 'DELETE',
+      headers:{ 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+  } catch(e){}
+  await sbInsert('djr_reports', {
+    device_id: getDeviceId(),
+    job: job, entry_date: date,
+    temp_am: data.tempAM||'', temp_pm: data.tempPM||'',
+    weather: data.weather||'', workforce: data.workforce||[],
+    yn: data.yn||{}, detail_values: data.detailValues||{},
+    delays: data.delays||'', extra: data.extra||'',
+    other: data.other||'', superintendent: data.superintendent||'',
+    title: data.title||''
+  });
 }
 
 /* === INIT === */
