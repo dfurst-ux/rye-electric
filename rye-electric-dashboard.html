@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Main Office Dashboard | Rye Electric + Simple Build</title>
+<style>
+:root {
+  --rye:#65ADE5; --rye-dark:#3D8DC4; --rye-glow:rgba(101,173,229,.12);
+  --rye-mid:#A8D4F5; --rye-deep:#0B1D2E;
+  --sb:#EF9F27; --sb-dark:#BA7517; --sb-mid:#FAC775;
+  --black:#060C10; --bg:#0B1520; --s1:#0F1E30; --s2:#152436;
+  --border:#1A3048; --border-hi:#254460;
+  --t1:#FFFFFF; --t2:#8BAFC8; --t3:#4A7090;
+  --green:#4CAF7D; --red:#E05A5A; --amber:#EF9F27;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+.hdr{background:var(--black);border-bottom:2px solid var(--rye);position:sticky;top:0;z-index:200;padding:0 24px}
+.hdr-in{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.hdr-left{display:flex;align-items:center;gap:14px}
+.logo-img{height:32px;width:auto}
+.hdr-divider{width:1px;height:22px;background:var(--border-hi)}
+.hdr-title{font-size:13px;font-weight:700;color:var(--t2);letter-spacing:.06em;text-transform:uppercase}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 2s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.live-label{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.06em;text-transform:uppercase}
+.week-badge{font-size:11px;font-weight:700;color:var(--t3);background:var(--s1);border:1px solid var(--border);padding:4px 12px;border-radius:999px}
+.sync-btn{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;background:var(--rye);color:var(--black);transition:all .15s;letter-spacing:.03em}
+.sync-btn:hover{background:var(--rye-dark);color:var(--t1)}
+.sync-btn svg{width:13px;height:13px;fill:currentColor}
+
+/* LAYOUT */
+.shell{max-width:1400px;margin:0 auto;padding:16px 24px 60px}
+
+/* TOP KPI ROW */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:20px}
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:16px 18px;position:relative;overflow:hidden;transition:border-color .15s}
+.kpi:hover{border-color:var(--border-hi)}
+.kpi-accent{position:absolute;top:0;left:0;width:3px;height:100%;border-radius:14px 0 0 14px}
+.kpi-lbl{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.kpi-val{font-size:32px;font-weight:700;line-height:1;font-family:'Arial Narrow',Arial,sans-serif;letter-spacing:-.01em}
+.kpi-sub{font-size:11px;color:var(--t3);margin-top:4px;font-weight:500}
+.kpi-delta{font-size:11px;font-weight:700;margin-top:3px}
+.delta-up{color:var(--green)}.delta-dn{color:var(--red)}.delta-flat{color:var(--t3)}
+
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.main-grid.three{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:900px){.main-grid,.main-grid.three{grid-template-columns:1fr}}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.card-full{grid-column:1/-1}
+.ch{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.2)}
+.ct{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:7px}
+.ct svg{width:13px;height:13px;fill:var(--rye)}
+.ct-sb svg{fill:var(--sb)}
+.cb{padding:16px 18px}
+.co-tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.06em}
+.tag-rye{background:var(--rye-glow);color:var(--rye-mid);border:1px solid rgba(101,173,229,.25)}
+.tag-sb{background:rgba(239,159,39,.12);color:var(--sb-mid);border:1px solid rgba(239,159,39,.25)}
+
+/* JOB PROGRESS BARS */
+.job-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.job-row:last-child{border-bottom:none}
+.job-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.job-icon svg{width:18px;height:18px;fill:var(--rye)}
+.job-info{flex:1;min-width:0}
+.job-name{font-size:13px;font-weight:700;color:var(--t1)}
+.job-meta{font-size:11px;color:var(--t3);margin-top:1px}
+.job-right{text-align:right;flex-shrink:0}
+.job-pct{font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--rye)}
+.job-cost{font-size:11px;color:var(--t3);margin-top:1px}
+.pbar{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:5px}
+.pfill{height:100%;border-radius:99px;transition:width .6s ease}
+.fill-rye{background:var(--rye)}.fill-sb{background:var(--sb)}.fill-ok{background:var(--green)}
+
+/* COST BREAKDOWN TABLE */
+.cost-table{width:100%;border-collapse:collapse;font-size:12px}
+.cost-table th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.cost-table td{padding:11px 12px;border-top:1px solid var(--border);color:var(--t2);vertical-align:middle}
+.cost-table tr:hover td{background:rgba(101,173,229,.04)}
+.cost-table tr.total-row td{border-top:2px solid var(--border-hi);font-weight:700;color:var(--t1);background:rgba(0,0,0,.15)}
+.tm{font-family:monospace;font-size:11px;color:var(--t3)}
+.tn{font-weight:700;color:var(--t1)}
+.tc{color:var(--rye);font-size:11px}
+
+/* LABOR CHART */
+.worker-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.worker-row:last-child{border-bottom:none}
+.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.av-rye{background:rgba(101,173,229,.18);color:var(--rye);border:1px solid rgba(101,173,229,.28)}
+.av-sb{background:rgba(239,159,39,.18);color:var(--sb);border:1px solid rgba(239,159,39,.28)}
+.wi{flex:1;min-width:0}
+.wn{font-size:12px;font-weight:700;color:var(--t1)}
+.wm{font-size:11px;color:var(--t3)}
+.wr{text-align:right;flex-shrink:0}
+.wh{font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700}
+.wc{font-size:10px;color:var(--t3);margin-top:1px}
+
+/* INVENTORY ALERTS */
+.alert-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.alert-row:last-child{border-bottom:none}
+.alert-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-icon.warn{background:rgba(239,159,39,.18);border:1px solid rgba(239,159,39,.25)}
+.alert-icon.danger{background:rgba(224,90,90,.18);border:1px solid rgba(224,90,90,.25)}
+.alert-icon svg{width:14px;height:14px}
+.alert-icon.warn svg{fill:var(--amber)}.alert-icon.danger svg{fill:var(--red)}
+.alert-info{flex:1;min-width:0}
+.alert-name{font-size:12px;font-weight:700;color:var(--t1)}
+.alert-meta{font-size:11px;color:var(--t3);margin-top:1px}
+.alert-qty{font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;flex-shrink:0}
+.alert-qty.warn{color:var(--amber)}.alert-qty.danger{color:var(--red)}
+
+/* ACTIVITY FEED */
+.act-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.act-row:last-child{border-bottom:none}
+.act-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.dot-sb{background:var(--sb)}.dot-rye{background:var(--rye)}.dot-ok{background:var(--green)}.dot-warn{background:var(--amber)}
+.act-body{flex:1;min-width:0}
+.act-text{font-size:12px;color:var(--t1);line-height:1.4}
+.act-meta{font-size:11px;color:var(--t3);margin-top:2px}
+.act-time{font-size:10px;color:var(--t3);flex-shrink:0;white-space:nowrap;margin-top:2px}
+
+/* BADGE */
+.bdg{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.b-ok{background:rgba(76,175,125,.15);color:#88d4ad;border:1px solid rgba(76,175,125,.3)}
+.b-sb{background:rgba(239,159,39,.15);color:var(--sb-mid);border:1px solid rgba(239,159,39,.3)}
+.b-rye{background:var(--rye-glow);color:var(--rye-mid);border:1px solid rgba(101,173,229,.3)}
+.b-warn{background:rgba(239,159,39,.15);color:var(--sb-mid);border:1px solid rgba(239,159,39,.3)}
+.b-gray{background:rgba(74,112,144,.12);color:var(--t3);border:1px solid rgba(74,112,144,.2)}
+.b-red{background:rgba(224,90,90,.12);color:#f09595;border:1px solid rgba(224,90,90,.25)}
+
+/* MINI CHART BARS */
+.bar-chart{display:flex;align-items:flex-end;gap:5px;height:60px;padding-top:8px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar-fill{width:100%;border-radius:3px 3px 0 0;min-height:4px;transition:height .5s ease}
+.bar-lbl{font-size:9px;color:var(--t3);font-weight:600}
+
+/* SECTION HEADER */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px}
+.section-title{font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;gap:6px}
+.section-title svg{width:13px;height:13px;fill:var(--rye)}
+
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--rye-deep);border:1px solid var(--rye);color:var(--rye-mid);border-radius:8px;padding:10px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#toast svg{width:13px;height:13px;fill:var(--rye);flex-shrink:0}
+#toast.on{opacity:1;transform:translateY(0)}
+
+/* TABS */
+.nav-tabs{display:flex;gap:4px;background:var(--s1);border:1px solid var(--border);padding:4px;border-radius:10px;margin-bottom:18px}
+.tab{flex:1;padding:8px 6px;font-size:12px;font-weight:700;border:none;cursor:pointer;border-radius:7px;background:transparent;color:var(--t3);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .14s;letter-spacing:.03em}
+.tab svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
+.tab.on{background:var(--rye);color:var(--black)}
+.tab:not(.on):hover{background:var(--s2);color:var(--t2)}
+.pane{display:none}.pane.on{display:block}
+
+/* EXPORT BTN */
+.exp-btn{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-hi);background:var(--s2);color:var(--t2);transition:all .14s;letter-spacing:.03em}
+.exp-btn:hover{background:var(--border-hi);color:var(--t1)}
+.exp-btn svg{width:12px;height:12px;fill:currentColor}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="hdr-left">
+      <img src="data:image/png;base64,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" alt="Rye Electric" class="logo-img">
+      <div class="hdr-divider"></div>
+      <span class="hdr-title">Main Office Dashboard</span>
+    </div>
+    <div class="hdr-right">
+      <div class="live-dot"></div>
+      <span class="live-label">Live</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Not synced yet</span>
+      <span class="week-badge">Week 21 &mdash; May 2025</span>
+      <button class="sync-btn" onclick="syncFromFieldTracker()">
+        <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        Sync now
+      </button>
+      <button class="exp-btn" onclick="exportReport()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- KPI ROW -->
+  <div class="kpi-grid" id="kpi-row"></div>
+
+  <!-- NAV TABS -->
+  <div class="nav-tabs">
+    <button class="tab on" onclick="showTab(this,'overview')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span>Overview</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'jobs')">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Job Costs</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'labor')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+      <span>Labor</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'inventory')">
+      <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      <span>Inventory</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'production')">
+      <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"/></svg>
+      <span>Production</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'reports')">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Prod Reports</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'activity')">
+      <svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+      <span>Activity</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'field')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      <span>Field</span>
+    </button>
+    <button class="tab" onclick="showTab(this,'timesheets')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span>Timesheets</span>
+    </button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="pane on" id="pane-overview">
+    <div class="main-grid">
+      <!-- Job Progress -->
+      <div class="card">
+        <div class="ch">
+          <div class="ct"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Job progress</div>
+          <span class="co-tag tag-rye">Rye Electric</span>
+        </div>
+        <div class="cb" id="ov-job-progress"></div>
+      </div>
+
+      <!-- Weekly cost by job -->
+      <div class="card">
+        <div class="ch">
+          <div class="ct"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Cost breakdown by job</div>
+          <span class="co-tag tag-sb">Simple Build</span>
+        </div>
+        <div class="cb" id="ov-cost-chart"></div>
+      </div>
+
+      <!-- Inventory alerts -->
+      <div class="card">
+        <div class="ch">
+          <div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Inventory alerts</div>
+          <span class="co-tag tag-sb">Simple Build</span>
+        </div>
+        <div class="cb" id="ov-inv-alerts"></div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="card">
+        <div class="ch">
+          <div class="ct"><svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>Recent activity</div>
+        </div>
+        <div class="cb" id="ov-activity"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOB COSTS -->
+  <div class="pane" id="pane-jobs">
+    <div id="job-cards-detail"></div>
+    <div class="card" style="margin-top:14px">
+      <div class="ch">
+        <div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>All prefab cost records</div>
+        <button class="exp-btn" onclick="exportReport()">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
+        </button>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="cost-table" id="all-prefabs-table">
+          <thead><tr>
+            <th>Prefab ID</th><th>Assembly</th><th>Job</th>
+            <th>SB Worker</th><th>Build hrs</th>
+            <th>Material $</th><th>SB Labor $</th>
+            <th>Install Worker</th><th>Install hrs</th><th>Install $</th>
+            <th>Total $</th><th>Status</th>
+          </tr></thead>
+          <tbody id="prefabs-tbody"></tbody>
+          <tfoot><tr class="total-row" id="prefabs-tfoot"></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LABOR -->
+  <div class="pane" id="pane-labor">
+    <div class="main-grid">
+      <div class="card">
+        <div class="ch">
+          <div class="ct ct-sb"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>Simple Build shop workers</div>
+          <span class="co-tag tag-sb">Simple Build</span>
+        </div>
+        <div class="cb" id="sb-labor-detail"></div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>Rye Electric field workers</div>
+          <span class="co-tag tag-rye">Rye Electric</span>
+        </div>
+        <div class="cb" id="rye-labor-detail"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Combined labor cost by job</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="cost-table" id="labor-by-job-table">
+          <thead><tr><th>Job</th><th>Manpower</th><th>Hrs to Date</th><th>Labor to Date</th><th>On Site</th><th>Last Wk Hrs</th><th>Last Wk $</th><th>Variance vs Budget</th></tr></thead>
+          <tbody id="labor-by-job-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVENTORY -->
+  <div class="pane" id="pane-inventory">
+    <div class="main-grid three">
+      <div class="card">
+        <div class="ch"><div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>Low / critical stock</div></div>
+        <div class="cb" id="inv-alerts-detail"></div>
+      </div>
+      <div class="card" style="grid-column:span 2">
+        <div class="ch"><div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>Full inventory register</div></div>
+        <div style="overflow-x:auto">
+          <table class="cost-table" id="inv-full-table">
+            <thead><tr><th>SKU</th><th>Item</th><th>Type</th><th>On Hand</th><th>Unit</th><th>Unit Cost</th><th>Total Value</th><th>Reorder At</th><th>Status</th></tr></thead>
+            <tbody id="inv-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTION -->
+  <div class="pane" id="pane-production">
+    <div class="main-grid">
+      <div class="card">
+        <div class="ch"><div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"/></svg>Production by worker this week</div></div>
+        <div class="cb" id="prod-by-worker"></div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg>Prefab pipeline</div></div>
+        <div class="cb" id="prod-pipeline"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>Full production log</div></div>
+      <div style="overflow-x:auto">
+        <table class="cost-table" id="prod-log-table">
+          <thead><tr><th>Prefab ID</th><th>Assembly</th><th>Job</th><th>Worker</th><th>Build hrs</th><th>Materials</th><th>Mat cost</th><th>Build cost</th><th>Status</th></tr></thead>
+          <tbody id="prod-log-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY -->
+  <div class="pane" id="pane-activity">
+    <div class="main-grid">
+      <div class="card card-full">
+        <div class="ch">
+          <div class="ct"><svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>Full activity log</div>
+          <div style="display:flex;gap:6px">
+            <button class="exp-btn" onclick="filterActivity('all')" id="af-all" style="background:var(--rye);color:var(--black);border-color:var(--rye)">All</button>
+            <button class="exp-btn" onclick="filterActivity('sb')" id="af-sb">Simple Build</button>
+            <button class="exp-btn" onclick="filterActivity('rye')" id="af-rye">Rye Electric</button>
+            <button class="exp-btn" onclick="filterActivity('inv')" id="af-inv">Inventory</button>
+          </div>
+        </div>
+        <div class="cb" id="activity-full"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PROD REPORTS PANE -->
+  <div class="pane" id="pane-reports">
+    <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">
+      Week of May 11-17, 2026 &mdash; 7 jobs
+    </div>
+
+    <!-- KPI summary row -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="rpt-kpi-row"></div>
+
+    <!-- Job cards -->
+    <div id="rpt-job-cards"></div>
+
+    <!-- Cost code detail table per job -->
+    <div class="card" style="margin-top:4px">
+      <div class="ch">
+        <div class="ct">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>
+          Cost code detail
+        </div>
+        <select id="rpt-job-filter" onchange="renderCCTable()" style="font-size:11px;height:30px;padding:0 8px">
+          <option value="all">All jobs</option>
+        </select>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="cost-table" id="rpt-cc-table">
+          <thead><tr>
+            <th>Job</th><th>Code</th><th>Description</th><th>Unit</th>
+            <th>Budget Qty</th><th>Actual Qty</th><th>% Used</th><th>Proj L/G</th>
+          </tr></thead>
+          <tbody id="rpt-cc-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FIELD DATA PANE -->
+  <div class="pane" id="pane-field">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="field-kpi-row"></div>
+    <div class="main-grid">
+      <div class="card">
+        <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Units logged this week</div></div>
+        <div class="cb" id="field-units-summary"></div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>Active workers this week</div></div>
+        <div class="cb" id="field-workers-list"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>Daily whiteboard — latest entries</div>
+        <select id="db-field-job-filter" onchange="renderFieldData()" style="height:28px;font-size:11px;padding:0 8px;border-radius:6px;background:var(--s2);border:1px solid var(--border);color:var(--t1)">
+          <option value="all">All jobs</option>
+        </select>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="cost-table" id="field-log-table">
+          <thead><tr>
+            <th>Date</th><th>Employee</th><th>Job</th><th>Phase Code</th><th>Description</th><th>Hours</th>
+          </tr></thead>
+          <tbody id="field-log-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" style="margin-top:10px">
+      <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>Daily Job Reports</div></div>
+      <div class="cb" id="djr-summary"><div style="color:var(--t3);font-size:12px">Sync from field tracker to see reports</div></div>
+    </div>
+
+    <div class="card" style="margin-top:10px">
+      <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Sign-in sheet data</div></div>
+      <div style="overflow-x:auto">
+        <table class="cost-table" id="signin-table">
+          <thead><tr>
+            <th>Date</th><th>Job</th><th>Employee</th><th>Start</th><th>Finish</th><th>Reg Hrs</th><th>OT Hrs</th><th>Total</th>
+          </tr></thead>
+          <tbody id="signin-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMESHEETS PANE -->
+  <div class="pane" id="pane-timesheets">
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">
+      <select id="db-ts-job" onchange="renderDashTimesheets()" style="height:36px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--border);color:var(--t1);min-width:200px">
+        <option value="all">All jobs</option>
+      </select>
+      <select id="db-ts-worker" onchange="renderDashTimesheets()" style="height:36px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--border);color:var(--t1);min-width:180px">
+        <option value="all">All employees</option>
+      </select>
+      <button class="exp-btn" onclick="exportFoundationCSV()">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export to Foundation CSV
+      </button>
+    </div>
+    <div id="db-ts-summary" style="margin-bottom:12px"></div>
+    <div style="overflow-x:auto">
+      <table class="cost-table" id="db-ts-table">
+        <thead><tr>
+          <th>Employee</th><th>Job</th><th>Week Days</th><th>Reg Hrs</th><th>OT Hrs</th><th>Total Hrs</th><th>Phase Codes</th>
+        </tr></thead>
+        <tbody id="db-ts-tbody"></tbody>
+        <tfoot><tr id="db-ts-tfoot" style="font-weight:700"></tr></tfoot>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /shell -->
+<div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg><span id="toast-txt"></span></div>
+
+<script>
+
+/* ======================================================
+   LIVE DATA — reads from Field Tracker localStorage
+====================================================== */
+var unitLogs  = [];
+var dailyLogs = [];
+var siData    = {};
+var djrData   = {};
+
+function syncFromFieldTracker(){
+  try {
+    unitLogs  = JSON.parse(localStorage.getItem('rye_unit_logs')  || '[]');
+    dailyLogs = JSON.parse(localStorage.getItem('rye_daily_logs') || '[]');
+    siData    = JSON.parse(localStorage.getItem('rye_signin_data')|| '{}');
+    djrData   = JSON.parse(localStorage.getItem('rye_djr_reports')|| '{}');
+  } catch(e){
+    console.warn('Sync error:', e);
+  }
+  refreshDashboard();
+  updateSyncTime();
+}
+
+function updateSyncTime(){
+  var el = document.getElementById('sync-time');
+  if(el) el.textContent = 'Last sync: '+new Date().toLocaleTimeString();
+}
+
+function refreshDashboard(){
+  renderKPIs();
+  renderOverview();
+  // Re-render active tab
+  var activeTab = document.querySelector('.tab.on');
+  if(activeTab){
+    var name = activeTab.textContent.trim().toLowerCase().replace(/ /g,'');
+    if(name==='jobcosts')    renderJobs();
+    if(name==='labor')       renderLabor();
+    if(name==='production')  renderProduction();
+    if(name==='activity'||name==='field')    renderActivity();
+    if(name==='prodreports') renderReports();
+    if(name==='field')       renderFieldData();
+    if(name==='timesheets')  renderDashTimesheets();
+  }
+}
+
+// Auto-sync every 60 seconds
+setInterval(syncFromFieldTracker, 60000);
+/* === SHARED DATA (mirrors prefab tracker) === */
+const RATE_SB = 60;
+const RATE_RYE = 70;
+
+const REPORT_DATA = [
+  {key:"24001 - BIOLA",name:"Biola Cinema",week:"May 11-17, 2026",laborRate:47.46,projLG:-394077.71,lastWkHrs:421,lastWkDollars:19955.36,budgetPct:0,manpower:10.51,hrsSpent:0,hrsRemaining:-9651,hrsbudget:20588.0,totalBudget:7815570.0,hrsPct:0,unitsPct:146.9,laborActual:2049519.37,laborBudget:1647104.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:9550.0,qtyActual:22175.0,projLG:-79807.94},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:13764.0,qtyActual:11438.0,projLG:-27974.21},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:55849.0,qtyActual:67745.0,projLG:-247232.7},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:2970.0,qtyActual:2916.0,projLG:-9608.79},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:204.0,qtyActual:207.0,projLG:2049.0},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:40.0,qtyActual:40.0,projLG:23109.28},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:105853.0,qtyActual:185853.0,projLG:-74585.33},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:39077.0,qtyActual:45045.0,projLG:28823.79},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:36694.0,qtyActual:43150.0,projLG:-19036.05},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:11084.0,qtyActual:7132.0,projLG:8807.94},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:328.0,qtyActual:326.0,projLG:-44431.74},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:1461.0,qtyActual:1426.0,projLG:22580.91},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:78.0,qtyActual:77.0,projLG:23228.13}]},
+  {key:"24002 - SEPULVEDA",name:"Sepulveda",week:"May 11-17, 2026",laborRate:44.4,projLG:-134227.42,lastWkHrs:457,lastWkDollars:20292.43,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:-1528,hrsbudget:25302.0,totalBudget:3336122.0,hrsPct:0,unitsPct:106.0,laborActual:1931419.84,laborBudget:1773746.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:1500.0,qtyActual:520.0,projLG:2410.92},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:185.0,qtyActual:57.0,projLG:5822.71},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:5500.0,qtyActual:4495.0,projLG:2591.6},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:210.0,qtyActual:210.0,projLG:-6088.36},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:59.0,qtyActual:59.0,projLG:18374.47},{code:"2500",desc:"UPS & PDUs",unit:"EA",qtyBudget:32.0,qtyActual:1446.07,projLG:-1446.07},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:60.0,qtyActual:0,projLG:0},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:110000.0,qtyActual:93280.0,projLG:-17387.72},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:3000.0,qtyActual:2739.0,projLG:-4352.45},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:13.0,qtyActual:23.0,projLG:-487.16},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:176.0,qtyActual:1708.0,projLG:-5891.16},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1135.0,qtyActual:1057.0,projLG:-27576.11},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:112.0,qtyActual:1088.0,projLG:-27123.84},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:930.0,qtyActual:315.0,projLG:-13482.12},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:210.19},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:13.0,qtyActual:910.82,projLG:910.82},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-910.82},{code:"7400",desc:"Common Area Rough",unit:"EA",qtyBudget:30.0,qtyActual:30.0,projLG:-18315.82},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-738.52},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-3697.15},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-5662.24},{code:"7800",desc:"Common Area Trim",unit:"EA",qtyBudget:30.0,qtyActual:28.0,projLG:14640.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:176.0,qtyActual:156.0,projLG:-25217.55},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:91.0,qtyActual:91.0,projLG:-5960.85}]},
+  {key:"24005 - VNV",name:"Van Nuys & Vose",week:"May 11-17, 2026",laborRate:48.69,projLG:26196.6,lastWkHrs:465,lastWkDollars:16943.52,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:-76,hrsbudget:6330.0,totalBudget:0,hrsPct:0,unitsPct:100.2,laborActual:2581052.07,laborBudget:2310016.75,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:20502.0,qtyActual:21173.0,projLG:-19203.24},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:6530.0,qtyActual:5625.0,projLG:16199.9},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:32807.0,qtyActual:7402.0,projLG:16791.64},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:1590.0,qtyActual:144.0,projLG:-6623.86},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:78.0,qtyActual:78.0,projLG:415.77},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:54.0,qtyActual:54.0,projLG:14101.57},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:217945.0,qtyActual:95866.0,projLG:44245.76},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:26683.0,qtyActual:26640.0,projLG:-36102.46},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:32942.0,qtyActual:34456.0,projLG:-61947.65},{code:"3400",desc:"Feeder Cable",unit:"LF",qtyBudget:8185.0,qtyActual:8174.0,projLG:-2456.69},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-55390.96},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1677.0,qtyActual:684.0,projLG:92421.96},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:54.0,qtyActual:122.0,projLG:787.37},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:538.0,qtyActual:179.0,projLG:96.92},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:2788.95},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:2419.65},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-33505.99},{code:"7300",desc:"Unit Shear Walls",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:8990.81},{code:"7320",desc:"Unit Drilling",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:17108.75},{code:"7330",desc:"Unit Pulling",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-208.26},{code:"7340",desc:"Unit Stab & Makeup",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:28431.84},{code:"7370",desc:"Unit Strap & Plate",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:20718.94},{code:"7380",desc:"Unit Fireproofing",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:1434.77},{code:"7500",desc:"HR to AC",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:8560.24},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:332.0,qtyActual:317.0,projLG:3899.27},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:332.0,qtyActual:306.0,projLG:-9023.16},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:332.0,qtyActual:317.0,projLG:-29774.41},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:996.0,qtyActual:423.0,projLG:14132.21},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:105.0,qtyActual:84.0,projLG:-9720.06}]},
+  {key:"24006 - VF",name:"Vintage Farms",week:"May 11-17, 2026",laborRate:47.61,projLG:253134.22,lastWkHrs:796,lastWkDollars:37894.41,budgetPct:0,manpower:19.9,hrsSpent:2887,hrsRemaining:34883,hrsbudget:6697.0,totalBudget:0,hrsPct:0,unitsPct:92.9,laborActual:2417868.11,laborBudget:2463044.0,costCodes:[]},
+  {key:"25001 - DECENA",name:"Mission Gorge",week:"May 11-17, 2026",laborRate:40.58,projLG:0,lastWkHrs:280,lastWkDollars:11361.29,budgetPct:0,manpower:7.0,hrsSpent:19522,hrsRemaining:9240,hrsbudget:1617.0,totalBudget:7.0,hrsPct:0,unitsPct:32.1,laborActual:909455.86,laborBudget:1795495.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:10130.0,qtyActual:13860.0,projLG:156030.5},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:2278.0,qtyActual:15286.0,projLG:69691.6},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:41780.0,qtyActual:1660.0,projLG:419476.59},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:22280.0,qtyActual:2174.0,projLG:231390.35},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:142.0,qtyActual:119.0,projLG:54444.05},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:24.0,qtyActual:1081.02,projLG:1081.02},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:261880.0,qtyActual:65030.0,projLG:71789.5},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:108700.0,qtyActual:72490.0,projLG:60343.15},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:30715.0,qtyActual:5550.0,projLG:110399.32},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:483.0,qtyActual:12.0,projLG:618014.23},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1296.0,qtyActual:52.0,projLG:154717.65},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:100.0,qtyActual:80.0,projLG:3600.0},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:766.0,qtyActual:184.0,projLG:8280.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:483.0,qtyActual:1932.0,projLG:86940.0},{code:"8200",desc:"Gnd Grid and Lighting Protec",unit:"EA",qtyBudget:200.0,qtyActual:50.0,projLG:2250.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:95.0,qtyActual:38.0,projLG:52255.66}]},
+  {key:"25002 - BAH",name:"Bellamy Agoura Hills",week:"May 11-17, 2026",laborRate:44.99,projLG:464128.96,lastWkHrs:485,lastWkDollars:21818.03,budgetPct:0,manpower:12.13,hrsSpent:31615,hrsRemaining:5836,hrsbudget:408.0,totalBudget:0,hrsPct:0,unitsPct:15.6,laborActual:582078.85,laborBudget:2579213.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:31055.0,qtyActual:30265.0,projLG:99988.06},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:8830.0,qtyActual:13820.0,projLG:9285.51},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:3777.0,qtyActual:389.06,projLG:-420.31},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:1865.0,qtyActual:450.37,projLG:-424.01},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:45.0,qtyActual:859.0,projLG:-3608.47},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:135200.0,qtyActual:130715.0,projLG:37061.94},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:67165.0,qtyActual:130.0,projLG:68839.84},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:28565.0,qtyActual:1000.0,projLG:54132.47},{code:"3400",desc:"Feeder Cable",unit:"LF",qtyBudget:620.0,qtyActual:515.0,projLG:23948.0},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:278.0,qtyActual:1946.0,projLG:-1330.97},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:2677.0,qtyActual:585.0,projLG:115647.28},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:436.0,qtyActual:1754.0,projLG:-1047.21},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:278.0,qtyActual:9.0,projLG:26348.66},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:278.0,qtyActual:10.0,projLG:49759.87},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-420.31},{code:"7300",desc:"Unit Shear Walls",unit:"UN",qtyBudget:278.0,qtyActual:556.0,projLG:-420.31},{code:"7320",desc:"Unit Drilling",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-2310.42},{code:"7330",desc:"Unit Pulling",unit:"UN",qtyBudget:278.0,qtyActual:1946.0,projLG:-3292.44},{code:"7340",desc:"Unit Stab & Makeup",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-3075.43},{code:"7370",desc:"Unit Strap & Plate",unit:"UN",qtyBudget:278.0,qtyActual:1668.0,projLG:-2456.25},{code:"7380",desc:"Unit Fireproofing",unit:"UN",qtyBudget:278.0,qtyActual:0,projLG:278.0},{code:"7400",desc:"Common Area Rough",unit:"EA",qtyBudget:769.0,qtyActual:1538.0,projLG:-6588.21},{code:"7500",desc:"HR to AC",unit:"UN",qtyBudget:278.0,qtyActual:1112.0,projLG:-210.15},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:278.0,qtyActual:556.0,projLG:-210.15},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-210.15},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:278.0,qtyActual:834.0,projLG:-210.15},{code:"7800",desc:"Common Area Trim",unit:"EA",qtyBudget:769.0,qtyActual:769.0,projLG:35759.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:278.0,qtyActual:1112.0,projLG:51708.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:85.0,qtyActual:31.0,projLG:29300.27}]},
+  {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 11-17, 2026",laborRate:54.54,projLG:-37838.68,lastWkHrs:12,lastWkDollars:0,budgetPct:0,manpower:0.3,hrsSpent:832,hrsRemaining:-568,hrsbudget:832.0,totalBudget:377268.0,hrsPct:0,unitsPct:315.2,laborActual:74426.34,laborBudget:35912.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:600.0,qtyActual:24.0,projLG:1116.0},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:74.0,qtyActual:3873.57,projLG:-3873.57},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:8.0,qtyActual:372.0,projLG:372.0},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:650.0,qtyActual:8.0,projLG:372.0},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:368.0,qtyActual:100.0,projLG:4650.0},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:8.0,qtyActual:372.0,projLG:372.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:116.0,qtyActual:758.0,projLG:-34709.11}]}
+];
+
+const jobs = [
+{name:"24001 - BIOLA",pct:100,budget:7815570.0,laborRate:47.46,manpower:10.51,projLG:-394077.71,lastWkHrs:421,unitsPct:146.9,laborActual:2049519.37,laborBudget:1647104.0,hrsSpent:0,hrsRemaining:-9651},
+{name:"24002 - SEPULVEDA",pct:100,budget:3336122.0,laborRate:44.4,manpower:0,projLG:-134227.42,lastWkHrs:457,unitsPct:106.0,laborActual:1931419.84,laborBudget:1773746.0,hrsSpent:0,hrsRemaining:-1528},
+{name:"24005 - VNV",pct:100,budget:0,laborRate:48.69,manpower:0,projLG:26196.6,lastWkHrs:465,unitsPct:100.2,laborActual:2581052.07,laborBudget:2310016.75,hrsSpent:0,hrsRemaining:-76},
+{name:"24006 - VF",pct:93,budget:0,laborRate:47.61,manpower:19.9,projLG:253134.22,lastWkHrs:796,unitsPct:92.9,laborActual:2417868.11,laborBudget:2463044.0,hrsSpent:2887,hrsRemaining:34883},
+{name:"25001 - DECENA",pct:32,budget:7.0,laborRate:40.58,manpower:7.0,projLG:0,lastWkHrs:280,unitsPct:32.1,laborActual:909455.86,laborBudget:1795495.0,hrsSpent:19522,hrsRemaining:9240},
+{name:"25002 - BAH",pct:16,budget:0,laborRate:44.99,manpower:12.13,projLG:464128.96,lastWkHrs:485,unitsPct:15.6,laborActual:582078.85,laborBudget:2579213.0,hrsSpent:31615,hrsRemaining:5836},
+{name:"SP25018 - CDC PLAZA",pct:100,budget:377268.0,laborRate:54.54,manpower:0.3,projLG:-37838.68,lastWkHrs:12,unitsPct:315.2,laborActual:74426.34,laborBudget:35912.0,hrsSpent:832,hrsRemaining:-568}
+];
+
+const prefabs = [
+  {id:'PFB-2501',assembly:'Panel Rough-In Kit',    job:'24010 - COMMONS',  sbWorker:'Anthony Zetina',  buildHrs:3.5, mats:[{n:'200A Panel',q:1,c:380},{n:'12 AWG Blk 50ft',q:1,c:9.00},{n:'Coupling 3/4" x4',q:1,c:2.60}],  status:'installed', ryeWorker:'Jorge Contreras',  installHrs:2.0},
+  {id:'PFB-2502',assembly:'EMT Home-Run 20-ckt',   job:'24010 - COMMONS',  sbWorker:'Adrian Flores', buildHrs:5.0, mats:[{n:'EMT 3/4" x12',q:1,c:22.20},{n:'Coupling 3/4" x10',q:1,c:6.50},{n:'Strap x24',q:1,c:5.28}],   status:'installed', ryeWorker:'Adrian Flores',   installHrs:3.5},
+  {id:'PFB-2503',assembly:'Conduit Drop 3/4" x12', job:'25001 - DECENA',   sbWorker:'Brian Campos',  buildHrs:4.0, mats:[{n:'EMT 3/4" x20',q:1,c:37.00},{n:'LB 90 x8',q:1,c:33.60},{n:'Strap x40',q:1,c:8.80}],          status:'installed', ryeWorker:'Carla Quijada', installHrs:3.5},
+  {id:'PFB-2504',assembly:'Service Entrance Pack', job:'24005 - VNV', sbWorker:'Pedro Barrera',   buildHrs:6.0, mats:[{n:'200A Panel',q:1,c:380},{n:'EMT 2" x4',q:1,c:16.40},{n:'10 AWG Red 80ft',q:1,c:21.60}],       status:'installed', ryeWorker:'Filiberto Ramos',   installHrs:4.0},
+  {id:'PFB-2505',assembly:'Junction Box Array',    job:'25001 - DECENA',   sbWorker:'Gabriel Flores',   buildHrs:2.5, mats:[{n:'4" Box x8',q:1,c:11.60},{n:'12 AWG Blk 40ft',q:1,c:7.20},{n:'Strap x16',q:1,c:3.52}],        status:'on-site',   ryeWorker:'',         installHrs:0},
+  {id:'PFB-2506',assembly:'Sub Panel Kit 100A',    job:'24005 - VNV', sbWorker:'Brian Flores', buildHrs:4.5, mats:[{n:'100A Panel',q:1,c:195},{n:'EMT 1" x6',q:1,c:14.40},{n:'12 AWG Blk 30ft',q:1,c:5.40}],        status:'pending',   ryeWorker:'',         installHrs:0},
+  {id:'PFB-2507',assembly:'Panel Rough-In Kit',    job:'24010 - COMMONS',  sbWorker:'Anthony Zetina',  buildHrs:3.5, mats:[{n:'200A Panel',q:1,c:380},{n:'12 AWG Wht 50ft',q:1,c:9.00},{n:'Coupling 3/4" x4',q:1,c:2.60}],  status:'on-site',   ryeWorker:'',         installHrs:0},
+  {id:'PFB-2508',assembly:'EMT Home-Run 20-ckt',   job:'25001 - DECENA',   sbWorker:'Adrian Flores', buildHrs:5.0, mats:[{n:'EMT 3/4" x12',q:1,c:22.20},{n:'Coupling 3/4" x10',q:1,c:6.50},{n:'Strap x24',q:1,c:5.28}],   status:'in-transit',ryeWorker:'',         installHrs:0},
+  {id:'PFB-2509',assembly:'Conduit Drop 3/4" x12', job:'24005 - VNV', sbWorker:'Brian Campos',  buildHrs:4.0, mats:[{n:'EMT 3/4" x20',q:1,c:37.00},{n:'LB 90 x8',q:1,c:33.60},{n:'Strap x40',q:1,c:8.80}],          status:'in-transit',ryeWorker:'',         installHrs:0},
+];
+
+const sbWorkers = [
+{name:"Jonathan Jacobo",initials:"JJ",role:"Dofo",wkHrs:[0,0,0,0,0],units:0},
+{name:"Anthony Zetina",initials:"AZ",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Xavier Contreras",initials:"XC",role:"General",wkHrs:[0,0,0,0,0],units:0},
+{name:"Brian Kitajima",initials:"BK",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"David Smith",initials:"DS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Dillan Smith",initials:"DS",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Efren Hilario",initials:"EH",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Alberto Lopez Ruiz",initials:"AR",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jorge Contreras",initials:"JC",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Johnny Perez",initials:"JP",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Armando Lopez",initials:"AL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Francisco Flores",initials:"FF",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Adrian Flores",initials:"AF",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Alejandro Lopez",initials:"AL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Brian Campos",initials:"BC",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Pedro Barrera",initials:"PB",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Kenneth William",initials:"KW",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Duvaldi Mazariegos",initials:"DM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Gabriel Flores",initials:"GF",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Louis Aceves",initials:"LA",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Juan Mazariegos",initials:"JM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Leonardo Mazariegos",initials:"LM",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Manuel Palacios",initials:"MP",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Anthony Lyons",initials:"AL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Filiberto Ramos",initials:"FR",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jose Ramirez",initials:"JR",role:"Lv",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jeffrey Rivera",initials:"JR",role:"Lv",wkHrs:[0,0,0,0,0],units:0},
+{name:"Irvin Rivera",initials:"IR",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Edgar Solis",initials:"ES",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Vincent Sopha",initials:"VS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Anthony Macias",initials:"AM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Enrique Laguna",initials:"EL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Matthew Baciu",initials:"MB",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Humberto Flores",initials:"HF",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jaime Moya",initials:"JM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Edith Del Carmen",initials:"EC",role:"Lv",wkHrs:[0,0,0,0,0],units:0},
+{name:"Daniel Villegas",initials:"DV",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Carla Quijada",initials:"CQ",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jose Preciado",initials:"JP",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Brian Flores",initials:"BF",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Carlos Landaverde",initials:"CL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jimmy Cascio",initials:"JC",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Sergio Sandoval",initials:"SS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Brenda Quijada",initials:"BQ",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Dyana Quijada",initials:"DQ",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Oliver Galicia",initials:"OG",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Sotero Dominguez",initials:"SD",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Miguel Dominguez",initials:"MD",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Efrain Cornejo",initials:"EC",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Rusel Santiago",initials:"RS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Kevin Bautista",initials:"KB",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Luis Ramirez",initials:"LR",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Josue Villegas",initials:"JV",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Salvador Perez",initials:"SP",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"David Casarez",initials:"DC",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Lizeth Marcos",initials:"LM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Randdy De Paz",initials:"RP",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Angel Ibanez",initials:"AI",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Robert Stark",initials:"RS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Anthony Ibanez",initials:"AI",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Daniel Burleson",initials:"DB",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Abiud Lopez",initials:"AL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Mario Arias",initials:"MA",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jaime Quintero",initials:"JQ",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Mario Lopez",initials:"ML",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Steven Sulewski",initials:"SS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Cristian Collin",initials:"CC",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jesus Heredia",initials:"JH",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Daniel Lopez",initials:"DL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Axel Salas",initials:"AS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Oscar Aguirre",initials:"OA",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Alex Osorio",initials:"AO",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Julio Munoz",initials:"JM",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Angel Hernandez",initials:"AH",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Adrian Hernandez",initials:"AH",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Samuel Munoz",initials:"SM",role:"Iw",wkHrs:[0,0,0,0,0],units:0},
+{name:"Antonio Castillo",initials:"AC",role:"Iw",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jerry Munoz",initials:"JM",role:"Iw",wkHrs:[0,0,0,0,0],units:0},
+{name:"Noah Villareal",initials:"NV",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jayson Ortega",initials:"JO",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Carlos Agapito",initials:"CA",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jose Luna",initials:"JL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Manuel Martinez",initials:"MM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Mathew Gonzalez",initials:"MG",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Sergio Diaz",initials:"SD",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Tony Broadnax",initials:"TB",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Isidro Enciso",initials:"IE",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Brian Ramirez",initials:"BR",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Jerlin Mendoza",initials:"JM",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Estevan Sandoval",initials:"ES",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Lorenzo Tanguma",initials:"LT",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Eduardo Echeverria",initials:"EE",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Victor Armienta",initials:"VA",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Guillermo Silva",initials:"GS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Erik Lopez",initials:"EL",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Isaiah Ortiz Alvarado",initials:"IA",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"James Marquez",initials:"JM",role:"Apprentice",wkHrs:[0,0,0,0,0],units:0},
+{name:"Henri Sibrian",initials:"HS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Vincent Stancati",initials:"VS",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Christian Moran",initials:"CM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Edwin Martinez",initials:"EM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Adrian Marquez",initials:"AM",role:"Electrician",wkHrs:[0,0,0,0,0],units:0},
+{name:"Victor Carrillo",initials:"VC",role:"Field",wkHrs:[0,0,0,0,0],units:0},
+{name:"Miguel Corral",initials:"MC",role:"Field",wkHrs:[0,0,0,0,0],units:0},
+{name:"Joaquin Garcia",initials:"JG",role:"Journeyman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Robert Welch",initials:"RW",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Uriel Chavez",initials:"UC",role:"Foreman",wkHrs:[0,0,0,0,0],units:0},
+{name:"Brandon Salazar",initials:"BS",role:"Field",wkHrs:[0,0,0,0,0],units:0}
+];
+
+const ryeWorkers = [
+{name:"Jonathan Jacobo",initials:"JJ",role:"Dofo",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Anthony Zetina",initials:"AZ",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Xavier Contreras",initials:"XC",role:"General",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Brian Kitajima",initials:"BK",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"David Smith",initials:"DS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Dillan Smith",initials:"DS",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Efren Hilario",initials:"EH",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Alberto Lopez Ruiz",initials:"AR",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jorge Contreras",initials:"JC",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Johnny Perez",initials:"JP",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Armando Lopez",initials:"AL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Francisco Flores",initials:"FF",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Adrian Flores",initials:"AF",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Alejandro Lopez",initials:"AL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Brian Campos",initials:"BC",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Pedro Barrera",initials:"PB",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Kenneth William",initials:"KW",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Duvaldi Mazariegos",initials:"DM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Gabriel Flores",initials:"GF",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Louis Aceves",initials:"LA",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Juan Mazariegos",initials:"JM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Leonardo Mazariegos",initials:"LM",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Manuel Palacios",initials:"MP",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Anthony Lyons",initials:"AL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Filiberto Ramos",initials:"FR",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jose Ramirez",initials:"JR",role:"Lv",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jeffrey Rivera",initials:"JR",role:"Lv",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Irvin Rivera",initials:"IR",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Edgar Solis",initials:"ES",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Vincent Sopha",initials:"VS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Anthony Macias",initials:"AM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Enrique Laguna",initials:"EL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Matthew Baciu",initials:"MB",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Humberto Flores",initials:"HF",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jaime Moya",initials:"JM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Edith Del Carmen",initials:"EC",role:"Lv",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Daniel Villegas",initials:"DV",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Carla Quijada",initials:"CQ",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jose Preciado",initials:"JP",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Brian Flores",initials:"BF",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Carlos Landaverde",initials:"CL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jimmy Cascio",initials:"JC",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Sergio Sandoval",initials:"SS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Brenda Quijada",initials:"BQ",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Dyana Quijada",initials:"DQ",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Oliver Galicia",initials:"OG",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Sotero Dominguez",initials:"SD",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Miguel Dominguez",initials:"MD",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Efrain Cornejo",initials:"EC",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Rusel Santiago",initials:"RS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Kevin Bautista",initials:"KB",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Luis Ramirez",initials:"LR",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Josue Villegas",initials:"JV",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Salvador Perez",initials:"SP",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"David Casarez",initials:"DC",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Lizeth Marcos",initials:"LM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Randdy De Paz",initials:"RP",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Angel Ibanez",initials:"AI",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Robert Stark",initials:"RS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Anthony Ibanez",initials:"AI",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Daniel Burleson",initials:"DB",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Abiud Lopez",initials:"AL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Mario Arias",initials:"MA",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jaime Quintero",initials:"JQ",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Mario Lopez",initials:"ML",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Steven Sulewski",initials:"SS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Cristian Collin",initials:"CC",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jesus Heredia",initials:"JH",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Daniel Lopez",initials:"DL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Axel Salas",initials:"AS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Oscar Aguirre",initials:"OA",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Alex Osorio",initials:"AO",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Julio Munoz",initials:"JM",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Angel Hernandez",initials:"AH",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Adrian Hernandez",initials:"AH",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Samuel Munoz",initials:"SM",role:"Iw",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Antonio Castillo",initials:"AC",role:"Iw",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jerry Munoz",initials:"JM",role:"Iw",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Noah Villareal",initials:"NV",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jayson Ortega",initials:"JO",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Carlos Agapito",initials:"CA",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jose Luna",initials:"JL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Manuel Martinez",initials:"MM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Mathew Gonzalez",initials:"MG",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Sergio Diaz",initials:"SD",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Tony Broadnax",initials:"TB",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Isidro Enciso",initials:"IE",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Brian Ramirez",initials:"BR",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Jerlin Mendoza",initials:"JM",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Estevan Sandoval",initials:"ES",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Lorenzo Tanguma",initials:"LT",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Eduardo Echeverria",initials:"EE",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Victor Armienta",initials:"VA",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Guillermo Silva",initials:"GS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Erik Lopez",initials:"EL",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Isaiah Ortiz Alvarado",initials:"IA",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"James Marquez",initials:"JM",role:"Apprentice",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Henri Sibrian",initials:"HS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Vincent Stancati",initials:"VS",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Christian Moran",initials:"CM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Edwin Martinez",initials:"EM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Adrian Marquez",initials:"AM",role:"Electrician",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Victor Carrillo",initials:"VC",role:"Field",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Miguel Corral",initials:"MC",role:"Field",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Joaquin Garcia",initials:"JG",role:"Journeyman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Robert Welch",initials:"RW",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Uriel Chavez",initials:"UC",role:"Foreman",site:"",wkHrs:[0,0,0,0,0],installs:0},
+{name:"Brandon Salazar",initials:"BS",role:"Field",site:"",wkHrs:[0,0,0,0,0],installs:0}
+];
+
+const inventory = [
+  {sku:'EMT-075', name:'EMT 3/4"',        type:'Conduit', qty:240, reorder:100, cost:1.85},
+  {sku:'EMT-100', name:'EMT 1"',           type:'Conduit', qty:180, reorder:80,  cost:2.40},
+  {sku:'EMT-200', name:'EMT 2"',           type:'Conduit', qty:42,  reorder:50,  cost:4.10},
+  {sku:'WIRE-12B',name:'12 AWG Black',     type:'Wire',    qty:3200,reorder:1000,cost:0.18},
+  {sku:'WIRE-12W',name:'12 AWG White',     type:'Wire',    qty:2900,reorder:1000,cost:0.18},
+  {sku:'WIRE-10R',name:'10 AWG Red',       type:'Wire',    qty:780, reorder:500, cost:0.27},
+  {sku:'PNL-200A',name:'200A Main Panel',  type:'Panel',   qty:8,   reorder:3,   cost:380},
+  {sku:'PNL-100A',name:'100A Sub Panel',   type:'Panel',   qty:2,   reorder:4,   cost:195},
+  {sku:'LB90-075',name:'LB 90 deg 3/4"',  type:'Fitting', qty:64,  reorder:20,  cost:4.20},
+  {sku:'COUP-075',name:'Coupling 3/4"',    type:'Fitting', qty:310, reorder:100, cost:0.65},
+  {sku:'STRAP-1H',name:'Strap 1-hole',     type:'Fitting', qty:820, reorder:200, cost:0.22},
+  {sku:'BOX-4SQ', name:'4" Square Box',    type:'Fitting', qty:95,  reorder:40,  cost:1.45},
+];
+
+const activityLog = [
+  {type:'rye',  text:'PFB-2504 Service Entrance Pack installed by Filiberto Ramos at 24005 - VNV',  meta:'4.0 hrs -- $280 install labor', time:'8m ago'},
+  {type:'sb',   text:'PFB-2509 Conduit Drop 3/4" x12 built by Brian Campos for 24005 - VNV',    meta:'4.0 hrs -- $240 build labor + $79.40 materials', time:'22m ago'},
+  {type:'inv',  text:'200A Main Panel -- 4 units received (now 8 on hand)',              meta:'Simple Build receiving dock', time:'41m ago'},
+  {type:'rye',  text:'PFB-2502 EMT Home-Run installed by Adrian Flores at 24010 - COMMONS',             meta:'3.5 hrs -- $245 install labor', time:'1h 5m ago'},
+  {type:'sb',   text:'PFB-2508 EMT Home-Run 20-ckt completed by Chris V. for 25001 - DECENA',   meta:'5.0 hrs -- $300 build labor + $34.00 materials', time:'1h 40m ago'},
+  {type:'inv',  text:'EMT 2" stock LOW -- 42 remaining (reorder at 50)',                 meta:'Alert triggered at Simple Build', time:'2h ago'},
+  {type:'rye',  text:'PFB-2503 Conduit Drop installed by Carla Quijada at 25001 - DECENA',            meta:'3.5 hrs -- $245 install labor', time:'2h 30m ago'},
+  {type:'sb',   text:'PFB-2507 Panel Rough-In Kit built by Anthony Zetina for 24010 - COMMONS',        meta:'3.5 hrs -- $210 build labor + $391.60 materials', time:'3h ago'},
+  {type:'inv',  text:'100A Sub Panel stock CRITICAL -- 2 remaining (reorder at 4)',      meta:'Alert triggered at Simple Build', time:'3h 20m ago'},
+  {type:'rye',  text:'PFB-2501 Panel Rough-In Kit installed by John D. at 24010 - COMMONS',      meta:'2.0 hrs -- $140 install labor', time:'4h ago'},
+  {type:'sb',   text:'Brian Campos clocked in -- assigned to 25001 - DECENA production',              meta:'Simple Build shop floor', time:'5h ago'},
+  {type:'rye',  text:'Filiberto Ramos clocked in -- assigned to 24005 - VNV field',                  meta:'Rye Electric field', time:'5h 10m ago'},
+];
+
+/* === HELPERS === */
+function $c(v){return '$'+Number(v).toFixed(2)}
+function matCost(p){return p.mats.reduce((a,m)=>a+m.c,0)}
+function sbLabor(p){return p.buildHrs*RATE_SB}
+function ryeLabor(p){return p.installHrs*RATE_RYE}
+function total(p){return matCost(p)+sbLabor(p)+ryeLabor(p)}
+function wkTotal(w){return w.wkHrs.reduce((a,b)=>a+b,0)}
+function bdg(s){
+  const m={installed:'b-ok','on-site':'b-rye',pending:'b-gray','in-transit':'b-sb'};
+  return '<span class="bdg '+(m[s]||'b-gray')+'">'+s+'</span>';
+}
+function toast(m){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-txt').textContent=m;
+  t.classList.add('on');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove('on'),3000);
+}
+
+/* === KPI ROW === */
+function renderKPIs(){
+  var wkStart     = getDBWeekStart();
+  var wkLogs      = dailyLogs.filter(function(l){ return l.date>=wkStart; });
+  var wkSIRows    = [];
+  Object.keys(siData).forEach(function(key){
+    var date=key.split('|')[1];
+    if(date>=wkStart && siData[key] && siData[key].rows){
+      siData[key].rows.forEach(function(r){ if(r.name) wkSIRows.push(r); });
+    }
+  });
+  var liveHrs     = wkSIRows.reduce(function(a,r){return a+(parseFloat(r.total)||0);},0) ||
+                    wkLogs.reduce(function(a,l){return a+l.hours;},0);
+  var liveWorkers = new Set(wkSIRows.map(function(r){return r.name;})).size ||
+                    new Set(wkLogs.map(function(l){return l.worker;})).size;
+  var liveOT      = wkSIRows.reduce(function(a,r){return a+(parseFloat(r.otHrs)||0);},0);
+  var totalManpower  = REPORT_DATA.reduce(function(a,j){return a+j.manpower;},0);
+  var totalLWHrs     = REPORT_DATA.reduce(function(a,j){return a+j.lastWkHrs;},0);
+  var totalProjLG    = REPORT_DATA.reduce(function(a,j){return a+j.projLG;},0);
+  var totalLaborActual=REPORT_DATA.reduce(function(a,j){return a+j.laborActual;},0);
+  var roughDone   = unitLogs.filter(function(l){return l.phase==='rough';}).length;
+  var finalDone   = unitLogs.filter(function(l){return l.phase==='final';}).length;
+  var djrCount    = Object.keys(djrData).length;
+
+  var kpis=[
+    {id:'kpi-manpower',  lbl:'Active Manpower',   val:totalManpower.toFixed(1),     sub:'workers on site',     color:'var(--rye)'},
+    {id:'kpi-wk-hrs',    lbl:'This Week Hours',    val:liveHrs.toFixed(1)+'h',       sub:liveWorkers+' workers', color:'var(--green)'},
+    {id:'kpi-ot',        lbl:'Overtime Hours',     val:liveOT.toFixed(1)+'h',        sub:'this week',           color:liveOT>0?'var(--red)':'var(--t3)'},
+    {id:'kpi-lw-hrs',    lbl:'Last Week Hours',    val:totalLWHrs.toLocaleString()+'h', sub:'all jobs',          color:'var(--t1)'},
+    {id:'kpi-proj-lg',   lbl:'Proj L/G',           val:(totalProjLG>=0?'+':'')+Math.round(totalProjLG/1000)+'k',
+                                                     sub:'projected',               color:totalProjLG>=0?'var(--green)':'var(--red)'},
+    {id:'kpi-labor',     lbl:'Labor to Date',      val:'$'+Math.round(totalLaborActual/1000)+'k', sub:'actual spend', color:'var(--sb)'},
+    {id:'kpi-rough',     lbl:'Units Rough',        val:roughDone,                    sub:'logged',              color:'var(--amber)'},
+    {id:'kpi-final',     lbl:'Units Final',        val:finalDone,                    sub:'logged',              color:'var(--green)'},
+    {id:'kpi-djr',       lbl:'Daily Reports',      val:djrCount,                     sub:'saved',               color:'var(--rye)'},
+  ];
+  var el=document.getElementById('kpi-row');
+  if(el) el.innerHTML=kpis.map(function(k){
+    return '<div class="kpi"><div class="kpi-lbl">'+k.lbl+'</div>'
+      +'<div class="kpi-val" style="color:'+k.color+'">'+k.val+'</div>'
+      +'<div class="kpi-sub">'+k.sub+'</div></div>';
+  }).join('');
+}
+
+/* === OVERVIEW === */
+function renderOverview(){
+  // Job progress
+  document.getElementById('ov-job-progress').innerHTML = jobs.map(j=>{
+    const lg = j.projLG||0;
+    const lgColor = lg>=0?'var(--green)':'var(--red)';
+    const lgSign  = lg>=0?'+':'-';
+    const pct = Math.min(100,j.pct||0);
+    const barColor = pct>100?'var(--red)':pct>85?'var(--amber)':'var(--rye)';
+    return `<div class="job-row">
+      <div class="job-icon" style="background:var(--rye-glow);border:1px solid rgba(101,173,229,.2)">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="job-info">
+        <div class="job-name">${j.name}</div>
+        <div class="job-meta">Rate: $${j.laborRate||0}/hr &bull; ${j.manpower||0} workers &bull; Last wk: ${j.lastWkHrs||0}hrs</div>
+        <div class="pbar"><div class="pfill" style="background:${barColor};width:${pct}%"></div></div>
+      </div>
+      <div class="job-right">
+        <div class="job-pct" style="color:${barColor}">${(j.unitsPct||0).toFixed(1)}%</div>
+        <div class="job-cost" style="color:${lgColor};font-weight:700">${lgSign}$${Math.abs(lg).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Cost chart — from report data
+  const maxCost = Math.max(...REPORT_DATA.map(j=>j.laborActual));
+  document.getElementById('ov-cost-chart').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px">
+      ${REPORT_DATA.map(j=>{
+        const pct = maxCost>0 ? Math.round(j.laborActual/maxCost*52) : 4;
+        const lwPct = maxCost>0 ? Math.round(j.lastWkDollars/maxCost*52) : 4;
+        const barColor = j.projLG<0?'var(--red)':j.projLG>0?'var(--green)':'var(--rye)';
+        return `<div>
+          <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${j.key.split(' - ')[0]}</div>
+          <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="width:100%;background:var(--sb);border-radius:3px 3px 0 0;height:${pct}px;min-height:4px"></div>
+              <span style="font-size:8px;color:var(--t3)">Total</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="width:100%;background:${barColor};border-radius:3px 3px 0 0;height:${lwPct}px;min-height:4px"></div>
+              <span style="font-size:8px;color:var(--t3)">Last wk</span>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$${Math.round(j.laborActual/1000)}k</div>
+          <div style="font-size:10px;color:var(--t3)">$${Math.round(j.lastWkDollars/1000)}k last wk</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  // Inv alerts
+  const lowItems = inventory.filter(i=>i.qty<=i.reorder);
+  document.getElementById('ov-inv-alerts').innerHTML = lowItems.length
+    ? lowItems.map(i=>{
+        const critical=i.qty<i.reorder*0.5;
+        return `<div class="alert-row">
+          <div class="alert-icon ${critical?'danger':'warn'}">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="alert-info">
+            <div class="alert-name">${i.name}</div>
+            <div class="alert-meta">${i.sku} &bull; reorder at ${i.reorder} &bull; ${$c(i.cost)}/${i.unit}</div>
+          </div>
+          <div class="alert-qty ${critical?'danger':'warn'}">${i.qty}</div>
+        </div>`;
+      }).join('')
+    : '<div style="color:var(--green);font-size:12px;font-weight:700;padding:8px 0">All inventory levels OK</div>';
+
+  // Activity
+  document.getElementById('ov-activity').innerHTML = activityLog.slice(0,6).map(a=>`
+    <div class="act-row">
+      <div class="act-dot dot-${a.type}"></div>
+      <div class="act-body">
+        <div class="act-text">${a.text}</div>
+        <div class="act-meta">${a.meta}</div>
+      </div>
+      <div class="act-time">${a.time}</div>
+    </div>`).join('');
+}
+
+/* === JOB COSTS === */
+function renderJobs(){
+  // ── Summary cards: driven entirely from production report data ──────────
+  document.getElementById('job-cards-detail').innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:14px">' +
+    REPORT_DATA.map(j=>{
+      const lg          = j.projLG||0;
+      const lgColor     = lg>=0 ? 'var(--green)' : 'var(--red)';
+      const lgSign      = lg>=0 ? '+' : '-';
+      const laborPct    = j.laborBudget>0 ? Math.round(j.laborActual/j.laborBudget*100) : 0;
+      const barColor    = laborPct>110?'var(--red)':laborPct>95?'var(--amber)':'var(--rye)';
+      const unitColor   = j.unitsPct>110?'var(--red)':j.unitsPct>95?'var(--amber)':'var(--rye)';
+      const variance    = j.laborActual - j.laborBudget;
+      const varColor    = variance<=0 ? 'var(--green)' : 'var(--red)';
+      const varSign     = variance<=0 ? '-' : '+';
+      return `<div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--t1)">${j.key}</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:2px">${j.name} &bull; ${j.week}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:20px;font-weight:700;color:${lgColor}">${lgSign}$${Math.abs(lg).toLocaleString('en-US',{maximumFractionDigits:0})}</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+            <div class="kpi" style="padding:10px">
+              <div class="kpi-lbl">Labor to date</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:20px;font-weight:700;color:var(--sb)">$${Math.round(j.laborActual).toLocaleString()}</div>
+            </div>
+            <div class="kpi" style="padding:10px">
+              <div class="kpi-lbl">Labor budget</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:20px;font-weight:700;color:var(--t2)">$${Math.round(j.laborBudget).toLocaleString()}</div>
+            </div>
+            <div class="kpi" style="padding:10px">
+              <div class="kpi-lbl">Last wk hours</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:20px;font-weight:700;color:var(--rye)">${j.lastWkHrs}h</div>
+            </div>
+            <div class="kpi" style="padding:10px">
+              <div class="kpi-lbl">Last wk cost</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:20px;font-weight:700;color:var(--sb)">$${Math.round(j.lastWkDollars).toLocaleString()}</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+            <span style="font-size:11px;color:var(--t2)">Labor vs budget</span>
+            <span style="font-size:11px;font-weight:700;color:${barColor}">${laborPct}%</span>
+          </div>
+          <div class="pbar" style="height:6px;margin-bottom:8px">
+            <div class="pfill" style="background:${barColor};width:${Math.min(100,laborPct)}%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:${unitColor}">${(j.unitsPct||0).toFixed(1)}%</span>
+          </div>
+          <div class="pbar" style="height:6px;margin-bottom:8px">
+            <div class="pfill" style="background:${unitColor};width:${Math.min(100,j.unitsPct||0)}%"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px">
+            <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 6px;text-align:center">
+              <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Workers</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye);line-height:1">${j.manpower}</div>
+              <div style="font-size:9px;color:var(--t3);margin-top:2px">on site</div>
+            </div>
+            <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 6px;text-align:center">
+              <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Rate</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:16px;font-weight:700;color:var(--t1);line-height:1">$${j.laborRate}</div>
+              <div style="font-size:9px;color:var(--t3);margin-top:2px">per hour</div>
+            </div>
+            <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 6px;text-align:center">
+              <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Hrs Left</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:16px;font-weight:700;color:${j.hrsRemaining<0?'var(--red)':(j.hrsRemaining>0?'var(--green)':' var(--t2)')};line-height:1">${j.hrsRemaining!==0?Math.abs(j.hrsRemaining).toLocaleString():'--'}</div>
+              <div style="font-size:9px;color:var(--t3);margin-top:2px">${j.hrsRemaining<0?'over budget':'remaining'}</div>
+            </div>
+            <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:7px 6px;text-align:center">
+              <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Variance</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:15px;font-weight:700;color:${varColor};line-height:1">${varSign}$${Math.abs(Math.round(variance/1000)).toLocaleString()}k</div>
+              <div style="font-size:9px;color:var(--t3);margin-top:2px">vs budget</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap">
+            ${lg<0?'<span class="bdg b-red">Over budget</span>':'<span class="bdg b-ok">Under budget</span>'}
+            ${j.unitsPct>110?'<span class="bdg b-warn">Units exceeded</span>':''}
+            ${laborPct>110?'<span class="bdg b-red">Labor over</span>':laborPct<90?'<span class="bdg b-ok">Labor under</span>':''}
+          </div>
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+
+  // ── Full prefab detail table (from prefab tracker data) ─────────────────
+  let matTot=0, sbTot=0, ryeTot=0, grandTot=0;
+  document.getElementById('prefabs-tbody').innerHTML = prefabs.map(p=>{
+    const mc=matCost(p), sl=sbLabor(p), rl=ryeLabor(p), tot=total(p);
+    matTot+=mc; sbTot+=sl; ryeTot+=rl; grandTot+=tot;
+    return `<tr>
+      <td class="tm">${p.id}</td>
+      <td class="tn">${p.assembly}</td>
+      <td class="tc">${p.job}</td>
+      <td>${p.sbWorker}</td>
+      <td style="font-weight:700">${p.buildHrs}h</td>
+      <td style="color:var(--sb)">${$c(mc)}</td>
+      <td style="color:var(--amber)">${$c(sl)}</td>
+      <td>${p.ryeWorker||'--'}</td>
+      <td style="font-weight:700">${p.installHrs?p.installHrs+'h':'--'}</td>
+      <td style="color:var(--rye)">${rl?$c(rl):'--'}</td>
+      <td style="color:var(--rye);font-weight:700">${$c(tot)}</td>
+      <td>${bdg(p.status)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('prefabs-tfoot').innerHTML=`
+    <td colspan="5">Totals (${prefabs.length} prefabs)</td>
+    <td style="color:var(--sb)">${$c(matTot)}</td>
+    <td style="color:var(--amber)">${$c(sbTot)}</td>
+    <td colspan="2"></td>
+    <td style="color:var(--rye)">${$c(ryeTot)}</td>
+    <td style="color:var(--rye)">${$c(grandTot)}</td>
+    <td></td>`;
+}
+
+/* === LABOR === */
+function renderLabor(){
+  // Per-job labor summary from report data
+  const maxLab = Math.max(...REPORT_DATA.map(j=>j.laborActual));
+
+  document.getElementById('sb-labor-detail').innerHTML =
+    '<div style="font-size:11px;color:var(--t3);margin-bottom:10px">Simple Build labor tracked through prefab production logs</div>' +
+    REPORT_DATA.map(j=>{
+      const pct = j.laborBudget>0 ? Math.round(j.laborActual/j.laborBudget*100) : 0;
+      const barColor = pct>110?'var(--red)':pct>95?'var(--amber)':'var(--sb)';
+      return `<div class="worker-row">
+        <div class="av av-sb" style="font-size:9px;width:38px;height:38px;border-radius:6px">${j.key.split(' - ')[0]}</div>
+        <div class="wi">
+          <div class="wn">${j.key} <span style="font-size:10px;font-weight:400;color:var(--t3)">$${j.laborRate}/hr</span></div>
+          <div class="wm">${j.manpower} workers &bull; ${j.lastWkHrs}h last week</div>
+          <div class="pb"><div class="pf" style="background:${barColor};width:${Math.min(100,pct)}%"></div></div>
+        </div>
+        <div class="wr">
+          <div class="wh" style="color:var(--sb);font-size:16px">$${Math.round(j.laborActual/1000)}k</div>
+          <div class="wc">${pct}% of $${Math.round(j.laborBudget/1000)}k budget</div>
+        </div>
+      </div>`;
+    }).join('');
+
+  // Live field workers — only those with data this week
+  var wkStart = getDBWeekStart();
+  var wkLogs  = dailyLogs.filter(l=>l.date>=wkStart);
+
+  // Also pull from sign-in sheets this week
+  var siWorkers = {};
+  Object.keys(siData).forEach(function(key){
+    var date = key.split('|')[1];
+    if(date < wkStart) return;
+    var saved = siData[key];
+    if(!saved||!saved.rows) return;
+    saved.rows.forEach(function(r){
+      if(!r.name) return;
+      if(!siWorkers[r.name]) siWorkers[r.name]={reg:0,ot:0,total:0,days:new Set()};
+      siWorkers[r.name].reg   += parseFloat(r.regHrs)||0;
+      siWorkers[r.name].ot    += parseFloat(r.otHrs)||0;
+      siWorkers[r.name].total += parseFloat(r.total)||0;
+      siWorkers[r.name].days.add(date);
+    });
+  });
+
+  // Merge with whiteboard hours
+  var wbWorkers = {};
+  wkLogs.forEach(function(l){
+    if(!wbWorkers[l.worker]) wbWorkers[l.worker]=0;
+    wbWorkers[l.worker]+=l.hours;
+  });
+
+  var activeWorkers = [...new Set([...Object.keys(siWorkers),...Object.keys(wbWorkers)])].sort();
+
+  document.getElementById('rye-labor-detail').innerHTML = activeWorkers.length===0
+    ? '<div style="font-size:11px;color:var(--t3)">No workers logged this week yet. Sync from the field tracker.</div>'
+    : activeWorkers.map(function(w){
+        var si  = siWorkers[w]  || {reg:0,ot:0,total:0,days:new Set()};
+        var wbH = wbWorkers[w]  || 0;
+        var totalH = si.total>0 ? si.total : wbH;
+        var init  = w.split(' ').map(function(p){return p[0];}).join('').slice(0,2).toUpperCase();
+        var hasOT = si.ot > 0;
+        return '<div class="worker-row">'
+          +'<div class="av av-rye">'+init+'</div>'
+          +'<div class="wi">'
+            +'<div class="wn">'+w+'</div>'
+            +'<div class="wm">'+(si.days.size>0?si.days.size+' day'+(si.days.size!==1?'s':''):'')+' &bull; '+totalH.toFixed(1)+'h'+(hasOT?' &bull; <span style="color:var(--red)">'+si.ot.toFixed(1)+'h OT</span>':'')+'</div>'
+            +'<div class="pb"><div class="pf pf-rye" style="width:'+Math.min(100,Math.round(totalH/40*100))+'%"></div></div>'
+          +'</div>'
+          +'<div class="wr">'
+            +'<div class="wh" style="color:var(--rye);font-size:16px">'+totalH.toFixed(1)+'h</div>'
+            +(hasOT?'<div class="wc" style="color:var(--red)">'+si.ot.toFixed(1)+'h OT</div>':'<div class="wc">regular</div>')
+          +'</div>'
+        +'</div>';
+      }).join('');
+
+  // Labor by job table
+  document.getElementById('labor-by-job-tbody').innerHTML = REPORT_DATA.map(j=>{
+    const variance = j.laborActual - j.laborBudget;
+    const varColor = variance<=0?'var(--green)':'var(--red)';
+    return `<tr>
+      <td style="font-weight:700;color:var(--t1)">${j.key}</td>
+      <td style="color:var(--t2)">${j.manpower}</td>
+      <td style="font-weight:700">${j.hrsSpent.toLocaleString()}h</td>
+      <td style="color:var(--sb);font-weight:700">$${Math.round(j.laborActual).toLocaleString()}</td>
+      <td style="color:var(--t2)">${j.manpower}</td>
+      <td style="font-weight:700">${j.lastWkHrs}h</td>
+      <td style="color:var(--rye);font-weight:700">$${Math.round(j.lastWkDollars).toLocaleString()}</td>
+      <td style="font-weight:700;color:${varColor}">${variance<=0?'-':'+'}$${Math.abs(Math.round(variance)).toLocaleString()}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* === INVENTORY === */
+function renderInventory(){
+  const lowItems = inventory.filter(i=>i.qty<=i.reorder);
+  document.getElementById('inv-alerts-detail').innerHTML = lowItems.length
+    ? lowItems.map(i=>{
+        const critical=i.qty<i.reorder*0.5;
+        return `<div class="alert-row">
+          <div class="alert-icon ${critical?'danger':'warn'}">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="alert-info">
+            <div class="alert-name">${i.name}</div>
+            <div class="alert-meta">Reorder at ${i.reorder} &bull; ${$c(i.cost)}/${i.unit}</div>
+          </div>
+          <div class="alert-qty ${critical?'danger':'warn'}">${i.qty}</div>
+        </div>`;
+      }).join('')
+    : '<div style="color:var(--green);font-size:12px;font-weight:700;padding:8px 0">All stock levels OK</div>';
+
+  document.getElementById('inv-tbody').innerHTML = inventory.map(i=>{
+    const val=i.qty*i.cost, low=i.qty<=i.reorder;
+    return `<tr>
+      <td class="tm">${i.sku}</td>
+      <td class="tn">${i.name}</td>
+      <td style="font-size:11px;color:var(--t3)">${i.type}</td>
+      <td style="font-weight:700;color:${low?'var(--red)':'var(--t1)'}">${i.qty}</td>
+      <td style="font-size:11px;color:var(--t3)">${i.unit}</td>
+      <td style="color:var(--sb)">${$c(i.cost)}</td>
+      <td style="font-weight:700;color:var(--sb)">${$c(val)}</td>
+      <td style="color:var(--t3)">${i.reorder}</td>
+      <td>${low?'<span class="bdg b-red">Low</span>':'<span class="bdg b-ok">OK</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* === PRODUCTION === */
+function renderProduction(){
+  // Only show workers who have actual logged data (from field tracker sync)
+  var wkStart = getDBWeekStart();
+
+  // Build active worker list from live data
+  var workerMap = {};
+  dailyLogs.forEach(function(l){
+    if(!workerMap[l.worker]) workerMap[l.worker]={name:l.worker,hrs:0,units:0,jobs:new Set()};
+    workerMap[l.worker].hrs += l.hours;
+    workerMap[l.worker].jobs.add(l.job.split(' - ')[0]);
+  });
+  unitLogs.forEach(function(l){
+    if(!workerMap[l.worker]) workerMap[l.worker]={name:l.worker,hrs:0,units:0,jobs:new Set()};
+    workerMap[l.worker].units += 1;
+    workerMap[l.worker].hrs   += l.hrs||0;
+    workerMap[l.worker].jobs.add((l.job||'').split(' - ')[0]);
+  });
+
+  // Also pull from sign-in sheets
+  Object.keys(siData).forEach(function(key){
+    var saved = siData[key]; if(!saved||!saved.rows) return;
+    var job = key.split('|')[0].split(' - ')[0];
+    saved.rows.forEach(function(r){
+      if(!r.name) return;
+      if(!workerMap[r.name]) workerMap[r.name]={name:r.name,hrs:0,units:0,jobs:new Set()};
+      workerMap[r.name].hrs += parseFloat(r.total)||0;
+      workerMap[r.name].jobs.add(job);
+    });
+  });
+
+  var activeWorkers = Object.values(workerMap).filter(function(w){ return w.hrs>0||w.units>0; })
+    .sort(function(a,b){ return b.hrs - a.hrs; });
+
+  if(activeWorkers.length===0){
+    document.getElementById('prod-by-worker').innerHTML =
+      '<div style="text-align:center;padding:30px;color:var(--t3);font-size:13px">'
+      +'No production data yet — sync from the field tracker first.'
+      +'</div>';
+  } else {
+    var maxHrs = Math.max.apply(null, activeWorkers.map(function(w){return w.hrs;})) || 1;
+    document.getElementById('prod-by-worker').innerHTML = activeWorkers.map(function(w){
+      var init = w.name.split(' ').map(function(p){return p[0];}).join('').slice(0,2).toUpperCase();
+      var pct  = Math.round(w.hrs/maxHrs*100);
+      return '<div class="worker-row">'
+        +'<div class="av av-sb">'+init+'</div>'
+        +'<div class="wi">'
+          +'<div class="wn">'+w.name+'</div>'
+          +'<div class="wm">'+[...w.jobs].join(', ')+(w.units>0?' &bull; '+w.units+' units':'')+'</div>'
+          +'<div class="pbar"><div class="pfill fill-sb" style="width:'+pct+'%"></div></div>'
+        +'</div>'
+        +'<div class="wr">'
+          +'<div class="wh" style="color:var(--sb)">'+w.hrs.toFixed(1)+'h</div>'
+          +'<div class="wc">'+(w.units>0?w.units+' units':'logged hrs')+'</div>'
+        +'</div>'
+      +'</div>';
+    }).join('');
+  }
+
+  // Prefab pipeline — keep existing prefab data
+  const statuses=['installed','on-site','in-transit','pending'];
+  const colors={'installed':'var(--green)','on-site':'var(--rye)','in-transit':'var(--amber)','pending':'var(--t3)'};
+  document.getElementById('prod-pipeline').innerHTML = statuses.map(s=>{
+    const count=prefabs.filter(p=>p.status===s).length;
+    const pct=Math.round(count/prefabs.length*100);
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="width:10px;height:10px;border-radius:50%;background:${colors[s]};flex-shrink:0"></div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:12px;font-weight:700;color:var(--t1)">${s.charAt(0).toUpperCase()+s.slice(1).replace('-',' ')}</span>
+          <span style="font-size:12px;color:var(--t2)">${count} prefabs</span>
+        </div>
+        <div class="pbar"><div class="pfill" style="background:${colors[s]};width:${pct}%"></div></div>
+      </div>
+      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:${colors[s]};min-width:28px;text-align:right">${pct}%</div>
+    </div>`;
+  }).join('');
+
+  // Production log table
+  document.getElementById('prod-log-tbody').innerHTML = prefabs.map(p=>{
+    const mc=matCost(p), sl=sbLabor(p);
+    return `<tr>
+      <td class="tm">${p.id}</td>
+      <td class="tn">${p.assembly}</td>
+      <td class="tc">${p.job}</td>
+      <td>${p.sbWorker}</td>
+      <td style="font-weight:700">${p.buildHrs}h</td>
+      <td style="font-size:11px;color:var(--t3)">${p.mats.map(m=>m.n).join(', ')}</td>
+      <td style="color:var(--sb)">${$c(mc)}</td>
+      <td style="color:var(--rye);font-weight:700">${$c(mc+sl)}</td>
+      <td>${bdg(p.status)}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* === ACTIVITY === */
+let actFilter = 'all';
+function filterActivity(f){
+  actFilter=f;
+  ['all','sb','rye','inv'].forEach(x=>{
+    const btn=document.getElementById('af-'+x);
+    if(btn) btn.style.cssText = x===f
+      ? 'background:var(--rye);color:var(--black);border-color:var(--rye)'
+      : '';
+  });
+  renderActivity();
+}
+function renderActivity(){
+  var filter = document.getElementById('activity-filter') ?
+    document.getElementById('activity-filter').value||'all' : 'all';
+
+  // Build activity feed from all live sources
+  var items = [];
+
+  // From daily logs (whiteboard entries)
+  dailyLogs.slice().reverse().slice(0,30).forEach(function(l){
+    if(filter!=='all' && filter!=='rye') return;
+    items.push({
+      type:'whiteboard', date:l.date, worker:l.worker,
+      job:l.job, desc:l.phaseCode+' — '+l.phaseDesc+' ('+l.hours+'h)',
+      color:'var(--rye)', icon:'W'
+    });
+  });
+
+  // From unit logs
+  unitLogs.slice().reverse().slice(0,20).forEach(function(l){
+    if(filter!=='all' && filter!=='rye') return;
+    items.push({
+      type:'unit', date:'today', worker:l.worker,
+      job:l.job, desc:'Unit '+l.unit+' ('+l.bldg+') — '+l.phase+' phase — '+l.hrs+'h',
+      color:'var(--amber)', icon:'U'
+    });
+  });
+
+  // From sign-in sheets
+  Object.keys(siData).forEach(function(key){
+    if(filter!=='all' && filter!=='rye') return;
+    var date=key.split('|')[1], job=key.split('|')[0];
+    var saved=siData[key]; if(!saved||!saved.rows) return;
+    var names=saved.rows.filter(function(r){return r.name;}).map(function(r){return r.name;});
+    if(names.length>0){
+      items.push({
+        type:'signin', date:date, worker:names.length+' workers',
+        job:job, desc:'Sign-in sheet: '+names.slice(0,3).join(', ')+(names.length>3?' +'+( names.length-3)+' more':''),
+        color:'var(--green)', icon:'S'
+      });
+    }
+  });
+
+  // From DJR reports
+  Object.keys(djrData).forEach(function(key){
+    if(filter!=='all' && filter!=='rye') return;
+    var job=key.split('|')[0], date=key.split('|')[1];
+    var saved=djrData[key];
+    var workforce=saved&&saved.workforce?saved.workforce.length:0;
+    items.push({
+      type:'djr', date:date, worker:saved&&saved.superintendent?saved.superintendent:'Superintendent',
+      job:job, desc:'Daily Job Report — '+workforce+' workers'+
+        (saved&&saved.weather?' — '+saved.weather:''),
+      color:'var(--sb)', icon:'D'
+    });
+  });
+
+  // Sort by date desc
+  items.sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+
+  var el = document.getElementById('activity-feed');
+  if(!el) return;
+
+  if(items.length===0){
+    el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3);font-size:13px">'
+      +'No activity yet — sync from the field tracker to see live data.</div>';
+    return;
+  }
+
+  el.innerHTML = items.slice(0,50).map(function(item){
+    return '<div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">'
+      +'<div style="width:28px;height:28px;border-radius:50%;background:'+item.color+';color:var(--black);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+item.icon+'</div>'
+      +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:12px;font-weight:700;color:var(--t1)">'+item.worker+'</div>'
+        +'<div style="font-size:11px;color:var(--t2);margin-top:1px">'+item.job+'</div>'
+        +'<div style="font-size:11px;color:var(--t3);margin-top:2px">'+item.desc+'</div>'
+      +'</div>'
+      +'<div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">'+item.date+'</div>'
+    +'</div>';
+  }).join('');
+}
+
+/* === TAB SWITCH === */
+function showTab(btn, name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  ['overview','jobs','labor','inventory','production','activity','reports','field','timesheets'].forEach(n=>{
+    const el=document.getElementById('pane-'+n);
+    if(el) el.className='pane'+(n===name?' on':'');
+  });
+  if(name==='jobs') renderJobs();
+  if(name==='labor') renderLabor();
+  if(name==='inventory') renderInventory();
+  if(name==='production') renderProduction();
+  if(name==='activity') renderActivity();
+  if(name==='reports')    renderReports();
+  if(name==='field')      renderFieldData();
+  if(name==='timesheets') renderDashTimesheets();
+}
+
+/* === SYNC / EXPORT === */
+
+/* ======================================================
+   FIELD DATA TAB
+====================================================== */
+function renderFieldData(){
+  var filterJob = document.getElementById('db-field-job-filter') ?
+    document.getElementById('db-field-job-filter').value : 'all';
+
+  // Populate job filter
+  var jf = document.getElementById('db-field-job-filter');
+  if(jf && jf.options.length <= 1){
+    jobs.forEach(function(j){
+      var o=document.createElement('option'); o.value=j.name; o.textContent=j.name; jf.appendChild(o);
+    });
+  }
+
+  // KPIs from live data
+  var wkStart = getDBWeekStart();
+  var wkLogs  = dailyLogs.filter(function(l){ return l.date>=wkStart; });
+  var wkUnits = unitLogs.filter(function(l){ return true; }); // all unit logs
+  var totalWkHrs = wkLogs.reduce(function(a,l){return a+l.hours;},0);
+  var activeWorkers = new Set(wkLogs.map(function(l){return l.worker;})).size;
+  var roughDone = wkUnits.filter(function(l){return l.phase==='rough';}).length;
+  var finalDone = wkUnits.filter(function(l){return l.phase==='final';}).length;
+
+  var kpis = [
+    {lbl:'Hours this week',  val:totalWkHrs.toFixed(1)+'h', color:'var(--rye)'},
+    {lbl:'Active workers',   val:activeWorkers,              color:'var(--green)'},
+    {lbl:'Units rough done', val:roughDone,                  color:'var(--amber)'},
+    {lbl:'Units final done', val:finalDone,                  color:'var(--green)'},
+    {lbl:'Daily log entries',val:dailyLogs.length,           color:'var(--t1)'},
+    {lbl:'Sign-in records',  val:Object.keys(siData).length, color:'var(--sb)'},
+  ];
+  document.getElementById('field-kpi-row').innerHTML = kpis.map(function(k){
+    return '<div class="kpi" style="padding:12px 14px">'
+      +'<div class="kpi-lbl">'+k.lbl+'</div>'
+      +'<div class="kpi-val" style="color:'+k.color+';font-size:24px">'+k.val+'</div>'
+    +'</div>';
+  }).join('');
+
+  // Units by job summary
+  var jobUnitMap = {};
+  unitLogs.forEach(function(l){
+    if(!jobUnitMap[l.job]) jobUnitMap[l.job]={rough:0,final:0};
+    if(l.phase==='rough') jobUnitMap[l.job].rough++;
+    if(l.phase==='final') jobUnitMap[l.job].final++;
+  });
+  document.getElementById('field-units-summary').innerHTML = Object.keys(jobUnitMap).length === 0
+    ? '<div style="color:var(--t3);font-size:12px">No unit logs yet — sync from field tracker</div>'
+    : Object.keys(jobUnitMap).map(function(job){
+        var d = jobUnitMap[job];
+        return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">'
+          +'<div style="flex:1;font-size:12px;font-weight:700;color:var(--t1)">'+job+'</div>'
+          +'<span class="bdg b-warn">'+d.rough+' rough</span>'
+          +'<span class="bdg b-ok">'+d.final+' final</span>'
+        +'</div>';
+      }).join('');
+
+  // Active workers list
+  var workerHrs = {};
+  wkLogs.forEach(function(l){
+    if(!workerHrs[l.worker]) workerHrs[l.worker]={hrs:0,jobs:new Set()};
+    workerHrs[l.worker].hrs += l.hours;
+    workerHrs[l.worker].jobs.add(l.job.split(' - ')[0]);
+  });
+  document.getElementById('field-workers-list').innerHTML = Object.keys(workerHrs).length === 0
+    ? '<div style="color:var(--t3);font-size:12px">No entries this week yet</div>'
+    : Object.keys(workerHrs).sort().map(function(w){
+        var d = workerHrs[w];
+        var init = w.split(' ').map(function(p){return p[0];}).join('').slice(0,2).toUpperCase();
+        return '<div class="worker-row">'
+          +'<div class="av av-rye">'+init+'</div>'
+          +'<div class="wi"><div class="wn">'+w+'</div>'
+          +'<div class="wm">'+[...d.jobs].join(', ')+'</div></div>'
+          +'<div class="wr"><div class="wh" style="color:var(--rye)">'+d.hrs.toFixed(1)+'h</div></div>'
+        +'</div>';
+      }).join('');
+
+  // Daily log table
+  var filtered = dailyLogs.filter(function(l){
+    return filterJob==='all' || l.job===filterJob;
+  }).slice().reverse().slice(0,50);
+
+  document.getElementById('field-log-tbody').innerHTML = filtered.length === 0
+    ? '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--t3)">No entries — sync from field tracker first</td></tr>'
+    : filtered.map(function(l){
+        return '<tr>'
+          +'<td class="tm">'+l.date+'</td>'
+          +'<td class="tn">'+l.worker+'</td>'
+          +'<td class="tc">'+l.job+'</td>'
+          +'<td style="font-family:monospace;font-size:11px;color:var(--t3)">'+l.phaseCode+'</td>'
+          +'<td style="color:var(--t2)">'+l.phaseDesc+'</td>'
+          +'<td style="font-weight:700;color:var(--rye)">'+l.hours+'h</td>'
+        +'</tr>';
+      }).join('');
+
+  // Sign-in table
+  var siRows = [];
+  Object.keys(siData).forEach(function(key){
+    var parts = key.split('|');
+    var job = parts[0], date = parts[1];
+    if(filterJob!=='all' && job!==filterJob) return;
+    var saved = siData[key];
+    if(!saved||!saved.rows) return;
+    saved.rows.forEach(function(r){
+      if(!r.name) return;
+      siRows.push({date:date, job:job, name:r.name, start:r.start, finish:r.finish,
+        reg:r.regHrs, ot:r.otHrs, total:r.total});
+    });
+  });
+  siRows.sort(function(a,b){ return b.date.localeCompare(a.date); });
+
+  // DJR Reports section
+  var djrEl = document.getElementById('djr-summary');
+  if(djrEl){
+    var djrKeys = Object.keys(djrData);
+    if(djrKeys.length===0){
+      djrEl.innerHTML='<div style="color:var(--t3);font-size:12px;padding:10px">No daily reports synced yet</div>';
+    } else {
+      djrEl.innerHTML = djrKeys.sort().reverse().slice(0,10).map(function(key){
+        var job=key.split('|')[0], date=key.split('|')[1];
+        var d=djrData[key];
+        var workforce=d&&d.workforce?d.workforce.length:0;
+        var sup=d&&d.superintendent?d.superintendent:'';
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">'
+          +'<div><div style="font-size:12px;font-weight:700;color:var(--t1)">'+job.split(' - ')[0]+' — '+date+'</div>'
+          +'<div style="font-size:11px;color:var(--t3)">'+workforce+' workers'+(sup?' — '+sup:'')+'</div></div>'
+          +'<span class="bdg b-rye">DJR</span>'
+        +'</div>';
+      }).join('');
+    }
+  }
+
+  document.getElementById('signin-tbody').innerHTML = siRows.length === 0
+    ? '<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--t3)">No sign-in data — sync from field tracker</td></tr>'
+    : siRows.map(function(r){
+        return '<tr>'
+          +'<td class="tm">'+r.date+'</td>'
+          +'<td class="tc">'+r.job+'</td>'
+          +'<td class="tn">'+r.name+'</td>'
+          +'<td style="font-size:11px;color:var(--t3)">'+r.start+'</td>'
+          +'<td style="font-size:11px;color:var(--t3)">'+r.finish+'</td>'
+          +'<td style="color:var(--green);font-weight:700">'+(parseFloat(r.reg)||0).toFixed(1)+'h</td>'
+          +'<td style="color:var(--red);font-weight:700">'+(parseFloat(r.ot)||0).toFixed(1)+'h</td>'
+          +'<td style="color:var(--rye);font-weight:700">'+(parseFloat(r.total)||0).toFixed(1)+'h</td>'
+        +'</tr>';
+      }).join('');
+}
+
+function getDBWeekStart(){
+  var d=new Date(); var day=d.getDay();
+  var diff=d.getDate()-(day===0?6:day-1);
+  return new Date(d.setDate(diff)).toISOString().slice(0,10);
+}
+
+/* ======================================================
+   TIMESHEETS TAB
+====================================================== */
+function renderDashTimesheets(){
+  var filterJob    = document.getElementById('db-ts-job')    ? document.getElementById('db-ts-job').value    : 'all';
+  var filterWorker = document.getElementById('db-ts-worker') ? document.getElementById('db-ts-worker').value : 'all';
+
+  // Populate dropdowns
+  var jSel = document.getElementById('db-ts-job');
+  if(jSel && jSel.options.length<=1){
+    jobs.forEach(function(j){
+      var o=document.createElement('option'); o.value=j.name; o.textContent=j.name; jSel.appendChild(o);
+    });
+  }
+  // Always rebuild worker dropdown from actual data this week
+  var wSel = document.getElementById('db-ts-worker');
+  if(wSel){
+    var currentVal = wSel.value;
+    var workerNames = [...new Set([
+      ...dailyLogs.map(function(l){return l.worker;}),
+      ...Object.values(siData).flatMap(function(s){return (s.rows||[]).map(function(r){return r.name;});})
+    ])].filter(Boolean).sort();
+    wSel.innerHTML = '<option value="all">All employees ('+workerNames.length+')</option>';
+    workerNames.forEach(function(w){
+      var o=document.createElement('option');
+      o.value=w; o.textContent=w;
+      if(w===currentVal) o.selected=true;
+      wSel.appendChild(o);
+    });
+  }
+
+  // Build timesheet summary per worker per job
+  var summary = {};
+
+  // From sign-in sheets
+  Object.keys(siData).forEach(function(key){
+    var parts=key.split('|'); var job=parts[0]; var date=parts[1];
+    if(filterJob!=='all' && job!==filterJob) return;
+    var saved=siData[key]; if(!saved||!saved.rows) return;
+    saved.rows.forEach(function(r){
+      if(!r.name) return;
+      if(filterWorker!=='all' && r.name!==filterWorker) return;
+      var k=r.name+'||'+job;
+      if(!summary[k]) summary[k]={name:r.name,job:job,dates:new Set(),reg:0,ot:0,total:0,phases:{}};
+      summary[k].dates.add(date);
+      summary[k].reg   += parseFloat(r.regHrs)||0;
+      summary[k].ot    += parseFloat(r.otHrs)||0;
+      summary[k].total += parseFloat(r.total)||0;
+    });
+  });
+
+  // Add phase codes from daily logs
+  dailyLogs.forEach(function(l){
+    if(filterJob!=='all' && l.job!==filterJob) return;
+    if(filterWorker!=='all' && l.worker!==filterWorker) return;
+    var k=l.worker+'||'+l.job;
+    if(!summary[k]) summary[k]={name:l.worker,job:l.job,dates:new Set(),reg:0,ot:0,total:0,phases:{}};
+    var pk=l.phaseCode;
+    if(!summary[k].phases[pk]) summary[k].phases[pk]=0;
+    summary[k].phases[pk]+=l.hours;
+    // If no sign-in data for this worker, use daily log hours
+    if(!siData[l.job+'|'+l.date]){
+      summary[k].dates.add(l.date);
+      summary[k].reg   += Math.min(l.hours,8);
+      summary[k].ot    += Math.max(0,l.hours-8);
+      summary[k].total += l.hours;
+    }
+  });
+
+  var rows = Object.values(summary).sort(function(a,b){return a.name.localeCompare(b.name);});
+
+  if(rows.length===0){
+    document.getElementById('db-ts-tbody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--t3)">No timesheet data — sync from field tracker first</td></tr>';
+    document.getElementById('db-ts-summary').innerHTML='';
+    return;
+  }
+
+  var totalReg   = rows.reduce(function(a,r){return a+r.reg;},0);
+  var totalOT    = rows.reduce(function(a,r){return a+r.ot;},0);
+  var totalHrs   = rows.reduce(function(a,r){return a+r.total;},0);
+  var totalLaborCost = rows.reduce(function(a,r){
+    var jobObj = jobs.find(function(j){return j.name===r.job;});
+    var rate = jobObj ? (jobObj.laborRate||47) : 47;
+    return a + r.total * rate;
+  },0);
+
+  document.getElementById('db-ts-summary').innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px">'
+    +[
+      {lbl:'Employees',      val:new Set(rows.map(function(r){return r.name;})).size, color:'var(--rye)'},
+      {lbl:'Regular hours',  val:totalReg.toFixed(1)+'h',   color:'var(--green)'},
+      {lbl:'Overtime hours', val:totalOT.toFixed(1)+'h',    color:totalOT>0?'var(--red)':'var(--t3)'},
+      {lbl:'Total hours',    val:totalHrs.toFixed(1)+'h',   color:'var(--rye)'},
+      {lbl:'Est labor cost', val:'$'+Math.round(totalLaborCost).toLocaleString(), color:'var(--sb)'},
+    ].map(function(k){
+      return '<div class="kpi" style="padding:10px 12px">'
+        +'<div class="kpi-lbl">'+k.lbl+'</div>'
+        +'<div style="font-family:\'Arial Narrow\',Arial,sans-serif;font-size:22px;font-weight:700;color:'+k.color+'">'+k.val+'</div>'
+      +'</div>';
+    }).join('')+'</div>';
+
+  document.getElementById('db-ts-tbody').innerHTML = rows.map(function(r){
+    var phaseSummary = Object.keys(r.phases).map(function(p){return p+' ('+r.phases[p].toFixed(1)+'h)';}).join(', ');
+    var jobObj = jobs.find(function(j){return j.name===r.job;});
+    var rate = jobObj ? (jobObj.laborRate||47) : 47;
+    var cost = r.total * rate;
+    return '<tr>'
+      +'<td class="tn">'+r.name+'</td>'
+      +'<td class="tc">'+r.job+'</td>'
+      +'<td style="font-size:11px;color:var(--t3)">'+r.dates.size+' day'+(r.dates.size!==1?'s':'')+'</td>'
+      +'<td style="color:var(--green);font-weight:700">'+r.reg.toFixed(1)+'h</td>'
+      +'<td style="color:'+(r.ot>0?'var(--red)':'var(--t3)')+';font-weight:700">'+r.ot.toFixed(1)+'h</td>'
+      +'<td style="color:var(--rye);font-weight:700">'+r.total.toFixed(1)+'h</td>'
+      +'<td style="font-size:10px;color:var(--t3)">'+phaseSummary+'</td>'
+    +'</tr>';
+  }).join('');
+
+  document.getElementById('db-ts-tfoot').innerHTML =
+    '<td colspan="3" style="padding:9px 12px;border-top:2px solid var(--border-hi)">Totals ('+rows.length+' records)</td>'
+    +'<td style="padding:9px 12px;border-top:2px solid var(--border-hi);color:var(--green);font-weight:700">'+totalReg.toFixed(1)+'h</td>'
+    +'<td style="padding:9px 12px;border-top:2px solid var(--border-hi);color:'+(totalOT>0?'var(--red)':'var(--t3)')+';font-weight:700">'+totalOT.toFixed(1)+'h</td>'
+    +'<td style="padding:9px 12px;border-top:2px solid var(--border-hi);color:var(--rye);font-weight:700">'+totalHrs.toFixed(1)+'h</td>'
+    +'<td style="padding:9px 12px;border-top:2px solid var(--border-hi);color:var(--sb);font-weight:700">$'+Math.round(totalLaborCost).toLocaleString()+' est</td>';
+}
+
+/* ======================================================
+   FOUNDATION CSV EXPORT (from dashboard)
+====================================================== */
+function exportFoundationCSV(){
+  var filterJob    = document.getElementById('db-ts-job')    ? document.getElementById('db-ts-job').value    : 'all';
+  var filterWorker = document.getElementById('db-ts-worker') ? document.getElementById('db-ts-worker').value : 'all';
+
+  var siRows=[], phaseRows=[];
+
+  Object.keys(siData).forEach(function(key){
+    var parts=key.split('|'); var job=parts[0]; var date=parts[1];
+    if(filterJob!=='all'&&job!==filterJob) return;
+    var saved=siData[key]; if(!saved||!saved.rows) return;
+    saved.rows.forEach(function(r){
+      if(!r.name) return;
+      if(filterWorker!=='all'&&r.name!==filterWorker) return;
+      siRows.push({name:r.name,date:date,jobNum:job.split(' - ')[0],
+        start:r.start,finish:r.finish,reg:parseFloat(r.regHrs)||0,
+        ot:parseFloat(r.otHrs)||0,total:parseFloat(r.total)||0});
+    });
+  });
+
+  dailyLogs.forEach(function(l){
+    if(filterJob!=='all'&&l.job!==filterJob) return;
+    if(filterWorker!=='all'&&l.worker!==filterWorker) return;
+    phaseRows.push({name:l.worker,date:l.date,jobNum:l.job.split(' - ')[0],
+      phaseCode:l.phaseCode,phaseDesc:l.phaseDesc,hours:l.hours});
+  });
+
+  if(siRows.length===0&&phaseRows.length===0){toast('No data to export — sync first');return;}
+
+  var nl='\r\n';
+  var csv='PAYROLL EXPORT - RYE ELECTRIC INC'+nl+'Generated: '+new Date().toLocaleDateString('en-US')+nl+nl;
+  csv+='DAILY TIME RECORDS'+nl;
+  csv+='Employee Name,Date,Job Number,Start Time,Finish Time,Regular Hours,Overtime Hours,Total Hours'+nl;
+  siRows.forEach(function(r){
+    csv+='"'+r.name+'","'+r.date+'","'+r.jobNum+'","'+r.start+'","'+r.finish+'",'+r.reg.toFixed(2)+','+r.ot.toFixed(2)+','+r.total.toFixed(2)+nl;
+  });
+
+  if(phaseRows.length>0){
+    csv+=nl+'PHASE CODE BREAKDOWN'+nl;
+    csv+='Employee Name,Date,Job Number,Phase Code,Phase Description,Hours'+nl;
+    phaseRows.forEach(function(r){
+      csv+='"'+r.name+'","'+r.date+'","'+r.jobNum+'","'+r.phaseCode+'","'+r.phaseDesc+'",'+r.hours.toFixed(2)+nl;
+    });
+  }
+
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download='rye-electric-foundation-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Foundation CSV exported');
+}
+
+function syncData(){
+  toast('Syncing from Simple Build and Rye Electric...');
+  setTimeout(()=>toast('Dashboard up to date -- Week 21'),1800);
+}
+function exportReport(){
+  // Build a full dashboard PDF using the in-page print frame
+  var date = new Date().toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'});
+  var wk   = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  // KPI data
+  var totalManpower   = REPORT_DATA.reduce(function(a,j){return a+j.manpower;},0);
+  var totalLWHrs      = REPORT_DATA.reduce(function(a,j){return a+j.lastWkHrs;},0);
+  var totalLWDollars  = REPORT_DATA.reduce(function(a,j){return a+j.lastWkDollars;},0);
+  var totalLaborActual= REPORT_DATA.reduce(function(a,j){return a+j.laborActual;},0);
+  var totalLaborBudget= REPORT_DATA.reduce(function(a,j){return a+j.laborBudget;},0);
+  var totalProjLG     = REPORT_DATA.reduce(function(a,j){return a+j.projLG;},0);
+  var avgRate         = REPORT_DATA.filter(function(j){return j.laborRate>0;}).reduce(function(a,j,_,arr){return a+j.laborRate/arr.length;},0);
+  var overBudget      = REPORT_DATA.filter(function(j){return j.projLG<0;}).length;
+  var laborVariance   = totalLaborActual - totalLaborBudget;
+
+  // Job rows
+  var jobRows = REPORT_DATA.map(function(j){
+    var lg = j.projLG;
+    var lgColor = lg>=0?'#2e7d32':'#c00';
+    var lgSign  = lg>=0?'+':'-';
+    var pct     = (j.unitsPct||0).toFixed(1);
+    var barColor= j.unitsPct>110?'#c00':j.unitsPct>95?'#e65100':'#1565c0';
+    return '<tr>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;font-weight:700">'+j.key+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd">'+j.name+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:center">'+j.manpower+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:center">$'+j.laborRate+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:center">'+j.lastWkHrs+'h</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:right">$'+Math.round(j.laborActual).toLocaleString()+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:right">$'+Math.round(j.laborBudget).toLocaleString()+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:center;color:'+barColor+';font-weight:700">'+pct+'%</td>'
+      +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:right;color:'+lgColor+';font-weight:700">'+lgSign+'$'+Math.abs(lg).toLocaleString('en-US',{maximumFractionDigits:0})+'</td>'
+    +'</tr>';
+  }).join('');
+
+  // Live field data section
+  var workerHrs = {};
+  dailyLogs.forEach(function(l){ if(!workerHrs[l.worker])workerHrs[l.worker]=0; workerHrs[l.worker]+=l.hours; });
+  var siTotal=0, siWorkers=0, siRows='';
+  Object.keys(siData).forEach(function(key){
+    var saved=siData[key]; if(!saved||!saved.rows) return;
+    var job=key.split('|')[0], date2=key.split('|')[1];
+    saved.rows.forEach(function(r){
+      if(!r.name) return;
+      siTotal+=parseFloat(r.total)||0; siWorkers++;
+      siRows+='<tr>'
+        +'<td style="padding:5px 8px;border:1px solid #ddd;font-size:11px">'+date2+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #ddd;font-size:11px;font-weight:700">'+r.name+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #ddd;font-size:11px">'+job.split(' - ')[0]+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #ddd;font-size:11px;text-align:center">'+r.start+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #ddd;font-size:11px;text-align:center">'+r.finish+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #ddd;font-size:11px;text-align:center;font-weight:700">'+(parseFloat(r.total)||0).toFixed(1)+'h</td>'
+      +'</tr>';
+    });
+  });
+
+  var content = '<style>'
+    +'body{font-family:Arial,sans-serif;font-size:12px;color:#111;padding:20px;background:#fff}'
+    +'table{border-collapse:collapse;width:100%}'
+    +'.section{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:20px 0 8px;padding:6px 0;border-bottom:2px solid #111}'
+    +'.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}'
+    +'.kpi-box{border:1px solid #ccc;border-radius:6px;padding:10px 12px;background:#f9f9f9}'
+    +'.kpi-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666;margin-bottom:4px}'
+    +'.kpi-val{font-size:22px;font-weight:700;font-family:"Arial Narrow",Arial,sans-serif}'
+    +'@media print{@page{margin:0.5in} .page-break{page-break-before:always}}'
+    +'</style>'
+
+    +'<div style="text-align:center;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid #111">'
+    +'<div style="font-size:24px;font-weight:700;letter-spacing:.05em">RYE ELECTRIC, INC.</div>'
+    +'<div style="font-size:16px;margin-top:4px">Production &amp; Labor Report</div>'
+    +'<div style="font-size:12px;color:#666;margin-top:4px">Generated: '+wk+'</div>'
+    +'</div>'
+
+    +'<div class="section">Key Performance Indicators</div>'
+    +'<div class="kpi-grid">'
+    +'<div class="kpi-box"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:#1565c0">'+totalManpower.toFixed(1)+'</div><div style="font-size:10px;color:#666">workers on site</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val">'+totalLWHrs.toLocaleString()+'h</div><div style="font-size:10px;color:#666">all jobs combined</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Last Week Cost</div><div class="kpi-val" style="color:#1a6b3a">$'+Math.round(totalLWDollars).toLocaleString()+'</div><div style="font-size:10px;color:#666">labor dollars</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Avg Labor Rate</div><div class="kpi-val">$'+avgRate.toFixed(2)+'</div><div style="font-size:10px;color:#666">per hour blended</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:#1a6b3a">$'+Math.round(totalLaborActual/1000)+'k</div><div style="font-size:10px;color:#666">of $'+Math.round(totalLaborBudget/1000)+'k budget</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Labor Variance</div><div class="kpi-val" style="color:'+(laborVariance<=0?'#2e7d32':'#c00')+'">'+(laborVariance<=0?'-':'+')+'$'+Math.abs(Math.round(laborVariance/1000))+'k</div><div style="font-size:10px;color:#666">'+(laborVariance<=0?'under':'over')+' budget</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Total Proj L/G</div><div class="kpi-val" style="color:'+(totalProjLG>=0?'#2e7d32':'#c00')+'">'+(totalProjLG>=0?'+':'-')+'$'+Math.abs(Math.round(totalProjLG/1000))+'k</div><div style="font-size:10px;color:#666">across all jobs</div></div>'
+    +'<div class="kpi-box"><div class="kpi-lbl">Jobs Over Budget</div><div class="kpi-val" style="color:'+(overBudget>0?'#c00':'#2e7d32')+'">'+overBudget+' / '+REPORT_DATA.length+'</div><div style="font-size:10px;color:#666">need attention</div></div>'
+    +'</div>'
+
+    +'<div class="section">Job Summary — Production Reports (May 11-17, 2026)</div>'
+    +'<table><thead><tr style="background:#eee">'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:left;font-size:10px;text-transform:uppercase">Job</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:left;font-size:10px;text-transform:uppercase">Name</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:center;font-size:10px;text-transform:uppercase">Workers</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:center;font-size:10px;text-transform:uppercase">Rate</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:center;font-size:10px;text-transform:uppercase">Last Wk Hrs</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:right;font-size:10px;text-transform:uppercase">Labor Actual</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:right;font-size:10px;text-transform:uppercase">Labor Budget</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:center;font-size:10px;text-transform:uppercase">Units %</th>'
+    +'<th style="padding:7px 10px;border:1px solid #ddd;text-align:right;font-size:10px;text-transform:uppercase">Proj L/G</th>'
+    +'</tr></thead>'
+    +'<tbody>'+jobRows+'</tbody>'
+    +'<tfoot><tr style="background:#eee;font-weight:700">'
+    +'<td colspan="5" style="padding:7px 10px;border:1px solid #ddd">Totals</td>'
+    +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:right">$'+Math.round(totalLaborActual).toLocaleString()+'</td>'
+    +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:right">$'+Math.round(totalLaborBudget).toLocaleString()+'</td>'
+    +'<td style="padding:7px 10px;border:1px solid #ddd"></td>'
+    +'<td style="padding:7px 10px;border:1px solid #ddd;text-align:right;color:'+(totalProjLG>=0?'#2e7d32':'#c00')+'">'+(totalProjLG>=0?'+':'-')+'$'+Math.abs(Math.round(totalProjLG)).toLocaleString()+'</td>'
+    +'</tr></tfoot></table>'
+
+    +(siRows?'<div class="section page-break">Field Sign-In Records</div>'
+    +'<div style="font-size:11px;color:#666;margin-bottom:8px">'+siWorkers+' entries &bull; '+siTotal.toFixed(1)+' total hours</div>'
+    +'<table><thead><tr style="background:#eee">'
+    +'<th style="padding:5px 8px;border:1px solid #ddd;font-size:10px;text-align:left">Date</th>'
+    +'<th style="padding:5px 8px;border:1px solid #ddd;font-size:10px;text-align:left">Employee</th>'
+    +'<th style="padding:5px 8px;border:1px solid #ddd;font-size:10px;text-align:left">Job</th>'
+    +'<th style="padding:5px 8px;border:1px solid #ddd;font-size:10px;text-align:center">Start</th>'
+    +'<th style="padding:5px 8px;border:1px solid #ddd;font-size:10px;text-align:center">Finish</th>'
+    +'<th style="padding:5px 8px;border:1px solid #ddd;font-size:10px;text-align:center">Hours</th>'
+    +'</tr></thead><tbody>'+siRows+'</tbody></table>'
+    :'')
+
+    +'<div style="text-align:center;font-size:10px;color:#888;margin-top:30px;padding-top:8px;border-top:1px solid #ddd">'
+    +'Rye Electric, Inc. | 30398 Esperanza, Rancho Santa Margarita, Ca. 92688 | 949.445.0545'
+    +'</div>';
+
+  var frame = document.getElementById('ios-print-frame');
+  var inner = document.getElementById('ios-print-content');
+  if(!frame){
+    // Dashboard doesn't have the print frame yet — open new window
+    var win = window.open('','_blank');
+    if(win){ win.document.write('<!DOCTYPE html><html><head><title>Rye Electric Report</title></head><body>'+content+'</body></html>'); win.document.close(); win.focus(); setTimeout(function(){win.print();},400); }
+    else { toast('Allow popups to print'); }
+    return;
+  }
+  inner.innerHTML = content;
+  frame.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  setTimeout(function(){ window.print(); }, 300);
+}
+
+
+function renderReports(){
+  if(!document.getElementById('rpt-kpi-row')) return;
+
+  // Populate job filter
+  const jf = document.getElementById('rpt-job-filter');
+  jf.innerHTML = '<option value="all">All jobs</option>' +
+    REPORT_DATA.map(j=>`<option value="${j.key}">${j.key}</option>`).join('');
+
+  // KPI summary
+  const totalManpower  = REPORT_DATA.reduce((a,j)=>a+j.manpower,0);
+  const totalLWHrs     = REPORT_DATA.reduce((a,j)=>a+j.lastWkHrs,0);
+  const totalLWDollars = REPORT_DATA.reduce((a,j)=>a+j.lastWkDollars,0);
+  const totalProjLG    = REPORT_DATA.reduce((a,j)=>a+j.projLG,0);
+  const avgRate        = REPORT_DATA.filter(j=>j.laborRate>0).reduce((a,j,_,arr)=>a+j.laborRate/arr.length,0);
+  const overBudget     = REPORT_DATA.filter(j=>j.projLG<0).length;
+
+  document.getElementById('rpt-kpi-row').innerHTML = [
+    {lbl:'Total manpower',  val:totalManpower.toFixed(1),    sub:'field workers',   color:'var(--rye)'},
+    {lbl:'Last week hours', val:totalLWHrs.toFixed(0)+'h',   sub:'all jobs combined',color:'var(--t1)'},
+    {lbl:'Last week cost',  val:'$'+Math.round(totalLWDollars).toLocaleString(), sub:'labor dollars', color:'var(--sb)'},
+    {lbl:'Avg labor rate',  val:'$'+avgRate.toFixed(2),       sub:'per hour',       color:'var(--t1)'},
+    {lbl:'Proj gain/loss',  val:(totalProjLG>=0?'+':'')+Math.round(totalProjLG).toLocaleString(), sub:'all jobs total', color:totalProjLG>=0?'var(--green)':'var(--red)'},
+    {lbl:'Jobs over budget',val:overBudget+'/'+REPORT_DATA.length, sub:'need attention', color:overBudget>0?'var(--red)':'var(--green)'},
+  ].map(k=>`<div class="kpi">
+    <div class="kpi-lbl">${k.lbl}</div>
+    <div class="kpi-val" style="color:${k.color};font-size:24px">${k.val}</div>
+    <div class="kpi-sub">${k.sub}</div>
+  </div>`).join('');
+
+  // Job cards
+  document.getElementById('rpt-job-cards').innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:14px">' +
+    REPORT_DATA.map(j=>{
+      const lg = j.projLG;
+      const lgColor = lg>=0?'var(--green)':'var(--red)';
+      const lgSign  = lg>=0?'+':'-';
+      const pct = Math.min(150, j.unitsPct||0);
+      const barColor = pct>110?'var(--red)':pct>95?'var(--amber)':'var(--rye)';
+      return `<div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">${j.key}</div>
+            <div style="font-size:11px;color:var(--t3);margin-top:1px">${j.name} &bull; ${j.week}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:${lgColor}">${lgSign}$${Math.abs(lg).toLocaleString('en-US',{minimumFractionDigits:0})}</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$${j.laborRate}</div>
+              <div style="font-size:10px;color:var(--t3)">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">${j.manpower}</div>
+              <div style="font-size:10px;color:var(--t3)">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">${j.lastWkHrs}</div>
+              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:${barColor}">${(j.unitsPct||0).toFixed(1)}%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:${barColor};width:${Math.min(100,pct)}%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:var(--t3)">Hours: ${j.hrsSpent.toLocaleString()} spent</span>
+            <span style="font-size:11px;color:var(--t3)">${j.hrsRemaining.toLocaleString()} remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            ${j.projLG<0?'<span class="bdg b-red">Over budget</span>':'<span class="bdg b-ok">On / under budget</span>'}
+            ${j.unitsPct>110?'<span class="bdg b-warn">Units exceeded</span>':''}
+            ${j.manpower>0?`<span class="bdg b-rye">${j.manpower} workers</span>`:''}
+          </div>
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+
+  renderCCTable();
+}
+
+function renderCCTable(){
+  const filter = document.getElementById('rpt-job-filter').value;
+  const rows = [];
+  REPORT_DATA.forEach(j=>{
+    if(filter!=='all' && j.key!==filter) return;
+    j.costCodes.forEach(c=>{
+      const pct = c.qtyBudget>0 ? Math.round(c.qtyActual/c.qtyBudget*100) : 0;
+      const lgColor = c.projLG<0?'var(--red)':c.projLG>0?'var(--green)':'var(--t2)';
+      const lg = c.projLG;
+      rows.push(`<tr>
+        <td style="font-size:11px;color:var(--rye);font-weight:600">${j.key}</td>
+        <td style="font-family:monospace;font-size:11px;color:var(--t3)">${c.code}</td>
+        <td style="font-weight:600;color:var(--t1)">${c.desc}</td>
+        <td style="font-size:11px;color:var(--t3)">${c.unit}</td>
+        <td>${c.qtyBudget.toLocaleString()}</td>
+        <td style="font-weight:600">${c.qtyActual.toLocaleString()}</td>
+        <td style="font-weight:700;color:${pct>110?'var(--red)':pct>95?'var(--amber)':'var(--green)'}">${pct}%</td>
+        <td style="font-weight:700;color:${lgColor}">${lg<0?'-':''}$${Math.abs(lg).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}</td>
+      </tr>`);
+    });
+  });
+  document.getElementById('rpt-cc-tbody').innerHTML = rows.join('');
+}
+
+/* === INIT === */
+renderKPIs();
+renderOverview();
+syncFromFieldTracker();
+</script>
+</body>
+</html>
