@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0076)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-field-tracker_46.html -->
+<!-- saved from url=(0076)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-field-tracker_49.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -3324,11 +3324,18 @@ function sigEnd(e){
       var hasContent = data.some(function(v,i){ return i%4===3 && v>0; });
       if(hasContent){
         sigData[wid] = sigCanvas.toDataURL('image/png');
+        // Store timestamp
+        var now = new Date();
+        var sigTs = now.toLocaleDateString('en-US',{month:'2-digit',day:'2-digit',year:'numeric'})
+                  + ' ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+        sigData[wid+'_ts'] = sigTs;
         saveSigData();
         // Hide placeholder
         var ph = document.getElementById('sig-placeholder-'+wid);
         if(ph) ph.style.display='none';
-        // Show subtle saved indicator
+        // Show timestamp
+        var tsEl = document.getElementById('sig-ts-'+wid);
+        if(tsEl){ tsEl.textContent='Signed: '+sigTs; tsEl.style.display='block'; }
         var st = document.getElementById('sig-status-'+wid);
         if(st){ st.textContent='v'; st.style.color='#2e7d32'; }
       }
@@ -3389,6 +3396,10 @@ function restoreSigs(){
       if(ph) ph.style.display='none';
       const st = document.getElementById('sig-status-'+wid);
       if(st) st.textContent='v Signature on file';
+      // Restore timestamp
+      const savedTs = sigData[wid+'_ts'];
+      const tsEl = document.getElementById('sig-ts-'+wid);
+      if(savedTs && tsEl){ tsEl.textContent='Signed: '+savedTs; tsEl.style.display='block'; }
     };
     img.src = sigData[wid];
   });
@@ -3725,6 +3736,8 @@ function collectSIRows(){
       empNum: tr.querySelector('.si-emp-num') ? tr.querySelector('.si-emp-num').value : '',
       name:   tr.querySelector('.si-emp-name') ? tr.querySelector('.si-emp-name').value : '',
       sig:    sigData[wid]||'',
+      sigTs:  sigData[wid+'_ts']||'',
+      sigTs:  sigData[wid+'_ts']||'',
       start:  tr.querySelector('.si-start') ? tr.querySelector('.si-start').value : '',
       lunchIn:tr.querySelector('.si-lunch-in') ? tr.querySelector('.si-lunch-in').value : '',
       lunchOut:tr.querySelector('.si-lunch-out') ? tr.querySelector('.si-lunch-out').value : '',
@@ -3812,7 +3825,12 @@ function printSignIn(){
   var supSig = sigData['SUPERVISOR']||'';
 
   var siRows = rows.map(function(r,i){
-    var sigImg = r.sig ? '<img src="'+r.sig+'" style="height:40px;max-width:120px">' : '&nbsp;';
+    var wid2 = 'SI_'+i;
+    var sigTs2 = sigData[wid2+'_ts'] || r.sigTs || '';
+    var sigImg = r.sig
+      ? '<img src="'+r.sig+'" style="height:40px;max-width:120px;display:block">'
+        +(sigTs2 ? '<div style="font-size:9px;color:#2e7d32;margin-top:2px">Signed: '+sigTs2+'</div>' : '')
+      : '&nbsp;';
     return '<tr>'
       +'<td style="padding:5px 8px;border:1px solid #aaa;font-size:11px">'+(r.empNum||'')+'</td>'
       +'<td style="padding:5px 8px;border:1px solid #aaa;font-size:11px;font-weight:700">'+(r.name||'')+'</td>'
