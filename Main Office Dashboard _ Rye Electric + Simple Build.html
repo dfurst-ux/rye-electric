@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_22.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_23.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 9:47:47 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 9:50:17 AM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -1592,6 +1592,9 @@ function renderProduction(){
 
     var rd = REPORT_DATA.find(function(r){ return r.key===job; })
       || REPORT_DATA.find(function(r){ return r.key.split(' - ')[0]===job.split(' - ')[0]; });
+    // Debug - show actual job string
+    if(!rd) console.warn('NO MATCH for job:', JSON.stringify(job), 'len:', job.length, 'codes:', job.split('').map(function(c){return c.charCodeAt(0);}));
+    else console.log('MATCHED:', job, 'rate:', rd.laborRate);
     var laborRate = rd ? rd.laborRate : 0;
     var totalHrs = allEntries.reduce(function(a,l){return a+(parseFloat(l.hrs||l.hours||0)||0);},0);
     var laborCost = totalHrs * laborRate;
