@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_19.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_22.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 8:07:26 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 9:47:47 AM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -195,7 +195,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 <div class="shell">
 
   <!-- KPI ROW -->
-  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">49.8</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">19.5h</div><div class="kpi-sub">4 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,916h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--green)">+177k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10546k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">2</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">0</div><div class="kpi-sub">saved</div></div></div>
+  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">49.8</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">40.0h</div><div class="kpi-sub">5 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,916h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--green)">+177k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10546k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">7</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">1</div><div class="kpi-sub">saved</div></div></div>
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
@@ -1590,7 +1590,8 @@ function renderProduction(){
       ccMap[cc].hrs  += parseFloat(l.hrs||l.hours||0)||0;
     });
 
-    var rd = REPORT_DATA.find(function(r){ return r.key===job; });
+    var rd = REPORT_DATA.find(function(r){ return r.key===job; })
+      || REPORT_DATA.find(function(r){ return r.key.split(' - ')[0]===job.split(' - ')[0]; });
     var laborRate = rd ? rd.laborRate : 0;
     var totalHrs = allEntries.reduce(function(a,l){return a+(parseFloat(l.hrs||l.hours||0)||0);},0);
     var laborCost = totalHrs * laborRate;
