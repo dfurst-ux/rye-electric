@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_27.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_28.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 10:02:29 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 10:04:09 AM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -199,7 +199,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
-    <button class="tab" onclick="showTab(this,&#39;overview&#39;)">
+    <button class="tab on" onclick="showTab(this,&#39;overview&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       <span>Overview</span>
     </button>
@@ -215,7 +215,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path></svg>
       <span>Inventory</span>
     </button>
-    <button class="tab on" onclick="showTab(this,&#39;production&#39;)">
+    <button class="tab" onclick="showTab(this,&#39;production&#39;)">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>
       <span>Production</span>
     </button>
@@ -238,7 +238,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
   </div>
 
   <!-- OVERVIEW -->
-  <div class="pane" id="pane-overview">
+  <div class="pane on" id="pane-overview">
     <div class="main-grid">
       <!-- Job Progress -->
       <div class="card">
@@ -612,8 +612,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
   </div>
 
   <!-- PRODUCTION -->
-  <div class="pane on" id="pane-production">
-    <div id="production-container" style="margin-bottom:12px"><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24001 - BIOLA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">3</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">20.0</b></span><span>Labor cost: <b style="color:var(--green)">$949.20</b> @ $47.46/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">3100 - Branch Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">1000</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">4.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">3200 - Feeder Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">2</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">1020</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">16.0</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24010 - COMMONS</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">3</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">25.5</b></span><span>Labor cost: <b style="color:var(--green)">$0.00</b> @ $0/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">5000 - Finish Devices and Trim</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">10</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">7.5</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">6000 - Equipment and Connections</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">5</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">9.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">7100 - Residential Boxing</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">12</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">9.0</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>25001 - DECENA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">1</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">5.0</b></span><span>Labor cost: <b style="color:var(--green)">$202.90</b> @ $40.58/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">7100 - Residential Boxing</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">8</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">5.0</td></tr></tbody></table></div></div></div>
+  <div class="pane" id="pane-production">
+    <div id="production-container" style="margin-bottom:12px"></div>
   
         <div class="cb" id="prod-by-worker"></div>
       </div>
@@ -1592,6 +1592,7 @@ function renderProduction(){
     var rd = REPORT_DATA.find(function(r){ 
       return r.key.split(' - ')[0].trim() === jobNum; 
     });
+    var debugInfo = 'jobNum=['+jobNum+'] rd='+(rd?rd.key+' rate:'+rd.laborRate:'NULL');
 
     var laborRate = rd ? rd.laborRate : 0;
     var totalHrs = allEntries.reduce(function(a,l){return a+(parseFloat(l.hrs||l.hours||0)||0);},0);
@@ -1603,7 +1604,7 @@ function renderProduction(){
     html += '<span>Rough: <b style="color:var(--amber)">' + rough.length + '</b></span>';
     html += '<span>Final: <b style="color:var(--green)">' + final.length + '</b></span>';
     html += '<span>Total hrs: <b style="color:var(--rye)">' + totalHrs.toFixed(1) + '</b></span>';
-    html += '<span>Labor cost: <b style="color:var(--green)">$' + laborCost.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</b> @ $'+laborRate+'/hr</span>';
+    html += '<span>Labor cost: <b style="color:var(--green)">$' + laborCost.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</b> @ $'+laborRate+'/hr ['+debugInfo+']</span>';
     html += '</div></div>';
     html += '<div class="cb" style="padding:0">';
     html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
