@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_29.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_36.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 10:13:04 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 10:35:14 AM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -199,7 +199,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
-    <button class="tab" onclick="showTab(this,&#39;overview&#39;)">
+    <button class="tab on" onclick="showTab(this,&#39;overview&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       <span>Overview</span>
     </button>
@@ -215,7 +215,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path></svg>
       <span>Inventory</span>
     </button>
-    <button class="tab on" onclick="showTab(this,&#39;production&#39;)">
+    <button class="tab" onclick="showTab(this,&#39;production&#39;)">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>
       <span>Production</span>
     </button>
@@ -238,7 +238,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
   </div>
 
   <!-- OVERVIEW -->
-  <div class="pane" id="pane-overview">
+  <div class="pane on" id="pane-overview">
     <div class="main-grid">
       <!-- Job Progress -->
       <div class="card">
@@ -344,7 +344,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <div class="card">
         <div class="ch">
           <div class="ct"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>Cost breakdown by job</div>
-          <span class="co-tag tag-sb">Simple Build</span>
+          <span class="co-tag tag-rye">Rye Electric</span>
         </div>
         <div class="cb" id="ov-cost-chart">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px">
@@ -496,7 +496,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <div class="card">
         <div class="ch">
           <div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Inventory alerts</div>
-          <span class="co-tag tag-sb">Simple Build</span>
+          <span class="co-tag tag-rye">Rye Electric</span>
         </div>
         <div class="cb" id="ov-inv-alerts"><div class="alert-row">
           <div class="alert-icon warn">
@@ -608,8 +608,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="main-grid">
       <div class="card">
         <div class="ch">
-          <div class="ct ct-sb"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>Simple Build shop workers</div>
-          <span class="co-tag tag-sb">Simple Build</span>
+          <div class="ct ct-sb"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>Rye Electric Field Workers</div>
+          <span class="co-tag tag-rye">Rye Electric</span>
         </div>
         <div class="cb" id="sb-labor-detail"></div>
       </div>
@@ -654,9 +654,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
   </div>
 
   <!-- PRODUCTION -->
-  <div class="pane on" id="pane-production">
-    <div id="production-container" style="margin-bottom:12px"><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24001 - BIOLA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">3</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">20.0</b></span><span>Labor cost: <b style="color:var(--green)">$949.20</b> @ $47.46/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">3100 - Branch Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">1000</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">4.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">3200 - Feeder Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">2</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">1020</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">16.0</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24010 - COMMONS</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">3</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">25.5</b></span><span>Labor cost: <b style="color:var(--green)">$1,195.95</b> @ $46.9/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">5000 - Finish Devices and Trim</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">10</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">7.5</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">6000 - Equipment and Connections</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">5</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">9.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">7100 - Residential Boxing</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">12</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">9.0</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>25001 - DECENA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">1</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">5.0</b></span><span>Labor cost: <b style="color:var(--green)">$202.90</b> @ $40.58/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1)">7100 - Residential Boxing</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">8</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">5.0</td></tr></tbody></table></div></div></div>
-  
+  <div class="pane" id="pane-production">
+    <div id="production-container" style="margin-bottom:12px"></div>
+
+    <div class="main-grid" style="margin-top:12px">
+      <div class="card">
+        <div class="ch"><div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>Production by worker this week</div></div>
         <div class="cb" id="prod-by-worker"></div>
       </div>
       <div class="card">
@@ -673,7 +676,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
         </table>
       </div>
     </div>
-  
+  </div>
 
   <!-- ACTIVITY -->
   <div class="pane" id="pane-activity">
@@ -681,11 +684,18 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <div class="card card-full">
         <div class="ch">
           <div class="ct"><svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline></svg>Full activity log</div>
-          <div style="display:flex;gap:6px">
-            <button class="exp-btn" onclick="filterActivity(&#39;all&#39;)" id="af-all" style="background:var(--rye);color:var(--black);border-color:var(--rye)">All</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;sb&#39;)" id="af-sb">Simple Build</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;rye&#39;)" id="af-rye">Rye Electric</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;inv&#39;)" id="af-inv">Inventory</button>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="exp-btn" onclick="filterActivity(&#39;all&#39;)" id="af-all" style="background:var(--rye);color:var(--black);border-color:var(--rye)">All Jobs</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24001 - BIOLA&#39;)" id="af-biola">BIOLA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24002 - SEPULVEDA&#39;)" id="af-sep">SEPULVEDA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24005 - VNV&#39;)" id="af-vnv">VNV</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24006 - VF&#39;)" id="af-vf">VF</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24010 - COMMONS&#39;)" id="af-commons">COMMONS</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;25001 - DECENA&#39;)" id="af-decena">DECENA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;25002 - BAH&#39;)" id="af-bah">BAH</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;26002 - WILSHIRE&#39;)" id="af-wilshire">WILSHIRE</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;SP25018 - CDC PLAZA&#39;)" id="af-cdc">CDC PLAZA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;26003 - CARINA&#39;)" id="af-carina">CARINA</button>
           </div>
         </div>
         <div class="cb" id="activity-full"></div>
@@ -696,6 +706,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   <!-- PROD REPORTS PANE -->
   
+    <select id="activity-filter" style="display:none"><option value="all">all</option></select>
     <div id="activity-feed"></div>
   <div class="pane" id="pane-reports">
     <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">
@@ -805,7 +816,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     </div>
   </div>
 
-<!-- /shell -->
+</div><!-- /shell -->
 <div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"></polyline></svg><span id="toast-txt"></span></div>
 
 <script>
@@ -901,7 +912,7 @@ function refreshDashboard(){
     var name = activeTab.textContent.trim().toLowerCase().replace(/ /g,'');
     if(name==='jobcosts')    renderJobs();
     if(name==='labor')       renderLabor();
-    if(name==='production')  renderProduction();
+    if(name==='production')  { renderProduction(); renderProductionByWorker(); }
     if(name==='activity'||name==='field')    renderActivity();
     if(name==='prodreports') renderReports();
     if(name==='field')       renderFieldData();
@@ -1472,10 +1483,10 @@ function renderLabor(){
   const maxLab = Math.max(...REPORT_DATA.map(j=>j.laborActual));
 
   document.getElementById('sb-labor-detail').innerHTML =
-    '<div style="font-size:11px;color:var(--t3);margin-bottom:10px">Simple Build labor tracked through prefab production logs</div>' +
+    '<div style="font-size:11px;color:var(--t3);margin-bottom:10px">Rye Electric labor costs by job from LCPR reports</div>' +
     REPORT_DATA.map(j=>{
       const pct = j.laborBudget>0 ? Math.round(j.laborActual/j.laborBudget*100) : 0;
-      const barColor = pct>110?'var(--red)':pct>95?'var(--amber)':'var(--sb)';
+      const barColor = pct>110?'var(--red)':pct>95?'var(--amber)':'var(--rye)';
       return `<div class="worker-row">
         <div class="av av-sb" style="font-size:9px;width:38px;height:38px;border-radius:6px">${j.key.split(' - ')[0]}</div>
         <div class="wi">
@@ -1484,7 +1495,7 @@ function renderLabor(){
           <div class="pb"><div class="pf" style="background:${barColor};width:${Math.min(100,pct)}%"></div></div>
         </div>
         <div class="wr">
-          <div class="wh" style="color:var(--sb);font-size:16px">$${Math.round(j.laborActual/1000)}k</div>
+          <div class="wh" style="color:var(--rye);font-size:16px">$${Math.round(j.laborActual/1000)}k</div>
           <div class="wc">${pct}% of $${Math.round(j.laborBudget/1000)}k budget</div>
         </div>
       </div>`;
@@ -1648,7 +1659,8 @@ function renderProduction(){
     html += '<span>Labor cost: <b style="color:var(--green)">$' + laborCost.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</b> @ $'+laborRate+'/hr</span>';
     html += '</div></div>';
     html += '<div class="cb" style="padding:0">';
-    html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed">';
+    html += '<colgroup><col style="width:55%"><col style="width:12%"><col style="width:11%"><col style="width:11%"><col style="width:11%"></colgroup>';
     html += '<thead><tr style="background:var(--s2)">';
     html += '<th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th>';
     html += '<th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th>';
@@ -1660,7 +1672,7 @@ function renderProduction(){
     Object.keys(ccMap).sort().forEach(function(cc){
       var d = ccMap[cc];
       html += '<tr style="border-top:1px solid var(--border)">';
-      html += '<td style="padding:7px 10px;font-size:11px;color:var(--t1)">' + cc + '</td>';
+      html += '<td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + cc + '</td>';
       html += '<td style="padding:7px 10px;text-align:center;color:var(--amber)">' + (d.rough||'-') + '</td>';
       html += '<td style="padding:7px 10px;text-align:center;color:var(--green)">' + (d.final||'-') + '</td>';
       html += '<td style="padding:7px 10px;text-align:center;color:var(--t1)">' + (d.qty||'-') + '</td>';
@@ -1672,23 +1684,24 @@ function renderProduction(){
   });
 
   container.innerHTML = html;
+  renderProductionByWorker();
 }
 
 /* === ACTIVITY === */
 let actFilter = 'all';
 function filterActivity(f){
-  actFilter=f;
-  ['all','sb','rye','inv'].forEach(x=>{
-    const btn=document.getElementById('af-'+x);
-    if(btn) btn.style.cssText = x===f
-      ? 'background:var(--rye);color:var(--black);border-color:var(--rye)'
-      : '';
+  window._actFilter = f;
+  // Highlight active button
+  document.querySelectorAll('.exp-btn').forEach(function(b){
+    b.style.background=''; b.style.color=''; b.style.borderColor='';
   });
+  var activeBtn = document.querySelector('button.exp-btn[onclick*="\'' + f + '\'"]');
+  if(!activeBtn) activeBtn = document.getElementById('af-all');
+  if(activeBtn){ activeBtn.style.background='var(--rye)'; activeBtn.style.color='var(--black)'; activeBtn.style.borderColor='var(--rye)'; }
   renderActivity();
 }
 function renderActivity(){
-  var filter = document.getElementById('activity-filter') ?
-    document.getElementById('activity-filter').value||'all' : 'all';
+  var filter = window._actFilter || 'all';
 
   var items = [];
 
@@ -2382,6 +2395,57 @@ function renderCCTable(){
     });
   });
   document.getElementById('rpt-cc-tbody').innerHTML = rows.join('');
+}
+
+
+function renderProductionByWorker(){
+  var el = document.getElementById('prod-by-worker');
+  if(!el) return;
+
+  var wkStart = getDBWeekStart ? getDBWeekStart() : new Date().toISOString().slice(0,10);
+  var wkLogs = unitLogs.filter(function(l){ return l.ts && l.ts.slice(0,10) >= wkStart; });
+
+  // Group by worker
+  var workerMap = {};
+  wkLogs.forEach(function(l){
+    if(!workerMap[l.worker]) workerMap[l.worker] = {hrs:0, units:0, job:l.job};
+    workerMap[l.worker].hrs   += parseFloat(l.hrs)||0;
+    workerMap[l.worker].units += 1;
+  });
+
+  // Also include daily logs
+  var wkDaily = dailyLogs.filter(function(l){ return l.date >= wkStart; });
+  wkDaily.forEach(function(l){
+    if(!workerMap[l.worker]) workerMap[l.worker] = {hrs:0, units:0, job:l.job};
+    workerMap[l.worker].hrs += parseFloat(l.hours)||0;
+  });
+
+  var workers = Object.keys(workerMap).sort(function(a,b){
+    return workerMap[b].hrs - workerMap[a].hrs;
+  });
+
+  if(!workers.length){
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--t3);font-size:12px">No production logged this week</div>';
+    return;
+  }
+
+  var maxHrs = workerMap[workers[0]].hrs;
+  el.innerHTML = workers.map(function(w){
+    var d = workerMap[w];
+    var pct = maxHrs > 0 ? (d.hrs/maxHrs*100) : 0;
+    var initials = w.split(' ').map(function(p){ return p[0]; }).join('').slice(0,2).toUpperCase();
+    return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">'
+      +'<div style="width:32px;height:32px;border-radius:50%;background:var(--rye);color:var(--black);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">'+initials+'</div>'
+      +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:12px;font-weight:700;color:var(--t1)">'+w+'</div>'
+        +'<div style="font-size:10px;color:var(--t3)">'+d.job.split(' - ')[0]+(d.units?' &bull; '+d.units+' units':''+' &bull; logged hrs')+'</div>'
+        +'<div style="height:4px;background:var(--border);border-radius:2px;margin-top:4px">'
+          +'<div style="height:4px;background:var(--amber);border-radius:2px;width:'+pct+'%"></div>'
+        +'</div>'
+      +'</div>'
+      +'<div style="font-size:14px;font-weight:700;color:var(--amber);flex-shrink:0">'+d.hrs.toFixed(1)+'h</div>'
+    +'</div>';
+  }).join('');
 }
 
 /* === INIT === */
