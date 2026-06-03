@@ -176,12 +176,17 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 .sig-btn-clear{background:#fee;border:1px solid #c00;color:#c00}
 .sig-btn-done{background:#e6f4ea;border:1px solid #2e7d32;color:#2e7d32}
 
+.quick-nav{display:flex;align-items:center;gap:8px;padding:6px 14px;background:var(--s2);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.qn-label{font-size:10px;color:var(--t3);font-weight:600;white-space:nowrap}
+.qn-dash{display:flex;align-items:center;gap:5px;background:var(--rye);color:var(--black);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
+.qn-select{background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 8px;cursor:pointer}
 .job-banner{background:linear-gradient(135deg,rgba(101,173,229,.18),rgba(101,173,229,.06));border-bottom:2px solid rgba(101,173,229,.4);padding:8px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:52px;z-index:90}
 .job-banner .jb-num{font-size:15px;font-weight:800;color:var(--rye)}
 .job-banner .jb-name{font-size:13px;color:var(--t1)}
 .job-banner .jb-badge{margin-left:auto;font-size:10px;color:var(--t3);background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:2px 8px}
 .dash-btn{display:inline-flex;align-items:center;gap:6px;background:var(--rye);color:var(--black);border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -5172,24 +5177,56 @@ function deleteTask(){
 
 function scheduleReminder(task){
   if(!task.reminder || !task.date || !task.time) return;
-  if(!('Notification' in window)) return;
 
-  Notification.requestPermission().then(function(perm){
-    if(perm!=='granted') return;
-    var taskTime = new Date(task.date+'T'+task.time);
-    var remindTime = new Date(taskTime.getTime() - parseInt(task.reminder)*60*1000);
-    var now = new Date();
-    var delay = remindTime - now;
-    if(delay>0){
-      setTimeout(function(){
+  emailjs.init('HGciJDgZDCRS9v0Eo');
+
+  var taskTime  = new Date(task.date + 'T' + task.time);
+  var remindTime = new Date(taskTime.getTime() - parseInt(task.reminder) * 60 * 1000);
+  var now = new Date();
+  var delay = remindTime - now;
+
+  if(delay > 0){
+    setTimeout(function(){
+      var job    = document.getElementById('sel-job') ? document.getElementById('sel-job').value : 'Field';
+      var emails = getJobEmail(job);
+
+      // 1. Email reminder
+      emailjs.send('service_obg8h7h', '5xh9mga', {
+        to_email:      emails.to,
+        task_title:    task.title,
+        job:           job,
+        task_date:     task.date,
+        task_time:     task.time,
+        task_notes:    task.notes || 'No notes',
+        task_priority: task.priority
+      }).then(function(){
+        console.log('Reminder email sent');
+      }, function(err){
+        console.log('Email error:', err);
+      });
+
+      // 2. Browser notification
+      if('Notification' in window && Notification.permission === 'granted'){
         new Notification('Rye Electric Reminder', {
-          body: task.title + (task.notes ? '\n'+task.notes : ''),
+          body: task.title + (task.notes ? '\n' + task.notes : '') + '\nJob: ' + job,
           icon: '/favicon.ico'
         });
-      }, delay);
-      toast('Reminder set for '+remindTime.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}));
+      }
+
+      // 3. In-app toast
+      toast('REMINDER: ' + task.title);
+    }, delay);
+
+    // Request browser notification permission
+    if('Notification' in window && Notification.permission === 'default'){
+      Notification.requestPermission();
     }
-  });
+
+    var remindStr = remindTime.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+    toast('Reminder set for ' + remindStr + ' (email + notification)');
+  } else {
+    toast('Reminder time has already passed');
+  }
 }
 
 function initTasks(){
