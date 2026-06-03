@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rye Electric - DECENA Field Tracker</title>
+<title>Rye Electric - COMMONS Field Tracker</title>
 <style>
 :root{
   --rye:#65ADE5;--rye-dark:#3D8DC4;--rye-glow:rgba(101,173,229,.13);
@@ -197,7 +197,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 </header>
 
 <div class="shell">
-<div class="job-banner"><svg viewBox="0 0 24 24" width="18" height="18" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="jb-num">25001</span><span class="jb-name">DECENA</span><span class="jb-badge">Job Tracker</span></div>
+<div class="job-banner"><svg viewBox="0 0 24 24" width="18" height="18" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="jb-num">24010</span><span class="jb-name">COMMONS</span><span class="jb-badge">Job Tracker</span></div>
   <div class="vh">
     <div class="vh-left">
       <div class="vh-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
@@ -280,20 +280,16 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
             <div class="flbl">Employee</div>
             <select id="sel-worker">
               <option value="">-- Select employee --</option>
-              <option value="Brandon Salazar">Brandon Salazar</option>
-              <option value="Isidro Enciso">Isidro Enciso</option>
-              <option value="Jayson Ortega">Jayson Ortega</option>
-              <option value="Jesus Heredia">Jesus Heredia</option>
-              <option value="Joaquin Garcia">Joaquin Garcia</option>
-              <option value="Jose Preciado">Jose Preciado</option>
-              <option value="Miguel Corral">Miguel Corral</option>
-              <option value="Steven Sulewski">Steven Sulewski</option>
-              <option value="Victor Carrillo">Victor Carrillo</option>
+              <option value="Angel Hernandez">Angel Hernandez</option>
+              <option value="Jose Ramirez">Jose Ramirez</option>
+              <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
+              <option value="Louis Aceves">Louis Aceves</option>
+              <option value="Xavier Contreras">Xavier Contreras</option>
             </select>
           </div>
           <div class="fgroup">
             <div class="flbl">Job / Project</div>
-            <select id="sel-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25001 - DECENA" selected>25001 - DECENA</option></select>
+            <select id="sel-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24010 - COMMONS" selected>24010 - COMMONS</option></select>
           </div>
         </div>
 
@@ -514,20 +510,16 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
             <div class="flbl">Employee</div>
             <select id="wb-worker">
               <option value="">-- Select employee --</option>
-              <option value="Brandon Salazar">Brandon Salazar</option>
-              <option value="Isidro Enciso">Isidro Enciso</option>
-              <option value="Jayson Ortega">Jayson Ortega</option>
-              <option value="Jesus Heredia">Jesus Heredia</option>
-              <option value="Joaquin Garcia">Joaquin Garcia</option>
-              <option value="Jose Preciado">Jose Preciado</option>
-              <option value="Miguel Corral">Miguel Corral</option>
-              <option value="Steven Sulewski">Steven Sulewski</option>
-              <option value="Victor Carrillo">Victor Carrillo</option>
+              <option value="Angel Hernandez">Angel Hernandez</option>
+              <option value="Jose Ramirez">Jose Ramirez</option>
+              <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
+              <option value="Louis Aceves">Louis Aceves</option>
+              <option value="Xavier Contreras">Xavier Contreras</option>
             </select>
           </div>
           <div class="fgroup">
             <div class="flbl">Job</div>
-            <select id="wb-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25001 - DECENA" selected>25001 - DECENA</option></select>
+            <select id="wb-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24010 - COMMONS" selected>24010 - COMMONS</option></select>
           </div>
         </div>
         <div class="form-grid">
@@ -656,7 +648,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
     <!-- Job + Employee filters -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <select id="dl-filter-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25001 - DECENA" selected>25001 - DECENA</option></select>
+      <select id="dl-filter-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24010 - COMMONS" selected>24010 - COMMONS</option></select>
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--bhi);color:var(--t1)">
         <option value="all">All employees</option>
               <option value="Abiud Lopez">Abiud Lopez</option>
@@ -806,7 +798,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       </div>
       <div class="fgroup" style="flex:1;min-width:160px">
         <div class="flbl">Job</div>
-        <select id="djr-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25001 - DECENA" selected>25001 - DECENA</option></select>
+        <select id="djr-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24010 - COMMONS" selected>24010 - COMMONS</option></select>
       </div>
       <button class="btn btn-rye" onclick="loadDJR()" style="margin-top:18px">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -952,7 +944,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       </div>
       <div class="fgroup" style="flex:2;min-width:180px">
         <div class="flbl">Job</div>
-        <select id="si-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25001 - DECENA" selected>25001 - DECENA</option></select>
+        <select id="si-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24010 - COMMONS" selected>24010 - COMMONS</option></select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Supervisor</div>
@@ -1114,7 +1106,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by job</div>
-        <select id="unit-filter-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25001 - DECENA" selected>25001 - DECENA</option></select>
+        <select id="unit-filter-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24010 - COMMONS" selected>24010 - COMMONS</option></select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by employee</div>
@@ -1321,9 +1313,9 @@ var JOB_MODE = getURLJob(); // null = all jobs, string = locked to one job
 
 
 /* -- Email configuration -- */
-const EMAIL_PAYROLL    = 'decena25001@ryecompany.com';
-const EMAIL_OFFICE     = 'decena25001@ryecompany.com';
-const EMAIL_SUPER      = 'decena25001@ryecompany.com';
+const EMAIL_PAYROLL    = 'commons24010@ryecompany.com';
+const EMAIL_OFFICE     = 'commons24010@ryecompany.com';
+const EMAIL_SUPER      = 'commons24010@ryecompany.com';
 const EMAIL_CC         = 'dfurst@ryecompany.com,jjava@ryecompany.com';
 const COMPANY_NAME     = 'Rye Electric, Inc.';
 
@@ -1676,7 +1668,7 @@ function updateUnitDropdowns(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   ['sel-job','djr-job','si-job','wb-job','dl-filter-job'].forEach(function(id){
-    var el=document.getElementById(id); if(el) el.value='25001 - DECENA';
+    var el=document.getElementById(id); if(el) el.value='24010 - COMMONS';
   });
   if(typeof updateUnitDropdowns==='function') updateUnitDropdowns();
   const jsel=document.getElementById('sel-job');
@@ -3585,7 +3577,7 @@ function renderSIRows(rows){
   if(!tbody) return;
   tbody.innerHTML = rows.map(function(r,i){
     var wid = 'SI_'+i;
-    var opts = '<option value="">-- Select --</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Jose Preciado">Jose Preciado</option><option value="Miguel Corral">Miguel Corral</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Victor Carrillo">Victor Carrillo</option>';
+    var opts = '<option value="">-- Select --</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Xavier Contreras">Xavier Contreras</option>';
     if(r.name) opts = opts.replace('value="'+r.name+'"', 'value="'+r.name+'" selected');
     return '<tr style="border-bottom:1px solid var(--border)" id="si-row-'+i+'">'
       +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 6px;height:30px"></td>'
@@ -4813,8 +4805,8 @@ function pad(str, len){
 }
 
 /* === JOB EMAIL ROUTING === */
-// Override for 25001 - DECENA
-function getJobEmail(job){ return {to:'decena25001@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com'}; }
+// Override for 24010 - COMMONS
+function getJobEmail(job){ return {to:'commons24010@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com'}; }
 // Original JOB_EMAILS below (unused):
 const JOB_EMAILS = {
   '25002 - BAH': {to:'bellamyagourahills25002@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com'},
