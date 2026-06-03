@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_36.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_40.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 10:35:14 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 2:30:12 PM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -195,7 +195,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 <div class="shell">
 
   <!-- KPI ROW -->
-  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">49.8</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">40.0h</div><div class="kpi-sub">5 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,916h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--green)">+177k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10546k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">7</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">1</div><div class="kpi-sub">saved</div></div></div>
+  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">72.4</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">0.0h</div><div class="kpi-sub">0 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,898h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--red)">-709k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10722k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">0</div><div class="kpi-sub">saved</div></div></div>
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
@@ -234,6 +234,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <button class="tab" onclick="showTab(this,&#39;timesheets&#39;)">
       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Timesheets</span>
+    </button>
+    <button class="tab" onclick="showTab(this,&#39;tasks&#39;)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Tasks</span>
     </button>
   </div>
 
@@ -360,8 +364,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$2050k</div>
-          <div style="font-size:10px;color:var(--t3)">$20k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$2073k</div>
+          <div style="font-size:10px;color:var(--t3)">$18k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24002</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -374,8 +378,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$1931k</div>
-          <div style="font-size:10px;color:var(--t3)">$20k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$1957k</div>
+          <div style="font-size:10px;color:var(--t3)">$19k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24005</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -388,7 +392,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$2581k</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$2605k</div>
           <div style="font-size:10px;color:var(--t3)">$17k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24006</div>
@@ -402,22 +406,22 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$2418k</div>
-          <div style="font-size:10px;color:var(--t3)">$38k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$2470k</div>
+          <div style="font-size:10px;color:var(--t3)">$39k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">25001</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:var(--sb);border-radius:3px 3px 0 0;height:18px;min-height:4px"></div>
+              <div style="width:100%;background:var(--sb);border-radius:3px 3px 0 0;height:19px;min-height:4px"></div>
               <span style="font-size:8px;color:var(--t3)">Total</span>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:var(--rye);border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <div style="width:100%;background:var(--red);border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$909k</div>
-          <div style="font-size:10px;color:var(--t3)">$11k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$932k</div>
+          <div style="font-size:10px;color:var(--t3)">$14k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">25002</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -430,21 +434,21 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$582k</div>
-          <div style="font-size:10px;color:var(--t3)">$22k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$610k</div>
+          <div style="font-size:10px;color:var(--t3)">$20k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SP25018</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:var(--sb);border-radius:3px 3px 0 0;height:1px;min-height:4px"></div>
+              <div style="width:100%;background:var(--sb);border-radius:3px 3px 0 0;height:2px;min-height:4px"></div>
               <span style="font-size:8px;color:var(--t3)">Total</span>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:var(--red);border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <div style="width:100%;background:var(--green);border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
               <span style="font-size:8px;color:var(--t3)">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$74k</div>
+          <div style="font-size:11px;font-weight:700;color:var(--sb);margin-top:4px">$75k</div>
           <div style="font-size:10px;color:var(--t3)">$0k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24010</div>
@@ -678,6 +682,44 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     </div>
   </div>
 
+
+  <!-- TASKS PANE -->
+  <div class="pane" id="pane-tasks">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div style="font-size:14px;font-weight:700;color:var(--t1)">All Job Tasks</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <select id="db-task-filter-job" onchange="renderDashTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:5px;padding:4px 8px;font-size:11px">
+          <option value="all">All Jobs</option>
+          <option value="24001 - BIOLA">BIOLA</option>
+          <option value="24002 - SEPULVEDA">SEPULVEDA</option>
+          <option value="24005 - VNV">VNV</option>
+          <option value="24006 - VF">VF</option>
+          <option value="24010 - COMMONS">COMMONS</option>
+          <option value="25001 - DECENA">DECENA</option>
+          <option value="25002 - BAH">BAH</option>
+          <option value="26002 - WILSHIRE">WILSHIRE</option>
+          <option value="SP25018 - CDC PLAZA">CDC PLAZA</option>
+          <option value="26003 - CARINA">CARINA</option>
+        </select>
+        <select id="db-task-filter-type" onchange="renderDashTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:5px;padding:4px 8px;font-size:11px">
+          <option value="all">All Types</option>
+          <option value="task">Tasks</option>
+          <option value="appointment">Appointments</option>
+          <option value="delivery">Deliveries</option>
+          <option value="inspection">Inspections</option>
+          <option value="reminder">Reminders</option>
+        </select>
+        <select id="db-task-filter-status" onchange="renderDashTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:5px;padding:4px 8px;font-size:11px">
+          <option value="open">Open</option>
+          <option value="all">All Status</option>
+          <option value="inprogress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+    </div>
+    <div id="db-task-list" class="card" style="padding:0"></div>
+  </div>
+
   <!-- ACTIVITY -->
   <div class="pane" id="pane-activity">
     <div class="main-grid">
@@ -887,6 +929,12 @@ async function syncFromSupabase(){
       });
     }
 
+    // Fetch tasks
+    const taskRes = await fetch(SUPABASE_URL+'/rest/v1/task_logs?select=*&order=date.asc', {headers:sbHeaders()});
+    if(taskRes.ok){
+      const taskData = await taskRes.json();
+      window._dashTasks = taskData || [];
+    }
     refreshDashboard();
     updateSyncTime('Last sync: '+new Date().toLocaleTimeString()+' ('+
       (unitLogs.length+dailyLogs.length)+' entries)');
@@ -913,6 +961,7 @@ function refreshDashboard(){
     if(name==='jobcosts')    renderJobs();
     if(name==='labor')       renderLabor();
     if(name==='production')  { renderProduction(); renderProductionByWorker(); }
+    if(name==='tasks')         renderDashTasks();
     if(name==='activity'||name==='field')    renderActivity();
     if(name==='prodreports') renderReports();
     if(name==='field')       renderFieldData();
@@ -927,13 +976,13 @@ const RATE_SB = 60;
 const RATE_RYE = 70;
 
 const REPORT_DATA = [
-  {key:"24001 - BIOLA",name:"Biola Cinema",week:"May 11-17, 2026",laborRate:47.46,projLG:-394077.71,lastWkHrs:421,lastWkDollars:19955.36,budgetPct:0,manpower:10.51,hrsSpent:0,hrsRemaining:-9651,hrsbudget:20588.0,totalBudget:7815570.0,hrsPct:0,unitsPct:146.9,laborActual:2049519.37,laborBudget:1647104.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:9550.0,qtyActual:22175.0,projLG:-79807.94},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:13764.0,qtyActual:11438.0,projLG:-27974.21},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:55849.0,qtyActual:67745.0,projLG:-247232.7},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:2970.0,qtyActual:2916.0,projLG:-9608.79},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:204.0,qtyActual:207.0,projLG:2049.0},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:40.0,qtyActual:40.0,projLG:23109.28},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:105853.0,qtyActual:185853.0,projLG:-74585.33},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:39077.0,qtyActual:45045.0,projLG:28823.79},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:36694.0,qtyActual:43150.0,projLG:-19036.05},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:11084.0,qtyActual:7132.0,projLG:8807.94},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:328.0,qtyActual:326.0,projLG:-44431.74},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:1461.0,qtyActual:1426.0,projLG:22580.91},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:78.0,qtyActual:77.0,projLG:23228.13}]},
-  {key:"24002 - SEPULVEDA",name:"Sepulveda",week:"May 11-17, 2026",laborRate:44.4,projLG:-134227.42,lastWkHrs:457,lastWkDollars:20292.43,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:-1528,hrsbudget:25302.0,totalBudget:3336122.0,hrsPct:0,unitsPct:106.0,laborActual:1931419.84,laborBudget:1773746.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:1500.0,qtyActual:520.0,projLG:2410.92},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:185.0,qtyActual:57.0,projLG:5822.71},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:5500.0,qtyActual:4495.0,projLG:2591.6},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:210.0,qtyActual:210.0,projLG:-6088.36},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:59.0,qtyActual:59.0,projLG:18374.47},{code:"2500",desc:"UPS & PDUs",unit:"EA",qtyBudget:32.0,qtyActual:1446.07,projLG:-1446.07},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:60.0,qtyActual:0,projLG:0},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:110000.0,qtyActual:93280.0,projLG:-17387.72},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:3000.0,qtyActual:2739.0,projLG:-4352.45},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:13.0,qtyActual:23.0,projLG:-487.16},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:176.0,qtyActual:1708.0,projLG:-5891.16},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1135.0,qtyActual:1057.0,projLG:-27576.11},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:112.0,qtyActual:1088.0,projLG:-27123.84},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:930.0,qtyActual:315.0,projLG:-13482.12},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:210.19},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:13.0,qtyActual:910.82,projLG:910.82},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-910.82},{code:"7400",desc:"Common Area Rough",unit:"EA",qtyBudget:30.0,qtyActual:30.0,projLG:-18315.82},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-738.52},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-3697.15},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-5662.24},{code:"7800",desc:"Common Area Trim",unit:"EA",qtyBudget:30.0,qtyActual:28.0,projLG:14640.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:176.0,qtyActual:156.0,projLG:-25217.55},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:91.0,qtyActual:91.0,projLG:-5960.85}]},
-  {key:"24005 - VNV",name:"Van Nuys & Vose",week:"May 11-17, 2026",laborRate:48.69,projLG:26196.6,lastWkHrs:465,lastWkDollars:16943.52,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:-76,hrsbudget:6330.0,totalBudget:0,hrsPct:0,unitsPct:100.2,laborActual:2581052.07,laborBudget:2310016.75,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:20502.0,qtyActual:21173.0,projLG:-19203.24},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:6530.0,qtyActual:5625.0,projLG:16199.9},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:32807.0,qtyActual:7402.0,projLG:16791.64},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:1590.0,qtyActual:144.0,projLG:-6623.86},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:78.0,qtyActual:78.0,projLG:415.77},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:54.0,qtyActual:54.0,projLG:14101.57},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:217945.0,qtyActual:95866.0,projLG:44245.76},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:26683.0,qtyActual:26640.0,projLG:-36102.46},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:32942.0,qtyActual:34456.0,projLG:-61947.65},{code:"3400",desc:"Feeder Cable",unit:"LF",qtyBudget:8185.0,qtyActual:8174.0,projLG:-2456.69},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-55390.96},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1677.0,qtyActual:684.0,projLG:92421.96},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:54.0,qtyActual:122.0,projLG:787.37},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:538.0,qtyActual:179.0,projLG:96.92},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:2788.95},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:2419.65},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-33505.99},{code:"7300",desc:"Unit Shear Walls",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:8990.81},{code:"7320",desc:"Unit Drilling",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:17108.75},{code:"7330",desc:"Unit Pulling",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-208.26},{code:"7340",desc:"Unit Stab & Makeup",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:28431.84},{code:"7370",desc:"Unit Strap & Plate",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:20718.94},{code:"7380",desc:"Unit Fireproofing",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:1434.77},{code:"7500",desc:"HR to AC",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:8560.24},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:332.0,qtyActual:317.0,projLG:3899.27},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:332.0,qtyActual:306.0,projLG:-9023.16},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:332.0,qtyActual:317.0,projLG:-29774.41},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:996.0,qtyActual:423.0,projLG:14132.21},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:105.0,qtyActual:84.0,projLG:-9720.06}]},
-  {key:"24006 - VF",name:"Vintage Farms",week:"May 11-17, 2026",laborRate:47.61,projLG:253134.22,lastWkHrs:796,lastWkDollars:37894.41,budgetPct:0,manpower:19.9,hrsSpent:2887,hrsRemaining:34883,hrsbudget:6697.0,totalBudget:0,hrsPct:0,unitsPct:92.9,laborActual:2417868.11,laborBudget:2463044.0,costCodes:[]},
-  {key:"25001 - DECENA",name:"Mission Gorge",week:"May 11-17, 2026",laborRate:40.58,projLG:0,lastWkHrs:280,lastWkDollars:11361.29,budgetPct:0,manpower:7.0,hrsSpent:19522,hrsRemaining:9240,hrsbudget:1617.0,totalBudget:7.0,hrsPct:0,unitsPct:32.1,laborActual:909455.86,laborBudget:1795495.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:10130.0,qtyActual:13860.0,projLG:156030.5},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:2278.0,qtyActual:15286.0,projLG:69691.6},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:41780.0,qtyActual:1660.0,projLG:419476.59},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:22280.0,qtyActual:2174.0,projLG:231390.35},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:142.0,qtyActual:119.0,projLG:54444.05},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:24.0,qtyActual:1081.02,projLG:1081.02},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:261880.0,qtyActual:65030.0,projLG:71789.5},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:108700.0,qtyActual:72490.0,projLG:60343.15},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:30715.0,qtyActual:5550.0,projLG:110399.32},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:483.0,qtyActual:12.0,projLG:618014.23},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1296.0,qtyActual:52.0,projLG:154717.65},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:100.0,qtyActual:80.0,projLG:3600.0},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:766.0,qtyActual:184.0,projLG:8280.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:483.0,qtyActual:1932.0,projLG:86940.0},{code:"8200",desc:"Gnd Grid and Lighting Protec",unit:"EA",qtyBudget:200.0,qtyActual:50.0,projLG:2250.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:95.0,qtyActual:38.0,projLG:52255.66}]},
-  {key:"25002 - BAH",name:"Bellamy Agoura Hills",week:"May 11-17, 2026",laborRate:44.99,projLG:464128.96,lastWkHrs:485,lastWkDollars:21818.03,budgetPct:0,manpower:12.13,hrsSpent:31615,hrsRemaining:5836,hrsbudget:408.0,totalBudget:0,hrsPct:0,unitsPct:15.6,laborActual:582078.85,laborBudget:2579213.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:31055.0,qtyActual:30265.0,projLG:99988.06},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:8830.0,qtyActual:13820.0,projLG:9285.51},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:3777.0,qtyActual:389.06,projLG:-420.31},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:1865.0,qtyActual:450.37,projLG:-424.01},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:45.0,qtyActual:859.0,projLG:-3608.47},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:135200.0,qtyActual:130715.0,projLG:37061.94},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:67165.0,qtyActual:130.0,projLG:68839.84},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:28565.0,qtyActual:1000.0,projLG:54132.47},{code:"3400",desc:"Feeder Cable",unit:"LF",qtyBudget:620.0,qtyActual:515.0,projLG:23948.0},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:278.0,qtyActual:1946.0,projLG:-1330.97},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:2677.0,qtyActual:585.0,projLG:115647.28},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:436.0,qtyActual:1754.0,projLG:-1047.21},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:278.0,qtyActual:9.0,projLG:26348.66},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:278.0,qtyActual:10.0,projLG:49759.87},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-420.31},{code:"7300",desc:"Unit Shear Walls",unit:"UN",qtyBudget:278.0,qtyActual:556.0,projLG:-420.31},{code:"7320",desc:"Unit Drilling",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-2310.42},{code:"7330",desc:"Unit Pulling",unit:"UN",qtyBudget:278.0,qtyActual:1946.0,projLG:-3292.44},{code:"7340",desc:"Unit Stab & Makeup",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-3075.43},{code:"7370",desc:"Unit Strap & Plate",unit:"UN",qtyBudget:278.0,qtyActual:1668.0,projLG:-2456.25},{code:"7380",desc:"Unit Fireproofing",unit:"UN",qtyBudget:278.0,qtyActual:0,projLG:278.0},{code:"7400",desc:"Common Area Rough",unit:"EA",qtyBudget:769.0,qtyActual:1538.0,projLG:-6588.21},{code:"7500",desc:"HR to AC",unit:"UN",qtyBudget:278.0,qtyActual:1112.0,projLG:-210.15},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:278.0,qtyActual:556.0,projLG:-210.15},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-210.15},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:278.0,qtyActual:834.0,projLG:-210.15},{code:"7800",desc:"Common Area Trim",unit:"EA",qtyBudget:769.0,qtyActual:769.0,projLG:35759.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:278.0,qtyActual:1112.0,projLG:51708.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:85.0,qtyActual:31.0,projLG:29300.27}]},
-  {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 11-17, 2026",laborRate:54.54,projLG:-37838.68,lastWkHrs:12,lastWkDollars:0,budgetPct:0,manpower:0.3,hrsSpent:832,hrsRemaining:-568,hrsbudget:832.0,totalBudget:377268.0,hrsPct:0,unitsPct:315.2,laborActual:74426.34,laborBudget:35912.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:600.0,qtyActual:24.0,projLG:1116.0},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:74.0,qtyActual:3873.57,projLG:-3873.57},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:8.0,qtyActual:372.0,projLG:372.0},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:650.0,qtyActual:8.0,projLG:372.0},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:368.0,qtyActual:100.0,projLG:4650.0},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:8.0,qtyActual:372.0,projLG:372.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:116.0,qtyActual:758.0,projLG:-34709.11}]},
+  {key:"24001 - BIOLA",name:"Biola Cinema & Media Arts Bldg",week:"May 18-24, 2026",laborRate:49.77,projLG:-411595.64,lastWkHrs:352,lastWkDollars:17517.93,budgetPct:112.3,manpower:8.8,hrsSpent:30591,hrsRemaining:-10003,hrsbudget:20588,totalBudget:7815570,hrsPct:148.6,unitsPct:140.0,laborActual:2073355.62,laborBudget:1647104,costCodes:[]},
+  {key:"24002 - SEPULVEDA",name:"6733 Sepulveda",week:"May 18-24, 2026",laborRate:44.45,projLG:-153586.78,lastWkHrs:436,lastWkDollars:19359.36,budgetPct:133.8,manpower:10.89,hrsSpent:27265,hrsRemaining:-1963,hrsbudget:25302,totalBudget:3336122,hrsPct:107.8,unitsPct:84.4,laborActual:1956758.72,laborBudget:1773746,costCodes:[]},
+  {key:"24005 - VNV",name:"Van Nuys & Vose",week:"May 18-24, 2026",laborRate:50.1,projLG:11625.05,lastWkHrs:482,lastWkDollars:17429.05,budgetPct:106.9,manpower:12.05,hrsSpent:36803,hrsRemaining:-399,hrsbudget:36403,totalBudget:6766729.82,hrsPct:100.8,unitsPct:62.0,laborActual:2605196.21,laborBudget:2319394.25,costCodes:[]},
+  {key:"24006 - VF",name:"Vintage Farms",week:"May 18-24, 2026",laborRate:47.5,projLG:194378.58,lastWkHrs:828,lastWkDollars:39328.37,budgetPct:102.3,manpower:20.7,hrsSpent:36681,hrsRemaining:2059,hrsbudget:38740,totalBudget:6144517,hrsPct:94.9,unitsPct:98.6,laborActual:2469947.41,laborBudget:2463044,costCodes:[]},
+  {key:"25001 - DECENA",name:"Mission Gorge-Decena Apts",week:"May 18-24, 2026",laborRate:39.61,projLG:-806458.61,lastWkHrs:360,lastWkDollars:14260.26,budgetPct:49.6,manpower:9.0,hrsSpent:9600,hrsRemaining:19162,hrsbudget:28761,totalBudget:4338062,hrsPct:33.4,unitsPct:37.0,laborActual:931775.96,laborBudget:1795495,costCodes:[]},
+  {key:"25002 - BAH",name:"Bellamy Agoura Hills",week:"May 18-24, 2026",laborRate:44.52,projLG:448260.5,lastWkHrs:440,lastWkDollars:19588.46,budgetPct:32.7,manpower:11.0,hrsSpent:6276,hrsRemaining:31399,hrsbudget:37675,totalBudget:5785587,hrsPct:16.7,unitsPct:61.9,laborActual:610196.36,laborBudget:2601129,costCodes:[]},
+  {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 18-24, 2026",laborRate:52.76,projLG:8325.93,lastWkHrs:0,lastWkDollars:0,budgetPct:20.8,manpower:0,hrsSpent:832,hrsRemaining:2101,hrsbudget:2933,totalBudget:642595.35,hrsPct:28.4,unitsPct:0.0,laborActual:75178.45,laborBudget:235612,costCodes:[]},
   {key:"24010 - COMMONS",name:"Commons Calabasas",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
   {key:"26002 - WILSHIRE",name:"600 Wilshire",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
   {key:"26003 - CARINA",name:"Carina Main Place Mall",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]}
@@ -1800,6 +1849,7 @@ function showTab(btn, name){
   if(name==='inventory') renderInventory();
   if(name==='production') renderProduction();
   if(name==='activity') renderActivity();
+  if(name==='tasks')   renderDashTasks();
   if(name==='reports')    renderReports();
   if(name==='field')      renderFieldData();
   if(name==='timesheets') renderDashTimesheets();
@@ -2444,6 +2494,51 @@ function renderProductionByWorker(){
         +'</div>'
       +'</div>'
       +'<div style="font-size:14px;font-weight:700;color:var(--amber);flex-shrink:0">'+d.hrs.toFixed(1)+'h</div>'
+    +'</div>';
+  }).join('');
+}
+
+
+function renderDashTasks(){
+  var el = document.getElementById('db-task-list');
+  if(!el) return;
+
+  var jobFilter    = document.getElementById('db-task-filter-job')    ? document.getElementById('db-task-filter-job').value    : 'all';
+  var typeFilter   = document.getElementById('db-task-filter-type')   ? document.getElementById('db-task-filter-type').value   : 'all';
+  var statusFilter = document.getElementById('db-task-filter-status') ? document.getElementById('db-task-filter-status').value : 'open';
+
+  var filtered = (window._dashTasks||[]).filter(function(t){
+    if(!t.job || t.job.trim()==='' || t.job==='all') return false; // only show job-specific tasks
+    return (jobFilter==='all'    || t.job===jobFilter)
+        && (typeFilter==='all'   || t.type===typeFilter)
+        && (statusFilter==='all' || t.status===statusFilter);
+  }).sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
+
+  if(!filtered.length){
+    el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3);font-size:13px">No tasks found.</div>';
+    return;
+  }
+
+  var TYPE_COLORS = {task:'var(--rye)',appointment:'var(--amber)',delivery:'#4caf50',inspection:'#e91e63',reminder:'#9c27b0'};
+  var PRI_COLORS  = {high:'var(--red)',medium:'var(--amber)',low:'var(--t3)'};
+  var today = new Date().toISOString().slice(0,10);
+
+  el.innerHTML = filtered.map(function(t){
+    var overdue = t.date < today && t.status!=='done';
+    var isDone  = t.status==='done';
+    return '<div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);'+(isDone?'opacity:0.5':'')+'">'
+      +'<div style="width:10px;height:10px;border-radius:50%;background:'+(isDone?'var(--t3)':TYPE_COLORS[t.type]||'var(--rye)')+';flex-shrink:0;margin-top:4px"></div>'
+      +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:'+(isDone?'line-through':'none')+'">'+t.title+'</div>'
+        +'<div style="font-size:11px;color:var(--t3);margin-top:2px">'+t.job+'</div>'
+        +(t.notes?'<div style="font-size:11px;color:var(--t3)">'+t.notes+'</div>':'')
+        +'<div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">'
+          +(function(){ var c=overdue?'var(--red)':'var(--t3)'; var w=overdue?'700':'400'; return '<span style="font-size:10px;color:'+c+';font-weight:'+w+'">'+t.date+(t.time?' '+t.time:'')+(overdue?' OVERDUE':'')+'</span>'; })()
+          +'<span style="font-size:10px;color:'+(PRI_COLORS[t.priority]||'var(--t3)')+';font-weight:600">'+(t.priority||'').toUpperCase()+'</span>'
+          +'<span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">'+(t.type||'')+'</span>'
+          +'<span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">'+(t.status||'')+'</span>'
+        +'</div>'
+      +'</div>'
     +'</div>';
   }).join('');
 }
