@@ -176,10 +176,6 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 .sig-btn-clear{background:#fee;border:1px solid #c00;color:#c00}
 .sig-btn-done{background:#e6f4ea;border:1px solid #2e7d32;color:#2e7d32}
 
-.quick-nav{display:flex;align-items:center;gap:8px;padding:6px 14px;background:var(--s2);border-bottom:1px solid var(--border);flex-wrap:wrap}
-.qn-label{font-size:10px;color:var(--t3);font-weight:600;white-space:nowrap}
-.qn-dash{display:flex;align-items:center;gap:5px;background:var(--rye);color:var(--black);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
-.qn-select{background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 8px;cursor:pointer}
 .job-banner{background:linear-gradient(135deg,rgba(101,173,229,.18),rgba(101,173,229,.06));border-bottom:2px solid rgba(101,173,229,.4);padding:8px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:52px;z-index:90}
 .job-banner .jb-num{font-size:15px;font-weight:800;color:var(--rye)}
 .job-banner .jb-name{font-size:13px;color:var(--t1)}
@@ -204,19 +200,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
 <div class="shell">
 <div class="job-banner"><svg viewBox="0 0 24 24" width="18" height="18" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="jb-num">25002</span><span class="jb-name">BAH</span><span class="jb-badge">Job Tracker</span><a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="dash-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a></div>
-  <div class="quick-nav">
-    <span class="qn-label">GO TO:</span>
-    <a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="qn-dash">
-      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard
-    </a>
-    <span class="qn-label" style="margin-left:4px">JOB TRACKER:</span>
-    <select class="qn-select" onchange="if(this.value) window.open(this.value,'_blank'); this.value=''">
-      <option value="">-- Select job --</option>
-      <option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24001-biola.html">24001 - BIOLA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html">24002 - SEPULVEDA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html">24005 - VNV</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html">24006 - VF</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24010-commons.html">24010 - COMMONS</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html">25001 - DECENA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html">25002 - BAH</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html">26002 - WILSHIRE</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html">SP25018 - CDC PLAZA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html">26003 - CARINA</option>
-    </select>
-  </div>
-  <div class="vh">
+    <div class="vh">
     <div class="vh-left">
       <div class="vh-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
       <div>
@@ -317,7 +301,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
               <option value="Xavier Contreras">Xavier Contreras</option>
             </select>
           </div>
-          <div class="fgroup">
+          <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
             <select id="sel-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
           </div>
@@ -555,7 +539,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
               <option value="Xavier Contreras">Xavier Contreras</option>
             </select>
           </div>
-          <div class="fgroup">
+          <div class="fgroup" style="display:none">
             <div class="flbl">Job</div>
             <select id="wb-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
           </div>
