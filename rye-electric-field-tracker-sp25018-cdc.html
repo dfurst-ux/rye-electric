@@ -5155,7 +5155,6 @@ function saveTask(){
     var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
     var emails = getJobEmail(job);
     if(typeof emailjs !== 'undefined'){
-      emailjs.init('HGciJDgZDCRS9v0Eo');
       emailjs.send('service_obg8h7h', '5xh9mga', {
         to_email:      emails.to,
         task_title:    task.title,
@@ -5187,8 +5186,7 @@ function deleteTask(){
 function scheduleReminder(task){
   if(!task.reminder || !task.date || !task.time) return;
 
-  emailjs.init('HGciJDgZDCRS9v0Eo');
-
+  
   var taskTime  = new Date(task.date + 'T' + task.time);
   var remindTime = new Date(taskTime.getTime() - parseInt(task.reminder) * 60 * 1000);
   var now = new Date();
@@ -5250,6 +5248,8 @@ function initTasks(){
 /* === END TASKS === */
 
 /* === INIT === */
+// Initialize EmailJS
+if(typeof emailjs !== 'undefined') emailjs.init('HGciJDgZDCRS9v0Eo');
 loadFromStorage();
 loadDJRFromStorage();
 loadSIFromStorage();
