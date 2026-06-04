@@ -1899,10 +1899,12 @@ let currentPhase = 'rough';
 let dlView = 'today';
 
 /* === LOCALSTORAGE PERSISTENCE === */
-const STORAGE_KEY_UNITS  = 'rye_unit_logs';
-const STORAGE_KEY_DAILY  = 'rye_daily_logs';
-const STORAGE_KEY_NEXTID = 'rye_next_id';
-const STORAGE_KEY_DLID   = 'rye_dl_next_id';
+// Job-specific storage keys — prevents data bleeding between jobs
+var _jobKey = (function(){ var j=new URLSearchParams(window.location.search).get('job'); return j?'_'+j:''; })();
+const STORAGE_KEY_UNITS  = 'rye_unit_logs'   + _jobKey;
+const STORAGE_KEY_DAILY  = 'rye_daily_logs'  + _jobKey;
+const STORAGE_KEY_NEXTID = 'rye_next_id'     + _jobKey;
+const STORAGE_KEY_DLID   = 'rye_dl_next_id'  + _jobKey;
 const STORAGE_KEY_WEEK   = 'rye_current_week';
 
 function getWeekKey(){
@@ -5436,6 +5438,7 @@ function saveTask(){
     var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
     var emails = getJobEmail(job);
     if(typeof emailjs !== 'undefined'){
+      try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
       emailjs.send('service_obg8h7h', '5xh9mga', {
         to_email:      emails.to,
         task_title:    task.title,
@@ -5444,7 +5447,11 @@ function saveTask(){
         task_time:     task.time || 'No time set',
         task_notes:    task.notes || 'No notes',
         task_priority: task.priority
-      }).then(function(){ console.log('Task email sent'); }, function(e){ console.log('Email error:',e); });
+      }).then(function(r){ console.log('Task email sent:', r.status); toast('Email sent to '+emails.to); },
+              function(e){ console.error('Email error:', JSON.stringify(e)); toast('Email failed: '+JSON.stringify(e)); });
+    } else {
+      console.error('EmailJS not loaded');
+      toast('EmailJS not loaded - check connection');
     }
   }
   closeTaskModal();
