@@ -4478,7 +4478,7 @@ function getDeviceId(){
   return id;
 }
 
-async async function sbInsert(table, data){
+async function sbInsert(table, data){
   try{
     const resp = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
       method: 'POST',
