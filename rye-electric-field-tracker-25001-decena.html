@@ -4475,7 +4475,7 @@ function getDeviceId(){
   return id;
 }
 
-async function sbInsert(table, data){
+async async function sbInsert(table, data){
   try{
     const resp = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
       method: 'POST',
@@ -5160,6 +5160,23 @@ function saveTask(){
   }
 
   saveTaskData();
+  // Send email notification immediately on save
+  if(!editId){
+    var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
+    var emails = getJobEmail(job);
+    if(typeof emailjs !== 'undefined'){
+      emailjs.init('HGciJDgZDCRS9v0Eo');
+      emailjs.send('service_obg8h7h', '5xh9mga', {
+        to_email:      emails.to,
+        task_title:    task.title,
+        job:           job || 'Field Tracker',
+        task_date:     task.date,
+        task_time:     task.time || 'No time set',
+        task_notes:    task.notes || 'No notes',
+        task_priority: task.priority
+      }).then(function(){ console.log('Task email sent'); }, function(e){ console.log('Email error:',e); });
+    }
+  }
   closeTaskModal();
   renderTasks();
   renderTaskCalendar();
