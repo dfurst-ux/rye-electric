@@ -4953,12 +4953,14 @@ var taskWeekOffset = 0;
 var taskNextId = 1;
 
 function loadTaskData(){
-  var saved = localStorage.getItem('rye_tasks_'+getDeviceId());
+  var jobSlug = document.getElementById('sel-job') ? document.getElementById('sel-job').value.replace(/[^a-zA-Z0-9]/g,'_') : 'master';
+  var saved = localStorage.getItem('rye_tasks_'+getDeviceId()+'_'+jobSlug);
   if(saved){ try{ var d=JSON.parse(saved); taskData=d.tasks||[]; taskNextId=d.nextId||1; }catch(e){} }
 }
 
 function saveTaskData(){
-  localStorage.setItem('rye_tasks_'+getDeviceId(), JSON.stringify({tasks:taskData,nextId:taskNextId}));
+  var jobSlug2 = document.getElementById('sel-job') ? document.getElementById('sel-job').value.replace(/[^a-zA-Z0-9]/g,'_') : 'master';
+  localStorage.setItem('rye_tasks_'+getDeviceId()+'_'+jobSlug2, JSON.stringify({tasks:taskData,nextId:taskNextId}));
   saveTasksToCloud();
 }
 
