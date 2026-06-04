@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_53.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_54.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 11:37:24 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 2:17:44 PM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -195,7 +195,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 <div class="shell">
 
   <!-- KPI ROW -->
-  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">72.4</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">0.0h</div><div class="kpi-sub">0 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,898h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--red)">-709k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10722k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">0</div><div class="kpi-sub">saved</div></div></div>
+  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">72.4</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">9.5h</div><div class="kpi-sub">2 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,898h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--red)">-709k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10722k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">11</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">1</div><div class="kpi-sub">saved</div></div></div>
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
@@ -219,7 +219,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>
       <span>Production</span>
     </button>
-    <button class="tab on" onclick="showTab(this,&#39;reports&#39;)">
+    <button class="tab" onclick="showTab(this,&#39;reports&#39;)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
       <span>Prod Reports</span>
     </button>
@@ -232,7 +232,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <span>Field</span>
     </button>
     
-    <button class="tab" onclick="showTab(this,&#39;tasks&#39;)">
+    <button class="tab on" onclick="showTab(this,&#39;tasks&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       <span>Tasks</span>
     </button>
@@ -656,12 +656,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   <!-- PRODUCTION -->
   <div class="pane" id="pane-production">
-    <div id="production-container" style="margin-bottom:12px"><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24001 - BIOLA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">4</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">24.5</b></span><span>Labor cost: <b style="color:var(--green)">$1,219.37</b> @ $49.77/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed"><colgroup><col style="width:55%"><col style="width:12%"><col style="width:11%"><col style="width:11%"><col style="width:11%"></colgroup><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">1400 - Feeder Conduit OH</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">10</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">4.5</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">3100 - Branch Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">1000</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">4.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">3200 - Feeder Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">2</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">1020</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">16.0</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24002 - SEPULVEDA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">2</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">13.5</b></span><span>Labor cost: <b style="color:var(--green)">$600.08</b> @ $44.45/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed"><colgroup><col style="width:55%"><col style="width:12%"><col style="width:11%"><col style="width:11%"><col style="width:11%"></colgroup><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5000 - Finish Devices and Trim</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">50</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">8.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">7010 - Layout</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">100</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">5.5</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>24010 - COMMONS</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">3</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">25.5</b></span><span>Labor cost: <b style="color:var(--green)">$1,195.95</b> @ $46.9/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed"><colgroup><col style="width:55%"><col style="width:12%"><col style="width:11%"><col style="width:11%"><col style="width:11%"></colgroup><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">5000 - Finish Devices and Trim</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">10</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">7.5</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">6000 - Equipment and Connections</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">5</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">9.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">7100 - Residential Boxing</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">12</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">9.0</td></tr></tbody></table></div></div><div class="card" style="margin-bottom:12px"><div class="ch"><div class="ct"><svg viewBox="0 0 24 24" width="14" height="14" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>25001 - DECENA</div><div style="display:flex;gap:16px;font-size:11px;color:var(--t3)"><span>Rough: <b style="color:var(--amber)">2</b></span><span>Final: <b style="color:var(--green)">0</b></span><span>Total hrs: <b style="color:var(--rye)">13.0</b></span><span>Labor cost: <b style="color:var(--green)">$514.93</b> @ $39.61/hr</span></div></div><div class="cb" style="padding:0"><table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed"><colgroup><col style="width:55%"><col style="width:12%"><col style="width:11%"><col style="width:11%"><col style="width:11%"></colgroup><thead><tr style="background:var(--s2)"><th style="padding:7px 10px;text-align:left;color:var(--t3);font-weight:600">Cost Code</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Rough</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Final</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Qty</th><th style="padding:7px 10px;text-align:center;color:var(--t3);font-weight:600">Hours</th></tr></thead><tbody><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">3200 - Feeder Wire</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">500</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">8.0</td></tr><tr style="border-top:1px solid var(--border)"><td style="padding:7px 10px;font-size:11px;color:var(--t1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">7100 - Residential Boxing</td><td style="padding:7px 10px;text-align:center;color:var(--amber)">1</td><td style="padding:7px 10px;text-align:center;color:var(--green)">-</td><td style="padding:7px 10px;text-align:center;color:var(--t1)">8</td><td style="padding:7px 10px;text-align:center;color:var(--rye)">5.0</td></tr></tbody></table></div></div></div>
+    <div id="production-container" style="margin-bottom:12px"></div>
 
     <div class="main-grid" style="margin-top:12px">
       <div class="card">
         <div class="ch"><div class="ct ct-sb"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>Production by worker this week</div></div>
-        <div class="cb" id="prod-by-worker"><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="width:32px;height:32px;border-radius:50%;background:var(--rye);color:var(--black);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">DS</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">David Smith</div><div style="font-size:10px;color:var(--t3)">24002 • logged hrs</div><div style="height:4px;background:var(--border);border-radius:2px;margin-top:4px"><div style="height:4px;background:var(--amber);border-radius:2px;width:100%"></div></div></div><div style="font-size:14px;font-weight:700;color:var(--amber);flex-shrink:0">5.5h</div></div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="width:32px;height:32px;border-radius:50%;background:var(--rye);color:var(--black);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">AS</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Axel Salas</div><div style="font-size:10px;color:var(--t3)">24002 • logged hrs</div><div style="height:4px;background:var(--border);border-radius:2px;margin-top:4px"><div style="height:4px;background:var(--amber);border-radius:2px;width:72.72727272727273%"></div></div></div><div style="font-size:14px;font-weight:700;color:var(--amber);flex-shrink:0">4.0h</div></div></div>
+        <div class="cb" id="prod-by-worker"></div>
       </div>
       <div class="card">
         <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22,2 15,22 11,13 2,9 22,2"></polygon></svg>Prefab pipeline</div></div>
@@ -681,7 +681,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
 
   <!-- TASKS PANE -->
-  <div class="pane" id="pane-tasks">
+  <div class="pane on" id="pane-tasks">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
       <div style="font-size:14px;font-weight:700;color:var(--t1)">All Job Tasks</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -714,7 +714,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
         </select>
       </div>
     </div>
-    <div id="db-task-list" class="card" style="padding:0"></div>
+    <div id="db-task-list" class="card" style="padding:0"><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">asdf</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">asfgd</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--red);font-weight:700">2026-06-03 OVERDUE</span><span style="font-size:10px;color:var(--t3);font-weight:600">LOW</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">Rosa RFI</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Please RFI multiple Feeder wire tomorrow</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 14:30</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">Rosa RFI</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Please RFI multiple Feeder wire tomorrow</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 14:30</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">Rosa RFI</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">Please RFI multiple Feeder wire tomorrow</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">sdg</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">sht</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 05:15</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">appointment</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div></div>
   </div>
 
   <!-- ACTIVITY -->
@@ -739,7 +739,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
         </div>
         <div class="cb" id="activity-full"></div>
         <select id="activity-filter" style="display:none"><option value="all">all</option></select>
-        <div id="activity-feed"><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Axel Salas</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24002 - SEPULVEDA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">5000 - Finish Devices and Trim (4h)</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-06-03</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">David Smith</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24002 - SEPULVEDA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">7010 - Layout (5.5h) -- Unit 012 (Bldg 2) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-06-03</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jesus Heredia</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">3200 - Feeder Wire (8h) -- Unit 009 (Bldg 1) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-29</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jonathan Jacobo</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">1400 - Feeder Conduit OH (4.5h) -- Unit 002 (Bldg A) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-29</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Adrian Marquez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24005 - VNV</div><div style="font-size:11px;color:var(--t3);margin-top:2px">5000 - Finish Devices and Trim (10h)</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-29</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--green);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">1 workers</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Sign-in: Jose Ramirez</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-29</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Brian Kitajima</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24002 - SEPULVEDA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">5000 - Finish Devices and Trim (8h) -- Unit 015 (Bldg 1) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">6000 - Equipment and Connections (9h) -- Unit 018 (Bldg B) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">7100 - Residential Boxing (9h) -- Unit 018 (Bldg B) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Isidro Enciso</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">4000 - Light Fixtures (6.5h)</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jayson Ortega</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">7100 - Residential Boxing (5h) -- Unit 013 (Bldg 1) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jaime Moya</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">3200 - Feeder Wire (8h) -- Unit 019 (Bldg B) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Matthew Baciu</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">3200 - Feeder Wire (8h) -- Unit 020 (Bldg A) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">6000 - Equipment and Connections (12h)</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--green);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">3 workers</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Sign-in: Jose Ramirez, Angel Hernandez, Louis Aceves</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--green);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">2 workers</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Sign-in: Jayson Ortega, Isidro Enciso</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--green);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">1 workers</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24005 - VNV</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Sign-in: Brenda Quijada</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--green);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">1 workers</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24006 - VF</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Sign-in: Brandon Salazar</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--green);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">1 workers</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24002 - SEPULVEDA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Sign-in: Axel Salas</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--sb);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">DAILY REPORT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Superintendent</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Daily Report -- 2 workers</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-28</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Brian Campos</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">7010 - Layout (10h)</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-27</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">5000 - Finish Devices and Trim (7.5h) -- Unit 017 (Bldg A) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-27</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Brian Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">3100 - Branch Wire (4h) -- Unit 001 (Bldg A) -- rough</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-27</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Filiberto Ramos</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">3100 - Branch Wire (4h) -- Panel X</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-27</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--rye);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">WHITEBOARD</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Brian Campos</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">3100 - Branch Wire (4h) -- Panel EM1 branch ckts 30,32,34</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">2026-05-27</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 018 (Bldg B) -- rough -- 6000 - Equipment and Connections -- 9h -- Qty: 5</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">09:46 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 018 (Bldg B) -- rough -- 7100 - Residential Boxing -- 9h -- Qty: 12</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">09:41 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jonathan Jacobo</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 002 (Bldg A) -- rough -- 1400 - Feeder Conduit OH -- 4.5h -- Qty: 10</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">09:00 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jayson Ortega</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 013 (Bldg 1) -- rough -- 7100 - Residential Boxing -- 5h -- Qty: 8</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">08:04 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jose Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24010 - COMMONS</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 017 (Bldg A) -- rough -- 5000 - Finish Devices and Trim -- 7.5h -- Qty: 10</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">07:41 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jaime Moya</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 019 (Bldg B) -- rough -- 3200 - Feeder Wire -- 8h -- Qty: 600</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">07:36 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Matthew Baciu</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 020 (Bldg A) -- rough -- 3200 - Feeder Wire -- 8h -- Qty: 420</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">07:36 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Brian Ramirez</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 001 (Bldg A) -- rough -- 3100 - Branch Wire -- 4h -- Qty: 1000</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">07:23 AM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">David Smith</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24002 - SEPULVEDA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 012 (Bldg 2) -- rough -- 7010 - Layout -- 5.5h -- Qty: 100</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">01:28 PM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Brian Kitajima</div><div style="font-size:11px;color:var(--t2);margin-top:1px">24002 - SEPULVEDA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 015 (Bldg 1) -- rough -- 5000 - Finish Devices and Trim -- 8h -- Qty: 50</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">01:27 PM</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:var(--amber);color:var(--black);font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">LOG UNIT</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1)">Jesus Heredia</div><div style="font-size:11px;color:var(--t2);margin-top:1px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3);margin-top:2px">Unit 009 (Bldg 1) -- rough -- 3200 - Feeder Wire -- 8h -- Qty: 500</div></div><div style="font-size:10px;color:var(--t3);flex-shrink:0;font-family:monospace">01:18 PM</div></div></div>
+        <div id="activity-feed"></div>
       </div>
     </div>
   </div>
@@ -747,480 +747,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   
 
-<div class="pane on" id="pane-reports">
+<div class="pane" id="pane-reports">
     <div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">
       Week of May 11-17, 2026 — 7 jobs
     </div>
 
     <!-- KPI summary row -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="rpt-kpi-row"><div class="kpi">
-    <div class="kpi-lbl">Total manpower</div>
-    <div class="kpi-val" style="color:var(--rye);font-size:24px">72.4</div>
-    <div class="kpi-sub">field workers</div>
-  </div><div class="kpi">
-    <div class="kpi-lbl">Last week hours</div>
-    <div class="kpi-val" style="color:var(--t1);font-size:24px">2898h</div>
-    <div class="kpi-sub">all jobs combined</div>
-  </div><div class="kpi">
-    <div class="kpi-lbl">Last week cost</div>
-    <div class="kpi-val" style="color:var(--sb);font-size:24px">$127,483</div>
-    <div class="kpi-sub">labor dollars</div>
-  </div><div class="kpi">
-    <div class="kpi-lbl">Avg labor rate</div>
-    <div class="kpi-val" style="color:var(--t1);font-size:24px">$46.94</div>
-    <div class="kpi-sub">per hour</div>
-  </div><div class="kpi">
-    <div class="kpi-lbl">Proj gain/loss</div>
-    <div class="kpi-val" style="color:var(--red);font-size:24px">-709,051</div>
-    <div class="kpi-sub">all jobs total</div>
-  </div><div class="kpi">
-    <div class="kpi-lbl">Jobs over budget</div>
-    <div class="kpi-val" style="color:var(--red);font-size:24px">3/10</div>
-    <div class="kpi-sub">need attention</div>
-  </div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="rpt-kpi-row"></div>
 
     <!-- Job cards -->
-    <div id="rpt-job-cards"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:14px"><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">24001 - BIOLA</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Biola Cinema &amp; Media Arts Bldg • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--red)">-$411,595.64</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$49.77</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">8.8</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">352</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--red)">140.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--red);width:100%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 30,591 spent</span>
-            <span style="font-size:11px;color:var(--t3)">-10,003 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-red">Over budget</span>
-            <span class="bdg b-warn">Units exceeded</span>
-            <span class="bdg b-rye">8.8 workers</span>
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">24002 - SEPULVEDA</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">6733 Sepulveda • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--red)">-$153,586.78</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$44.45</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">10.89</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">436</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">84.4%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:84.4%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 27,265 spent</span>
-            <span style="font-size:11px;color:var(--t3)">-1,963 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-red">Over budget</span>
-            
-            <span class="bdg b-rye">10.89 workers</span>
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">24005 - VNV</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Van Nuys &amp; Vose • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$11,625.05</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$50.1</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">12.05</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">482</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">62.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:62%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 36,803 spent</span>
-            <span style="font-size:11px;color:var(--t3)">-399 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            <span class="bdg b-rye">12.05 workers</span>
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">24006 - VF</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Vintage Farms • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$194,378.58</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$47.5</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">20.7</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">828</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--amber)">98.6%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--amber);width:98.6%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 36,681 spent</span>
-            <span style="font-size:11px;color:var(--t3)">2,059 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            <span class="bdg b-rye">20.7 workers</span>
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">25001 - DECENA</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Mission Gorge-Decena Apts • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--red)">-$806,458.61</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$39.61</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">9</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">360</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">37.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:37%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 9,600 spent</span>
-            <span style="font-size:11px;color:var(--t3)">19,162 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-red">Over budget</span>
-            
-            <span class="bdg b-rye">9 workers</span>
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">25002 - BAH</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Bellamy Agoura Hills • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$448,260.5</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$44.52</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">11</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">440</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">61.9%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:61.9%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 6,276 spent</span>
-            <span style="font-size:11px;color:var(--t3)">31,399 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            <span class="bdg b-rye">11 workers</span>
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">SP25018 - CDC PLAZA</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">CDC Plaza • May 18-24, 2026</div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$8,325.93</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$52.76</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">0</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">0</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">0.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:0%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 832 spent</span>
-            <span style="font-size:11px;color:var(--t3)">2,101 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">24010 - COMMONS</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Commons Calabasas • </div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$0</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$46.9</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">0</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">0</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">0.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:0%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 0 spent</span>
-            <span style="font-size:11px;color:var(--t3)">0 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">26002 - WILSHIRE</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">600 Wilshire • </div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$0</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$46.9</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">0</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">0</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">0.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:0%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 0 spent</span>
-            <span style="font-size:11px;color:var(--t3)">0 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            
-          </div>
-        </div>
-      </div><div class="card">
-        <div class="ch" style="background:rgba(0,0,0,.25)">
-          <div>
-            <div style="font-size:13px;font-weight:700">26003 - CARINA</div>
-            <div style="font-size:11px;color:var(--t3);margin-top:1px">Carina Main Place Mall • </div>
-          </div>
-          <div style="text-align:right">
-            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
-            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--green)">+$0</div>
-          </div>
-        </div>
-        <div class="cb">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Rate</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">$46.9</div>
-              <div style="font-size:10px;color:var(--t3)">/hr</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Manpower</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--rye)">0</div>
-              <div style="font-size:10px;color:var(--t3)">on site</div>
-            </div>
-            <div class="sc" style="padding:8px 10px">
-              <div class="sl">Last wk hrs</div>
-              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)">0</div>
-              <div style="font-size:10px;color:var(--t3)">hrs worked</div>
-            </div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:11px;color:var(--t2)">Units % of budget</span>
-            <span style="font-size:11px;font-weight:700;color:var(--rye)">0.0%</span>
-          </div>
-          <div class="pbar" style="height:6px"><div class="pfill" style="background:var(--rye);width:0%"></div></div>
-          <div style="display:flex;justify-content:space-between;margin-top:8px">
-            <span style="font-size:11px;color:var(--t3)">Hours: 0 spent</span>
-            <span style="font-size:11px;color:var(--t3)">0 remaining</span>
-          </div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <span class="bdg b-ok">On / under budget</span>
-            
-            
-          </div>
-        </div>
-      </div></div></div>
+    <div id="rpt-job-cards"></div>
 
     <!-- Cost code detail table per job -->
     <div class="card" style="margin-top:4px">
@@ -1229,7 +765,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path></svg>
           Cost code detail
         </div>
-        <select id="rpt-job-filter" onchange="renderCCTable()" style="font-size:11px;height:30px;padding:0 8px"><option value="all">All jobs</option><option value="24001 - BIOLA">24001 - BIOLA</option><option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option><option value="24005 - VNV">24005 - VNV</option><option value="24006 - VF">24006 - VF</option><option value="25001 - DECENA">25001 - DECENA</option><option value="25002 - BAH">25002 - BAH</option><option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option><option value="24010 - COMMONS">24010 - COMMONS</option><option value="26002 - WILSHIRE">26002 - WILSHIRE</option><option value="26003 - CARINA">26003 - CARINA</option></select>
+        <select id="rpt-job-filter" onchange="renderCCTable()" style="font-size:11px;height:30px;padding:0 8px">
+          <option value="all">All jobs</option>
+        </select>
       </div>
       <div style="overflow-x:auto">
         <table class="cost-table" id="rpt-cc-table">
@@ -1246,15 +784,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   <!-- FIELD DATA PANE -->
   <div class="pane" id="pane-field">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="field-kpi-row"><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Hours this week</div><div class="kpi-val" style="color:var(--rye);font-size:24px">9.5h</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Active workers</div><div class="kpi-val" style="color:var(--green);font-size:24px">2</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Units rough done</div><div class="kpi-val" style="color:var(--amber);font-size:24px">11</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Units final done</div><div class="kpi-val" style="color:var(--green);font-size:24px">0</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Daily log entries</div><div class="kpi-val" style="color:var(--t1);font-size:24px">18</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Sign-in records</div><div class="kpi-val" style="color:var(--sb);font-size:24px">7</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="field-kpi-row"></div>
     <div class="main-grid">
       <div class="card">
         <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>Units logged this week</div></div>
-        <div class="cb" id="field-units-summary"><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:12px;font-weight:700;color:var(--t1)">24001 - BIOLA</div><span class="bdg b-warn">4 rough</span><span class="bdg b-ok">0 final</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:12px;font-weight:700;color:var(--t1)">24010 - COMMONS</div><span class="bdg b-warn">3 rough</span><span class="bdg b-ok">0 final</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:12px;font-weight:700;color:var(--t1)">25001 - DECENA</div><span class="bdg b-warn">2 rough</span><span class="bdg b-ok">0 final</span></div><div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)"><div style="flex:1;font-size:12px;font-weight:700;color:var(--t1)">24002 - SEPULVEDA</div><span class="bdg b-warn">2 rough</span><span class="bdg b-ok">0 final</span></div></div>
+        <div class="cb" id="field-units-summary"></div>
       </div>
       <div class="card">
         <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>Active workers this week</div></div>
-        <div class="cb" id="field-workers-list"><div class="worker-row"><div class="av av-rye">AS</div><div class="wi"><div class="wn">Axel Salas</div><div class="wm">24002</div></div><div class="wr"><div class="wh" style="color:var(--rye)">4.0h</div></div></div><div class="worker-row"><div class="av av-rye">DS</div><div class="wi"><div class="wn">David Smith</div><div class="wm">24002</div></div><div class="wr"><div class="wh" style="color:var(--rye)">5.5h</div></div></div></div>
+        <div class="cb" id="field-workers-list"></div>
       </div>
     </div>
     <div class="card">
@@ -1262,20 +800,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
         <div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path></svg>Daily whiteboard — latest entries</div>
         <select id="db-field-job-filter" onchange="renderFieldData()" style="height:28px;font-size:11px;padding:0 8px;border-radius:6px;background:var(--s2);border:1px solid var(--border);color:var(--t1)">
           <option value="all">All jobs</option>
-        <option value="24001 - BIOLA">24001 - BIOLA</option><option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option><option value="24005 - VNV">24005 - VNV</option><option value="24006 - VF">24006 - VF</option><option value="25001 - DECENA">25001 - DECENA</option><option value="25002 - BAH">25002 - BAH</option><option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option></select>
+        </select>
       </div>
       <div style="overflow-x:auto">
         <table class="cost-table" id="field-log-table">
           <thead><tr>
             <th>Date</th><th>Employee</th><th>Job</th><th>Phase Code</th><th>Description</th><th>Hours</th>
           </tr></thead>
-          <tbody id="field-log-tbody"><tr><td class="tm">2026-06-03</td><td class="tn">Axel Salas</td><td class="tc">24002 - SEPULVEDA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">5000</td><td style="color:var(--t2)">Finish Devices and Trim</td><td style="font-weight:700;color:var(--rye)">4h</td></tr><tr><td class="tm">2026-06-03</td><td class="tn">David Smith</td><td class="tc">24002 - SEPULVEDA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">7010</td><td style="color:var(--t2)">Layout</td><td style="font-weight:700;color:var(--rye)">5.5h</td></tr><tr><td class="tm">2026-05-29</td><td class="tn">Jesus Heredia</td><td class="tc">25001 - DECENA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">3200</td><td style="color:var(--t2)">Feeder Wire</td><td style="font-weight:700;color:var(--rye)">8h</td></tr><tr><td class="tm">2026-05-29</td><td class="tn">Jonathan Jacobo</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">1400</td><td style="color:var(--t2)">Feeder Conduit OH</td><td style="font-weight:700;color:var(--rye)">4.5h</td></tr><tr><td class="tm">2026-05-29</td><td class="tn">Adrian Marquez</td><td class="tc">24005 - VNV</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">5000</td><td style="color:var(--t2)">Finish Devices and Trim</td><td style="font-weight:700;color:var(--rye)">10h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Brian Kitajima</td><td class="tc">24002 - SEPULVEDA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">5000</td><td style="color:var(--t2)">Finish Devices and Trim</td><td style="font-weight:700;color:var(--rye)">8h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Jose Ramirez</td><td class="tc">24010 - COMMONS</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">6000</td><td style="color:var(--t2)">Equipment and Connections</td><td style="font-weight:700;color:var(--rye)">9h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Jose Ramirez</td><td class="tc">24010 - COMMONS</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">7100</td><td style="color:var(--t2)">Residential Boxing</td><td style="font-weight:700;color:var(--rye)">9h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Isidro Enciso</td><td class="tc">25001 - DECENA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">4000</td><td style="color:var(--t2)">Light Fixtures</td><td style="font-weight:700;color:var(--rye)">6.5h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Jayson Ortega</td><td class="tc">25001 - DECENA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">7100</td><td style="color:var(--t2)">Residential Boxing</td><td style="font-weight:700;color:var(--rye)">5h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Jaime Moya</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">3200</td><td style="color:var(--t2)">Feeder Wire</td><td style="font-weight:700;color:var(--rye)">8h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Matthew Baciu</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">3200</td><td style="color:var(--t2)">Feeder Wire</td><td style="font-weight:700;color:var(--rye)">8h</td></tr><tr><td class="tm">2026-05-28</td><td class="tn">Jose Ramirez</td><td class="tc">24010 - COMMONS</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">6000</td><td style="color:var(--t2)">Equipment and Connections</td><td style="font-weight:700;color:var(--rye)">12h</td></tr><tr><td class="tm">2026-05-27</td><td class="tn">Brian Campos</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">7010</td><td style="color:var(--t2)">Layout</td><td style="font-weight:700;color:var(--rye)">10h</td></tr><tr><td class="tm">2026-05-27</td><td class="tn">Jose Ramirez</td><td class="tc">24010 - COMMONS</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">5000</td><td style="color:var(--t2)">Finish Devices and Trim</td><td style="font-weight:700;color:var(--rye)">7.5h</td></tr><tr><td class="tm">2026-05-27</td><td class="tn">Brian Ramirez</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">3100</td><td style="color:var(--t2)">Branch Wire</td><td style="font-weight:700;color:var(--rye)">4h</td></tr><tr><td class="tm">2026-05-27</td><td class="tn">Filiberto Ramos</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">3100</td><td style="color:var(--t2)">Branch Wire</td><td style="font-weight:700;color:var(--rye)">4h</td></tr><tr><td class="tm">2026-05-27</td><td class="tn">Brian Campos</td><td class="tc">24001 - BIOLA</td><td style="font-family:monospace;font-size:11px;color:var(--t3)">3100</td><td style="color:var(--t2)">Branch Wire</td><td style="font-weight:700;color:var(--rye)">4h</td></tr></tbody>
+          <tbody id="field-log-tbody"></tbody>
         </table>
       </div>
     </div>
     <div class="card" style="margin-top:10px">
       <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline></svg>Daily Job Reports</div></div>
-      <div class="cb" id="djr-summary"><div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:700;color:var(--t1)">25001 -- 2026-05-28</div><div style="font-size:11px;color:var(--t3)">2 workers</div></div><span class="bdg b-rye">DJR</span></div></div>
+      <div class="cb" id="djr-summary"><div style="color:var(--t3);font-size:12px">Sync from field tracker to see reports</div></div>
     </div>
 
     <div class="card" style="margin-top:10px">
@@ -1285,7 +823,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
           <thead><tr>
             <th>Date</th><th>Job</th><th>Employee</th><th>Start</th><th>Finish</th><th>Reg Hrs</th><th>OT Hrs</th><th>Total</th>
           </tr></thead>
-          <tbody id="signin-tbody"><tr><td class="tm">2026-05-29</td><td class="tc">24010 - COMMONS</td><td class="tn">Jose Ramirez</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">7.5h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">7.5h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">24010 - COMMONS</td><td class="tn">Jose Ramirez</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">24010 - COMMONS</td><td class="tn">Angel Hernandez</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">24010 - COMMONS</td><td class="tn">Louis Aceves</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">25001 - DECENA</td><td class="tn">Jayson Ortega</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">25001 - DECENA</td><td class="tn">Isidro Enciso</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">24005 - VNV</td><td class="tn">Brenda Quijada</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">2:30 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">24006 - VF</td><td class="tn">Brandon Salazar</td><td style="font-size:11px;color:var(--t3)">6:00 AM</td><td style="font-size:11px;color:var(--t3)">3:00 PM</td><td style="color:var(--green);font-weight:700">8.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">8.0h</td></tr><tr><td class="tm">2026-05-28</td><td class="tc">24002 - SEPULVEDA</td><td class="tn">Axel Salas</td><td style="font-size:11px;color:var(--t3)"></td><td style="font-size:11px;color:var(--t3)"></td><td style="color:var(--green);font-weight:700">0.0h</td><td style="color:var(--red);font-weight:700">0.0h</td><td style="color:var(--rye);font-weight:700">0.0h</td></tr></tbody>
+          <tbody id="signin-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -1359,7 +897,7 @@ async function syncFromSupabase(){
     }
 
     // Fetch tasks
-    const taskRes = await fetch(SUPABASE_URL+'/rest/v1/task_logs?select=*&order=date.asc', {headers:sbHeaders()});
+    const taskRes = await fetch(SUPABASE_URL+'/rest/v1/task_logs?select=*&order=date.asc', {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
     if(taskRes.ok){
       const taskData = await taskRes.json();
       window._dashTasks = taskData || [];
