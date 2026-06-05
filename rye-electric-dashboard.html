@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_54.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_55.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 2:17:44 PM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 8:09:50 AM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -199,7 +199,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
-    <button class="tab" onclick="showTab(this,&#39;overview&#39;)">
+    <button class="tab on" onclick="showTab(this,&#39;overview&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       <span>Overview</span>
     </button>
@@ -232,14 +232,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
       <span>Field</span>
     </button>
     
-    <button class="tab on" onclick="showTab(this,&#39;tasks&#39;)">
+    <button class="tab" onclick="showTab(this,&#39;tasks&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       <span>Tasks</span>
     </button>
   </div>
 
   <!-- OVERVIEW -->
-  <div class="pane" id="pane-overview">
+  <div class="pane on" id="pane-overview">
     <div class="main-grid">
       <!-- Job Progress -->
       <div class="card">
@@ -681,10 +681,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 
 
   <!-- TASKS PANE -->
-  <div class="pane on" id="pane-tasks">
+  <div class="pane" id="pane-tasks">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
       <div style="font-size:14px;font-weight:700;color:var(--t1)">All Job Tasks</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button onclick="clearDashTasks()" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:5px;padding:4px 12px;font-size:11px;cursor:pointer;white-space:nowrap">✕ Clear View</button>
         <select id="db-task-filter-job" onchange="renderDashTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:5px;padding:4px 8px;font-size:11px">
           <option value="all">All Jobs</option>
           <option value="24001 - BIOLA">BIOLA</option>
@@ -714,7 +715,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
         </select>
       </div>
     </div>
-    <div id="db-task-list" class="card" style="padding:0"><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">asdf</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">asfgd</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--red);font-weight:700">2026-06-03 OVERDUE</span><span style="font-size:10px;color:var(--t3);font-weight:600">LOW</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">Rosa RFI</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Please RFI multiple Feeder wire tomorrow</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 14:30</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">Rosa RFI</div><div style="font-size:11px;color:var(--t3);margin-top:2px">25001 - DECENA</div><div style="font-size:11px;color:var(--t3)">Please RFI multiple Feeder wire tomorrow</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">RFI Rosa</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">Rosa please remember to RFI the one that Ken emailed us about this morning</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 14:30</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--rye);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">Rosa RFI</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">Please RFI multiple Feeder wire tomorrow</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 12:45</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">task</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div><div style="display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);"><div style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:4px"></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:none">sdg</div><div style="font-size:11px;color:var(--t3);margin-top:2px">24001 - BIOLA</div><div style="font-size:11px;color:var(--t3)">sht</div><div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap"><span style="font-size:10px;color:var(--t3);font-weight:400">2026-06-04 05:15</span><span style="font-size:10px;color:var(--amber);font-weight:600">MEDIUM</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">appointment</span><span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">open</span></div></div></div></div>
+    <div id="db-task-list" class="card" style="padding:0"></div>
   </div>
 
   <!-- ACTIVITY -->
@@ -2509,6 +2510,14 @@ function renderDashTasks(){
       +'</div>'
     +'</div>';
   }).join('');
+}
+
+
+function clearDashTasks(){
+  if(!confirm('Clear task view? Tasks are still saved in Supabase — click Sync to restore them.')) return;
+  window._dashTasks = [];
+  renderDashTasks();
+  toast('Task view cleared — click Sync to restore');
 }
 
 /* === INIT === */
