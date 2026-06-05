@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rye Electric - BIOLA Field Tracker</title>
+<title>Rye Electric - Field Tracker</title>
 <style>
 :root{
   --rye:#65ADE5;--rye-dark:#3D8DC4;--rye-glow:rgba(101,173,229,.13);
@@ -180,10 +180,6 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 .qn-label{font-size:10px;color:var(--t3);font-weight:600;white-space:nowrap}
 .qn-dash{display:flex;align-items:center;gap:5px;background:var(--rye);color:var(--black);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
 .qn-select{background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 8px;cursor:pointer}
-.job-banner{background:linear-gradient(135deg,rgba(101,173,229,.18),rgba(101,173,229,.06));border-bottom:2px solid rgba(101,173,229,.4);padding:8px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:52px;z-index:90}
-.job-banner .jb-num{font-size:15px;font-weight:800;color:var(--rye)}
-.job-banner .jb-name{font-size:13px;color:var(--t1)}
-.job-banner .jb-badge{margin-left:auto;font-size:10px;color:var(--t3);background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:2px 8px}
 .dash-btn{display:inline-flex;align-items:center;gap:6px;background:var(--rye);color:var(--black);border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -204,7 +200,6 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 </header>
 
 <div class="shell">
-<div class="job-banner"><svg viewBox="0 0 24 24" width="18" height="18" fill="var(--rye)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span class="jb-num">24001</span><span class="jb-name">BIOLA</span><span class="jb-badge">Job Tracker</span><a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="dash-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a></div>
     <div class="vh">
     <div class="vh-left">
       <div class="vh-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
@@ -289,15 +284,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="sel-worker">
-              <option value="">-- Select employee --</option>
-              <option value="Brian Campos">Brian Campos</option>
-              <option value="Brian Ramirez">Brian Ramirez</option>
-              <option value="Filiberto Ramos">Filiberto Ramos</option>
-              <option value="Jaime Moya">Jaime Moya</option>
-              <option value="Matthew Baciu">Matthew Baciu</option>
-              <option value="Randdy De Paz">Randdy De Paz</option>
-            </select>
+            <select id="sel-worker"><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Jaime Moya">Jaime Moya</option><option value="Brian Campos">Brian Campos</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Brian Ramirez">Brian Ramirez</option></select>
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
@@ -520,15 +507,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="wb-worker">
-              <option value="">-- Select employee --</option>
-              <option value="Brian Campos">Brian Campos</option>
-              <option value="Brian Ramirez">Brian Ramirez</option>
-              <option value="Filiberto Ramos">Filiberto Ramos</option>
-              <option value="Jaime Moya">Jaime Moya</option>
-              <option value="Matthew Baciu">Matthew Baciu</option>
-              <option value="Randdy De Paz">Randdy De Paz</option>
-            </select>
+            <select id="wb-worker"><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Jaime Moya">Jaime Moya</option><option value="Brian Campos">Brian Campos</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Brian Ramirez">Brian Ramirez</option></select>
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job</div>
@@ -661,7 +640,19 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
     <!-- Job + Employee filters -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <select id="dl-filter-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24001 - BIOLA" selected>24001 - BIOLA</option></select>
+      <select id="dl-filter-job" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--bhi);color:var(--t1)">
+        <option value="all">All jobs</option>
+              <option value="24001 - BIOLA">24001 - BIOLA</option>
+              <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
+              <option value="24005 - VNV">24005 - VNV</option>
+              <option value="24006 - VF">24006 - VF</option>
+              <option value="24010 - COMMONS">24010 - COMMONS</option>
+              <option value="25001 - DECENA">25001 - DECENA</option>
+              <option value="25002 - BAH">25002 - BAH</option>
+              <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
+              <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
+              <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
+      </select>
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--bhi);color:var(--t1)">
         <option value="all">All employees</option>
               <option value="Abiud Lopez">Abiud Lopez</option>
@@ -1119,7 +1110,19 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by job</div>
-        <select id="unit-filter-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="24001 - BIOLA" selected>24001 - BIOLA</option></select>
+        <select id="unit-filter-job" onchange="renderUnitsTab()">
+          <option value="all">All jobs</option>
+          <option value="24001 - BIOLA">24001 - BIOLA</option>
+          <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
+          <option value="24005 - VNV">24005 - VNV</option>
+          <option value="24006 - VF">24006 - VF</option>
+          <option value="24010 - COMMONS">24010 - COMMONS</option>
+          <option value="25001 - DECENA">25001 - DECENA</option>
+          <option value="25002 - BAH">25002 - BAH</option>
+          <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
+          <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
+          <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
+        </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by employee</div>
@@ -1397,6 +1400,41 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
         <option value="inprogress">In Progress</option>
         <option value="done">Done</option>
       </select>
+      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">ASSIGN TO</label>
+      <select id="task-assignee" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+        <option value="">-- Select employee --</option>
+      </select>
+
+      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">COST CODE</label>
+      <select id="task-costcode" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+        <option value="">-- Select cost code --</option>
+        <option value="1100">1100 - Branch Conduit UG</option>
+        <option value="1200">1200 - Feeder Conduit UG</option>
+        <option value="1300">1300 - Branch Conduit OH</option>
+        <option value="1400">1400 - Feeder Conduit OH</option>
+        <option value="1700">1700 - Fire Stop</option>
+        <option value="2000">2000 - Electrical Power Distribution</option>
+        <option value="3100">3100 - Branch Wire</option>
+        <option value="3200">3200 - Feeder Wire</option>
+        <option value="3300">3300 - Branch Cable</option>
+        <option value="3410">3410 - Unit Feeder Cable</option>
+        <option value="4000">4000 - Light Fixtures</option>
+        <option value="4100">4100 - Lighting Controls</option>
+        <option value="5000">5000 - Finish Devices and Trim</option>
+        <option value="7100">7100 - Unit Boxing</option>
+        <option value="7200">7200 - Unit Drops</option>
+        <option value="7320">7320 - Unit Drilling</option>
+        <option value="7330">7330 - Unit Pulling</option>
+        <option value="7340">7340 - Unit Stab & Makeup</option>
+        <option value="7370">7370 - Unit Strap & Plate</option>
+        <option value="7400">7400 - Common Area Rough</option>
+        <option value="7500">7500 - HR to AC</option>
+        <option value="7600">7600 - Unit Fixtures</option>
+        <option value="7700">7700 - Unit Finish & Trim</option>
+        <option value="7900">7900 - Test and Check</option>
+        <option value="8800">8800 - Temporary Power</option>
+      </select>
+
       <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">REMINDER</label>
       <select id="task-reminder" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:16px">
         <option value="">No reminder</option>
@@ -1430,10 +1468,10 @@ var JOB_MODE = getURLJob(); // null = all jobs, string = locked to one job
 
 
 /* -- Email configuration -- */
-const EMAIL_PAYROLL    = 'biola24001@ryecompany.com';
-const EMAIL_OFFICE     = 'biola24001@ryecompany.com';
-const EMAIL_SUPER      = 'biola24001@ryecompany.com';
-const EMAIL_CC         = 'dfurst@ryecompany.com,jjava@ryecompany.com';
+const EMAIL_PAYROLL    = 'dfurst@ryecompany.com';
+const EMAIL_OFFICE     = 'dfurst@ryecompany.com';
+const EMAIL_SUPER      = 'dfurst@ryecompany.com';
+const EMAIL_CC         = 'jjava@ryecompany.com';
 const COMPANY_NAME     = 'Rye Electric, Inc.';
 
 const REPORT_DATA = [
@@ -1786,10 +1824,6 @@ function updateUnitDropdowns(){
   }
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  ['sel-job','djr-job','si-job','wb-job','dl-filter-job'].forEach(function(id){
-    var el=document.getElementById(id); if(el) el.value='24001 - BIOLA';
-  });
-  if(typeof updateUnitDropdowns==='function') updateUnitDropdowns();
   initTasks();
   const jsel=document.getElementById('sel-job');
   if(jsel) jsel.addEventListener('change',updateUnitDropdowns);
@@ -3698,7 +3732,7 @@ function renderSIRows(rows){
   if(!tbody) return;
   tbody.innerHTML = rows.map(function(r,i){
     var wid = 'SI_'+i;
-    var opts = '<option value="">-- Select --</option><option value="Brian Campos">Brian Campos</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Jaime Moya">Jaime Moya</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Randdy De Paz">Randdy De Paz</option>';
+    var opts = '<option value="">-- Select --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option>';
     if(r.name) opts = opts.replace('value="'+r.name+'"', 'value="'+r.name+'" selected');
     return '<tr style="border-bottom:1px solid var(--border)" id="si-row-'+i+'">'
       +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 6px;height:30px"></td>'
@@ -4926,9 +4960,6 @@ function pad(str, len){
 }
 
 /* === JOB EMAIL ROUTING === */
-// Override for 24001 - BIOLA
-function getJobEmail(job){ return {to:'biola24001@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com'}; }
-// Original JOB_EMAILS below (unused):
 const JOB_EMAILS = {
   '25002 - BAH':          {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
   '25001 - DECENA':       {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
@@ -5107,6 +5138,7 @@ function openTaskModal(){
   document.getElementById('task-status').value='open';
   document.getElementById('task-reminder').value='';
   document.getElementById('task-delete-btn').style.display='none';
+  loadEmployeesForJob();
   document.getElementById('task-modal').style.display='flex';
 }
 
@@ -5138,17 +5170,25 @@ function saveTask(){
   if(!date) { toast('Please select a date');  return; }
 
   var editId = document.getElementById('task-edit-id').value;
+  var assigneeId = document.getElementById('task-assignee') ? document.getElementById('task-assignee').value : '';
+  var assigneeName = assigneeId ? (document.getElementById('task-assignee').options[document.getElementById('task-assignee').selectedIndex].text) : '';
+  var costCode = document.getElementById('task-costcode') ? document.getElementById('task-costcode').value : '';
+  var costCodeText = costCode ? (document.getElementById('task-costcode').options[document.getElementById('task-costcode').selectedIndex].text) : '';
   var task = {
-    id:      editId ? parseInt(editId) : taskNextId++,
-    type:     document.getElementById('task-type').value,
-    title:    title,
-    notes:    document.getElementById('task-notes').value.trim(),
-    date:     date,
-    time:     document.getElementById('task-time').value,
-    priority: document.getElementById('task-priority').value,
-    status:   document.getElementById('task-status').value,
-    reminder: document.getElementById('task-reminder').value,
-    _synced:  false
+    id:        editId ? parseInt(editId) : taskNextId++,
+    type:      document.getElementById('task-type').value,
+    title:     title,
+    notes:     document.getElementById('task-notes').value.trim(),
+    date:      date,
+    time:      document.getElementById('task-time').value,
+    priority:  document.getElementById('task-priority').value,
+    status:    document.getElementById('task-status').value,
+    reminder:  document.getElementById('task-reminder').value,
+    assigneeId: assigneeId,
+    assigneeName: assigneeName,
+    costCode:  costCode,
+    costCodeText: costCodeText,
+    _synced:   false
   };
 
   if(editId){
@@ -5179,6 +5219,36 @@ function saveTask(){
     } else {
       console.error('EmailJS not loaded');
       toast('EmailJS not loaded - check connection');
+    }
+    // Send SMS to assigned employee
+    if(assigneeId && !editId){
+      var emp = _employees.find(function(e){ return String(e.id)===String(assigneeId); });
+      if(emp && emp.phone && emp.phone !== '+1XXXXXXXXXX'){
+        var jobTrackerLinks = {
+          '24001 - BIOLA':       'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24001-biola.html',
+          '24002 - SEPULVEDA':   'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html',
+          '24005 - VNV':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html',
+          '24006 - VF':          'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html',
+          '24010 - COMMONS':     'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24010-commons.html',
+          '25001 - DECENA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html',
+          '25002 - BAH':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html',
+          '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
+          'SP25018 - CDC PLAZA': 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html',
+          '26003 - CARINA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html'
+        };
+        var jobLink = jobTrackerLinks[job] || 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker.html';
+        var smsBody = 'Rye Electric - Task Assigned to You\n\n'
+          + 'Job: ' + job + '\n'
+          + 'Task: ' + task.title + '\n'
+          + (costCodeText ? 'Cost Code: ' + costCodeText + '\n' : '')
+          + 'Priority: ' + task.priority.toUpperCase() + '\n'
+          + 'Date: ' + task.date + '\n'
+          + (task.time ? 'Time: ' + task.time + '\n' : '')
+          + (task.notes ? 'Notes: ' + task.notes + '\n' : '')
+          + '\nOpen job tracker:\n' + jobLink;
+        sendSMS(emp.phone, smsBody);
+        toast('SMS sent to ' + emp.name);
+      }
     }
   }
   closeTaskModal();
@@ -5261,6 +5331,48 @@ function initTasks(){
   }
 }
 /* === END TASKS === */
+
+
+/* === EMPLOYEE & SMS === */
+var _employees = [];
+
+async function loadEmployeesForJob(){
+  var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
+  if(!job) return;
+  try{
+    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/employees?job=eq.'+encodeURIComponent(job)+'&order=name.asc', {
+      headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'}
+    });
+    if(resp.ok){
+      _employees = await resp.json();
+      var sel = document.getElementById('task-assignee');
+      if(sel){
+        sel.innerHTML = '<option value="">-- Select employee --</option>';
+        _employees.forEach(function(e){
+          sel.innerHTML += '<option value="'+e.id+'">'+e.name+'</option>';
+        });
+      }
+    }
+  }catch(ex){ console.log('Employee load error:',ex); }
+}
+
+async function sendSMS(phone, message){
+  try{
+    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/functions/v1/send-sms', {
+      method:'POST',
+      headers:{
+        'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
+        'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({to: phone, body: message})
+    });
+    var data = await resp.json();
+    if(data.success){ console.log('SMS sent:', data.sid); }
+    else{ console.error('SMS error:', data.error); }
+  }catch(e){ console.error('SMS failed:',e); }
+}
+/* === END EMPLOYEE & SMS === */
 
 /* === INIT === */
 // Initialize EmailJS

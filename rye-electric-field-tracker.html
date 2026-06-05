@@ -1679,6 +1679,41 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
         <option value="inprogress">In Progress</option>
         <option value="done">Done</option>
       </select>
+      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">ASSIGN TO</label>
+      <select id="task-assignee" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+        <option value="">-- Select employee --</option>
+      </select>
+
+      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">COST CODE</label>
+      <select id="task-costcode" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+        <option value="">-- Select cost code --</option>
+        <option value="1100">1100 - Branch Conduit UG</option>
+        <option value="1200">1200 - Feeder Conduit UG</option>
+        <option value="1300">1300 - Branch Conduit OH</option>
+        <option value="1400">1400 - Feeder Conduit OH</option>
+        <option value="1700">1700 - Fire Stop</option>
+        <option value="2000">2000 - Electrical Power Distribution</option>
+        <option value="3100">3100 - Branch Wire</option>
+        <option value="3200">3200 - Feeder Wire</option>
+        <option value="3300">3300 - Branch Cable</option>
+        <option value="3410">3410 - Unit Feeder Cable</option>
+        <option value="4000">4000 - Light Fixtures</option>
+        <option value="4100">4100 - Lighting Controls</option>
+        <option value="5000">5000 - Finish Devices and Trim</option>
+        <option value="7100">7100 - Unit Boxing</option>
+        <option value="7200">7200 - Unit Drops</option>
+        <option value="7320">7320 - Unit Drilling</option>
+        <option value="7330">7330 - Unit Pulling</option>
+        <option value="7340">7340 - Unit Stab & Makeup</option>
+        <option value="7370">7370 - Unit Strap & Plate</option>
+        <option value="7400">7400 - Common Area Rough</option>
+        <option value="7500">7500 - HR to AC</option>
+        <option value="7600">7600 - Unit Fixtures</option>
+        <option value="7700">7700 - Unit Finish & Trim</option>
+        <option value="7900">7900 - Test and Check</option>
+        <option value="8800">8800 - Temporary Power</option>
+      </select>
+
       <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">REMINDER</label>
       <select id="task-reminder" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:16px">
         <option value="">No reminder</option>
@@ -5382,6 +5417,7 @@ function openTaskModal(){
   document.getElementById('task-status').value='open';
   document.getElementById('task-reminder').value='';
   document.getElementById('task-delete-btn').style.display='none';
+  loadEmployeesForJob();
   document.getElementById('task-modal').style.display='flex';
 }
 
@@ -5413,17 +5449,25 @@ function saveTask(){
   if(!date) { toast('Please select a date');  return; }
 
   var editId = document.getElementById('task-edit-id').value;
+  var assigneeId = document.getElementById('task-assignee') ? document.getElementById('task-assignee').value : '';
+  var assigneeName = assigneeId ? (document.getElementById('task-assignee').options[document.getElementById('task-assignee').selectedIndex].text) : '';
+  var costCode = document.getElementById('task-costcode') ? document.getElementById('task-costcode').value : '';
+  var costCodeText = costCode ? (document.getElementById('task-costcode').options[document.getElementById('task-costcode').selectedIndex].text) : '';
   var task = {
-    id:      editId ? parseInt(editId) : taskNextId++,
-    type:     document.getElementById('task-type').value,
-    title:    title,
-    notes:    document.getElementById('task-notes').value.trim(),
-    date:     date,
-    time:     document.getElementById('task-time').value,
-    priority: document.getElementById('task-priority').value,
-    status:   document.getElementById('task-status').value,
-    reminder: document.getElementById('task-reminder').value,
-    _synced:  false
+    id:        editId ? parseInt(editId) : taskNextId++,
+    type:      document.getElementById('task-type').value,
+    title:     title,
+    notes:     document.getElementById('task-notes').value.trim(),
+    date:      date,
+    time:      document.getElementById('task-time').value,
+    priority:  document.getElementById('task-priority').value,
+    status:    document.getElementById('task-status').value,
+    reminder:  document.getElementById('task-reminder').value,
+    assigneeId: assigneeId,
+    assigneeName: assigneeName,
+    costCode:  costCode,
+    costCodeText: costCodeText,
+    _synced:   false
   };
 
   if(editId){
@@ -5454,6 +5498,36 @@ function saveTask(){
     } else {
       console.error('EmailJS not loaded');
       toast('EmailJS not loaded - check connection');
+    }
+    // Send SMS to assigned employee
+    if(assigneeId && !editId){
+      var emp = _employees.find(function(e){ return String(e.id)===String(assigneeId); });
+      if(emp && emp.phone && emp.phone !== '+1XXXXXXXXXX'){
+        var jobTrackerLinks = {
+          '24001 - BIOLA':       'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24001-biola.html',
+          '24002 - SEPULVEDA':   'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html',
+          '24005 - VNV':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html',
+          '24006 - VF':          'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html',
+          '24010 - COMMONS':     'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24010-commons.html',
+          '25001 - DECENA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html',
+          '25002 - BAH':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html',
+          '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
+          'SP25018 - CDC PLAZA': 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html',
+          '26003 - CARINA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html'
+        };
+        var jobLink = jobTrackerLinks[job] || 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker.html';
+        var smsBody = 'Rye Electric - Task Assigned to You\n\n'
+          + 'Job: ' + job + '\n'
+          + 'Task: ' + task.title + '\n'
+          + (costCodeText ? 'Cost Code: ' + costCodeText + '\n' : '')
+          + 'Priority: ' + task.priority.toUpperCase() + '\n'
+          + 'Date: ' + task.date + '\n'
+          + (task.time ? 'Time: ' + task.time + '\n' : '')
+          + (task.notes ? 'Notes: ' + task.notes + '\n' : '')
+          + '\nOpen job tracker:\n' + jobLink;
+        sendSMS(emp.phone, smsBody);
+        toast('SMS sent to ' + emp.name);
+      }
     }
   }
   closeTaskModal();
@@ -5536,6 +5610,48 @@ function initTasks(){
   }
 }
 /* === END TASKS === */
+
+
+/* === EMPLOYEE & SMS === */
+var _employees = [];
+
+async function loadEmployeesForJob(){
+  var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
+  if(!job) return;
+  try{
+    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/employees?job=eq.'+encodeURIComponent(job)+'&order=name.asc', {
+      headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'}
+    });
+    if(resp.ok){
+      _employees = await resp.json();
+      var sel = document.getElementById('task-assignee');
+      if(sel){
+        sel.innerHTML = '<option value="">-- Select employee --</option>';
+        _employees.forEach(function(e){
+          sel.innerHTML += '<option value="'+e.id+'">'+e.name+'</option>';
+        });
+      }
+    }
+  }catch(ex){ console.log('Employee load error:',ex); }
+}
+
+async function sendSMS(phone, message){
+  try{
+    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/functions/v1/send-sms', {
+      method:'POST',
+      headers:{
+        'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
+        'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({to: phone, body: message})
+    });
+    var data = await resp.json();
+    if(data.success){ console.log('SMS sent:', data.sid); }
+    else{ console.error('SMS error:', data.error); }
+  }catch(e){ console.error('SMS failed:',e); }
+}
+/* === END EMPLOYEE & SMS === */
 
 /* === INIT === */
 // Initialize EmailJS
