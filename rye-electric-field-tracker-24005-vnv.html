@@ -181,6 +181,10 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 .qn-dash{display:flex;align-items:center;gap:5px;background:var(--rye);color:var(--black);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
 .qn-select{background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 8px;cursor:pointer}
 .dash-btn{display:inline-flex;align-items:center;gap:6px;background:var(--rye);color:var(--black);border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
+.job-banner{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--rye);color:var(--black)}
+.jb-num{font-size:13px;font-weight:900}
+.jb-name{font-size:13px;font-weight:700;flex:1}
+.jb-badge{font-size:10px;background:rgba(0,0,0,.2);border-radius:10px;padding:2px 8px}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -200,7 +204,14 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 </header>
 
 <div class="shell">
-    <div class="vh">
+  <div class="job-banner">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--black)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+  <span class="jb-num">24005</span>
+  <span class="jb-name">VNV</span>
+  <span class="jb-badge">Job Tracker</span>
+  <a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="dash-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+</div>
+  <div class="vh">
     <div class="vh-left">
       <div class="vh-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
       <div>
@@ -5357,20 +5368,22 @@ async function loadEmployeesForJob(){
 }
 
 async function sendSMS(phone, message){
+  // T-Mobile email-to-text gateway
   try{
-    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/functions/v1/send-sms', {
-      method:'POST',
-      headers:{
-        'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
-        'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
-        'Content-Type':'application/json'
-      },
-      body: JSON.stringify({to: phone, body: message})
-    });
-    var data = await resp.json();
-    if(data.success){ console.log('SMS sent:', data.sid); }
-    else{ console.error('SMS error:', data.error); }
-  }catch(e){ console.error('SMS failed:',e); }
+    var digits = phone.replace(/\D/g,'');
+    if(digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
+    var smsEmail = digits + '@tmomail.net';
+    emailjs.send('service_q9t1mnk', 'template_tgzqipn', {
+      to_email:      smsEmail,
+      task_title:    message.substring(0, 160),
+      job:           ' ',
+      task_date:     ' ',
+      task_time:     ' ',
+      task_notes:    ' ',
+      task_priority: ' '
+    }).then(function(){ console.log('SMS sent via email-to-text to', smsEmail); },
+            function(e){ console.error('SMS email error:', e); });
+  }catch(e){ console.error('sendSMS error:',e); }
 }
 /* === END EMPLOYEE & SMS === */
 
