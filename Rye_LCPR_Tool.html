@@ -355,7 +355,7 @@ async function go(file) {
   setStatus('info','Sending to Claude for extraction…', true);
 
   try {
-    const resp = await fetch('https://round-truth-784a.dfurst.workers.dev/, {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
