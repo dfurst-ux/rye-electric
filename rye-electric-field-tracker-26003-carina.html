@@ -5445,7 +5445,7 @@ function saveTask(){
         task_time:     task.time || 'No time set',
         task_notes:    (task.notes || 'No notes') + (task.assigneeName ? '\n\nAssigned to: ' + task.assigneeName : '') + (task.costCodeText ? '\nCost Code: ' + task.costCodeText : ''),
         task_priority: task.priority,
-        calendar_link: generateICSLink(task, job || 'Field Tracker')
+        calendar_link: generateGCalLink(task, job || 'Field Tracker')
       }).then(function(r){ console.log('Task email sent:', r.status); toast('Email sent to '+emails.to); },
               function(e){ console.error('Email error:', JSON.stringify(e)); toast('Email failed: '+JSON.stringify(e)); });
     } else {
@@ -5595,37 +5595,28 @@ async function sendSMS(phone, message){
 /* === END EMPLOYEE & SMS === */
 
 
-/* === ICS CALENDAR === */
-function generateICSLink(task, job){
-  // Build ICS content
+/* === CALENDAR LINK === */
+function generateGCalLink(task, job){
   var date = task.date ? task.date.replace(/-/g,'') : '';
   var timeStr = task.time ? task.time.replace(':','') + '00' : '000000';
   var dtStart = date + 'T' + timeStr;
-  var dtEnd   = date + 'T' + (task.time ? (parseInt(task.time.replace(':','').slice(0,4)) + 100).toString().padStart(6,'0') : '010000');
+  // End time = start + 1 hour
+  var endHour = task.time ? String(parseInt(task.time.split(':')[0]) + 1).padStart(2,'0') + task.time.split(':')[1] + '00' : '010000';
+  var dtEnd = date + 'T' + endHour;
 
-  var ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//Rye Electric//Field Tracker//EN',
-    'BEGIN:VEVENT',
-    'DTSTART:' + dtStart,
-    'DTEND:'   + dtEnd,
-    'SUMMARY:' + (task.title || 'Task'),
-    'DESCRIPTION:Job: ' + job + '\\n' +
-      (task.costCodeText ? 'Cost Code: ' + task.costCodeText + '\\n' : '') +
-      (task.notes ? 'Notes: ' + task.notes + '\\n' : '') +
-      'Priority: ' + (task.priority || '') + '\\n' +
-      'Status: ' + (task.status || ''),
-    'LOCATION:' + job,
-    'END:VEVENT',
-    'END:VCALENDAR'
-  ].join('\r\n');
+  var details = 'Job: ' + job +
+    (task.costCodeText ? '%0ACost Code: ' + encodeURIComponent(task.costCodeText) : '') +
+    (task.notes ? '%0ANotes: ' + encodeURIComponent(task.notes) : '') +
+    '%0APriority: ' + (task.priority || '') +
+    (task.assigneeName ? '%0AAssigned to: ' + encodeURIComponent(task.assigneeName) : '');
 
-  // Create data URI
-  var encoded = encodeURIComponent(ics);
-  return 'data:text/calendar;charset=utf-8,' + encoded;
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+    + '&text=' + encodeURIComponent(task.title || 'Task')
+    + '&dates=' + dtStart + '/' + dtEnd
+    + '&details=' + details
+    + '&location=' + encodeURIComponent(job);
 }
-/* === END ICS === */
+/* === END CALENDAR LINK === */
 
 /* === INIT === */
 // Initialize EmailJS
