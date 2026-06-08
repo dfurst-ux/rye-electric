@@ -5491,8 +5491,9 @@ function saveTask(){
         job:           job || 'Field Tracker',
         task_date:     task.date,
         task_time:     task.time || 'No time set',
-        task_notes:    task.notes || 'No notes',
-        task_priority: task.priority
+        task_notes:    (task.notes || 'No notes') + (task.assigneeName ? '\n\nAssigned to: ' + task.assigneeName : '') + (task.costCodeText ? '\nCost Code: ' + task.costCodeText : ''),
+        task_priority: task.priority,
+        calendar_link: generateICSLink(task, job || 'Field Tracker')
       }).then(function(r){ console.log('Task email sent:', r.status); toast('Email sent to '+emails.to); },
               function(e){ console.error('Email error:', JSON.stringify(e)); toast('Email failed: '+JSON.stringify(e)); });
     } else {
@@ -5640,6 +5641,39 @@ async function sendSMS(phone, message){
   console.log('SMS skipped (A2P pending) for:', phone);
 }
 /* === END EMPLOYEE & SMS === */
+
+
+/* === ICS CALENDAR === */
+function generateICSLink(task, job){
+  // Build ICS content
+  var date = task.date ? task.date.replace(/-/g,'') : '';
+  var timeStr = task.time ? task.time.replace(':','') + '00' : '000000';
+  var dtStart = date + 'T' + timeStr;
+  var dtEnd   = date + 'T' + (task.time ? (parseInt(task.time.replace(':','').slice(0,4)) + 100).toString().padStart(6,'0') : '010000');
+
+  var ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Rye Electric//Field Tracker//EN',
+    'BEGIN:VEVENT',
+    'DTSTART:' + dtStart,
+    'DTEND:'   + dtEnd,
+    'SUMMARY:' + (task.title || 'Task'),
+    'DESCRIPTION:Job: ' + job + '\\n' +
+      (task.costCodeText ? 'Cost Code: ' + task.costCodeText + '\\n' : '') +
+      (task.notes ? 'Notes: ' + task.notes + '\\n' : '') +
+      'Priority: ' + (task.priority || '') + '\\n' +
+      'Status: ' + (task.status || ''),
+    'LOCATION:' + job,
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+
+  // Create data URI
+  var encoded = encodeURIComponent(ics);
+  return 'data:text/calendar;charset=utf-8,' + encoded;
+}
+/* === END ICS === */
 
 /* === INIT === */
 // Initialize EmailJS
