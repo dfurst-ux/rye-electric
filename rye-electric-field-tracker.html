@@ -5637,19 +5637,15 @@ async function loadEmployeesForJob(){
 
 async function sendSMS(phone, message){
   try{
-    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/functions/v1/send-sms', {
-      method:'POST',
-      headers:{
-        'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
-        'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
-        'Content-Type':'application/json'
-      },
+    var resp = await fetch('https://rye-sms.dfurst.workers.dev/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({to: phone, body: message})
     });
     var data = await resp.json();
-    if(data.success){ console.log('SMS sent:', data.sid); }
-    else{ console.error('SMS error:', data.error); }
-  }catch(e){ console.error('SMS failed:',e); }
+    if(data.success){ console.log('SMS sent:', data.sid); toast('Text sent!'); }
+    else{ console.error('SMS error:', data.error); toast('Text failed'); }
+  }catch(e){ console.error('sendSMS error:',e); }
 }
 /* === END EMPLOYEE & SMS === */
 
