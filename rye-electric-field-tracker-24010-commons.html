@@ -5368,16 +5368,8 @@ async function loadEmployeesForJob(){
 }
 
 async function sendSMS(phone, message){
-  try{
-    var resp = await fetch('https://rye-sms.dfurst.workers.dev/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({to: phone, body: message})
-    });
-    var data = await resp.json();
-    if(data.success){ console.log('SMS sent:', data.sid); toast('Text sent!'); }
-    else{ console.error('SMS error:', data.error); toast('Text failed'); }
-  }catch(e){ console.error('sendSMS error:',e); }
+  // SMS disabled until A2P 10DLC registration complete
+  console.log('SMS skipped (A2P pending) for:', phone);
 }
 /* === END EMPLOYEE & SMS === */
 
