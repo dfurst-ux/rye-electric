@@ -4,7 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric — LCPR Weekly Job Review</title>
-
+<script>
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+let scriptsLoaded = false;
+async function ensureScripts() {
+  if(scriptsLoaded) return;
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js');
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js');
+  scriptsLoaded = true;
+}
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -514,236 +531,174 @@ dlBtn.addEventListener('click', () => {
   if(!extracted) return;
   dlBtn.disabled = true;
   dlBtn.innerHTML = '⏳ Building document…';
-  setTimeout(() => {
-    try {
-      buildWordDoc(extracted);
-    } catch(e) {
-      alert('Error: ' + e.message);
-    }
-    dlBtn.disabled = false;
-    dlBtn.innerHTML = '⬇ Download .docx';
-  }, 50);
+  setTimeout(() => buildDoc(extracted), 50);
 });
 
-function buildWordDoc(d) {
-  const n = v => v || '—';
-  const rC = d.laborRateFlag === 'WTF' ? '#DC2626' : d.laborRateFlag === 'NICE' ? '#16A34A' : '#000';
-  const mC = (d.projectedMargin_dollar && d.projectedMargin_dollar.includes('-')) ? '#DC2626' : '#16A34A';
-
-  function row(label, value, color) {
-    return `<tr>
-      <td style="background:#D6E4F0;font-weight:bold;padding:6px 10px;border:1px solid #ccc;width:35%;color:#1F3864">${label}</td>
-      <td style="padding:6px 10px;border:1px solid #ccc;color:${color||'#000'};font-weight:${color?'bold':'normal'}">${value||'—'}</td>
-    </tr>`;
+let Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, AlignmentType, BorderStyle, WidthType, ShadingType;
+window.addEventListener('load', () => {
+  if(window.docx) {
+    ({ Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+       AlignmentType, BorderStyle, WidthType, ShadingType } = docx);
   }
+});
 
-  function sectionHead(title) {
-    return `<tr><td colspan="2" style="background:#1F3864;color:#fff;font-weight:bold;padding:8px 10px;font-size:13pt;border:1px solid #1F3864;letter-spacing:1px">${title.toUpperCase()}</td></tr>`;
+async function buildDoc(d) {
+  try {
+    await ensureScripts();
+    ({ Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+       AlignmentType, BorderStyle, WidthType, ShadingType } = docx);
+
+  const BD='1F3864',BM='2E75B6',BL='D6E4F0',GR='F5F5F5',YL='FFFDE7',RL='FEF2F2',GL='F0FDF4';
+  const b={style:BorderStyle.SINGLE,size:4,color:'CCCCCC'};
+  const bds={top:b,bottom:b,left:b,right:b};
+
+  function c(text,w,fill='FFFFFF',bold=false,color='111827'){
+    return new TableCell({borders:bds,width:{size:w,type:WidthType.DXA},
+      shading:{fill,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:120,right:120},
+      children:[new Paragraph({children:[new TextRun({text:String(text||''),bold,size:18,font:'Arial',color})]})]});
   }
-
-  function blankRows(n) {
-    let r = '';
-    for(let i=0;i<n;i++) r += `<tr><td style="border:1px solid #ccc;padding:6px 10px;background:#D6E4F0;font-weight:bold;color:#1F3864"></td><td style="border:1px solid #ccc;padding:6px 10px;height:20px"></td></tr>`;
-    return r;
+  function hr(l,r){return new TableRow({children:[c(l,3120,BD,true,'FFFFFF'),c(r,6240,BD,true,'FFFFFF')]});}
+  function dr(label,val,fill='FFFFFF',col=null){
+    return new TableRow({children:[
+      c(label,3120,BL,true,BD),
+      new TableCell({borders:bds,width:{size:6240,type:WidthType.DXA},shading:{fill,type:ShadingType.CLEAR},
+        margins:{top:80,bottom:80,left:120,right:120},
+        children:[new Paragraph({children:[new TextRun({text:String(val||'—'),size:18,font:'Arial',bold:!!col,color:col||'111827'})]})]})
+    ]});
   }
+  function t2(rows){return new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[3120,6240],rows});}
+  function sh(text){return new Paragraph({spacing:{before:300,after:80},border:{bottom:{style:BorderStyle.SINGLE,size:12,color:BM,space:4}},children:[new TextRun({text:text.toUpperCase(),bold:true,size:22,font:'Arial',color:BD})]});}
+  function sp(){return new Paragraph({spacing:{after:80},children:[new TextRun('')]});}
+  function n(x){return x||'—';}
 
-  const phases = (d.phases||[]).map(p => `<tr>
-    <td style="border:1px solid #ccc;padding:5px 8px;background:#f5f5f5;font-weight:bold">${p.code||''}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px">${p.estimated||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px">${p.reported||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px">${p.purchased||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px;font-weight:bold;color:${p.flag==='WTF'?'#DC2626':p.flag==='NICE'?'#16A34A':'#000'};background:${p.flag==='WTF'?'#FEF2F2':p.flag==='NICE'?'#F0FDF4':'#fff'}">${p.flag||''}</td>
-  </tr>`).join('');
+  const rC=d.laborRateFlag==='WTF'?'DC2626':d.laborRateFlag==='NICE'?'16A34A':'111827';
+  const mC=(d.projectedMargin_dollar&&d.projectedMargin_dollar.includes('-'))?'DC2626':'16A34A';
 
-  const losses = (d.topLossCodes||[]).slice(0,8).map(c => `<tr>
-    <td style="border:1px solid #ccc;padding:5px 8px;background:#f5f5f5;font-weight:bold">${c.code||''}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px;color:#DC2626;font-weight:bold">${c.loss||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px"></td>
-  </tr>`).join('');
+  const phRows=(d.phases||[]).map(p=>new TableRow({children:[
+    c(p.code,1440,GR,true,'111827'),
+    c(p.estimated,1560,'FFFFFF'),
+    c(p.reported,1560,'FFFFFF'),
+    c(p.purchased,1560,'FFFFFF'),
+    new TableCell({borders:bds,width:{size:1080,type:WidthType.DXA},shading:{fill:p.flag==='WTF'?RL:p.flag==='NICE'?GL:'FFFFFF',type:ShadingType.CLEAR},margins:{top:60,bottom:60,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:p.flag||'',bold:true,size:17,font:'Arial',color:p.flag==='WTF'?'DC2626':p.flag==='NICE'?'16A34A':'111827'})]})]}),
+    new TableCell({borders:bds,width:{size:1680,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:60,bottom:60,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:'',size:17})]})]})
+  ]}));
 
-  const gains = (d.topGainCodes||[]).slice(0,6).map(c => `<tr>
-    <td style="border:1px solid #ccc;padding:5px 8px;background:#f5f5f5;font-weight:bold">${c.code||''}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px;color:#16A34A;font-weight:bold">${c.gain||'—'}</td>
-  </tr>`).join('');
+  const lRows=(d.topLossCodes||[]).slice(0,8).map(lc=>new TableRow({children:[c(lc.code,3120,GR,true,'111827'),new TableCell({borders:bds,width:{size:6240,type:WidthType.DXA},shading:{fill:RL,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:120,right:120},children:[new Paragraph({children:[new TextRun({text:lc.loss||'—',size:18,font:'Arial',bold:true,color:'DC2626'})]})]})]}));
+  const gRows=(d.topGainCodes||[]).slice(0,6).map(gc=>new TableRow({children:[c(gc.code,3120,GR,true,'111827'),new TableCell({borders:bds,width:{size:6240,type:WidthType.DXA},shading:{fill:GL,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:120,right:120},children:[new Paragraph({children:[new TextRun({text:gc.gain||'—',size:18,font:'Arial',bold:true,color:'16A34A'})]})]})]}));
 
-  const html = `
-<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="utf-8">
-<style>
-  body { font-family: Arial, sans-serif; font-size: 10pt; margin: 0.75in; }
-  table { border-collapse: collapse; width: 100%; margin-bottom: 16px; }
-  td, th { font-size: 10pt; }
-  h1 { color: #1F3864; font-size: 20pt; margin: 0; }
-  h2 { color: #2E75B6; font-size: 11pt; margin: 12px 0 4px; border-bottom: 2px solid #2E75B6; padding-bottom: 3px; }
-  .cover { background: #1F3864; color: white; padding: 16px 20px; margin-bottom: 20px; }
-  .cover p { color: #93B8D8; margin: 3px 0 0; font-size: 9pt; }
-  .metric-box { display: inline-block; width: 22%; text-align: center; border: 1px solid #ccc; padding: 10px; margin: 2px; }
-  .metric-label { font-size: 8pt; color: #666; }
-  .metric-val { font-size: 18pt; font-weight: bold; color: #1F3864; }
-</style>
-</head>
-<body>
+  const nbdr={style:BorderStyle.NONE,size:0,color:'FFFFFF'};
+  const nbs={top:nbdr,bottom:nbdr,left:nbdr,right:nbdr};
 
-<div class="cover">
-  <h1>RYE ELECTRIC — WEEKLY JOB REVIEW</h1>
-  <p>LCPR + CTC Combined &nbsp;|&nbsp; Job: ${n(d.jobName)} (${n(d.jobNumber)}) &nbsp;|&nbsp; Week Ending: ${n(d.weekEnding)} &nbsp;|&nbsp; Manpower: ${n(d.currentManpower)}</p>
-</div>
+  const cover=new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[4680,4680],rows:[new TableRow({children:[
+    new TableCell({borders:nbs,width:{size:4680,type:WidthType.DXA},shading:{fill:BD,type:ShadingType.CLEAR},margins:{top:200,bottom:200,left:240,right:240},children:[
+      new Paragraph({children:[new TextRun({text:'RYE ELECTRIC',bold:true,size:36,font:'Arial',color:'FFFFFF'})]}),
+      new Paragraph({children:[new TextRun({text:'WEEKLY JOB REVIEW',size:22,font:'Arial',color:'D6E4F0'})]}),
+      new Paragraph({children:[new TextRun({text:'LCPR + CTC Combined',italics:true,size:18,font:'Arial',color:'93B8D8'})]})
+    ]}),
+    new TableCell({borders:nbs,width:{size:4680,type:WidthType.DXA},shading:{fill:BD,type:ShadingType.CLEAR},margins:{top:200,bottom:200,left:240,right:240},children:[
+      new Paragraph({alignment:AlignmentType.RIGHT,children:[new TextRun({text:'Job:  ',bold:true,size:18,font:'Arial',color:'D6E4F0'}),new TextRun({text:n(d.jobName)+' ('+n(d.jobNumber)+')',size:18,font:'Arial',color:'FFFFFF'})]}),
+      new Paragraph({alignment:AlignmentType.RIGHT,children:[new TextRun({text:'Week ending:  ',bold:true,size:18,font:'Arial',color:'D6E4F0'}),new TextRun({text:n(d.weekEnding),size:18,font:'Arial',color:'FFFFFF'})]}),
+      new Paragraph({alignment:AlignmentType.RIGHT,children:[new TextRun({text:'Current manpower:  ',bold:true,size:18,font:'Arial',color:'D6E4F0'}),new TextRun({text:n(d.currentManpower),size:18,font:'Arial',color:'FFFFFF'})]}),
+    ]})
+  ]})]});
 
-<h2>1 | PERCENT COMPLETE</h2>
-<table>
-  <tr>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Total Costs</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Units</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Hours</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Labor Costs</td>
-  </tr>
-  <tr>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.totalCostsPct)}</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.unitsPct)}</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.hoursPct)}</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.laborCostsPct)}</td>
-  </tr>
-</table>
+  const doc=new Document({styles:{default:{document:{run:{font:'Arial',size:20}}}},sections:[{
+    properties:{page:{size:{width:12240,height:15840},margin:{top:1080,right:1080,bottom:1080,left:1080}}},
+    children:[
+      cover,sp(),
+      sh('1  |  Percent Complete'),
+      new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[2340,2340,2340,2340],rows:[
+        new TableRow({children:['Total Costs','Units','Hours','Labor Costs'].map(h=>new TableCell({borders:bds,width:{size:2340,type:WidthType.DXA},shading:{fill:BD,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:h,bold:true,size:18,font:'Arial',color:'FFFFFF'})]})]}))}),
+        new TableRow({children:[n(d.totalCostsPct),n(d.unitsPct),n(d.hoursPct),n(d.laborCostsPct)].map(v=>new TableCell({borders:bds,width:{size:2340,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:120,bottom:120,left:80,right:80},children:[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:v,size:24,font:'Arial',bold:true})]})]}))})
+      ]}),sp(),
+      sh('2  |  Labor Rate'),
+      t2([
+        hr('METRIC','VALUE'),
+        dr('JTD labor rate',n(d.jtdLaborRate)+' (budget: '+n(d.budgetLaborRate)+')', d.laborRateFlag==='WTF'?RL:d.laborRateFlag==='NICE'?GL:'FFFFFF', rC),
+        dr('Last week rate',n(d.lastWeekLaborRate)),
+        dr('Weekly goal rate',n(d.weeklyGoalRate)),
+        dr('Projected wage loss at current rate',n(d.projectedWageLoss),RL,'DC2626'),
+        dr('Rate flag',d.laborRateFlag||'—',d.laborRateFlag==='WTF'?RL:d.laborRateFlag==='NICE'?GL:'FFFFFF',rC),
+        dr('Root cause (to complete in meeting)',''),
+      ]),sp(),
+      sh('3  |  Labor Productivity  (★ = most important)'),
+      new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[2400,1560,1560,1560,2280],rows:[
+        new TableRow({children:['Category','Actual','Budget','Status','Notes'].map((h,i)=>new TableCell({borders:bds,width:{size:[2400,1560,1560,1560,2280][i],type:WidthType.DXA},shading:{fill:BD,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:h,bold:true,size:17,font:'Arial',color:'FFFFFF'})]})]})) }),
+        ...[
+          ['Units (hr/un) ★',d.unitsProductivity_actual,d.unitsProductivity_budget],
+          ['Conduit (ft/hr)',d.conduitProductivity_actual,d.conduitProductivity_budget],
+          ['Wire & cabling (ft/hr)',d.wireProductivity_actual,d.wireProductivity_budget],
+          ['Fixtures & devices (hr/un)',d.fixturesProductivity_actual,d.fixturesProductivity_budget],
+          ['Power & distribution (hr/un)',null,null],
+          ['Common areas (hr/un)',null,null],
+        ].map(([cat,act,bud])=>{
+          const over=act&&bud&&parseFloat(act)>parseFloat(bud);
+          const fill=over?RL:(act&&bud)?GL:'FFFFFF';
+          return new TableRow({children:[
+            new TableCell({borders:bds,width:{size:2400,type:WidthType.DXA},shading:{fill:BL,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:cat,bold:cat.includes('★'),size:17,font:'Arial',color:BD})]})] }),
+            new TableCell({borders:bds,width:{size:1560,type:WidthType.DXA},shading:{fill,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:n(act),size:17,font:'Arial',bold:true,color:over?'DC2626':'16A34A'})]})] }),
+            new TableCell({borders:bds,width:{size:1560,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:n(bud),size:17,font:'Arial'})]})] }),
+            new TableCell({borders:bds,width:{size:1560,type:WidthType.DXA},shading:{fill,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:over?'OVER':'—',size:17,font:'Arial',bold:over,color:over?'DC2626':'9CA3AF'})]})] }),
+            new TableCell({borders:bds,width:{size:2280,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:'',size:17})]})] }),
+          ]});
+        })
+      ]}),sp(),
+      sh('4  |  Projected Profit Margin'),
+      t2([hr('METRIC','VALUE'),dr('Projected margin ($)',n(d.projectedMargin_dollar),(d.projectedMargin_dollar&&d.projectedMargin_dollar.includes('-'))?RL:GL,mC),dr('Projected margin (%)',n(d.projectedMargin_pct),(d.projectedMargin_pct&&d.projectedMargin_pct.includes('-'))?RL:GL,mC),dr('Last week margin',n(d.lastWeekMargin_dollar)),dr('Trend (improving / declining / flat)',''),]),sp(),
+      sh('5  |  Risk Exposure — Top Loss Codes'),
+      new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[3120,6240],rows:[
+        new TableRow({children:[c('Phase code',3120,BD,true,'FFFFFF'),c('Projected loss',6240,BD,true,'FFFFFF')]}),
+        ...lRows,
+        ...(lRows.length===0?[new TableRow({children:[c('No loss codes extracted',9360,'FFFFFF',false,'9CA3AF')]})]:[]),
+        new TableRow({children:[new TableCell({borders:bds,columnSpan:2,width:{size:9360,type:WidthType.DXA},shading:{fill:YL,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:120,right:120},children:[new Paragraph({children:[new TextRun({text:'Root causes & action items — to complete in meeting:',italics:true,size:17,font:'Arial',color:'92400E'})]})]})]}),
+        new TableRow({children:[new TableCell({borders:bds,columnSpan:2,width:{size:9360,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:60,bottom:120,left:120,right:120},children:[new Paragraph({children:[new TextRun({text:'',size:17})]})]})]})
+      ]}),sp(),
+      sh('6  |  Risk Exposure — Top Gain Codes'),
+      new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[3120,6240],rows:[
+        new TableRow({children:[c('Phase code',3120,'2E7D32',true,'FFFFFF'),c('Projected gain',6240,'2E7D32',true,'FFFFFF')]}),
+        ...gRows,
+        ...(gRows.length===0?[new TableRow({children:[c('No gain codes extracted',9360,'FFFFFF',false,'9CA3AF')]})]:[]),
+      ]}),sp(),
+      sh('7  |  Unit Reporting & Quantity Flags'),
+      new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[1440,1560,1560,1560,1560,1680],rows:[
+        new TableRow({children:['Phase','Estimated','Reported','Purchased','Flag','Notes'].map((h,i)=>new TableCell({borders:bds,width:{size:[1440,1560,1560,1560,1560,1680][i],type:WidthType.DXA},shading:{fill:BD,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:h,bold:true,size:17,font:'Arial',color:'FFFFFF'})]})]})) }),
+        ...phRows,
+        ...(phRows.length===0?[new TableRow({children:[new TableCell({borders:bds,columnSpan:6,width:{size:9360,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:120,right:120},children:[new Paragraph({children:[new TextRun({text:'No phase data extracted',size:17,font:'Arial',color:'9CA3AF',italics:true})]})]})]})]:
+          [new TableRow({children:[new TableCell({borders:bds,columnSpan:6,width:{size:9360,type:WidthType.DXA},shading:{fill:YL,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:120,right:120},children:[new Paragraph({children:[new TextRun({text:'Review any Q EXCEEDED or NO BUDGET flags for COR exposure.',italics:true,size:16,font:'Arial',color:'92400E'})]})]})]})]),
+      ]}),sp(),
+      sh('8  |  Schedule & Milestones'),
+      t2([hr('ITEM','STATUS / DATE'),...['Original completion date','Current projected completion','Weeks ahead / behind schedule','Next critical milestone','Permanent power / energization status','LADWP / utility status','TCO target date','Schedule impacts from RFIs or design issues'].map(l=>dr(l,''))]),sp(),
+      sh('9  |  Change Order Status'),
+      t2([hr('METRIC','VALUE / NOTES'),...['Total approved COs ($)','Total pending COs (qty + $)','CORs open > 30 days (qty + $)','Total exposed costs (unapproved work)','New scope identified from LCPR phase overruns this week?'].map(l=>dr(l,''))]),sp(),
+      sh('10  |  Manpower & Field Operations'),
+      t2([hr('QUESTION','ANSWER / NOTES'),dr('Current manpower',n(d.currentManpower)),dr('JM-to-apprentice ratio',''),dr('Hours spent to date',n(d.hoursSpentToDate)+' spent  |  '+n(d.budgetedHoursRemaining)+' remaining'),dr('Dollars spent last week',n(d.dollarsSpentLastWeek)),dr('Injuries or near misses this week?',''),dr('Upcoming high-risk activities?',''),dr('Acceleration or overtime anticipated?','')]),sp(),
+      sh('11  |  Project Impacts, RFIs & Open Issues'),
+      t2([hr('TOPIC','STATUS / NOTES'),...['Open RFIs impacting schedule or labor productivity','Notice of impacts logged this week','WTF-flagged phases tied to unresolved RFIs?','GC coordination issues / scope disputes','AHJ / inspector issues'].map(l=>dr(l,''))]),sp(),
+      sh('12  |  Closeout Readiness'),
+      t2([hr('ITEM','STATUS'),...['As-builts (deck / unit)','Panels & labels','O&M manuals','Title 24 documents','Warranty letter (after TCO)'].map(l=>dr(l,''))]),sp(),
+      sh('13  |  Action Items'),
+      new Table({width:{size:9360,type:WidthType.DXA},columnWidths:[480,4080,2400,1440,960],rows:[
+        new TableRow({children:['#','Action item','Owner','Due date','Done'].map((h,i)=>new TableCell({borders:bds,width:{size:[480,4080,2400,1440,960][i],type:WidthType.DXA},shading:{fill:BD,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:h,bold:true,size:17,font:'Arial',color:'FFFFFF'})]})]})) }),
+        ...Array.from({length:8},(_,idx)=>new TableRow({children:[
+          new TableCell({borders:bds,width:{size:480,type:WidthType.DXA},shading:{fill:GR,type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:String(idx+1),bold:true,size:17,font:'Arial'})]})] }),
+          ...[4080,2400,1440,960].map(w=>new TableCell({borders:bds,width:{size:w,type:WidthType.DXA},shading:{fill:'FFFFFF',type:ShadingType.CLEAR},margins:{top:80,bottom:80,left:80,right:80},children:[new Paragraph({children:[new TextRun({text:'',size:17})]})]}))
+        ]}))
+      ]}),sp(),
+      new Paragraph({spacing:{before:200},border:{top:{style:BorderStyle.SINGLE,size:4,color:'CCCCCC',space:4}},children:[new TextRun({text:'Next meeting date: ___________________________     Duration: ___________     Facilitator: ___________________________',size:16,font:'Arial',color:'6B7280',italics:true})]})
+    ]
+  }]});
 
-<h2>2 | LABOR RATE</h2>
-<table>
-  ${sectionHead('METRIC')}
-  ${row('JTD labor rate', n(d.jtdLaborRate) + ' (budget: ' + n(d.budgetLaborRate) + ')', rC)}
-  ${row('Last week rate', n(d.lastWeekLaborRate))}
-  ${row('Weekly goal rate', n(d.weeklyGoalRate))}
-  ${row('Projected wage loss', n(d.projectedWageLoss), '#DC2626')}
-  ${row('Rate flag', d.laborRateFlag||'—', rC)}
-  ${row('Root cause (to complete in meeting)', '')}
-</table>
-
-<h2>3 | LABOR PRODUCTIVITY (★ = most important)</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Category</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Actual</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Budget</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Status</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Notes</td>
-  </tr>
-  ${[
-    ['Units (hr/un) ★', d.unitsProductivity_actual, d.unitsProductivity_budget],
-    ['Conduit (ft/hr)', d.conduitProductivity_actual, d.conduitProductivity_budget],
-    ['Wire & cabling (ft/hr)', d.wireProductivity_actual, d.wireProductivity_budget],
-    ['Fixtures & devices (hr/un)', d.fixturesProductivity_actual, d.fixturesProductivity_budget],
-    ['Power & distribution (hr/un)', null, null],
-    ['Common areas (hr/un)', null, null],
-  ].map(([cat, act, bud]) => {
-    const over = act && bud && parseFloat(act) > parseFloat(bud);
-    return `<tr style="background:${over?'#FEF2F2':'#fff'}">
-      <td style="border:1px solid #ccc;padding:6px 8px;background:#D6E4F0;color:#1F3864;font-weight:${cat.includes('★')?'bold':'normal'}">${cat}</td>
-      <td style="border:1px solid #ccc;padding:6px 8px;font-weight:bold;color:${over?'#DC2626':'#16A34A'}">${act||'—'}</td>
-      <td style="border:1px solid #ccc;padding:6px 8px">${bud||'—'}</td>
-      <td style="border:1px solid #ccc;padding:6px 8px;font-weight:bold;color:${over?'#DC2626':'#9CA3AF'}">${over?'OVER':'—'}</td>
-      <td style="border:1px solid #ccc;padding:6px 8px"></td>
-    </tr>`;
-  }).join('')}
-</table>
-
-<h2>4 | PROJECTED PROFIT MARGIN</h2>
-<table>
-  ${row('Projected margin ($)', n(d.projectedMargin_dollar), mC)}
-  ${row('Projected margin (%)', n(d.projectedMargin_pct), mC)}
-  ${row('Last week margin', n(d.lastWeekMargin_dollar))}
-  ${row('Trend (improving / declining / flat)', '')}
-</table>
-
-<h2>5 | RISK EXPOSURE — TOP LOSS CODES</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Phase code</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Projected loss</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Root cause / action item</td>
-  </tr>
-  ${losses || '<tr><td colspan="3" style="border:1px solid #ccc;padding:6px;color:#999;font-style:italic">No loss codes extracted</td></tr>'}
-  <tr><td colspan="3" style="border:1px solid #ccc;padding:20px 8px;background:#FFFDE7"></td></tr>
-</table>
-
-<h2>6 | RISK EXPOSURE — TOP GAIN CODES</h2>
-<table>
-  <tr style="background:#2E7D32;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Phase code</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Projected gain</td>
-  </tr>
-  ${gains || '<tr><td colspan="2" style="border:1px solid #ccc;padding:6px;color:#999;font-style:italic">No gain codes extracted</td></tr>'}
-</table>
-
-<h2>7 | UNIT REPORTING & QUANTITY FLAGS</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Phase</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Estimated</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Reported</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Purchased</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Flag</td>
-  </tr>
-  ${phases || '<tr><td colspan="5" style="border:1px solid #ccc;padding:6px;color:#999;font-style:italic">No phase data</td></tr>'}
-</table>
-
-<h2>8 | SCHEDULE & MILESTONES</h2>
-<table>
-  ${['Original completion date','Current projected completion','Weeks ahead / behind schedule','Next critical milestone','Permanent power / energization status','LADWP / utility status','TCO target date','Schedule impacts from RFIs'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>9 | CHANGE ORDER STATUS</h2>
-<table>
-  ${['Total approved COs ($)','Total pending COs (qty + $)','CORs open > 30 days (qty + $)','Total exposed costs (unapproved work)','New scope from LCPR phase overruns this week?'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>10 | MANPOWER & FIELD OPERATIONS</h2>
-<table>
-  ${row('Current manpower', n(d.currentManpower))}
-  ${row('JM-to-apprentice ratio', '')}
-  ${row('Hours spent to date / remaining', n(d.hoursSpentToDate) + ' spent  |  ' + n(d.budgetedHoursRemaining) + ' remaining')}
-  ${row('Dollars spent last week', n(d.dollarsSpentLastWeek))}
-  ${['Injuries or near misses this week?','Upcoming high-risk activities?','Acceleration or overtime anticipated?'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>11 | PROJECT IMPACTS, RFIs & OPEN ISSUES</h2>
-<table>
-  ${['Open RFIs impacting schedule or labor productivity','Notice of impacts logged this week','WTF-flagged phases tied to unresolved RFIs?','GC coordination issues / scope disputes','AHJ / inspector issues'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>12 | CLOSEOUT READINESS</h2>
-<table>
-  ${['As-builts (deck / unit)','Panels & labels','O&M manuals','Title 24 documents','Warranty letter (after TCO)'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>13 | ACTION ITEMS</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:5%">#</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:45%">Action item</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:25%">Owner</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:15%">Due date</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:10%">Done</td>
-  </tr>
-  ${Array.from({length:8},(_,i)=>`<tr>
-    <td style="border:1px solid #ccc;padding:6px 8px;background:#f5f5f5;font-weight:bold">${i+1}</td>
-    <td style="border:1px solid #ccc;padding:6px 8px;height:22px"></td>
-    <td style="border:1px solid #ccc;padding:6px 8px"></td>
-    <td style="border:1px solid #ccc;padding:6px 8px"></td>
-    <td style="border:1px solid #ccc;padding:6px 8px"></td>
-  </tr>`).join('')}
-</table>
-
-<p style="margin-top:20px;border-top:1px solid #ccc;padding-top:10px;color:#666;font-size:9pt;font-style:italic">
-  Next meeting date: ___________________________ &nbsp;&nbsp; Duration: ___________ &nbsp;&nbsp; Facilitator: ___________________________
-</p>
-
-</body></html>`;
-
-  const blob = new Blob([html], {type: 'application/msword'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.doc`;
-  a.click();
-  URL.revokeObjectURL(url);
+  const buf = await Packer.toBuffer(doc);
+  const blob = new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  saveAs(blob, `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.docx`);
+  dlBtn.disabled = false;
+  dlBtn.innerHTML = '⬇ Download .docx';
+  } catch(e) {
+    dlBtn.disabled = false;
+    dlBtn.innerHTML = '⬇ Download .docx';
+    alert('Download failed: ' + e.message);
+  }
 }
-
 </script>
+</body>
+</html>
