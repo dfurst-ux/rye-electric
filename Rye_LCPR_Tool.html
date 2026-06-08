@@ -352,15 +352,15 @@ async function go(file) {
     r.readAsDataURL(file);
   });
 
-  setStatus('info','Sending to Claude for extraction…', true);
+  setStatus('info','Sending to Rye Management for extraction…', true);
 
   try {
     const resp = await fetch('https://round-truth-784a.dfurst.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        model: 'claude-sonnet-4-5',
+        max_tokens: 4096,
         messages: [{
           role: 'user',
           content: [
@@ -406,6 +406,9 @@ async function go(file) {
     });
 
     const data = await resp.json();
+    if (!data.content) {
+      throw new Error('API error: ' + JSON.stringify(data));
+    }
     const raw = data.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
     extracted = JSON.parse(raw);
     setStatus('success', 'Extraction complete — review below, then download your .docx.', false);
@@ -508,14 +511,27 @@ function renderPreview(d, fname) {
   dataGrid.innerHTML = html;
 }
 
-dlBtn.addEventListener('click', async () => {
+dlBtn.addEventListener('click', () => {
   if(!extracted) return;
   dlBtn.disabled = true;
   dlBtn.innerHTML = '⏳ Building document…';
-  const d = extracted;
+  setTimeout(() => buildDoc(extracted), 50);
+});
 
-  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-          AlignmentType, BorderStyle, WidthType, ShadingType } = docx;
+let Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, AlignmentType, BorderStyle, WidthType, ShadingType;
+window.addEventListener('load', () => {
+  if(window.docx) {
+    ({ Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+       AlignmentType, BorderStyle, WidthType, ShadingType } = docx);
+  }
+});
+
+async function buildDoc(d) {
+  try {
+    if(!Document) {
+      ({ Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+         AlignmentType, BorderStyle, WidthType, ShadingType } = docx);
+    }
 
   const BD='1F3864',BM='2E75B6',BL='D6E4F0',GR='F5F5F5',YL='FFFDE7',RL='FEF2F2',GL='F0FDF4';
   const b={style:BorderStyle.SINGLE,size:4,color:'CCCCCC'};
@@ -657,17 +673,17 @@ dlBtn.addEventListener('click', async () => {
     ]
   }]});
 
-  try {
-    const buf = await Packer.toBuffer(doc);
-    const blob = new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-    saveAs(blob, `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.docx`);
-  } catch(e) {
-    alert('Download failed: ' + e.message);
-  }
-
+  const buf = await Packer.toBuffer(doc);
+  const blob = new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  saveAs(blob, `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.docx`);
   dlBtn.disabled = false;
   dlBtn.innerHTML = '⬇ Download .docx';
-});
+  } catch(e) {
+    dlBtn.disabled = false;
+    dlBtn.innerHTML = '⬇ Download .docx';
+    alert('Download failed: ' + e.message);
+  }
+}
 </script>
 </body>
 </html>
