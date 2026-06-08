@@ -4,24 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric — LCPR Weekly Job Review</title>
-<script>
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = src;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.head.appendChild(s);
-  });
-}
-let scriptsLoaded = false;
-async function ensureScripts() {
-  if(scriptsLoaded) return;
-  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js');
-  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js');
-  scriptsLoaded = true;
-}
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -368,15 +352,15 @@ async function go(file) {
     r.readAsDataURL(file);
   });
 
-  setStatus('info','Sending to Rye Management for extraction…', true);
+  setStatus('info','Sending to Claude for extraction…', true);
 
   try {
-    const resp = await fetch('https://round-truth-784a.dfurst.workers.dev/', {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
-        max_tokens: 4096,
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
         messages: [{
           role: 'user',
           content: [
@@ -422,9 +406,6 @@ async function go(file) {
     });
 
     const data = await resp.json();
-    if (!data.content) {
-      throw new Error('API error: ' + JSON.stringify(data));
-    }
     const raw = data.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
     extracted = JSON.parse(raw);
     setStatus('success', 'Extraction complete — review below, then download your .docx.', false);
@@ -527,27 +508,14 @@ function renderPreview(d, fname) {
   dataGrid.innerHTML = html;
 }
 
-dlBtn.addEventListener('click', () => {
+dlBtn.addEventListener('click', async () => {
   if(!extracted) return;
   dlBtn.disabled = true;
   dlBtn.innerHTML = '⏳ Building document…';
-  setTimeout(() => buildDoc(extracted), 50);
-});
+  const d = extracted;
 
-let Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, AlignmentType, BorderStyle, WidthType, ShadingType;
-window.addEventListener('load', () => {
-  if(window.docx) {
-    ({ Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-       AlignmentType, BorderStyle, WidthType, ShadingType } = docx);
-  }
-});
-
-async function buildDoc(d) {
-  try {
-    await ensureScripts();
-    console.log('docx loaded:', typeof docx, Object.keys(docx||{}).slice(0,5));
-    ({ Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-       AlignmentType, BorderStyle, WidthType, ShadingType } = docx);
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+          AlignmentType, BorderStyle, WidthType, ShadingType } = docx;
 
   const BD='1F3864',BM='2E75B6',BL='D6E4F0',GR='F5F5F5',YL='FFFDE7',RL='FEF2F2',GL='F0FDF4';
   const b={style:BorderStyle.SINGLE,size:4,color:'CCCCCC'};
@@ -689,18 +657,17 @@ async function buildDoc(d) {
     ]
   }]});
 
-  const buf = await Packer.toBuffer(doc);
-  const blob = new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-  saveAs(blob, `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.docx`);
+  try {
+    const buf = await Packer.toBuffer(doc);
+    const blob = new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+    saveAs(blob, `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.docx`);
+  } catch(e) {
+    alert('Download failed: ' + e.message);
+  }
+
   dlBtn.disabled = false;
   dlBtn.innerHTML = '⬇ Download .docx';
-  } catch(e) {
-    console.error('buildDoc error:', e);
-    dlBtn.disabled = false;
-    dlBtn.innerHTML = '⬇ Download .docx';
-    alert('Download failed: ' + e.message + ' | ' + e.stack);
-  }
-}
+});
 </script>
 </body>
 </html>
