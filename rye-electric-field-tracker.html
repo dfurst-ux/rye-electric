@@ -5450,7 +5450,9 @@ function saveTask(){
 
   var editId = document.getElementById('task-edit-id').value;
   var assigneeId = document.getElementById('task-assignee') ? document.getElementById('task-assignee').value : '';
-  var assigneeName = assigneeId ? (document.getElementById('task-assignee').options[document.getElementById('task-assignee').selectedIndex].text) : '';
+  var assigneeSel = document.getElementById('task-assignee');
+  var assigneeName = assigneeId && assigneeSel ? assigneeSel.options[assigneeSel.selectedIndex].text : '';
+  var assigneeEmail = assigneeId && assigneeSel ? (assigneeSel.options[assigneeSel.selectedIndex].getAttribute('data-email') || '') : '';
   var costCode = document.getElementById('task-costcode') ? document.getElementById('task-costcode').value : '';
   var costCodeText = costCode ? (document.getElementById('task-costcode').options[document.getElementById('task-costcode').selectedIndex].text) : '';
   var task = {
@@ -5486,7 +5488,7 @@ function saveTask(){
     if(typeof emailjs !== 'undefined'){
       try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
       emailjs.send('service_q9t1mnk', 'template_tgzqipn', {
-        to_email:      emails.to,
+        to_email:      assigneeEmail || emails.to,
         task_title:    task.title,
         job:           job || 'Field Tracker',
         task_date:     task.date,
@@ -5564,7 +5566,7 @@ function scheduleReminder(task){
 
       // 1. Email reminder
       emailjs.send('service_q9t1mnk', 'template_tgzqipn', {
-        to_email:      emails.to,
+        to_email:      assigneeEmail || emails.to,
         task_title:    task.title,
         job:           job,
         task_date:     task.date,
@@ -5629,7 +5631,7 @@ async function loadEmployeesForJob(){
       if(sel){
         sel.innerHTML = '<option value="">-- Select employee --</option>';
         _employees.forEach(function(e){
-          sel.innerHTML += '<option value="'+e.id+'">'+e.name+'</option>';
+          sel.innerHTML += '<option value="'+e.id+'" data-email="'+(e.email||'')+'" data-phone="'+(e.phone||'')+'">'+e.name+'</option>';
         });
       }
     }
