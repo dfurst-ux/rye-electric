@@ -527,245 +527,367 @@ dlBtn.addEventListener('click', () => {
 
 function buildWordDoc(d) {
   const n = v => v || '—';
-  const rC = d.laborRateFlag === 'WTF' ? '#DC2626' : d.laborRateFlag === 'NICE' ? '#16A34A' : '#000';
-  const mC = (d.projectedMargin_dollar && d.projectedMargin_dollar.includes('-')) ? '#DC2626' : '#16A34A';
+  const rC = d.laborRateFlag === 'WTF' ? '#C0392B' : d.laborRateFlag === 'NICE' ? '#1A7A4A' : '#1a1a1a';
+  const mNeg = d.projectedMargin_dollar && d.projectedMargin_dollar.includes('-');
+  const mC = mNeg ? '#C0392B' : '#1A7A4A';
 
-  function row(label, value, color) {
+  // ── helpers ──────────────────────────────────────────────────────────
+  function secHead(num, title) {
     return `<tr>
-      <td style="background:#D6E4F0;font-weight:bold;padding:6px 10px;border:1px solid #ccc;width:35%;color:#1F3864">${label}</td>
-      <td style="padding:6px 10px;border:1px solid #ccc;color:${color||'#000'};font-weight:${color?'bold':'normal'}">${value||'—'}</td>
+      <td colspan="2" style="background:#1F3864;color:#ffffff;font-family:Arial,sans-serif;
+        font-size:9.5pt;font-weight:bold;padding:7px 12px;letter-spacing:1.5px;
+        border:1px solid #1F3864;text-transform:uppercase">
+        <span style="color:#5B9BD5;margin-right:8px">${num}</span>${title}
+      </td></tr>`;
+  }
+
+  function dataRow(label, value, valueColor, bgOverride) {
+    const bg = bgOverride || '#ffffff';
+    const vc = valueColor || '#1a1a1a';
+    const fw = valueColor ? 'bold' : 'normal';
+    return `<tr>
+      <td style="background:#EBF2FA;font-family:Arial,sans-serif;font-size:9pt;
+        font-weight:600;color:#1F3864;padding:6px 12px;border:1px solid #D0DCE8;
+        width:38%;vertical-align:top">${label}</td>
+      <td style="background:${bg};font-family:Arial,sans-serif;font-size:9pt;
+        font-weight:${fw};color:${vc};padding:6px 12px;border:1px solid #D0DCE8;
+        vertical-align:top">${value || '—'}</td>
     </tr>`;
   }
 
-  function sectionHead(title) {
-    return `<tr><td colspan="2" style="background:#1F3864;color:#fff;font-weight:bold;padding:8px 10px;font-size:13pt;border:1px solid #1F3864;letter-spacing:1px">${title.toUpperCase()}</td></tr>`;
+  function blankRow(label) {
+    return `<tr>
+      <td style="background:#EBF2FA;font-family:Arial,sans-serif;font-size:9pt;
+        font-weight:600;color:#1F3864;padding:6px 12px;border:1px solid #D0DCE8;width:38%">${label}</td>
+      <td style="background:#ffffff;font-family:Arial,sans-serif;font-size:9pt;
+        padding:6px 12px;border:1px solid #D0DCE8;height:22px">&nbsp;</td>
+    </tr>`;
   }
 
-  function blankRows(n) {
-    let r = '';
-    for(let i=0;i<n;i++) r += `<tr><td style="border:1px solid #ccc;padding:6px 10px;background:#D6E4F0;font-weight:bold;color:#1F3864"></td><td style="border:1px solid #ccc;padding:6px 10px;height:20px"></td></tr>`;
-    return r;
+  function subHead(title) {
+    return `<tr><td colspan="2" style="background:#EBF2FA;font-family:Arial,sans-serif;
+      font-size:8.5pt;font-weight:bold;color:#2E75B6;padding:5px 12px;
+      border:1px solid #D0DCE8;letter-spacing:.5px;text-transform:uppercase;
+      border-top:2px solid #2E75B6">${title}</td></tr>`;
   }
 
-  const phases = (d.phases||[]).map(p => `<tr>
-    <td style="border:1px solid #ccc;padding:5px 8px;background:#f5f5f5;font-weight:bold">${p.code||''}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px">${p.estimated||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px">${p.reported||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px">${p.purchased||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px;font-weight:bold;color:${p.flag==='WTF'?'#DC2626':p.flag==='NICE'?'#16A34A':'#000'};background:${p.flag==='WTF'?'#FEF2F2':p.flag==='NICE'?'#F0FDF4':'#fff'}">${p.flag||''}</td>
-  </tr>`).join('');
+  // ── productivity rows ─────────────────────────────────────────────────
+  const prodCats = [
+    ['Units (hr/un)', d.unitsProductivity_actual, d.unitsProductivity_budget, true],
+    ['Conduit (ft/hr)', d.conduitProductivity_actual, d.conduitProductivity_budget, false],
+    ['Wire & cabling (ft/hr)', d.wireProductivity_actual, d.wireProductivity_budget, false],
+    ['Fixtures & devices (hr/un)', d.fixturesProductivity_actual, d.fixturesProductivity_budget, false],
+    ['Power & distribution (hr/un)', null, null, false],
+    ['Common areas (hr/un)', null, null, false],
+  ];
 
-  const losses = (d.topLossCodes||[]).slice(0,8).map(c => `<tr>
-    <td style="border:1px solid #ccc;padding:5px 8px;background:#f5f5f5;font-weight:bold">${c.code||''}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px;color:#DC2626;font-weight:bold">${c.loss||'—'}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px"></td>
-  </tr>`).join('');
+  var prodRows = '';
+  prodRows += `<tr style="background:#1F3864">
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#ffffff;
+      padding:5px 12px;border:1px solid #1F3864;width:38%">Category</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#ffffff;
+      padding:5px 12px;border:1px solid #1F3864">Actual &nbsp;/&nbsp; Budget &nbsp;/&nbsp; Status</td>
+  </tr>`;
 
-  const gains = (d.topGainCodes||[]).slice(0,6).map(c => `<tr>
-    <td style="border:1px solid #ccc;padding:5px 8px;background:#f5f5f5;font-weight:bold">${c.code||''}</td>
-    <td style="border:1px solid #ccc;padding:5px 8px;color:#16A34A;font-weight:bold">${c.gain||'—'}</td>
-  </tr>`).join('');
+  prodCats.forEach(function(item) {
+    var cat=item[0], act=item[1], bud=item[2], star=item[3];
+    var over = act && bud && parseFloat(act) > parseFloat(bud);
+    var rowBg = over ? '#FDF1F0' : '#ffffff';
+    var actColor = over ? '#C0392B' : '#1A7A4A';
+    var label = star ? ('&#9733; ' + cat) : cat;
+    var labelBg = star ? '#DDE8F5' : '#EBF2FA';
+    var status = act && bud ? (over ? '&#9650; OVER BUDGET' : '&#9660; ON BUDGET') : '—';
+    var statusColor = over ? '#C0392B' : '#1A7A4A';
+    prodRows += '<tr style="background:' + rowBg + '">'
+      + '<td style="background:' + labelBg + ';font-family:Arial,sans-serif;font-size:9pt;'
+      + 'font-weight:' + (star?'bold':'600') + ';color:#1F3864;padding:6px 12px;border:1px solid #D0DCE8">' + label + '</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:6px 12px;border:1px solid #D0DCE8">'
+      + '<span style="font-weight:bold;color:' + actColor + '">' + (act||'—') + '</span>'
+      + '<span style="color:#888;margin:0 6px">/</span>'
+      + '<span style="color:#555">' + (bud||'—') + '</span>'
+      + '<span style="float:right;font-weight:bold;font-size:8pt;color:' + statusColor + '">' + status + '</span>'
+      + '</td>'
+      + '</tr>';
+  });
 
-  const html = `
-<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="utf-8">
+  // ── phase table ───────────────────────────────────────────────────────
+  var phaseRows = '';
+  phaseRows += `<tr style="background:#1F3864">
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864">Phase</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864">Estimated</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864">Reported</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864">Purchased</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864">Flag</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864">Notes</td>
+  </tr>`;
+
+  (d.phases||[]).forEach(function(p) {
+    var flagBg = p.flag==='WTF' ? '#FDF1F0' : p.flag==='NICE' ? '#EDF7ED' : '#fff';
+    var flagColor = p.flag==='WTF' ? '#C0392B' : p.flag==='NICE' ? '#1A7A4A' : '#888';
+    phaseRows += '<tr>'
+      + '<td style="background:#EBF2FA;font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#1F3864;padding:5px 8px;border:1px solid #D0DCE8">'+(p.code||'')+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8">'+(p.estimated||'—')+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8">'+(p.reported||'—')+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8">'+(p.purchased||'—')+'</td>'
+      + '<td style="background:'+flagBg+';font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:'+flagColor+';padding:5px 8px;border:1px solid #D0DCE8;text-align:center">'+(p.flag||'')+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8">&nbsp;</td>'
+      + '</tr>';
+  });
+
+  // ── loss / gain tables ────────────────────────────────────────────────
+  var lossRows = '';
+  (d.topLossCodes||[]).slice(0,8).forEach(function(c) {
+    lossRows += '<tr>'
+      + '<td style="background:#EBF2FA;font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#1F3864;padding:5px 12px;border:1px solid #D0DCE8;width:25%">'+c.code+'</td>'
+      + '<td style="background:#FDF1F0;font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#C0392B;padding:5px 12px;border:1px solid #D0DCE8;width:25%">'+c.loss+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 12px;border:1px solid #D0DCE8">Root cause / action item:</td>'
+      + '</tr>';
+  });
+
+  var gainRows = '';
+  (d.topGainCodes||[]).slice(0,6).forEach(function(c) {
+    gainRows += '<tr>'
+      + '<td style="background:#EBF2FA;font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#1F3864;padding:5px 12px;border:1px solid #D0DCE8;width:25%">'+c.code+'</td>'
+      + '<td style="background:#EDF7ED;font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#1A7A4A;padding:5px 12px;border:1px solid #D0DCE8;width:25%">'+c.gain+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 12px;border:1px solid #D0DCE8">&nbsp;</td>'
+      + '</tr>';
+  });
+
+  // ── action items ──────────────────────────────────────────────────────
+  var actionRows = '';
+  for (var i = 1; i <= 8; i++) {
+    actionRows += '<tr>'
+      + '<td style="background:#EBF2FA;font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#1F3864;padding:5px 8px;border:1px solid #D0DCE8;text-align:center;width:5%">'+i+'</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8;height:22px;width:45%">&nbsp;</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8;width:25%">&nbsp;</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8;width:15%">&nbsp;</td>'
+      + '<td style="font-family:Arial,sans-serif;font-size:9pt;padding:5px 8px;border:1px solid #D0DCE8;width:10%">&nbsp;</td>'
+      + '</tr>';
+  }
+
+  // ── blank input rows for open sections ───────────────────────────────
+  function blankInputRows(labels) {
+    return labels.map(function(l){ return blankRow(l); }).join('');
+  }
+
+  const LOGO =  + LOGO + ;
+
+  const html = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
 <style>
-  body { font-family: Arial, sans-serif; font-size: 10pt; margin: 0.75in; color: #1a1a1a; }
-  table { border-collapse: collapse; width: 100%; margin-bottom: 18px; }
-  td, th { font-size: 10pt; }
-  h2 { color: #1F3864; font-size: 10pt; font-weight: bold; margin: 18px 0 0; 
-       border-bottom: 3px solid #2E75B6; padding-bottom: 4px; 
-       letter-spacing: 1px; text-transform: uppercase; }
-  .cover { background: #1F3864; color: white; padding: 20px 24px; margin-bottom: 24px;
-           border-radius: 4px; }
-  .section-note { background: #FFFDE7; border-left: 4px solid #F59E0B; 
-                  padding: 8px 12px; font-size: 9pt; color: #92400E; 
-                  margin-bottom: 16px; font-style: italic; }
+  @page { margin: 0.65in 0.75in; }
+  body { font-family: Arial, sans-serif; font-size: 9pt; color: #1a1a1a; margin: 0; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 0; page-break-inside: avoid; }
+  .section { margin-bottom: 18px; }
+  .note { background:#FFFDE7; border-left:4px solid #F59E0B; padding:6px 12px;
+          font-size:8.5pt; color:#7C5A00; font-style:italic; margin:4px 0 12px; }
 </style>
 </head>
 <body>
 
-<div class="cover">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <div>
-      <img src="data:image/png;base64,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" style="height:52px;display:block;margin-bottom:10px" alt="Rye Electric">
-      <div style="color:#93B8D8;font-size:9pt;letter-spacing:2px;text-transform:uppercase">Weekly Job Review &nbsp;·&nbsp; LCPR + CTC Combined</div>
-    </div>
-    <div style="text-align:right">
-      <div style="color:#fff;font-size:11pt;font-weight:bold;margin-bottom:4px">${n(d.jobName)} (${n(d.jobNumber)})</div>
-      <div style="color:#93B8D8;font-size:9pt">Week Ending: ${n(d.weekEnding)}</div>
-      <div style="color:#93B8D8;font-size:9pt">Manpower: ${n(d.currentManpower)}</div>
-    </div>
-  </div>
+<!-- COVER HEADER -->
+<table style="margin-bottom:20px">
+  <tr>
+    <td style="background:#1F3864;padding:16px 20px;border:none;width:50%">
+      <img src="${LOGO}" style="height:44px;display:block" alt="Rye Electric">
+      <div style="color:#93B8D8;font-size:7.5pt;letter-spacing:2px;text-transform:uppercase;margin-top:8px">
+        Weekly Job Review &nbsp;·&nbsp; LCPR + CTC Combined
+      </div>
+    </td>
+    <td style="background:#162A4A;padding:16px 20px;border:none;text-align:right;vertical-align:middle">
+      <div style="color:#ffffff;font-size:13pt;font-weight:bold;margin-bottom:6px">${n(d.jobName)}</div>
+      <div style="color:#5B9BD5;font-size:8.5pt;margin-bottom:3px">Job # &nbsp;<span style="color:#fff;font-weight:bold">${n(d.jobNumber)}</span></div>
+      <div style="color:#5B9BD5;font-size:8.5pt;margin-bottom:3px">Week Ending &nbsp;<span style="color:#fff;font-weight:bold">${n(d.weekEnding)}</span></div>
+      <div style="color:#5B9BD5;font-size:8.5pt">Current Manpower &nbsp;<span style="color:#fff;font-weight:bold">${n(d.currentManpower)}</span></div>
+    </td>
+  </tr>
+</table>
+
+<!-- PERCENT COMPLETE GAUGES -->
+<div class="section">
+<table style="margin-bottom:18px">
+  <tr>
+    <td colspan="4" style="background:#1F3864;color:#fff;font-family:Arial,sans-serif;
+      font-size:9.5pt;font-weight:bold;padding:7px 12px;letter-spacing:1.5px;
+      border:1px solid #1F3864;text-transform:uppercase">
+      <span style="color:#5B9BD5;margin-right:8px">1</span>PERCENT COMPLETE
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:10px 8px;background:#EBF2FA;
+      font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#1F3864;width:25%">TOTAL COSTS</td>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:10px 8px;background:#EBF2FA;
+      font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#1F3864;width:25%">UNITS</td>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:10px 8px;background:#EBF2FA;
+      font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#1F3864;width:25%">HOURS</td>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:10px 8px;background:#EBF2FA;
+      font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#1F3864;width:25%">LABOR COSTS</td>
+  </tr>
+  <tr>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:14px 8px;
+      font-family:Arial,sans-serif;font-size:22pt;font-weight:bold;color:#1F3864">${n(d.totalCostsPct)}</td>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:14px 8px;
+      font-family:Arial,sans-serif;font-size:22pt;font-weight:bold;color:#1F3864">${n(d.unitsPct)}</td>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:14px 8px;
+      font-family:Arial,sans-serif;font-size:22pt;font-weight:bold;color:#1F3864">${n(d.hoursPct)}</td>
+    <td style="text-align:center;border:1px solid #D0DCE8;padding:14px 8px;
+      font-family:Arial,sans-serif;font-size:22pt;font-weight:bold;color:#1F3864">${n(d.laborCostsPct)}</td>
+  </tr>
+</table>
 </div>
 
-<h2>1 | PERCENT COMPLETE</h2>
+<!-- LABOR RATE -->
+<div class="section">
 <table>
+  ${secHead('2','Labor Rate')}
+  ${dataRow('JTD labor rate vs. budget', n(d.jtdLaborRate) + ' &nbsp;/&nbsp; budget: ' + n(d.budgetLaborRate), rC, d.laborRateFlag==='WTF'?'#FDF1F0':d.laborRateFlag==='NICE'?'#EDF7ED':null)}
+  ${dataRow('Last week rate', n(d.lastWeekLaborRate))}
+  ${dataRow('Weekly goal rate', n(d.weeklyGoalRate))}
+  ${dataRow('Projected wage loss at current rate', n(d.projectedWageLoss), '#C0392B', '#FDF1F0')}
+  ${dataRow('Rate flag', d.laborRateFlag||'—', rC, d.laborRateFlag==='WTF'?'#FDF1F0':d.laborRateFlag==='NICE'?'#EDF7ED':null)}
+  ${blankRow('Root cause (to complete in meeting)')}
+</table>
+</div>
+
+<!-- LABOR PRODUCTIVITY -->
+<div class="section">
+<table>
+  ${secHead('3','Labor Productivity &nbsp; &#9733; = Most Important')}
+  ${prodRows}
+</table>
+</div>
+
+<!-- PROJECTED MARGIN -->
+<div class="section">
+<table>
+  ${secHead('4','Projected Profit Margin')}
+  ${dataRow('Projected margin ($)', n(d.projectedMargin_dollar), mC, mNeg?'#FDF1F0':'#EDF7ED')}
+  ${dataRow('Projected margin (%)', n(d.projectedMargin_pct), mC, mNeg?'#FDF1F0':'#EDF7ED')}
+  ${dataRow('Last week margin', n(d.lastWeekMargin_dollar))}
+  ${blankRow('Trend (improving / declining / flat)')}
+</table>
+</div>
+
+<!-- LOSS CODES -->
+<div class="section">
+<table>
+  ${secHead('5','Risk Exposure — Top Loss Codes')}
+  <tr style="background:#1F3864">
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864;width:25%">Phase</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864;width:25%">Projected Loss</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864">Root Cause / Action Item</td>
+  </tr>
+  ${lossRows || '<tr><td colspan="3" style="border:1px solid #D0DCE8;padding:8px 12px;color:#999;font-style:italic;font-family:Arial,sans-serif;font-size:9pt">No loss codes extracted</td></tr>'}
+</table>
+</div>
+
+<!-- GAIN CODES -->
+<div class="section">
+<table>
+  ${secHead('6','Risk Exposure — Top Gain Codes')}
+  <tr style="background:#1A7A4A">
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1A7A4A;width:25%">Phase</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1A7A4A;width:25%">Projected Gain</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1A7A4A">Notes</td>
+  </tr>
+  ${gainRows || '<tr><td colspan="3" style="border:1px solid #D0DCE8;padding:8px 12px;color:#999;font-style:italic;font-family:Arial,sans-serif;font-size:9pt">No gain codes extracted</td></tr>'}
+</table>
+</div>
+
+<!-- UNIT REPORTING -->
+<div class="section">
+<table>
+  ${secHead('7','Unit Reporting & Quantity Flags')}
+  ${phaseRows || '<tr><td colspan="6" style="border:1px solid #D0DCE8;padding:8px 12px;color:#999;font-style:italic;font-family:Arial,sans-serif;font-size:9pt">No phase data extracted</td></tr>'}
+</table>
+<div class="note">Review any WTF-flagged phases and Q EXCEEDED quantities — confirm COR exposure before end of meeting.</div>
+</div>
+
+<!-- SCHEDULE -->
+<div class="section">
+<table>
+  ${secHead('8','Schedule & Milestones')}
+  ${blankInputRows(['Original completion date','Current projected completion','Weeks ahead / behind schedule','Next critical milestone','Permanent power / energization status','LADWP / utility status','TCO target date','Schedule impacts from RFIs / design issues'])}
+</table>
+</div>
+
+<!-- CHANGE ORDERS -->
+<div class="section">
+<table>
+  ${secHead('9','Change Order Status')}
+  ${blankInputRows(['Total approved COs ($)','Total pending COs (qty + $)','CORs open > 30 days (qty + $)','Total exposed costs (unapproved work)','New scope from LCPR phase overruns this week?'])}
+</table>
+</div>
+
+<!-- MANPOWER -->
+<div class="section">
+<table>
+  ${secHead('10','Manpower & Field Operations')}
+  ${dataRow('Current manpower', n(d.currentManpower))}
+  ${blankRow('JM-to-apprentice ratio')}
+  ${dataRow('Hours spent to date / remaining', n(d.hoursSpentToDate) + ' spent &nbsp;|&nbsp; ' + n(d.budgetedHoursRemaining) + ' remaining')}
+  ${dataRow('Dollars spent last week', n(d.dollarsSpentLastWeek))}
+  ${blankInputRows(['Injuries or near misses this week?','Upcoming high-risk activities?','Acceleration or overtime anticipated?'])}
+</table>
+</div>
+
+<!-- RFIs & IMPACTS -->
+<div class="section">
+<table>
+  ${secHead('11','Project Impacts, RFIs & Open Issues')}
+  ${blankInputRows(['Open RFIs impacting schedule or labor productivity','Notice of impacts logged this week','WTF-flagged phases tied to unresolved RFIs?','GC coordination issues / scope disputes','AHJ / inspector issues'])}
+</table>
+</div>
+
+<!-- CLOSEOUT -->
+<div class="section">
+<table>
+  ${secHead('12','Closeout Readiness')}
+  ${blankInputRows(['As-builts (deck / unit)','Panels & labels','O&M manuals','Title 24 documents','Warranty letter (after TCO)'])}
+</table>
+</div>
+
+<!-- ACTION ITEMS -->
+<div class="section">
+<table>
+  ${secHead('13','Action Items')}
+  <tr style="background:#1F3864">
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 8px;border:1px solid #1F3864;width:5%;text-align:center">#</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864;width:45%">Action Item</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864;width:25%">Owner</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864;width:15%">Due Date</td>
+    <td style="font-family:Arial,sans-serif;font-size:8.5pt;font-weight:bold;color:#fff;padding:5px 12px;border:1px solid #1F3864;width:10%;text-align:center">Done</td>
+  </tr>
+  ${actionRows}
+</table>
+</div>
+
+<!-- FOOTER -->
+<table style="margin-top:24px;border-top:3px solid #1F3864">
   <tr>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Total Costs</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Units</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Hours</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:10px;background:#1F3864;color:#fff;font-weight:bold">Labor Costs</td>
-  </tr>
-  <tr>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.totalCostsPct)}</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.unitsPct)}</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.hoursPct)}</td>
-    <td style="text-align:center;border:1px solid #ccc;padding:12px;font-size:18pt;font-weight:bold">${n(d.laborCostsPct)}</td>
+    <td style="font-family:Arial,sans-serif;font-size:8pt;color:#666;padding:8px 0">
+      Next meeting date: &nbsp;_____________________________ &nbsp;&nbsp;&nbsp;
+      Duration: &nbsp;_____________ &nbsp;&nbsp;&nbsp;
+      Facilitator: &nbsp;_____________________________
+    </td>
+    <td style="font-family:Arial,sans-serif;font-size:7.5pt;color:#aaa;text-align:right;padding:8px 0">
+      Rye Electric &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; Generated ${new Date().toLocaleDateString()}
+    </td>
   </tr>
 </table>
 
-<h2>2 | LABOR RATE</h2>
-<table>
-  ${sectionHead('METRIC')}
-  ${row('JTD labor rate', n(d.jtdLaborRate) + ' (budget: ' + n(d.budgetLaborRate) + ')', rC)}
-  ${row('Last week rate', n(d.lastWeekLaborRate))}
-  ${row('Weekly goal rate', n(d.weeklyGoalRate))}
-  ${row('Projected wage loss', n(d.projectedWageLoss), '#DC2626')}
-  ${row('Rate flag', d.laborRateFlag||'—', rC)}
-  ${row('Root cause (to complete in meeting)', '')}
-</table>
-
-<h2>3 | LABOR PRODUCTIVITY (★ = most important)</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Category</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Actual</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Budget</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Status</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Notes</td>
-  </tr>
-  ${(function(){
-    const cats = [
-      ['Units (hr/un) ★', d.unitsProductivity_actual, d.unitsProductivity_budget],
-      ['Conduit (ft/hr)', d.conduitProductivity_actual, d.conduitProductivity_budget],
-      ['Wire & cabling (ft/hr)', d.wireProductivity_actual, d.wireProductivity_budget],
-      ['Fixtures & devices (hr/un)', d.fixturesProductivity_actual, d.fixturesProductivity_budget],
-      ['Power & distribution (hr/un)', null, null],
-      ['Common areas (hr/un)', null, null],
-    ];
-    return cats.map(function(item){
-      const cat=item[0], act=item[1], bud=item[2];
-      const over = act && bud && parseFloat(act) > parseFloat(bud);
-      const bg = over ? '#FEF2F2' : '#fff';
-      const actColor = over ? '#DC2626' : '#16A34A';
-      const statColor = over ? '#DC2626' : '#9CA3AF';
-      const fw = cat.indexOf('★') >= 0 ? 'bold' : 'normal';
-      return '<tr style="background:'+bg+'">'
-        + '<td style="border:1px solid #ccc;padding:6px 8px;background:#D6E4F0;color:#1F3864;font-weight:'+fw+'">'+cat+'</td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px;font-weight:bold;color:'+actColor+'">'+(act||'—')+'</td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px">'+(bud||'—')+'</td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px;font-weight:bold;color:'+statColor+'">'+(over?'OVER':'—')+'</td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px"></td>'
-        + '</tr>';
-    }).join('');
-  })()}
-</table>
-
-<h2>4 | PROJECTED PROFIT MARGIN</h2>
-<table>
-  ${row('Projected margin ($)', n(d.projectedMargin_dollar), mC)}
-  ${row('Projected margin (%)', n(d.projectedMargin_pct), mC)}
-  ${row('Last week margin', n(d.lastWeekMargin_dollar))}
-  ${row('Trend (improving / declining / flat)', '')}
-</table>
-
-<h2>5 | RISK EXPOSURE — TOP LOSS CODES</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Phase code</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Projected loss</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Root cause / action item</td>
-  </tr>
-  ${losses || '<tr><td colspan="3" style="border:1px solid #ccc;padding:6px;color:#999;font-style:italic">No loss codes extracted</td></tr>'}
-  <tr><td colspan="3" style="border:1px solid #ccc;padding:20px 8px;background:#FFFDE7"></td></tr>
-</table>
-
-<h2>6 | RISK EXPOSURE — TOP GAIN CODES</h2>
-<table>
-  <tr style="background:#2E7D32;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Phase code</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Projected gain</td>
-  </tr>
-  ${gains || '<tr><td colspan="2" style="border:1px solid #ccc;padding:6px;color:#999;font-style:italic">No gain codes extracted</td></tr>'}
-</table>
-
-<h2>7 | UNIT REPORTING & QUANTITY FLAGS</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Phase</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Estimated</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Reported</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Purchased</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold">Flag</td>
-  </tr>
-  ${phases || '<tr><td colspan="5" style="border:1px solid #ccc;padding:6px;color:#999;font-style:italic">No phase data</td></tr>'}
-</table>
-
-<h2>8 | SCHEDULE & MILESTONES</h2>
-<table>
-  ${['Original completion date','Current projected completion','Weeks ahead / behind schedule','Next critical milestone','Permanent power / energization status','LADWP / utility status','TCO target date','Schedule impacts from RFIs'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>9 | CHANGE ORDER STATUS</h2>
-<table>
-  ${['Total approved COs ($)','Total pending COs (qty + $)','CORs open > 30 days (qty + $)','Total exposed costs (unapproved work)','New scope from LCPR phase overruns this week?'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>10 | MANPOWER & FIELD OPERATIONS</h2>
-<table>
-  ${row('Current manpower', n(d.currentManpower))}
-  ${row('JM-to-apprentice ratio', '')}
-  ${row('Hours spent to date / remaining', n(d.hoursSpentToDate) + ' spent  |  ' + n(d.budgetedHoursRemaining) + ' remaining')}
-  ${row('Dollars spent last week', n(d.dollarsSpentLastWeek))}
-  ${['Injuries or near misses this week?','Upcoming high-risk activities?','Acceleration or overtime anticipated?'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>11 | PROJECT IMPACTS, RFIs & OPEN ISSUES</h2>
-<table>
-  ${['Open RFIs impacting schedule or labor productivity','Notice of impacts logged this week','WTF-flagged phases tied to unresolved RFIs?','GC coordination issues / scope disputes','AHJ / inspector issues'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>12 | CLOSEOUT READINESS</h2>
-<table>
-  ${['As-builts (deck / unit)','Panels & labels','O&M manuals','Title 24 documents','Warranty letter (after TCO)'].map(l=>row(l,'')).join('')}
-</table>
-
-<h2>13 | ACTION ITEMS</h2>
-<table>
-  <tr style="background:#1F3864;color:#fff">
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:5%">#</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:45%">Action item</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:25%">Owner</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:15%">Due date</td>
-    <td style="padding:6px 8px;border:1px solid #ccc;font-weight:bold;width:10%">Done</td>
-  </tr>
-  ${(function(){
-    var rows='';
-    for(var i=1;i<=8;i++){
-      rows += '<tr>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px;background:#f5f5f5;font-weight:bold">'+i+'</td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px;height:22px"></td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px"></td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px"></td>'
-        + '<td style="border:1px solid #ccc;padding:6px 8px"></td>'
-        + '</tr>';
-    }
-    return rows;
-  })()}
-</table>
-
-<p style="margin-top:20px;border-top:1px solid #ccc;padding-top:10px;color:#666;font-size:9pt;font-style:italic">
-  Next meeting date: ___________________________ &nbsp;&nbsp; Duration: ___________ &nbsp;&nbsp; Facilitator: ___________________________
-</p>
-
-</body></html>`;
+</body>
+</html>`;
 
   const blob = new Blob([html], {type: 'application/msword'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `Rye_Job_Review_${(d.jobNumber||'').replace(/\s/g,'_')}_WE_${(d.weekEnding||'').replace(/\//g,'-')}.doc`;
+  a.download = 'Rye_Job_Review_' + (d.jobNumber||'').replace(/\s/g,'_') + '_WE_' + (d.weekEnding||'').replace(/\//g,'-') + '.doc';
   a.click();
   URL.revokeObjectURL(url);
 }
