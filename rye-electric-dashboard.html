@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_55.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_43.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -178,7 +178,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 8:09:50 AM</span>
+      <span id="sync-time" style="font-size:10px;color:var(--t3)">Last sync: 3:39:46 PM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -195,44 +195,44 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 <div class="shell">
 
   <!-- KPI ROW -->
-  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">72.4</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">9.5h</div><div class="kpi-sub">2 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,898h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--red)">-709k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10722k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">11</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">1</div><div class="kpi-sub">saved</div></div></div>
+  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:var(--rye)">72.4</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:var(--green)">0.0h</div><div class="kpi-sub">0 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:var(--t3)">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:var(--t1)">2,898h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:var(--red)">-709k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:var(--sb)">$10722k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:var(--amber)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:var(--green)">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:var(--rye)">0</div><div class="kpi-sub">saved</div></div></div>
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
-    <button class="tab on" onclick="showTab(this,&#39;overview&#39;)">
+    <button class="tab on" onclick="showTab(this,'overview')">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       <span>Overview</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;jobs&#39;)">
+    <button class="tab" onclick="showTab(this,'jobs')">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
       <span>Job Costs</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;labor&#39;)">
+    <button class="tab" onclick="showTab(this,'labor')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>
       <span>Labor</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;inventory&#39;)">
+    <button class="tab" onclick="showTab(this,'inventory')">
       <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path></svg>
       <span>Inventory</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;production&#39;)">
+    <button class="tab" onclick="showTab(this,'production')">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>
       <span>Production</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;reports&#39;)">
+    <button class="tab" onclick="showTab(this,'reports')">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
       <span>Prod Reports</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;activity&#39;)">
+    <button class="tab" onclick="showTab(this,'activity')">
       <svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline></svg>
       <span>Activity</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;field&#39;)">
+    <button class="tab" onclick="showTab(this,'field')">
       <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
       <span>Field</span>
     </button>
     
-    <button class="tab" onclick="showTab(this,&#39;tasks&#39;)">
+    <button class="tab" onclick="showTab(this,'tasks')">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       <span>Tasks</span>
     </button>
@@ -685,7 +685,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
       <div style="font-size:14px;font-weight:700;color:var(--t1)">All Job Tasks</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <button onclick="clearDashTasks()" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:5px;padding:4px 12px;font-size:11px;cursor:pointer;white-space:nowrap">✕ Clear View</button>
+        <button onclick="clearDashTasks()" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:5px;padding:4px 12px;font-size:11px;cursor:pointer;white-space:nowrap">&#x2715; Clear View</button>
         <select id="db-task-filter-job" onchange="renderDashTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:5px;padding:4px 8px;font-size:11px">
           <option value="all">All Jobs</option>
           <option value="24001 - BIOLA">BIOLA</option>
@@ -725,17 +725,17 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
         <div class="ch">
           <div class="ct"><svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline></svg>Full activity log</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button class="exp-btn" onclick="filterActivity(&#39;all&#39;)" id="af-all" style="background:var(--rye);color:var(--black);border-color:var(--rye)">All Jobs</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;24001 - BIOLA&#39;)" id="af-biola">BIOLA</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;24002 - SEPULVEDA&#39;)" id="af-sep">SEPULVEDA</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;24005 - VNV&#39;)" id="af-vnv">VNV</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;24006 - VF&#39;)" id="af-vf">VF</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;24010 - COMMONS&#39;)" id="af-commons">COMMONS</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;25001 - DECENA&#39;)" id="af-decena">DECENA</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;25002 - BAH&#39;)" id="af-bah">BAH</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;26002 - WILSHIRE&#39;)" id="af-wilshire">WILSHIRE</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;SP25018 - CDC PLAZA&#39;)" id="af-cdc">CDC PLAZA</button>
-            <button class="exp-btn" onclick="filterActivity(&#39;26003 - CARINA&#39;)" id="af-carina">CARINA</button>
+            <button class="exp-btn" onclick="filterActivity('all')" id="af-all" style="background:var(--rye);color:var(--black);border-color:var(--rye)">All Jobs</button>
+            <button class="exp-btn" onclick="filterActivity('24001 - BIOLA')" id="af-biola">BIOLA</button>
+            <button class="exp-btn" onclick="filterActivity('24002 - SEPULVEDA')" id="af-sep">SEPULVEDA</button>
+            <button class="exp-btn" onclick="filterActivity('24005 - VNV')" id="af-vnv">VNV</button>
+            <button class="exp-btn" onclick="filterActivity('24006 - VF')" id="af-vf">VF</button>
+            <button class="exp-btn" onclick="filterActivity('24010 - COMMONS')" id="af-commons">COMMONS</button>
+            <button class="exp-btn" onclick="filterActivity('25001 - DECENA')" id="af-decena">DECENA</button>
+            <button class="exp-btn" onclick="filterActivity('25002 - BAH')" id="af-bah">BAH</button>
+            <button class="exp-btn" onclick="filterActivity('26002 - WILSHIRE')" id="af-wilshire">WILSHIRE</button>
+            <button class="exp-btn" onclick="filterActivity('SP25018 - CDC PLAZA')" id="af-cdc">CDC PLAZA</button>
+            <button class="exp-btn" onclick="filterActivity('26003 - CARINA', '26005 - MARINA SHORES')" id="af-carina">CARINA</button>
           </div>
         </div>
         <div class="cb" id="activity-full"></div>
@@ -2476,7 +2476,7 @@ function renderDashTasks(){
   var statusFilter = document.getElementById('db-task-filter-status') ? document.getElementById('db-task-filter-status').value : 'open';
 
   var filtered = (window._dashTasks||[]).filter(function(t){
-    var knownJobs = ['24001 - BIOLA', '24002 - SEPULVEDA', '24005 - VNV', '24006 - VF', '24010 - COMMONS', '25001 - DECENA', '25002 - BAH', '26002 - WILSHIRE', 'SP25018 - CDC PLAZA', '26003 - CARINA'];
+    var knownJobs = ['24001 - BIOLA', '24002 - SEPULVEDA', '24005 - VNV', '24006 - VF', '24010 - COMMONS', '25001 - DECENA', '25002 - BAH', '26002 - WILSHIRE', 'SP25018 - CDC PLAZA', '26003 - CARINA', '26005 - MARINA SHORES'];
     if(!t.job || knownJobs.indexOf(t.job) < 0) return false; // only show tasks from job trackers
     return (jobFilter==='all'    || t.job===jobFilter)
         && (typeFilter==='all'   || t.type===typeFilter)
@@ -2526,4 +2526,4 @@ renderOverview();
 syncFromFieldTracker();
 </script>
 
-</div></body></html>
+</body></html>
