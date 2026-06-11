@@ -6,6 +6,8 @@
 <title>Rye Electric — Service Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
 :root {
   --red: #C0392B;
@@ -1127,6 +1129,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('viewTicketModal')">Close</button>
       <button class="btn btn-gold btn-sm" onclick="printTicket()">🖨 Print / PDF</button>
+      <button class="btn btn-green btn-sm" id="btn-gen-invoice" onclick="generateInvoice()">📄 Generate Invoice</button>
     </div>
   </div>
 </div>
@@ -1146,6 +1149,8 @@ let taskCounter = tasks.length + 1;
 let tsCounter = timesheets.length + 1;
 let currentFilterStatus = 'all';
 let currentSearch = '';
+let currentViewTicketId = null;
+let invoiceCounter = parseInt(localStorage.getItem('svc_invoice_counter') || '1000');
 
 // Init EmailJS
 emailjs.init('YOUR_EMAILJS_PUBLIC_KEY'); // Replace with your EmailJS public key
@@ -1609,6 +1614,7 @@ function renderTicketsTable() {
         <td>${starDisp}</td>
         <td>
           <button class="link-btn" onclick="viewTicket('${t.id}')">View</button>
+          <button class="link-btn" style="color:var(--green);margin-left:8px" onclick="currentViewTicketId='${t.id}';generateInvoice()">Invoice</button>
           <button class="link-btn" style="color:var(--muted);margin-left:8px" onclick="deleteTicket('${t.id}')">Del</button>
         </td>
       </tr>`;
@@ -1876,11 +1882,373 @@ function viewTicket(id) {
     </div>`;
 
   document.getElementById('view-ticket-content').innerHTML = html;
+  currentViewTicketId = id;
   openModal('viewTicketModal');
 }
 
 function printTicket() {
   window.print();
+}
+
+// ── GENERATE INVOICE ──────────────────────────────────────────────────────────
+async function generateInvoice() {
+  const id = currentViewTicketId;
+  if (!id) { toast('No ticket selected', true); return; }
+  const t = tickets.find(x => x.id === id);
+  if (!t) { toast('Ticket not found', true); return; }
+
+  const btn = document.getElementById('btn-gen-invoice');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Generating…'; }
+
+  invoiceCounter++;
+  localStorage.setItem('svc_invoice_counter', invoiceCounter);
+  const invNum = 'INV-' + String(invoiceCounter).padStart(5, '0');
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  const TEAL   = [78, 157, 168];
+  const DARK   = [26,  26,  26];
+  const WHITE  = [255, 255, 255];
+  const LTGRAY = [248, 250, 251];
+  const MIDGRAY= [120, 120, 120];
+  const BORDER = [226, 226, 226];
+
+  // ── HEADER BAR ─────────────────────────────────────────────
+  doc.setFillColor(...DARK);
+  doc.rect(0, 0, W, 80, 'F');
+
+  // Teal accent line
+  doc.setFillColor(...TEAL);
+  doc.rect(0, 80, W, 4, 'F');
+
+  // "rye" wordmark
+  doc.setTextColor(...WHITE);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(32);
+  doc.text('rye', 40, 50);
+
+  // "electric" sub-label
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...TEAL);
+  doc.setCharSpace(2);
+  doc.text('electric', 40, 65);
+  doc.setCharSpace(0);
+
+  // INVOICE label top right
+  doc.setTextColor(...WHITE);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(26);
+  doc.text('INVOICE', W - 40, 46, { align: 'right' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...TEAL);
+  doc.text(invNum, W - 40, 65, { align: 'right' });
+
+  // ── COMPANY INFO + INVOICE META ──────────────────────────────
+  let y = 110;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(...DARK);
+  doc.text('Rye Electric, Inc.', 40, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...MIDGRAY);
+  doc.text('75 Doppler, Irvine, CA 92618', 40, y + 14);
+  doc.text('(949) 441-0545  |  www.ryecompany.com', 40, y + 27);
+  doc.text('CA License 980345', 40, y + 40);
+
+  // Invoice meta right side
+  const metaX = W - 200;
+  const metaData = [
+    ['Invoice #:',   invNum],
+    ['Invoice Date:', fmtDate(new Date().toISOString().split('T')[0])],
+    ['Service Date:', fmtDate(t.date)],
+    ['Ticket #:',    t.id],
+    ['Status:',      'Due on Receipt'],
+  ];
+  doc.setFontSize(9);
+  metaData.forEach(([label, val], i) => {
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...MIDGRAY);
+    doc.text(label, metaX, y + (i * 14));
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...DARK);
+    doc.text(val, metaX + 85, y + (i * 14));
+  });
+
+  // ── DIVIDER ─────────────────────────────────────────────────
+  y += 62;
+  doc.setDrawColor(...BORDER);
+  doc.setLineWidth(0.5);
+  doc.line(40, y, W - 40, y);
+
+  // ── BILL TO ─────────────────────────────────────────────────
+  y += 18;
+  doc.setFillColor(...LTGRAY);
+  doc.roundedRect(40, y, (W - 80) / 2 - 10, 74, 4, 4, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(...TEAL);
+  doc.text('BILL TO', 52, y + 16);
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.setTextColor(...DARK);
+  doc.text(t.customer || '—', 52, y + 32);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...MIDGRAY);
+  if (t.address) doc.text(t.address, 52, y + 46);
+  if (t.po)      doc.text('PO / WO: ' + t.po, 52, y + 60);
+
+  // SERVICE INFO box
+  const sx = 40 + (W - 80) / 2 + 10;
+  doc.setFillColor(...LTGRAY);
+  doc.roundedRect(sx, y, (W - 80) / 2 - 10, 74, 4, 4, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(...TEAL);
+  doc.text('SERVICE INFO', sx + 12, y + 16);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...DARK);
+  doc.text('Type: ' + (t.type || '—'), sx + 12, y + 32);
+  doc.text('Tech: ' + (t.tech || '—'), sx + 12, y + 46);
+  if (t.nte) doc.text('NTE: $' + parseFloat(t.nte).toLocaleString(), sx + 12, y + 60);
+
+  y += 92;
+
+  // ── LABOR TABLE ─────────────────────────────────────────────
+  const REG_RATE = 124.97;
+  const OT_RATE  = 164.35;
+
+  let laborSubtotal = 0;
+  const laborRows = (t.labor || []).filter(r => r.employee).map(r => {
+    const reg = parseFloat(r.regHours) || 0;
+    const ot  = parseFloat(r.otHours)  || 0;
+    const amt = (reg * REG_RATE) + (ot * OT_RATE);
+    laborSubtotal += amt;
+    return [
+      r.employee,
+      r.timeIn  || '—',
+      r.timeOut || '—',
+      reg > 0 ? reg.toFixed(2) + ' hrs @ $' + REG_RATE : '—',
+      ot  > 0 ? ot.toFixed(2)  + ' hrs @ $' + OT_RATE  : '—',
+      '$' + amt.toFixed(2),
+    ];
+  });
+
+  if (laborRows.length) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('LABOR', 40, y);
+    y += 6;
+
+    doc.autoTable({
+      startY: y,
+      head: [['Employee', 'Time In', 'Time Out', 'Regular', 'Overtime', 'Amount']],
+      body: laborRows,
+      margin: { left: 40, right: 40 },
+      styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+      headStyles: { fillColor: DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+      alternateRowStyles: { fillColor: LTGRAY },
+      columnStyles: { 5: { halign: 'right', fontStyle: 'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 8;
+  }
+
+  // ── MATERIALS TABLE ──────────────────────────────────────────
+  let matSubtotal = 0;
+  const matRows = (t.materials || []).filter(r => r.desc).map(r => {
+    const total = parseFloat(r.total) || 0;
+    matSubtotal += total;
+    return [
+      r.desc,
+      r.part || '—',
+      r.qty  || '—',
+      r.unit || '—',
+      r.unitCost ? '$' + r.unitCost : '—',
+      '$' + total.toFixed(2),
+    ];
+  });
+
+  if (matRows.length) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('MATERIALS', 40, y + 6);
+    y += 12;
+
+    doc.autoTable({
+      startY: y,
+      head: [['Description', 'Part #', 'Qty', 'Unit', 'Unit Cost', 'Total']],
+      body: matRows,
+      margin: { left: 40, right: 40 },
+      styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+      headStyles: { fillColor: DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+      alternateRowStyles: { fillColor: LTGRAY },
+      columnStyles: { 5: { halign: 'right', fontStyle: 'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 8;
+  }
+
+  // ── EQUIPMENT ────────────────────────────────────────────────
+  if (t.equipment) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('EQUIPMENT / TOOLS', 40, y + 6);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...DARK);
+    const eqLines = doc.splitTextToSize(t.equipment, W - 80);
+    doc.text(eqLines, 40, y + 20);
+    y += 20 + (eqLines.length * 12) + 8;
+  }
+
+  // ── TOTALS BOX ───────────────────────────────────────────────
+  const OP_PCT   = 0.20;
+  const subtotal = laborSubtotal + matSubtotal;
+  const op       = subtotal * OP_PCT;
+  const total    = subtotal + op;
+
+  const totW = 220;
+  const totX = W - 40 - totW;
+  y += 10;
+
+  // Box background
+  doc.setFillColor(...LTGRAY);
+  doc.roundedRect(totX, y, totW, 100, 4, 4, 'F');
+
+  // Teal left accent bar
+  doc.setFillColor(...TEAL);
+  doc.roundedRect(totX, y, 4, 100, 2, 2, 'F');
+
+  const totRows = [
+    ['Labor subtotal',     '$' + laborSubtotal.toFixed(2)],
+    ['Materials subtotal', '$' + matSubtotal.toFixed(2)],
+    ['Overhead & Profit (20%)', '$' + op.toFixed(2)],
+  ];
+
+  doc.setFontSize(9);
+  totRows.forEach(([label, val], i) => {
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...MIDGRAY);
+    doc.text(label, totX + 14, y + 18 + (i * 18));
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...DARK);
+    doc.text(val, totX + totW - 12, y + 18 + (i * 18), { align: 'right' });
+  });
+
+  // Divider
+  doc.setDrawColor(...BORDER);
+  doc.line(totX + 12, y + 70, totX + totW - 12, y + 70);
+
+  // TOTAL DUE
+  doc.setFillColor(...TEAL);
+  doc.roundedRect(totX, y + 76, totW, 24, 3, 3, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.setTextColor(...WHITE);
+  doc.text('TOTAL DUE', totX + 14, y + 92);
+  doc.text('$' + total.toFixed(2), totX + totW - 12, y + 92, { align: 'right' });
+
+  y += 120;
+
+  // ── NOTES ────────────────────────────────────────────────────
+  if (t.notes || t.scope) {
+    const note = t.scope || t.notes;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...TEAL);
+    doc.text('WORK PERFORMED', 40, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...DARK);
+    const noteLines = doc.splitTextToSize(note, W - 80);
+    doc.text(noteLines, 40, y + 14);
+    y += 14 + noteLines.length * 11 + 10;
+  }
+
+  // ── TERMS ────────────────────────────────────────────────────
+  y = Math.max(y, H - 120);
+  doc.setDrawColor(...BORDER);
+  doc.line(40, y, W - 40, y);
+  y += 12;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(...MIDGRAY);
+  doc.text('Payment Terms: Net 30 days. All T&M work invoiced per agreement. Minimum 4-hour service call applies.', 40, y);
+  doc.text('Late payments subject to 1.5% monthly interest. Thank you for your business.', 40, y + 11);
+
+  // ── FOOTER BAR ───────────────────────────────────────────────
+  doc.setFillColor(...DARK);
+  doc.rect(0, H - 36, W, 36, 'F');
+  doc.setFillColor(...TEAL);
+  doc.rect(0, H - 36, W, 3, 'F');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...MIDGRAY);
+  doc.text('Rye Electric, Inc.  ·  75 Doppler, Irvine, CA 92618  ·  (949) 441-0545  ·  ryecompany.com  ·  CA Lic. 980345', W / 2, H - 14, { align: 'center' });
+
+  // ── CONVERT TO BASE64 & EMAIL ─────────────────────────────────
+  const pdfBase64 = doc.output('datauristring');
+
+  // Also trigger download for Mychal's records
+  doc.save(invNum + '_' + (t.customer || t.id).replace(/\s+/g, '_') + '.pdf');
+
+  // Send via EmailJS with invoice details in body
+  const invoiceBody = `
+Invoice ${invNum} has been generated for the following service call:
+
+Ticket:   ${t.id}
+Customer: ${t.customer}
+Address:  ${t.address || '—'}
+Date:     ${fmtDate(t.date)}
+Tech:     ${t.tech}
+Type:     ${t.type || '—'}
+
+SUMMARY
+  Labor:        $${laborSubtotal.toFixed(2)}
+  Materials:    $${matSubtotal.toFixed(2)}
+  O&P (20%):    $${op.toFixed(2)}
+  ─────────────────────
+  TOTAL DUE:    $${total.toFixed(2)}
+
+The PDF invoice has been downloaded. Please attach it to your billing email.
+
+Notes: ${t.notes || t.scope || '—'}
+
+— Rye Electric Service Department
+  `.trim();
+
+  try {
+    await emailjs.send('service_jbdjjoh', 'template_q4xc3qp', {
+      to_email: 'amatias@ryecompany.com',
+      to_name:  'A. Matias',
+      subject:  `Invoice ${invNum} — ${t.customer} (${t.id})`,
+      invoice_number: invNum,
+      ticket_id:  t.id,
+      customer:   t.customer,
+      total_due:  '$' + total.toFixed(2),
+      message:    invoiceBody,
+    });
+    toast('Invoice ' + invNum + ' generated & emailed to accounting ✓');
+  } catch(e) {
+    console.warn('Email failed:', e);
+    toast('Invoice PDF downloaded — email delivery pending', true);
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = '📄 Generate Invoice'; }
 }
 
 // ── DELETE ──
