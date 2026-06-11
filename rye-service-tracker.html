@@ -450,7 +450,34 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 #toast.show { opacity: 1; transform: none; }
 #toast.error { border-left-color: var(--red); }
 
-/* ── STATUS FILTER BAR ── */
+/* ── YES/NO CONDITION QUESTIONS ── */
+.yn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--dark);
+}
+.yn-row:last-child { border-bottom: none; }
+.yn-row:nth-child(even) { background: var(--bg); }
+.yn-buttons { display: flex; gap: 6px; flex-shrink: 0; }
+.yn-btn {
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  border-radius: 4px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+  color: var(--mid);
+}
+.yn-btn:hover { border-color: var(--teal); color: var(--teal); }
+.yn-btn.yes-active { background: var(--green); border-color: var(--green); color: #fff; }
+.yn-btn.no-active  { background: var(--muted); border-color: var(--muted); color: #fff; }
 .filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--white); }
 .filter-pill {
   background: var(--white);
@@ -894,6 +921,73 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         <textarea class="form-control" id="t-notes" rows="3" placeholder="Work performed, findings, resolution..."></textarea>
       </div>
 
+      <!-- SECTION: Daily Report -->
+      <div class="form-section">
+        <div class="form-section-title red">Daily Report</div>
+
+        <div class="form-grid" style="margin-bottom:14px">
+          <div class="form-group">
+            <label class="form-label">Report Date</label>
+            <input class="form-control" type="date" id="dr-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Weather Description</label>
+            <input class="form-control" id="dr-weather" placeholder="e.g. Clear, sunny, 72°F">
+          </div>
+          <div class="form-group">
+            <label class="form-label">AM Temp (°F)</label>
+            <input class="form-control" type="number" id="dr-temp-am" placeholder="e.g. 65">
+          </div>
+          <div class="form-group">
+            <label class="form-label">PM Temp (°F)</label>
+            <input class="form-control" type="number" id="dr-temp-pm" placeholder="e.g. 78">
+          </div>
+        </div>
+
+        <div class="form-section-title" style="font-size:11px;margin-bottom:8px">Workforce — Description of Work Performed</div>
+        <table class="ts-table" id="dr-workforce-table">
+          <thead>
+            <tr>
+              <th style="width:25%">Employee</th>
+              <th style="width:45%">Description of Work Performed</th>
+              <th style="width:15%">Hours</th>
+              <th style="width:15%"></th>
+            </tr>
+          </thead>
+          <tbody id="dr-workforce-tbody"></tbody>
+        </table>
+        <button class="btn btn-ghost btn-sm add-row-btn" onclick="addDrRow()">+ Add Employee</button>
+
+        <div class="form-grid" style="margin-top:14px">
+          <div class="form-group full-col">
+            <label class="form-label" style="margin-bottom:10px">Job Conditions</label>
+            <div id="dr-conditions" style="border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <!-- Yes/No questions -->
+            </div>
+          </div>
+          <div class="form-group full-col">
+            <label class="form-label">Delays or Interference by Others</label>
+            <textarea class="form-control" id="dr-delays" rows="2" placeholder="Describe any areas where work is delayed, blocked, or interfered with by others..."></textarea>
+          </div>
+          <div class="form-group full-col">
+            <label class="form-label">Extra Work / Change Order Notes</label>
+            <textarea class="form-control" id="dr-extra-work" rows="2" placeholder="Describe any extra work performed or potential change orders..."></textarea>
+          </div>
+          <div class="form-group full-col">
+            <label class="form-label">Other Notes / Valuable Information</label>
+            <textarea class="form-control" id="dr-other-notes" rows="2" placeholder="Any other information valuable for cost recovery, claims, or project record..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Superintendent Name</label>
+            <input class="form-control" id="dr-super-name" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Title</label>
+            <input class="form-control" id="dr-super-title" placeholder="e.g. Field Superintendent">
+          </div>
+        </div>
+      </div>
+
       <!-- SECTION: Customer Rating + Signature -->
       <div class="form-section">
         <div class="form-section-title red">Customer Review &amp; Signature</div>
@@ -1187,9 +1281,28 @@ function openModal(id) {
     document.getElementById('modal-ticket-num').textContent = 'TICKET #SVC-' + String(ticketCounter).padStart(4,'0');
     document.getElementById('t-date').value = today();
     document.getElementById('t-sig-date').value = today();
+    // Init daily report
+    const drDate = document.getElementById('dr-date');
+    if (drDate) drDate.value = today();
+    const drTbody = document.getElementById('dr-workforce-tbody');
+    if (drTbody && !drTbody.children.length) addDrRow();
+    buildDrConditions();
     if (!document.getElementById('labor-tbody').children.length) addLaborRow();
     if (!document.getElementById('materials-tbody').children.length) addMaterialRow();
     resetCatRatings();
+    // Fix signature pad — resize after modal is visible
+    setTimeout(() => {
+      const canvas = document.getElementById('sig-canvas');
+      const pad    = document.getElementById('sig-pad');
+      if (canvas && pad && pad.offsetWidth > 0) {
+        canvas.width  = pad.offsetWidth;
+        canvas.height = pad.offsetHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.strokeStyle = '#1a1a1a';
+        ctx.lineWidth   = 2;
+        ctx.lineCap     = 'round';
+      }
+    }, 100);
     populateTaskTicketDropdown();
   }
   if (id === 'taskModal') {
@@ -1257,7 +1370,7 @@ function addMaterialRow() {
   tr.innerHTML = `
     <td><input class="form-control" placeholder="Description"></td>
     <td><input class="form-control" placeholder="Part #"></td>
-    <td><input type="number" class="form-control mat-qty" placeholder="1" min="0" oninput="calcMatTotal(this)"></td>
+    <td><input type="number" class="form-control mat-qty" placeholder="1" min="0" value="1" oninput="calcMatTotal(this)"></td>
     <td><input class="form-control" placeholder="EA / LF / etc"></td>
     <td><input type="number" class="form-control mat-cost" placeholder="0.00" min="0" step="0.01" oninput="calcMatTotal(this)"></td>
     <td><input type="number" class="form-control mat-total" placeholder="0.00" readonly style="background:#f8f8f8"></td>
@@ -1267,9 +1380,95 @@ function addMaterialRow() {
 
 function calcMatTotal(input) {
   const tr = input.closest('tr');
-  const qty = parseFloat(tr.querySelector('.mat-qty').value) || 0;
+  const qty = parseFloat(tr.querySelector('.mat-qty').value) || 1;
   const cost = parseFloat(tr.querySelector('.mat-cost').value) || 0;
   tr.querySelector('.mat-total').value = (qty * cost).toFixed(2);
+}
+
+// ── DAILY REPORT ROWS ─────────────────────────────────────────────────────────
+const DR_QUESTIONS = [
+  { id: 'dr-q1', text: 'Did you perform any extra work?' },
+  { id: 'dr-q2', text: 'Will overtime be required?' },
+  { id: 'dr-q3', text: 'Was direction provided by the GC, Owner, or Sub?' },
+  { id: 'dr-q4', text: 'Will this direction result in extra work?' },
+  { id: 'dr-q5', text: 'Were any inspections called or received?' },
+  { id: 'dr-q6', text: 'Did you attend any meetings?' },
+  { id: 'dr-q7', text: 'Were there any visitors at the jobsite?' },
+  { id: 'dr-q8', text: 'Were any deliveries received today?' },
+];
+
+function buildDrConditions() {
+  const container = document.getElementById('dr-conditions');
+  if (!container || container.children.length) return;
+  container.innerHTML = DR_QUESTIONS.map(q => `
+    <div class="yn-row">
+      <span>${q.text}</span>
+      <div class="yn-buttons">
+        <button type="button" class="yn-btn" id="${q.id}-yes" onclick="setYN('${q.id}','yes')">YES</button>
+        <button type="button" class="yn-btn" id="${q.id}-no"  onclick="setYN('${q.id}','no')">NO</button>
+      </div>
+    </div>`).join('');
+}
+
+function setYN(id, val) {
+  const yesBtn = document.getElementById(id + '-yes');
+  const noBtn  = document.getElementById(id + '-no');
+  if (!yesBtn || !noBtn) return;
+  yesBtn.classList.toggle('yes-active', val === 'yes');
+  noBtn.classList.toggle('no-active',   val === 'no');
+  yesBtn.classList.toggle('no-active',  false);
+  noBtn.classList.toggle('yes-active',  false);
+}
+
+function collectConditions() {
+  return DR_QUESTIONS.map(q => ({
+    question: q.text,
+    answer: document.getElementById(q.id + '-yes')?.classList.contains('yes-active') ? 'Yes'
+          : document.getElementById(q.id + '-no')?.classList.contains('no-active')   ? 'No'
+          : '—',
+  }));
+}
+function addDrRow() {
+  const tbody = document.getElementById('dr-workforce-tbody');
+  if (!tbody) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><select class="form-control" style="min-width:130px">
+      <option value="">Select tech...</option>
+      <option>Mychal Kirschbaum</option>
+      <option>G</option>
+      <option>Erik</option>
+      <option>James</option>
+      <option>Mario</option>
+      <option>Dak</option>
+    </select></td>
+    <td><input class="form-control" placeholder="Description of work performed"></td>
+    <td><input type="number" class="form-control" placeholder="0" min="0" step="0.5"></td>
+    <td><button class="del-row" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function collectDailyReport() {
+  const workforce = [];
+  document.querySelectorAll('#dr-workforce-tbody tr').forEach(tr => {
+    const emp  = tr.querySelector('select')?.value || '';
+    const desc = tr.querySelectorAll('input')[0]?.value || '';
+    const hrs  = tr.querySelectorAll('input')[1]?.value || '';
+    if (emp || desc) workforce.push({ employee: emp, description: desc, hours: hrs });
+  });
+  return {
+    date:       document.getElementById('dr-date')?.value || '',
+    weather:    document.getElementById('dr-weather')?.value || '',
+    tempAM:     document.getElementById('dr-temp-am')?.value || '',
+    tempPM:     document.getElementById('dr-temp-pm')?.value || '',
+    workforce,
+    conditions: collectConditions(),
+    delays:     document.getElementById('dr-delays')?.value || '',
+    extraWork:  document.getElementById('dr-extra-work')?.value || '',
+    otherNotes: document.getElementById('dr-other-notes')?.value || '',
+    superName:  document.getElementById('dr-super-name')?.value || '',
+    superTitle: document.getElementById('dr-super-title')?.value || '',
+  };
 }
 
 // ── TIMESHEET ROWS ──
@@ -1408,6 +1607,7 @@ function saveTicket() {
     ratings: {...catRatings},
     rating: ticketRating,
     ratingNotes: document.getElementById('t-rating-notes').value,
+    dailyReport: collectDailyReport(),
     createdAt: new Date().toISOString()
   };
 
@@ -1433,6 +1633,14 @@ function clearTicketForm() {
   document.getElementById('t-sig-date').value = today();
   document.getElementById('labor-tbody').innerHTML = '';
   document.getElementById('materials-tbody').innerHTML = '';
+  // Clear daily report
+  ['dr-date','dr-weather','dr-temp-am','dr-temp-pm','dr-delays','dr-extra-work','dr-other-notes','dr-super-name','dr-super-title'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const drTbody = document.getElementById('dr-workforce-tbody');
+  if (drTbody) drTbody.innerHTML = '';
+  // Reset condition buttons
+  document.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('yes-active','no-active'));
   resetCatRatings();
 }
 
@@ -2222,6 +2430,205 @@ async function generateInvoice() {
     y += 14 + noteLines.length * 11 + 10;
   }
 
+  // ── DAILY REPORT ─────────────────────────────────────────────
+  const dr = t.dailyReport;
+  if (dr && (dr.workforce?.length || dr.delays || dr.extraWork || dr.superName)) {
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('DAILY REPORT', 40, y);
+    y += 8;
+
+    // Weather row
+    if (dr.weather || dr.tempAM || dr.tempPM) {
+      doc.setFillColor(...LTGRAY);
+      doc.roundedRect(40, y, W - 80, 20, 3, 3, 'F');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...MIDGRAY);
+      const weatherStr = [
+        dr.date ? 'Date: ' + fmtDate(dr.date) : '',
+        dr.weather ? 'Weather: ' + dr.weather : '',
+        dr.tempAM  ? 'AM: ' + dr.tempAM + '°F' : '',
+        dr.tempPM  ? 'PM: ' + dr.tempPM + '°F' : '',
+      ].filter(Boolean).join('   ·   ');
+      doc.text(weatherStr, 52, y + 13);
+      y += 26;
+    }
+
+    // Job conditions Yes/No table
+    if (dr.conditions?.length) {
+      const condRows = dr.conditions.map(c => [
+        c.question,
+        {
+          content: c.answer,
+          styles: {
+            fontStyle: 'bold',
+            textColor: c.answer === 'Yes' ? [39,174,96] : c.answer === 'No' ? [120,120,120] : DARK,
+            halign: 'center',
+          }
+        }
+      ]);
+      doc.autoTable({
+        startY: y,
+        head: [['Job Condition', 'Answer']],
+        body: condRows,
+        margin: { left: 40, right: 40 },
+        styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+        headStyles: { fillColor: TEAL, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+        alternateRowStyles: { fillColor: LTGRAY },
+        columnStyles: { 1: { halign: 'center', cellWidth: 60 } },
+      });
+      y = doc.lastAutoTable.finalY + 8;
+    }
+
+    // Workforce table
+    if (dr.workforce?.length) {
+      const wfRows = dr.workforce.map(w => [
+        w.employee || '—',
+        w.description || '—',
+        w.hours ? w.hours + ' hrs' : '—',
+      ]);
+      const totalDrHours = dr.workforce.reduce((s, w) => s + (parseFloat(w.hours) || 0), 0);
+      wfRows.push([{ content: 'Total Hours', colSpan: 2, styles: { fontStyle: 'bold', fillColor: DARK, textColor: WHITE } },
+                   { content: totalDrHours.toFixed(1) + ' hrs', styles: { fontStyle: 'bold', fillColor: DARK, textColor: WHITE } }]);
+
+      doc.autoTable({
+        startY: y,
+        head: [['Employee', 'Description of Work Performed', 'Hours']],
+        body: wfRows,
+        margin: { left: 40, right: 40 },
+        styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+        headStyles: { fillColor: TEAL, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+        alternateRowStyles: { fillColor: LTGRAY },
+        columnStyles: { 2: { halign: 'right' } },
+      });
+      y = doc.lastAutoTable.finalY + 8;
+    }
+
+    // Conditions / delays
+    const drSections = [
+      { label: 'Job Conditions / Delays', val: dr.delays },
+      { label: 'Extra Work / Change Orders', val: dr.extraWork },
+      { label: 'Other Notes', val: dr.otherNotes },
+    ];
+    drSections.forEach(({ label, val }) => {
+      if (!val) return;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.setTextColor(...TEAL);
+      doc.text(label + ':', 40, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...DARK);
+      const lines = doc.splitTextToSize(val, W - 90);
+      doc.text(lines, 40, y + 12);
+      y += 12 + lines.length * 11 + 6;
+    });
+
+    // Superintendent
+    if (dr.superName) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...MIDGRAY);
+      doc.text('Superintendent: ' + dr.superName + (dr.superTitle ? ' — ' + dr.superTitle : ''), 40, y);
+      y += 14;
+    }
+    y += 6;
+  }
+
+  // ── CUSTOMER RATINGS ─────────────────────────────────────────
+  const r = t.ratings || {};
+  const ratedCats = Object.values(r).filter(v => v > 0);
+  if (ratedCats.length) {
+    const catLabels = {
+      timeliness:       'Timeliness',
+      customer_service: 'Customer Service',
+      cleanliness:      'Cleanliness',
+      knowledge:        'Overall Knowledge',
+      support:          'Customer Support',
+    };
+    const overallAvg = (ratedCats.reduce((a,b)=>a+b,0) / ratedCats.length).toFixed(1);
+
+    y += 10;
+    // Section label
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('CUSTOMER SATISFACTION RATING', 40, y);
+    y += 10;
+
+    // Rating box background
+    const rBoxH = 20 + (Object.keys(catLabels).length * 16) + 28;
+    doc.setFillColor(...LTGRAY);
+    doc.roundedRect(40, y, W - 80, rBoxH, 4, 4, 'F');
+    doc.setFillColor(...TEAL);
+    doc.roundedRect(40, y, 4, rBoxH, 2, 2, 'F');
+
+    y += 14;
+    Object.entries(catLabels).forEach(([key, label]) => {
+      const val = r[key] || 0;
+      // Draw filled and empty circles manually using jsPDF shapes
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...MIDGRAY);
+      doc.text(label, 55, y);
+
+      // Draw 5 circles — filled for rated, outline for unrated
+      const starColor = val >= 4 ? [39,174,96] : val >= 3 ? [180,140,10] : [192,57,43];
+      for (let s = 1; s <= 5; s++) {
+        const cx = 200 + (s - 1) * 14;
+        const cy = y - 5;
+        if (s <= val) {
+          doc.setFillColor(...starColor);
+          doc.circle(cx, cy, 4, 'F');
+        } else {
+          doc.setDrawColor(...MIDGRAY);
+          doc.setLineWidth(0.5);
+          doc.circle(cx, cy, 4, 'S');
+        }
+      }
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...DARK);
+      doc.text(val + '/5', W - 60, y);
+      y += 16;
+    });
+
+    // Overall avg bar
+    doc.setDrawColor(...BORDER);
+    doc.line(55, y, W - 55, y);
+    y += 10;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('Overall Average', 55, y);
+    doc.setFontSize(11);
+    doc.text(overallAvg + ' / 5.0', W - 60, y);
+    y += 6;
+
+    if (t.sigName) {
+      y += 8;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...MIDGRAY);
+      doc.text('Signed by: ' + t.sigName + (t.sigDate ? '   Date: ' + fmtDate(t.sigDate) : ''), 55, y);
+    }
+
+    if (t.ratingNotes) {
+      y += 12;
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(...MIDGRAY);
+      const noteLines = doc.splitTextToSize('"' + t.ratingNotes + '"', W - 110);
+      doc.text(noteLines, 55, y);
+      y += noteLines.length * 10;
+    }
+    y += 16;
+  }
+
   // ── TERMS ────────────────────────────────────────────────────
   y = Math.max(y, H - 120);
   doc.setDrawColor(...BORDER);
@@ -2401,34 +2808,85 @@ function toast(msg, error) {
 
 // ── SIGNATURE PAD (basic canvas) ──
 (function initSig() {
-  const canvas = document.getElementById('sig-canvas');
-  const pad = document.getElementById('sig-pad');
-  if (!canvas || !pad) return;
-  const ctx = canvas.getContext('2d');
-  let drawing = false;
-  function resize() {
-    canvas.width = pad.offsetWidth;
+  let ctx, drawing = false;
+
+  function setupCanvas() {
+    const canvas = document.getElementById('sig-canvas');
+    const pad    = document.getElementById('sig-pad');
+    if (!canvas || !pad || pad.offsetWidth === 0) return false;
+    canvas.width  = pad.offsetWidth;
     canvas.height = pad.offsetHeight;
+    ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth   = 2;
+    ctx.lineCap     = 'round';
+    return true;
   }
-  resize();
-  ctx.strokeStyle = '#1a1a1a';
-  ctx.lineWidth = 2;
-  ctx.lineCap = 'round';
-  function pos(e) {
-    const r = canvas.getBoundingClientRect();
+
+  function getPos(e, canvas) {
+    const r   = canvas.getBoundingClientRect();
     const src = e.touches ? e.touches[0] : e;
     return { x: src.clientX - r.left, y: src.clientY - r.top };
   }
-  canvas.addEventListener('mousedown', e => { drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); document.getElementById('sig-pad').querySelector('.sig-placeholder').style.display='none'; });
-  canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); });
-  canvas.addEventListener('mouseup', () => drawing = false);
-  canvas.addEventListener('mouseleave', () => drawing = false);
-  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); }, {passive:false});
-  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); }, {passive:false});
-  canvas.addEventListener('touchend', () => drawing = false);
+
+  // Attach events using delegation so it works after modal open
+  document.addEventListener('mousedown', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (e.target !== canvas) return;
+    if (!ctx) setupCanvas();
+    if (!ctx) return;
+    drawing = true;
+    const p = getPos(e, canvas);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    const ph = document.querySelector('#sig-pad .sig-placeholder');
+    if (ph) ph.style.display = 'none';
+  });
+  document.addEventListener('mousemove', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (!drawing || !ctx || e.target !== canvas) return;
+    const p = getPos(e, canvas);
+    ctx.lineTo(p.x, p.y); ctx.stroke();
+  });
+  document.addEventListener('mouseup',    () => { drawing = false; });
+  document.addEventListener('mouseleave', () => { drawing = false; });
+
+  document.addEventListener('touchstart', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (e.target !== canvas) return;
+    e.preventDefault();
+    if (!ctx) setupCanvas();
+    if (!ctx) return;
+    drawing = true;
+    const p = getPos(e, canvas);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    const ph = document.querySelector('#sig-pad .sig-placeholder');
+    if (ph) ph.style.display = 'none';
+  }, { passive: false });
+  document.addEventListener('touchmove', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (!drawing || !ctx || e.target !== canvas) return;
+    e.preventDefault();
+    const p = getPos(e, canvas);
+    ctx.lineTo(p.x, p.y); ctx.stroke();
+  }, { passive: false });
+  document.addEventListener('touchend', () => { drawing = false; });
+
   window.clearSig = function() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    document.getElementById('sig-pad').querySelector('.sig-placeholder').style.display='';
+    const canvas = document.getElementById('sig-canvas');
+    if (!canvas) return;
+    if (!ctx) setupCanvas();
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const ph = document.querySelector('#sig-pad .sig-placeholder');
+    if (ph) ph.style.display = '';
+  };
+
+  window.getSigDataURL = function() {
+    const canvas = document.getElementById('sig-canvas');
+    if (!canvas) return null;
+    // Check if anything was drawn
+    const data = ctx && ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    const hasDrawing = data && Array.from(data).some(v => v !== 0);
+    return hasDrawing ? canvas.toDataURL() : null;
   };
 })();
 
