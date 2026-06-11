@@ -4,60 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric - Field Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --rye:#65ADE5;--rye-dark:#3D8DC4;--rye-glow:rgba(101,173,229,.13);
-  --rye-mid:#A8D4F5;--rye-deep:#0B1D2E;
-  --black:#060C10;--bg:#0B1520;--s1:#0F1E30;--s2:#152436;
-  --border:#1A3048;--bhi:#254460;
-  --t1:#FFF;--t2:#8BAFC8;--t3:#4A7090;
-  --green:#4CAF7D;--red:#E05A5A;--amber:#EF9F27;
+  --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
+  --gold:#D4A843;--gold-light:#fdf6e3;
+  --dark:#1a1a1a;--dark2:#2a2a2a;--mid:#444;--muted:#777;
+  --border:#e2e2e2;--bg:#F4F8F9;--white:#fff;
+  --green:#27ae60;--green-light:#eafaf1;
+  --red:#C0392B;--red-light:#f9eded;
+  --amber:#e67e22;--amber-light:#fef5ec;
+  --blue:#2980b9;--blue-light:#eaf4fb;
+  --shadow:0 2px 8px rgba(0,0,0,.07);
+  --shadow-lg:0 4px 20px rgba(0,0,0,.11);
+  --radius:6px;
+  --font:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
 /* HEADER */
-.hdr{background:var(--black);border-bottom:2px solid var(--rye);position:sticky;top:0;z-index:100}
-.hdr-in{max-width:900px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:58px;gap:12px}
-.logo-img{height:32px;width:auto}
-.hdr-div{width:1px;height:22px;background:var(--bhi);margin:0 10px}
-.hdr-sub{font-size:11px;font-weight:700;color:var(--t3);letter-spacing:.07em;text-transform:uppercase}
+.hdr{background:var(--white);border-bottom:1px solid #e2e2e2;box-shadow:0 1px 6px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.logo-img{height:30px;width:auto}
+.hdr-div{width:1px;height:24px;background:var(--border);margin:0 12px}
+.hdr-sub{font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
 .hdr-right{display:flex;align-items:center;gap:8px}
-.week-badge{font-size:11px;font-weight:700;color:var(--t3);background:var(--s1);border:1px solid var(--border);padding:4px 11px;border-radius:999px}
+.week-badge{font-size:11px;font-weight:700;color:var(--dark);background:var(--bg);border:1.5px solid var(--border);padding:4px 13px;border-radius:999px}
 
 /* SHELL */
-.shell{max-width:900px;margin:0 auto;padding:0 16px 60px}
+.shell{max-width:960px;margin:0 auto;padding:0 20px 60px}
 
 /* VIEW HEADER */
 .vh{padding:16px 0 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.vh-left{display:flex;align-items:center;gap:10px}
-.vh-icon{width:42px;height:42px;border-radius:10px;background:var(--rye);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.vh-icon svg{width:22px;height:22px;fill:var(--black)}
-.vh-name{font-family:'Arial Narrow',Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:.02em;line-height:1}
-.vh-desc{font-size:11px;color:var(--t3);margin-top:2px;letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.vh-left{display:flex;align-items:center;gap:12px}
+.vh-icon{width:42px;height:42px;border-radius:var(--radius);background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vh-icon svg{width:22px;height:22px;fill:#fff}
+.vh-name{font-size:22px;font-weight:700;color:var(--dark);line-height:1}
+.vh-desc{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.05em;text-transform:uppercase;font-weight:600}
 
 /* TABS */
-.tabs{display:flex;gap:3px;background:var(--s1);border:1px solid var(--border);padding:4px;border-radius:10px;margin-bottom:16px}
-.tab{flex:1;padding:9px 6px;font-size:12px;font-weight:700;border:none;cursor:pointer;border-radius:7px;background:transparent;color:var(--t3);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .14s;letter-spacing:.03em}
-.tab svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
-.tab.on{background:var(--rye);color:var(--black)}
-.tab:not(.on):hover{background:var(--s2);color:var(--t2)}
+.tabs{display:flex;gap:3px;background:var(--white);border:1px solid #e2e2e2;padding:5px;border-radius:10px;margin-bottom:16px;box-shadow:var(--shadow)}
+.tab{flex:1;padding:8px 6px;font-size:12px;font-weight:700;border:none;cursor:pointer;border-radius:6px;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .14s;letter-spacing:.03em;font-family:var(--font)}
+.tab svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
+.tab.on{background:var(--teal);color:#fff}
+.tab:not(.on):hover{background:var(--teal-light);color:var(--teal)}
 .pane{display:none}.pane.on{display:block}
 
 /* STATS */
-.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:16px}
-.sc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
-.sl{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
-.sv{font-family:'Arial Narrow',Arial,sans-serif;font-size:32px;font-weight:700;line-height:1}
-.sv.rye{color:var(--rye)}.sv.g{color:var(--green)}.sv.a{color:var(--amber)}.sv.w{color:var(--t1)}
-.ss{font-size:11px;color:var(--t3);margin-top:3px;font-weight:500}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+.sc{background:var(--white);border:1px solid #e2e2e2;border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);border-left:4px solid var(--border)}
+.sc.rye{border-left-color:var(--teal)}
+.sc.g{border-left-color:var(--green)}
+.sc.a{border-left-color:var(--gold)}
+.sc.w{border-left-color:var(--blue)}
+.sl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.sv{font-size:30px;font-weight:700;line-height:1;color:var(--dark)}
+.sv.rye{color:var(--teal)}.sv.g{color:var(--green)}.sv.a{color:var(--gold)}.sv.w{color:var(--blue)}
+.ss{font-size:11px;color:var(--muted);margin-top:3px;font-weight:500}
 
 /* CARD */
-.card{background:var(--s1);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
-.ch{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.18)}
-.ct{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:6px}
-.ct svg{width:13px;height:13px;fill:var(--rye)}
-.cb{padding:14px 16px}
+.card{background:var(--white);border:1px solid #e2e2e2;border-radius:var(--radius);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
+.ch{padding:12px 18px;border-bottom:1px solid #e2e2e2;display:flex;align-items:center;justify-content:space-between;background:#fafafa}
+.ct{font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:6px}
+.ct svg{width:13px;height:13px;fill:var(--teal)}
+.cb{padding:16px 18px}
 
 /* LOG FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
@@ -65,86 +76,92 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t1
 .form-grid.four{grid-template-columns:1fr 1fr 1fr 1fr}
 @media(max-width:580px){.form-grid,.form-grid.three,.form-grid.four{grid-template-columns:1fr 1fr}}
 .fgroup{display:flex;flex-direction:column;gap:5px}
-.flbl{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em}
+.flbl{font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.4px}
 select,input[type=number],input[type=text]{
-  background:var(--black);border:1px solid var(--bhi);border-radius:8px;
-  color:var(--t1);font-family:'Segoe UI',Arial,sans-serif;
+  background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);
+  color:var(--dark);font-family:var(--font);
   font-size:13px;padding:9px 12px;outline:none;
   transition:border-color .14s;height:40px;width:100%
 }
-select:focus,input:focus{border-color:var(--rye);box-shadow:0 0 0 3px rgba(101,173,229,.18)}
-select option{background:var(--black)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;height:42px;border-radius:8px;font-family:'Segoe UI',Arial,sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s;white-space:nowrap;letter-spacing:.03em}
+select{
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%23777' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  padding-right:32px
+}
+select:focus,input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(78,157,168,.12)}
+select option{background:var(--white);color:var(--dark)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;height:40px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s;white-space:nowrap;letter-spacing:.03em}
 .btn svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
-.btn-rye{background:var(--rye);color:var(--black)}.btn-rye:hover{background:var(--rye-dark);color:var(--t1)}
-.btn-g{background:var(--s2);color:var(--t2);border:1px solid var(--bhi)}.btn-g:hover{background:var(--bhi);color:var(--t1)}
-.btn-ok{background:rgba(76,175,125,.2);color:#88d4ad;border:1px solid rgba(76,175,125,.3)}
-.btn-ok:hover{background:rgba(76,175,125,.35)}
+.btn-rye{background:var(--teal);color:#fff}.btn-rye:hover{background:var(--teal-dark)}
+.btn-g{background:var(--white);color:var(--mid);border:1.5px solid var(--border)}.btn-g:hover{border-color:var(--teal);color:var(--teal)}
+.btn-ok{background:var(--green-light);color:#1a6b3e;border:1px solid rgba(39,174,96,.25)}
+.btn-ok:hover{background:#d5f0e3}
 .btn-sm{height:32px;padding:5px 12px;font-size:11px}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
 
 /* PHASE TOGGLE */
-.phase-toggle{display:flex;gap:0;border:1px solid var(--bhi);border-radius:8px;overflow:hidden;margin-bottom:14px}
-.phase-btn{flex:1;padding:10px 12px;font-size:12px;font-weight:700;border:none;cursor:pointer;background:transparent;color:var(--t3);transition:all .14s;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.03em}
+.phase-toggle{display:flex;gap:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
+.phase-btn{flex:1;padding:10px 12px;font-size:12px;font-weight:700;border:none;cursor:pointer;background:var(--white);color:var(--muted);transition:all .14s;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.03em;font-family:var(--font)}
 .phase-btn svg{width:14px;height:14px;fill:currentColor}
-.phase-btn:not(:last-child){border-right:1px solid var(--bhi)}
-.phase-btn.on-rough{background:var(--amber);color:var(--black)}
-.phase-btn.on-final{background:var(--green);color:var(--black)}
-.phase-btn:not(.on-rough):not(.on-final):hover{background:var(--s2);color:var(--t2)}
+.phase-btn:not(:last-child){border-right:1.5px solid var(--border)}
+.phase-btn.on-rough{background:#2980b9;color:#fff}
+.phase-btn.on-final{background:#2980b9;color:#fff}
+.phase-btn:not(.on-rough):not(.on-final):hover{background:var(--teal-light);color:var(--teal)}
 
 /* RESULT PANEL */
-.result{background:var(--black);border:1px solid var(--bhi);border-left:3px solid var(--rye);border-radius:10px;padding:14px;margin-top:10px;display:none;animation:fi .2s ease}
+.result{background:var(--teal-light);border:1px solid var(--teal);border-left:3px solid var(--teal);border-radius:var(--radius);padding:14px;margin-top:10px;display:none;animation:fi .2s ease}
 .result.on{display:block}
 @keyframes fi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 
 /* TABLE */
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
-thead th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-tbody td{padding:10px 12px;border-top:1px solid var(--border);color:var(--t2);vertical-align:middle}
-tbody tr:hover td{background:rgba(101,173,229,.04)}
-.tm{font-family:monospace;font-size:11px;color:var(--t3)}
-.tn{font-weight:700;color:var(--t1)}
-.tc{color:var(--rye);font-size:11px;font-weight:600}
+thead th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);background:#fafafa;border-bottom:2px solid var(--border);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+tbody td{padding:10px 12px;border-top:1px solid #f0f0f0;color:var(--mid);vertical-align:middle}
+tbody tr:hover td{background:#f7fbfc}
+.tm{font-family:monospace;font-size:11px;color:var(--muted)}
+.tn{font-weight:700;color:var(--dark)}
+.tc{color:var(--teal);font-size:11px;font-weight:600}
 
 /* BADGE */
 .bdg{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-.b-rye{background:var(--rye-glow);color:var(--rye-mid);border:1px solid rgba(101,173,229,.3)}
-.b-ok{background:rgba(76,175,125,.15);color:#88d4ad;border:1px solid rgba(76,175,125,.3)}
-.b-warn{background:rgba(239,159,39,.15);color:#FAC775;border:1px solid rgba(239,159,39,.3)}
-.b-gray{background:rgba(74,112,144,.12);color:var(--t3);border:1px solid rgba(74,112,144,.2)}
-.b-amber{background:rgba(239,159,39,.15);color:#FAC775;border:1px solid rgba(239,159,39,.3)}
+.b-rye{background:var(--teal-light);color:var(--teal-dark);border:1px solid rgba(78,157,168,.3)}
+.b-ok{background:var(--green-light);color:#1a6b3e;border:1px solid rgba(39,174,96,.25)}
+.b-warn{background:var(--gold-light);color:#8a6a1a;border:1px solid rgba(212,168,67,.3)}
+.b-gray{background:#f0f0f0;color:var(--mid);border:1px solid #ddd}
+.b-amber{background:var(--amber-light);color:#7a3910;border:1px solid rgba(230,126,34,.3)}
 
 /* WORKER CARD */
-.wcard{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.wcard{background:var(--bg);border:1px solid #e2e2e2;border-radius:var(--radius);padding:12px 14px;margin-bottom:8px}
 .wcard-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;background:rgba(101,173,229,.2);color:var(--rye);border:1px solid rgba(101,173,229,.3)}
-.wcard-name{font-size:14px;font-weight:700;color:var(--t1)}
-.wcard-role{font-size:11px;color:var(--t3)}
+.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;background:var(--teal-light);color:var(--teal);border:1px solid rgba(78,157,168,.3)}
+.wcard-name{font-size:14px;font-weight:700;color:var(--dark)}
+.wcard-role{font-size:11px;color:var(--muted)}
 .wcard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.ws{background:var(--black);border-radius:7px;padding:8px 10px;text-align:center}
-.ws-val{font-family:'Arial Narrow',Arial,sans-serif;font-size:20px;font-weight:700;color:var(--rye)}
-.ws-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;font-weight:700}
+.ws{background:var(--white);border:1px solid #e2e2e2;border-radius:var(--radius);padding:8px 10px;text-align:center}
+.ws-val{font-size:20px;font-weight:700;color:var(--teal)}
+.ws-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;font-weight:700}
 
 /* UNIT STATUS GRID */
 .unit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;margin-top:6px}
-.unit-cell{background:var(--black);border:1px solid var(--border);border-radius:7px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s}
-.unit-cell:hover{border-color:var(--rye)}
-.unit-cell.rough{border-color:var(--amber);background:rgba(239,159,39,.08)}
-.unit-cell.final{border-color:var(--green);background:rgba(76,175,125,.08)}
-.unit-cell.both{border-color:var(--green);background:rgba(76,175,125,.1)}
-.unit-num{font-family:'Arial Narrow',Arial,sans-serif;font-size:18px;font-weight:700;color:var(--t1)}
+.unit-cell{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s;box-shadow:var(--shadow)}
+.unit-cell:hover{border-color:var(--teal)}
+.unit-cell.rough{border-color:var(--gold);background:var(--gold-light)}
+.unit-cell.final{border-color:var(--green);background:var(--green-light)}
+.unit-cell.both{border-color:var(--green);background:var(--green-light)}
+.unit-num{font-size:18px;font-weight:700;color:var(--dark)}
 .unit-status{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
-.unit-status.rough{color:var(--amber)}.unit-status.final{color:var(--green)}.unit-status.both{color:var(--green)}
+.unit-status.rough{color:var(--gold)}.unit-status.final{color:var(--green)}.unit-status.both{color:var(--green)}
 
 /* PROGRESS BAR */
 .pb{height:4px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:5px}
 .pf{height:100%;border-radius:99px;transition:width .5s ease}
-.pf-rye{background:var(--rye)}.pf-ok{background:var(--green)}.pf-warn{background:var(--amber)}
+.pf-rye{background:var(--teal)}.pf-ok{background:var(--green)}.pf-warn{background:var(--gold)}
 
 /* TOAST */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--rye-deep);border:1px solid var(--rye);color:var(--rye-mid);border-radius:8px;padding:10px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:0 8px 28px rgba(0,0,0,.5)}
-#toast svg{width:13px;height:13px;fill:var(--rye);flex-shrink:0}
+#toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg);border-left:4px solid var(--green)}
+#toast svg{width:13px;height:13px;fill:var(--green);flex-shrink:0}
 #toast.on{opacity:1;transform:translateY(0)}
 
 /* SECTION DIVIDER */
@@ -169,22 +186,12 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 }
 
 /* SIGNATURE PAD */
-.sig-pad-wrap{background:#fafafa;border:2px dashed #bbb;border-radius:6px;position:relative;margin-bottom:4px;cursor:crosshair}
+.sig-pad-wrap{background:#fafafa;border:2px dashed var(--border);border-radius:var(--radius);position:relative;margin-bottom:4px;cursor:crosshair}
 .sig-pad-wrap canvas{display:block;touch-action:none}
 .sig-pad-btns{display:flex;gap:6px;margin-top:4px}
-.sig-btn{padding:4px 12px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;font-family:Arial,sans-serif}
-.sig-btn-clear{background:#fee;border:1px solid #c00;color:#c00}
-.sig-btn-done{background:#e6f4ea;border:1px solid #2e7d32;color:#2e7d32}
-
-.quick-nav{display:flex;align-items:center;gap:8px;padding:6px 14px;background:var(--s2);border-bottom:1px solid var(--border);flex-wrap:wrap}
-.qn-label{font-size:10px;color:var(--t3);font-weight:600;white-space:nowrap}
-.qn-dash{display:flex;align-items:center;gap:5px;background:var(--rye);color:var(--black);border:none;border-radius:5px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
-.qn-select{background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 8px;cursor:pointer}
-.dash-btn{display:inline-flex;align-items:center;gap:6px;background:var(--rye);color:var(--black);border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap}
-.job-banner{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--rye);color:var(--black)}
-.jb-num{font-size:13px;font-weight:900}
-.jb-name{font-size:13px;font-weight:700;flex:1}
-.jb-badge{font-size:10px;background:rgba(0,0,0,.2);border-radius:10px;padding:2px 8px}
+.sig-btn{padding:4px 12px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;font-family:var(--font)}
+.sig-btn-clear{background:var(--red-light);border:1px solid var(--red);color:var(--red)}
+.sig-btn-done{background:var(--green-light);border:1px solid var(--green);color:var(--green)}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -205,7 +212,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
 <div class="shell">
   <div class="job-banner">
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--black)"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="#1a1a1a"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
   <span class="jb-num">25002</span>
   <span class="jb-name">BAH</span>
   <span class="jb-badge">Job Tracker</span>
@@ -299,7 +306,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
-            <select id="sel-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
+            <select id="sel-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
           </div>
         </div>
 
@@ -462,7 +469,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
           <input type="text" id="inp-notes" placeholder="Add any extra details, issues, materials used...">
         </div>
 
-        <div style="font-size:10px;color:var(--t3);text-align:center;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:4px">
+        <div style="font-size:10px;color:#777;text-align:center;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:4px">
           <svg viewBox="0 0 24 24" width="11" height="11" fill="var(--green)"><polyline points="20,6 9,17 4,12"/></svg>
           Automatically syncs to Whiteboard &amp; Timesheets
         </div>
@@ -522,7 +529,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job</div>
-            <select id="wb-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
+            <select id="wb-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
           </div>
         </div>
         <div class="form-grid">
@@ -604,19 +611,19 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
           <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="20,6 9,17 4,12"/></svg>
           Save to whiteboard
         </button>
-        <div id="wb-confirm" style="display:none;margin-top:8px;padding:8px 12px;background:var(--black);border:1px solid var(--green);border-radius:7px;font-size:12px;color:var(--green)"></div>
+        <div id="wb-confirm" style="display:none;margin-top:8px;padding:8px 12px;background:#fff;border:1px solid var(--green);border-radius:7px;font-size:12px;color:var(--green)"></div>
       </div>
     </div>
 
     <!-- Storage status -->
-    <div id="storage-bar" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px">
+    <div id="storage-bar" style="background:#fff;border:1px solid #e2e2e2;border-radius:8px;padding:8px 14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px">
       <div style="display:flex;align-items:center;gap:6px">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="var(--green)"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
-        <span style="color:var(--t2)">Entries auto-saved to this device</span>
-        <span id="storage-week-label" style="color:var(--t3)"></span>
+        <span style="color:#444">Entries auto-saved to this device</span>
+        <span id="storage-week-label" style="color:#777"></span>
       </div>
       <div style="display:flex;gap:6px">
-        <select id="archive-week-sel" style="height:28px;font-size:10px;padding:0 6px;border-radius:6px;background:var(--black);border:1px solid var(--border);color:var(--t2)" onchange="if(this.value)loadArchivedWeek(this.value)">
+        <select id="archive-week-sel" style="height:28px;font-size:10px;padding:0 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2;color:#444" onchange="if(this.value)loadArchivedWeek(this.value)">
           <option value="">View past week...</option>
         </select>
         <button class="btn btn-g btn-sm" onclick="syncFromSupabase()" style="font-size:10px;color:var(--green);border-color:rgba(76,175,125,.3)">
@@ -629,8 +636,8 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
     </div>
 
     <!-- View tabs -->
-    <div style="display:flex;gap:4px;background:var(--s1);border:1px solid var(--border);padding:3px;border-radius:8px;flex-wrap:wrap;margin-bottom:8px">
-      <button class="btn btn-g btn-sm" id="dlv-today" onclick="setDLView('today')" style="background:var(--rye);color:var(--black);border-color:var(--rye)">Whiteboard</button>
+    <div style="display:flex;gap:4px;background:#f4f8f9;border:1px solid #e2e2e2;padding:3px;border-radius:8px;flex-wrap:wrap;margin-bottom:8px">
+      <button class="btn btn-g btn-sm" id="dlv-today" onclick="setDLView('today')" style="background:#2980b9;color:#fff;border-color:#2980b9">Whiteboard</button>
       <button class="btn btn-g btn-sm" id="dlv-week"  onclick="setDLView('week')">This week</button>
       <button class="btn btn-g btn-sm" id="dlv-all"   onclick="setDLView('all')">All entries</button>
       <button class="btn btn-g btn-sm" id="dlv-ts"    onclick="setDLView('timesheet')">Timesheets</button>
@@ -651,7 +658,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
     <!-- Job + Employee filters -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <select id="dl-filter-job" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--bhi);color:var(--t1)">
+      <select id="dl-filter-job" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
         <option value="all">All jobs</option>
               <option value="24001 - BIOLA">24001 - BIOLA</option>
               <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
@@ -664,7 +671,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
               <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
               <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
       </select>
-      <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:var(--s2);border:1px solid var(--bhi);color:var(--t1)">
+      <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
         <option value="all">All employees</option>
               <option value="Abiud Lopez">Abiud Lopez</option>
               <option value="Adrian Flores">Adrian Flores</option>
@@ -813,7 +820,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       </div>
       <div class="fgroup" style="flex:1;min-width:160px">
         <div class="flbl">Job</div>
-        <select id="djr-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
+        <select id="djr-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
       </div>
       <button class="btn btn-rye" onclick="loadDJR()" style="margin-top:18px">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -869,9 +876,9 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
           <table style="width:100%;border-collapse:collapse;font-size:13px" id="djr-workforce-table">
             <thead>
               <tr style="background:rgba(0,0,0,.3)">
-                <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;width:180px">Employee</th>
-                <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">Description of work performed</th>
-                <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;width:70px">Hours</th>
+                <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:.06em;width:180px">Employee</th>
+                <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:.06em">Description of work performed</th>
+                <th style="padding:9px 14px;text-align:left;font-size:10px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:.06em;width:70px">Hours</th>
                 <th style="width:36px"></th>
               </tr>
             </thead>
@@ -893,19 +900,19 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
           <!-- Delay / interference notes -->
           <div class="fgroup" style="margin-top:12px">
             <div class="flbl">Delays or interferences by others</div>
-            <textarea id="djr-delays" rows="3" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:8px;color:var(--t1);font-family:'Segoe UI',Arial,sans-serif;font-size:13px;padding:10px 12px;resize:vertical;outline:none" placeholder="Describe any areas where work is delayed, blocked, or interfered with by others..."></textarea>
+            <textarea id="djr-delays" rows="3" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;color:#1a1a1a;font-family:'Lato',Arial,sans-serif;font-size:13px;padding:10px 12px;resize:vertical;outline:none" placeholder="Describe any areas where work is delayed, blocked, or interfered with by others..."></textarea>
           </div>
 
           <!-- Extra work / claims -->
           <div class="fgroup" style="margin-top:10px">
             <div class="flbl">Extra work / change order notes</div>
-            <textarea id="djr-extra" rows="2" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:8px;color:var(--t1);font-family:'Segoe UI',Arial,sans-serif;font-size:13px;padding:10px 12px;resize:vertical;outline:none" placeholder="Describe any extra work performed or potential change orders..."></textarea>
+            <textarea id="djr-extra" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;color:#1a1a1a;font-family:'Lato',Arial,sans-serif;font-size:13px;padding:10px 12px;resize:vertical;outline:none" placeholder="Describe any extra work performed or potential change orders..."></textarea>
           </div>
 
           <!-- Other notes -->
           <div class="fgroup" style="margin-top:10px">
             <div class="flbl">Other notes / valuable information</div>
-            <textarea id="djr-other" rows="2" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:8px;color:var(--t1);font-family:'Segoe UI',Arial,sans-serif;font-size:13px;padding:10px 12px;resize:vertical;outline:none" placeholder="Any other information valuable for cost recovery, claims, or project record..."></textarea>
+            <textarea id="djr-other" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;color:#1a1a1a;font-family:'Lato',Arial,sans-serif;font-size:13px;padding:10px 12px;resize:vertical;outline:none" placeholder="Any other information valuable for cost recovery, claims, or project record..."></textarea>
           </div>
 
         </div>
@@ -940,8 +947,8 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
     </div><!-- /djr-form -->
 
-    <div id="djr-empty" style="text-align:center;padding:40px;color:var(--t3);font-size:13px">
-      Select a job and date above, then click <strong style="color:var(--t2)">Load</strong> to generate today's report from logged entries.
+    <div id="djr-empty" style="text-align:center;padding:40px;color:#777;font-size:13px">
+      Select a job and date above, then click <strong style="color:#444">Load</strong> to generate today's report from logged entries.
     </div>
 
   </div><!-- /pane-djr -->
@@ -959,7 +966,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       </div>
       <div class="fgroup" style="flex:2;min-width:180px">
         <div class="flbl">Job</div>
-        <select id="si-job" disabled style="border-color:var(--rye);opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
+        <select id="si-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="25002 - BAH" selected>25002 - BAH</option></select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Supervisor</div>
@@ -971,15 +978,15 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       </button>
     </div>
 
-    <div id="si-empty" style="text-align:center;padding:40px;color:var(--t3);font-size:13px">
-      Select a job and date, then click <strong style="color:var(--t2)">Load</strong> to generate today's sign-in sheets.
+    <div id="si-empty" style="text-align:center;padding:40px;color:#777;font-size:13px">
+      Select a job and date, then click <strong style="color:#444">Load</strong> to generate today's sign-in sheets.
     </div>
 
     <div id="si-forms" style="display:none">
 
       <!-- Form toggle -->
-      <div style="display:flex;gap:4px;background:var(--s1);border:1px solid var(--border);padding:3px;border-radius:8px;margin-bottom:12px">
-        <button class="btn btn-g btn-sm" id="si-tab-signin" onclick="showSIForm('signin')" style="flex:1;justify-content:center;background:var(--rye);color:var(--black);border-color:var(--rye)">Sign In Sheet</button>
+      <div style="display:flex;gap:4px;background:#f4f8f9;border:1px solid #e2e2e2;padding:3px;border-radius:8px;margin-bottom:12px">
+        <button class="btn btn-g btn-sm" id="si-tab-signin" onclick="showSIForm('signin')" style="flex:1;justify-content:center;background:#2980b9;color:#fff;border-color:#2980b9">Sign In Sheet</button>
         <button class="btn btn-g btn-sm" id="si-tab-incident" onclick="showSIForm('incident')" style="flex:1;justify-content:center">Incident Declaration</button>
       </div>
 
@@ -1010,8 +1017,8 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
             <button class="btn btn-g btn-sm" onclick="addSIRow()">+ Add row</button>
           </div>
           <div class="cb" style="padding:0">
-            <div style="font-size:11px;color:var(--t3);padding:10px 14px;background:rgba(0,0,0,.15);line-height:1.5;border-bottom:1px solid var(--border)">
-              <strong style="color:var(--t2)">Employee Declaration:</strong> I understand my hours worked for this week have been recorded and sent to the payroll department on my behalf. I agree if ever a difference arises between my hours worked and the hours for which I am paid, I am to bring this to the attention of my supervisor for correction.
+            <div style="font-size:11px;color:#777;padding:10px 14px;background:rgba(0,0,0,.15);line-height:1.5;border-bottom:1px solid #e2e2e2">
+              <strong style="color:#444">Employee Declaration:</strong> I understand my hours worked for this week have been recorded and sent to the payroll department on my behalf. I agree if ever a difference arises between my hours worked and the hours for which I am paid, I am to bring this to the attention of my supervisor for correction.
             </div>
             <div style="overflow-x:auto">
               <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:700px;table-layout:fixed">
@@ -1031,17 +1038,17 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
                   </colgroup>
                   <thead>
                   <tr style="background:rgba(0,0,0,.3)">
-                    <th style="padding:7px 8px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Emp #</th>
-                    <th style="padding:7px 8px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase">Employee Name</th>
-                    <th style="padding:7px 8px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Sign In / Out</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Start</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Lunch In</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Lunch Out</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Finish</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap"># Breaks</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Reg Hrs</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">OT Hrs</th>
-                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;white-space:nowrap">Total</th>
+                    <th style="padding:7px 8px;text-align:left;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Emp #</th>
+                    <th style="padding:7px 8px;text-align:left;font-size:9px;font-weight:700;color:#777;text-transform:uppercase">Employee Name</th>
+                    <th style="padding:7px 8px;text-align:left;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Sign In / Out</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Start</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Lunch In</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Lunch Out</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Finish</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap"># Breaks</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Reg Hrs</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">OT Hrs</th>
+                    <th style="padding:7px 8px;text-align:center;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;white-space:nowrap">Total</th>
                     <th style="width:30px"></th>
                   </tr>
                 </thead>
@@ -1062,15 +1069,15 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
             </div>
           </div>
           <div class="cb" style="padding:0">
-            <div style="font-size:11px;color:var(--t3);padding:10px 14px;background:rgba(0,0,0,.15);line-height:1.5;border-bottom:1px solid var(--border)">
-              <strong style="color:var(--t2)">Employee Declaration:</strong> By signing below, I certify that I have not suffered any injury or aggravated a pre-existing injury during my workday. I understand that I can report any injury to my supervisor, or Safety Director (Cory Stricker 714-715-4204) without fear of reprisal. I further understand that any injury is serious and must be reported to my supervisor when it occurs.
+            <div style="font-size:11px;color:#777;padding:10px 14px;background:rgba(0,0,0,.15);line-height:1.5;border-bottom:1px solid #e2e2e2">
+              <strong style="color:#444">Employee Declaration:</strong> By signing below, I certify that I have not suffered any injury or aggravated a pre-existing injury during my workday. I understand that I can report any injury to my supervisor, or Safety Director (Cory Stricker 714-715-4204) without fear of reprisal. I further understand that any injury is serious and must be reported to my supervisor when it occurs.
             </div>
             <div style="overflow-x:auto">
               <table style="width:100%;border-collapse:collapse;font-size:12px">
                 <thead>
                   <tr style="background:rgba(0,0,0,.3)">
-                    <th style="padding:8px 12px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;width:200px">Employee Name (Print)</th>
-                    <th style="padding:8px 12px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase">Signature</th>
+                    <th style="padding:8px 12px;text-align:left;font-size:9px;font-weight:700;color:#777;text-transform:uppercase;width:200px">Employee Name (Print)</th>
+                    <th style="padding:8px 12px;text-align:left;font-size:9px;font-weight:700;color:#777;text-transform:uppercase">Signature</th>
                   </tr>
                 </thead>
                 <tbody id="si-incident-tbody"></tbody>
@@ -1311,16 +1318,16 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 <div id="ios-print-frame" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:99999;overflow:auto;padding:20px;box-sizing:border-box"><button onclick="closePrintFrame()" style="position:fixed;top:10px;right:14px;z-index:100000;background:#c00;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer">&#x2715; Close</button><div id="ios-print-content"></div></div>
 <div id="sig-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:99998;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
   <div style="background:#1a1f2e;border:2px solid #2a3545;border-radius:12px;padding:20px;width:100%;max-width:500px;box-sizing:border-box">
-    <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:4px" id="sig-overlay-name">Employee Signature</div>
-    <div style="font-size:11px;color:var(--t3);margin-bottom:12px">Sign in the white box below</div>
+    <div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:4px" id="sig-overlay-name">Employee Signature</div>
+    <div style="font-size:11px;color:#777;margin-bottom:12px">Sign in the white box below</div>
     <div style="background:#fff;border-radius:8px;position:relative;margin-bottom:12px;overflow:hidden">
       <canvas id="sig-overlay-canvas" width="460" height="160" style="width:100%;height:160px;display:block;touch-action:none;cursor:crosshair" onmousedown="event.stopPropagation();sigStart(event,this)" ontouchstart="event.stopPropagation();sigStart(event,this)"></canvas>
       <div id="sig-overlay-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;color:#ccc;pointer-events:none">Sign here</div>
     </div>
     <div style="display:flex;gap:8px">
-      <button onclick="sigOverlayClear()" style="flex:1;padding:10px;background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:8px;font-size:13px;cursor:pointer">Clear</button>
-      <button onclick="sigOverlayCancel()" style="flex:1;padding:10px;background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:8px;font-size:13px;cursor:pointer">Cancel</button>
-      <button onclick="sigOverlayAccept()" style="flex:2;padding:10px;background:var(--rye);color:var(--black);border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Accept</button>
+      <button onclick="sigOverlayClear()" style="flex:1;padding:10px;background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:8px;font-size:13px;cursor:pointer">Clear</button>
+      <button onclick="sigOverlayCancel()" style="flex:1;padding:10px;background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:8px;font-size:13px;cursor:pointer">Cancel</button>
+      <button onclick="sigOverlayAccept()" style="flex:2;padding:10px;background:#2980b9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Accept</button>
     </div>
   </div>
 </div>
@@ -1329,8 +1336,8 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
   <!-- TASKS & CALENDAR -->
   <div class="pane" id="pane-tasks">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <div style="font-size:14px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:8px">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--rye)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <div style="font-size:14px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2980b9" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Tasks &amp; Calendar
       </div>
       <button class="btn btn-rye" onclick="openTaskModal()" style="padding:6px 14px;font-size:12px">+ Add Item</button>
@@ -1339,9 +1346,9 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       <div class="ch">
         <div class="ct">Weekly View</div>
         <div style="display:flex;align-items:center;gap:8px">
-          <button onclick="changeWeek(-1)" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:12px">&lt;</button>
-          <span id="task-week-label" style="font-size:12px;color:var(--t2);min-width:140px;text-align:center"></span>
-          <button onclick="changeWeek(1)" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:12px">&gt;</button>
+          <button onclick="changeWeek(-1)" style="background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:12px">&lt;</button>
+          <span id="task-week-label" style="font-size:12px;color:#444;min-width:140px;text-align:center"></span>
+          <button onclick="changeWeek(1)" style="background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:12px">&gt;</button>
         </div>
       </div>
       <div class="cb" style="padding:0;overflow-x:auto">
@@ -1352,7 +1359,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       <div class="ch">
         <div class="ct">All Items</div>
         <div style="display:flex;gap:6px">
-          <select id="task-filter-type" onchange="renderTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:4px;padding:3px 6px;font-size:11px">
+          <select id="task-filter-type" onchange="renderTasks()" style="background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:4px;padding:3px 6px;font-size:11px">
             <option value="all">All types</option>
             <option value="task">Tasks</option>
             <option value="appointment">Appointments</option>
@@ -1360,7 +1367,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
             <option value="inspection">Inspections</option>
             <option value="reminder">Reminders</option>
           </select>
-          <select id="task-filter-status" onchange="renderTasks()" style="background:var(--s2);border:1px solid var(--border);color:var(--t1);border-radius:4px;padding:3px 6px;font-size:11px">
+          <select id="task-filter-status" onchange="renderTasks()" style="background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:4px;padding:3px 6px;font-size:11px">
             <option value="all">All status</option>
             <option value="open">Open</option>
             <option value="inprogress">In Progress</option>
@@ -1374,50 +1381,50 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
 
   <!-- TASK MODAL -->
   <div id="task-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;align-items:center;justify-content:center">
-    <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;width:90%;max-width:420px;max-height:90vh;overflow-y:auto">
-      <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:16px" id="task-modal-title">Add Item</div>
+    <div style="background:#f4f8f9;border:1px solid #e2e2e2;border-radius:12px;padding:20px;width:90%;max-width:420px;max-height:90vh;overflow-y:auto">
+      <div style="font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:16px" id="task-modal-title">Add Item</div>
       <input type="hidden" id="task-edit-id">
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">TYPE</label>
-      <select id="task-type" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">TYPE</label>
+      <select id="task-type" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px">
         <option value="task">Task</option>
         <option value="appointment">Appointment</option>
         <option value="delivery">Delivery</option>
         <option value="inspection">Inspection</option>
         <option value="reminder">Reminder</option>
       </select>
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">TITLE</label>
-      <input id="task-title" type="text" placeholder="What needs to be done?" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px;box-sizing:border-box">
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">NOTES</label>
-      <textarea id="task-notes" placeholder="Additional details..." rows="2" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px;box-sizing:border-box;resize:vertical"></textarea>
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">TITLE</label>
+      <input id="task-title" type="text" placeholder="What needs to be done?" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px;box-sizing:border-box">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">NOTES</label>
+      <textarea id="task-notes" placeholder="Additional details..." rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px;box-sizing:border-box;resize:vertical"></textarea>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
         <div>
-          <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">DATE</label>
-          <input id="task-date" type="date" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;box-sizing:border-box">
+          <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">DATE</label>
+          <input id="task-date" type="date" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;box-sizing:border-box">
         </div>
         <div>
-          <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">TIME (optional)</label>
-          <select id="task-time" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;box-sizing:border-box"><option value="">-- No time --</option><option value="04:00">4:00 AM</option><option value="04:15">4:15 AM</option><option value="04:30">4:30 AM</option><option value="04:45">4:45 AM</option><option value="05:00">5:00 AM</option><option value="05:15">5:15 AM</option><option value="05:30">5:30 AM</option><option value="05:45">5:45 AM</option><option value="06:00">6:00 AM</option><option value="06:15">6:15 AM</option><option value="06:30">6:30 AM</option><option value="06:45">6:45 AM</option><option value="07:00">7:00 AM</option><option value="07:15">7:15 AM</option><option value="07:30">7:30 AM</option><option value="07:45">7:45 AM</option><option value="08:00">8:00 AM</option><option value="08:15">8:15 AM</option><option value="08:30">8:30 AM</option><option value="08:45">8:45 AM</option><option value="09:00">9:00 AM</option><option value="09:15">9:15 AM</option><option value="09:30">9:30 AM</option><option value="09:45">9:45 AM</option><option value="10:00">10:00 AM</option><option value="10:15">10:15 AM</option><option value="10:30">10:30 AM</option><option value="10:45">10:45 AM</option><option value="11:00">11:00 AM</option><option value="11:15">11:15 AM</option><option value="11:30">11:30 AM</option><option value="11:45">11:45 AM</option><option value="12:00">12:00 PM</option><option value="12:15">12:15 PM</option><option value="12:30">12:30 PM</option><option value="12:45">12:45 PM</option><option value="13:00">1:00 PM</option><option value="13:15">1:15 PM</option><option value="13:30">1:30 PM</option><option value="13:45">1:45 PM</option><option value="14:00">2:00 PM</option><option value="14:15">2:15 PM</option><option value="14:30">2:30 PM</option><option value="14:45">2:45 PM</option><option value="15:00">3:00 PM</option><option value="15:15">3:15 PM</option><option value="15:30">3:30 PM</option><option value="15:45">3:45 PM</option><option value="16:00">4:00 PM</option><option value="16:15">4:15 PM</option><option value="16:30">4:30 PM</option><option value="16:45">4:45 PM</option><option value="17:00">5:00 PM</option><option value="17:15">5:15 PM</option><option value="17:30">5:30 PM</option><option value="17:45">5:45 PM</option><option value="18:00">6:00 PM</option><option value="18:15">6:15 PM</option><option value="18:30">6:30 PM</option><option value="18:45">6:45 PM</option><option value="19:00">7:00 PM</option><option value="19:15">7:15 PM</option><option value="19:30">7:30 PM</option><option value="19:45">7:45 PM</option><option value="20:00">8:00 PM</option><option value="20:15">8:15 PM</option><option value="20:30">8:30 PM</option><option value="20:45">8:45 PM</option><option value="21:00">9:00 PM</option><option value="21:15">9:15 PM</option><option value="21:30">9:30 PM</option><option value="21:45">9:45 PM</option><option value="22:00">10:00 PM</option><option value="22:15">10:15 PM</option><option value="22:30">10:30 PM</option><option value="22:45">10:45 PM</option></select>
+          <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">TIME (optional)</label>
+          <select id="task-time" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;box-sizing:border-box"><option value="">-- No time --</option><option value="04:00">4:00 AM</option><option value="04:15">4:15 AM</option><option value="04:30">4:30 AM</option><option value="04:45">4:45 AM</option><option value="05:00">5:00 AM</option><option value="05:15">5:15 AM</option><option value="05:30">5:30 AM</option><option value="05:45">5:45 AM</option><option value="06:00">6:00 AM</option><option value="06:15">6:15 AM</option><option value="06:30">6:30 AM</option><option value="06:45">6:45 AM</option><option value="07:00">7:00 AM</option><option value="07:15">7:15 AM</option><option value="07:30">7:30 AM</option><option value="07:45">7:45 AM</option><option value="08:00">8:00 AM</option><option value="08:15">8:15 AM</option><option value="08:30">8:30 AM</option><option value="08:45">8:45 AM</option><option value="09:00">9:00 AM</option><option value="09:15">9:15 AM</option><option value="09:30">9:30 AM</option><option value="09:45">9:45 AM</option><option value="10:00">10:00 AM</option><option value="10:15">10:15 AM</option><option value="10:30">10:30 AM</option><option value="10:45">10:45 AM</option><option value="11:00">11:00 AM</option><option value="11:15">11:15 AM</option><option value="11:30">11:30 AM</option><option value="11:45">11:45 AM</option><option value="12:00">12:00 PM</option><option value="12:15">12:15 PM</option><option value="12:30">12:30 PM</option><option value="12:45">12:45 PM</option><option value="13:00">1:00 PM</option><option value="13:15">1:15 PM</option><option value="13:30">1:30 PM</option><option value="13:45">1:45 PM</option><option value="14:00">2:00 PM</option><option value="14:15">2:15 PM</option><option value="14:30">2:30 PM</option><option value="14:45">2:45 PM</option><option value="15:00">3:00 PM</option><option value="15:15">3:15 PM</option><option value="15:30">3:30 PM</option><option value="15:45">3:45 PM</option><option value="16:00">4:00 PM</option><option value="16:15">4:15 PM</option><option value="16:30">4:30 PM</option><option value="16:45">4:45 PM</option><option value="17:00">5:00 PM</option><option value="17:15">5:15 PM</option><option value="17:30">5:30 PM</option><option value="17:45">5:45 PM</option><option value="18:00">6:00 PM</option><option value="18:15">6:15 PM</option><option value="18:30">6:30 PM</option><option value="18:45">6:45 PM</option><option value="19:00">7:00 PM</option><option value="19:15">7:15 PM</option><option value="19:30">7:30 PM</option><option value="19:45">7:45 PM</option><option value="20:00">8:00 PM</option><option value="20:15">8:15 PM</option><option value="20:30">8:30 PM</option><option value="20:45">8:45 PM</option><option value="21:00">9:00 PM</option><option value="21:15">9:15 PM</option><option value="21:30">9:30 PM</option><option value="21:45">9:45 PM</option><option value="22:00">10:00 PM</option><option value="22:15">10:15 PM</option><option value="22:30">10:30 PM</option><option value="22:45">10:45 PM</option></select>
         </div>
       </div>
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">PRIORITY</label>
-      <select id="task-priority" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">PRIORITY</label>
+      <select id="task-priority" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px">
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
       </select>
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">STATUS</label>
-      <select id="task-status" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:16px">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">STATUS</label>
+      <select id="task-status" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:16px">
         <option value="open">Open</option>
         <option value="inprogress">In Progress</option>
         <option value="done">Done</option>
       </select>
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">ASSIGN TO</label>
-      <select id="task-assignee" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">ASSIGN TO</label>
+      <select id="task-assignee" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px">
         <option value="">-- Select employee --</option>
       </select>
 
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">COST CODE</label>
-      <select id="task-costcode" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:12px">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">COST CODE</label>
+      <select id="task-costcode" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px">
         <option value="">-- Select cost code --</option>
         <option value="1100">1100 - Branch Conduit UG</option>
         <option value="1200">1200 - Feeder Conduit UG</option>
@@ -1446,8 +1453,8 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
         <option value="8800">8800 - Temporary Power</option>
       </select>
 
-      <label style="font-size:11px;color:var(--t3);display:block;margin-bottom:4px">REMINDER</label>
-      <select id="task-reminder" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:8px;margin-bottom:16px">
+      <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">REMINDER</label>
+      <select id="task-reminder" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:16px">
         <option value="">No reminder</option>
         <option value="15">15 min before</option>
         <option value="30">30 min before</option>
@@ -1456,7 +1463,7 @@ tbody tr:hover td{background:rgba(101,173,229,.04)}
       </select>
       <div style="display:flex;gap:8px">
         <button onclick="saveTask()" class="btn btn-rye" style="flex:1">Save</button>
-        <button onclick="closeTaskModal()" class="btn" style="flex:1;background:var(--s2);color:var(--t2)">Cancel</button>
+        <button onclick="closeTaskModal()" class="btn" style="flex:1;background:#fff;color:#444">Cancel</button>
         <button id="task-delete-btn" onclick="deleteTask()" style="display:none;background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:6px;padding:8px 14px;cursor:pointer;font-size:12px">Delete</button>
       </div>
     </div>
@@ -1913,20 +1920,20 @@ function logUnit(){
   const status=getUnitStatus(job_val,bldgCombined,unit);
   el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
     <div><div style="font-size:14px;font-weight:700">${job_val} - ${bldgCombined} - Unit ${unit}</div>
-    <div style="font-size:11px;color:var(--t3);margin-top:2px">${worker} - ${currentPhase} phase logged</div></div>
+    <div style="font-size:11px;color:#777;margin-top:2px">${worker} - ${currentPhase} phase logged</div></div>
     ${bdg(status==='both'?'both complete':status==='rough'?'rough':status==='final'?'final':'not started')}
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr ${currentPhase==='final'?'1fr ':''}1fr;gap:8px">
     <div class="sc" style="padding:10px"><div class="sl">${currentPhase==='rough'?'Qty':'Trim Qty'}</div>
-      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--rye)">${boxes}</div></div>
+      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:#2980b9">${boxes}</div></div>
     ${currentPhase==='final'?`<div class="sc" style="padding:10px"><div class="sl">Lights</div>
-      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--rye)">${lights}</div></div>`:''}
+      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:#2980b9">${lights}</div></div>`:''}
     <div class="sc" style="padding:10px"><div class="sl">${currentPhase==='rough'?'Rough':'Final'} hrs</div>
-      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:${currentPhase==='rough'?'var(--amber)':'var(--green)'}">${hrs}</div></div>
+      <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:22px;font-weight:700;color:${currentPhase==='rough'?'#D4A843':'#27ae60'}">${hrs}</div></div>
     <div class="sc" style="padding:10px"><div class="sl">Status</div>
-      <div style="font-size:12px;font-weight:700;color:${status==='both'?'var(--green)':status==='none'?'var(--t3)':'var(--amber)'};margin-top:5px">${status==='both'?'Both done':status==='rough'?'Rough done':status==='final'?'Final done':'Started'}</div></div>
+      <div style="font-size:12px;font-weight:700;color:${status==='both'?'#27ae60':status==='none'?'#777':'#D4A843'};margin-top:5px">${status==='both'?'Both done':status==='rough'?'Rough done':status==='final'?'Final done':'Started'}</div></div>
   </div>
-  ${notes?`<div style="font-size:11px;color:var(--t3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">Note: ${notes}</div>`:''}`
+  ${notes?`<div style="font-size:11px;color:#777;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">Note: ${notes}</div>`:''}`
 
   document.getElementById('sel-unit').value='';
   document.getElementById('sel-costcode').value='';
@@ -1950,12 +1957,12 @@ function renderTodayLog(){
   document.getElementById('today-log-tbody').innerHTML=rows.map(l=>`
     <tr>
       <td class="tm">${l.ts}</td><td class="tn">${l.worker}</td>
-      <td class="tc">${l.job}</td><td style="font-size:11px;color:var(--t3)">${l.costcode||'--'}</td>
-      <td style="font-weight:700">${l.unit}</td><td style="font-size:11px;color:var(--t3)">${l.bldg}</td>
-      <td>${bdg(l.phase)}</td><td style="font-weight:700;color:var(--rye)">${l.boxes}</td>
-      <td style="font-weight:700;color:var(--rye)">${l.lights!=null?l.lights:'--'}</td>
+      <td class="tc">${l.job}</td><td style="font-size:11px;color:#777">${l.costcode||'--'}</td>
+      <td style="font-weight:700">${l.unit}</td><td style="font-size:11px;color:#777">${l.bldg}</td>
+      <td>${bdg(l.phase)}</td><td style="font-weight:700;color:#2980b9">${l.boxes}</td>
+      <td style="font-weight:700;color:#2980b9">${l.lights!=null?l.lights:'--'}</td>
       <td style="font-weight:700">${l.hrs}h</td>
-      <td style="font-size:11px;color:var(--t3)">${l.notes||'--'}</td>
+      <td style="font-size:11px;color:#777">${l.notes||'--'}</td>
     </tr>`).join('');
 }
 
@@ -2005,16 +2012,16 @@ function renderUnitsTab(){
         return `<div class="unit-cell ${s==='both'?'both':s}" onclick="showUnitDetail('${job}','${bldg}','${unit}')">
           <div class="unit-num">${unit}</div>
           <div class="unit-status ${s==='both'?'both':s}">${s==='both'?'done':s==='rough'?'rough':s==='final'?'final':''}</div>
-          ${tip?`<div style="font-size:8px;color:var(--t3);margin-top:2px">${tip}${tip2}</div>`:''}</div>`;
+          ${tip?`<div style="font-size:8px;color:#777;margin-top:2px">${tip}${tip2}</div>`:''}</div>`;
       }).join('');
-      return `<div style="margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${bldg}</div>
+      return `<div style="margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${bldg}</div>
         <div class="unit-grid">${cellsHtml}</div></div>`;
     }).join('');
     return `<div class="card" style="margin-bottom:10px">
       <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>${job}</div>
-        <span style="font-size:11px;color:var(--t3)">${filtered.filter(k=>k.startsWith(job+'|')).length} units</span></div>
+        <span style="font-size:11px;color:#777">${filtered.filter(k=>k.startsWith(job+'|')).length} units</span></div>
       <div class="cb">${bldgHtml}</div></div>`;
-  }).join('')||'<div style="color:var(--t3);padding:20px;text-align:center">No units match filters</div>';
+  }).join('')||'<div style="color:#777;padding:20px;text-align:center">No units match filters</div>';
 }
 function showUnitDetail(job,bldg,unit){
   const d=getUnitData(job,bldg,unit);
@@ -2028,7 +2035,7 @@ function showUnitDetail(job,bldg,unit){
 function renderWorkers(){
   const activeWorkers=WORKERS.filter(w=>unitLogs.some(l=>l.worker===w.name)||dailyLogs.some(l=>l.worker===w.name));
   if(activeWorkers.length===0){
-    document.getElementById('worker-cards').innerHTML=`<div style="text-align:center;padding:40px;color:var(--t3);font-size:13px">No workers have logged hours yet.</div>`;
+    document.getElementById('worker-cards').innerHTML=`<div style="text-align:center;padding:40px;color:#777;font-size:13px">No workers have logged hours yet.</div>`;
     return;
   }
   document.getElementById('worker-cards').innerHTML=activeWorkers.map(w=>{
@@ -2057,20 +2064,20 @@ function renderWorkers(){
     const jobRows=Object.keys(jobBreakdown).map(job=>{
       const jb=jobBreakdown[job];
       const jTotal=jb.roughHrs+jb.finalHrs+jb.dailyHrs;
-      return `<tr><td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--rye);font-size:11px;font-weight:600">${job}</td>
+      return `<tr><td style="padding:7px 10px;border-top:1px solid var(--border);color:#2980b9;font-size:11px;font-weight:600">${job}</td>
         <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700">${jb.units.size}</td>
         <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--amber)">${jb.roughHrs>0?jb.roughHrs.toFixed(1)+'h':'--'}</td>
         <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--green)">${jb.finalHrs>0?jb.finalHrs.toFixed(1)+'h':'--'}</td>
         <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--sb)">${jb.dailyHrs>0?jb.dailyHrs.toFixed(1)+'h':'--'}</td>
-        <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700;color:var(--rye)">${jTotal.toFixed(1)}h</td>
-        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--rye)">${jb.boxes||'--'}</td></tr>`;
+        <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700;color:#2980b9">${jTotal.toFixed(1)}h</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:#2980b9">${jb.boxes||'--'}</td></tr>`;
     }).join('');
     return `<div class="card" style="margin-bottom:10px">
       <div class="ch">
         <div style="display:flex;align-items:center;gap:10px">
           <div class="av av-rye">${w.initials}</div>
           <div><div style="font-size:14px;font-weight:700">${w.name}</div>
-            <div style="font-size:11px;color:var(--t3)">${w.role} &bull; ${jobsWorked.length} job${jobsWorked.length>1?'s':''} </div></div>
+            <div style="font-size:11px;color:#777">${w.role} &bull; ${jobsWorked.length} job${jobsWorked.length>1?'s':''} </div></div>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
           <span class="bdg b-rye">${unitsWorked} units</span>
@@ -2083,20 +2090,20 @@ function renderWorkers(){
           <div class="ws"><div class="ws-val" style="color:var(--amber)">${roughLogs.reduce((a,l)=>a+l.hrs,0).toFixed(1)}h</div><div class="ws-lbl">Rough</div></div>
           <div class="ws"><div class="ws-val" style="color:var(--green)">${finalLogs.reduce((a,l)=>a+l.hrs,0).toFixed(1)}h</div><div class="ws-lbl">Final</div></div>
           <div class="ws"><div class="ws-val" style="color:var(--sb)">${dailyHrs.toFixed(1)}h</div><div class="ws-lbl">WB hrs</div></div>
-          <div class="ws"><div class="ws-val" style="color:var(--rye)">${totalHrs.toFixed(1)}h</div><div class="ws-lbl">Total</div></div>
+          <div class="ws"><div class="ws-val" style="color:#2980b9">${totalHrs.toFixed(1)}h</div><div class="ws-lbl">Total</div></div>
         </div>
         ${jobRows?`<table style="width:100%;border-collapse:collapse;font-size:12px">
           <thead><tr>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">Job</th>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">Units</th>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">Rough</th>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">Final</th>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">WB</th>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">Total</th>
-            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.25);text-transform:uppercase">Qty</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Job</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Units</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Rough</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Final</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">WB</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Total</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Qty</th>
           </tr></thead>
           <tbody>${jobRows}</tbody>
-        </table>`:'<div style="color:var(--t3);font-size:12px">No entries yet</div>'}
+        </table>`:'<div style="color:#777;font-size:12px">No entries yet</div>'}
       </div>
     </div>`;
   }).join('');
@@ -2106,32 +2113,32 @@ function renderWorkers(){
 function renderJobsReportBanner(){
   const el=document.getElementById('jobs-report-banner');
   if(!el) return;
-  el.innerHTML='<div style="margin-bottom:14px"><div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Production reports -- Week of May 11-17, 2026</div>'
+  el.innerHTML='<div style="margin-bottom:14px"><div style="font-size:10px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Production reports -- Week of May 11-17, 2026</div>'
     +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px">'
     +REPORT_DATA.map(j=>{
       const lg=j.projLG;
-      const lgColor=lg>=0?'var(--green)':'var(--red)';
+      const lgColor=lg>=0?'#27ae60':'#C0392B';
       const lgSign=lg>=0?'+':'-';
       const pct=Math.min(100,j.unitsPct||0);
-      const barColor=j.unitsPct>110?'var(--red)':j.unitsPct>95?'var(--amber)':'var(--rye)';
+      const barColor=j.unitsPct>110?'#C0392B':j.unitsPct>95?'#D4A843':'#2980b9';
       return '<div class="card" style="margin-bottom:0">'
-        +'<div style="padding:10px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">'
+        +'<div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center">'
           +'<div><div style="font-size:12px;font-weight:700">'+j.key+'</div>'
-          +'<div style="font-size:10px;color:var(--t3);margin-top:1px">$'+j.laborRate+'/hr &bull; '+j.manpower+' workers</div></div>'
+          +'<div style="font-size:10px;color:#777;margin-top:1px">$'+j.laborRate+'/hr &bull; '+j.manpower+' workers</div></div>'
           +'<div style="text-align:right">'
             +'<div style="font-family:\'Arial Narrow\',Arial,sans-serif;font-size:16px;font-weight:700;color:'+lgColor+'">'+lgSign+'$'+Math.abs(lg).toLocaleString('en-US',{maximumFractionDigits:0})+'</div>'
-            +'<div style="font-size:10px;color:var(--t3)">proj L/G</div>'
+            +'<div style="font-size:10px;color:#777">proj L/G</div>'
           +'</div>'
         +'</div>'
         +'<div style="padding:10px 14px">'
           +'<div style="display:flex;justify-content:space-between;margin-bottom:3px">'
-            +'<span style="font-size:11px;color:var(--t2)">Units % budget</span>'
+            +'<span style="font-size:11px;color:#444">Units % budget</span>'
             +'<span style="font-size:11px;font-weight:700;color:'+barColor+'">'+( j.unitsPct||0).toFixed(1)+'%</span>'
           +'</div>'
           +'<div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden">'
             +'<div style="height:100%;border-radius:99px;background:'+barColor+';width:'+pct+'%"></div>'
           +'</div>'
-          +'<div style="font-size:10px;color:var(--t3);margin-top:5px">'+j.lastWkHrs+'h last week &bull; '+j.hrsSpent.toLocaleString()+'h to date</div>'
+          +'<div style="font-size:10px;color:#777;margin-top:5px">'+j.lastWkHrs+'h last week &bull; '+j.hrsSpent.toLocaleString()+'h to date</div>'
         +'</div>'
       +'</div>';
     }).join('')
@@ -2164,21 +2171,21 @@ function renderJobsTab(){
           <div class="cb">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
               <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
-                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">${roughDone}<span style="font-size:14px;color:var(--t3)">/${totalUnits}</span></div>
+                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">${roughDone}<span style="font-size:14px;color:#777">/${totalUnits}</span></div>
                 <div class="pb"><div class="pf pf-warn" style="width:${roughPct}%"></div></div></div>
               <div class="sc" style="padding:10px"><div class="sl">Final done</div>
-                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">${finalDone}<span style="font-size:14px;color:var(--t3)">/${totalUnits}</span></div>
+                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">${finalDone}<span style="font-size:14px;color:#777">/${totalUnits}</span></div>
                 <div class="pb"><div class="pf pf-ok" style="width:${finalPct}%"></div></div></div>
               <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
-                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:var(--rye)">${totalHrs.toFixed(1)}</div></div>
+                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">${totalHrs.toFixed(1)}</div></div>
               <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
-                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:var(--rye)">${totalBoxes}</div></div>
+                <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">${totalBoxes}</div></div>
             </div>
-            <div style="font-size:11px;color:var(--t3)">${bothDone} units fully complete</div>
-            ${rpt?`<div style="font-size:11px;color:var(--t2);margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
-              <span style="color:var(--t3)">Prod report:</span> $${rpt.laborRate}/hr &bull; ${rpt.manpower} workers &bull;
-              <span style="font-weight:700;color:${rpt.unitsPct>110?'var(--red)':rpt.unitsPct>95?'var(--amber)':'var(--rye)'}"> ${rpt.unitsPct.toFixed(1)}% units</span> &bull;
-              <span style="font-weight:700;color:${rpt.projLG>=0?'var(--green)':'var(--red)'}"> ${rpt.projLG>=0?'+':'-'}$${Math.abs(rpt.projLG).toLocaleString('en-US',{maximumFractionDigits:0})}</span>
+            <div style="font-size:11px;color:#777">${bothDone} units fully complete</div>
+            ${rpt?`<div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $${rpt.laborRate}/hr &bull; ${rpt.manpower} workers &bull;
+              <span style="font-weight:700;color:${rpt.unitsPct>110?'#C0392B':rpt.unitsPct>95?'#D4A843':'#2980b9'}"> ${rpt.unitsPct.toFixed(1)}% units</span> &bull;
+              <span style="font-weight:700;color:${rpt.projLG>=0?'#27ae60':'#C0392B'}"> ${rpt.projLG>=0?'+':'-'}$${Math.abs(rpt.projLG).toLocaleString('en-US',{maximumFractionDigits:0})}</span>
             </div>`:''}</div></div>`;
       }).join('')}
     </div>`;
@@ -2191,17 +2198,17 @@ function renderJobsTab(){
     const totalHrs=(d.rough?d.rough.hrs:0)+(d.final?d.final.hrs:0);
     const statusLabel=s==='both'?'both complete':s==='rough'?'rough done':s==='final'?'final done':'not started';
     return `<tr>
-      <td class="tc">${job}</td><td style="font-size:11px;color:var(--t3)">${bldg}</td>
+      <td class="tc">${job}</td><td style="font-size:11px;color:#777">${bldg}</td>
       <td style="font-weight:700">${unit}</td>
-      <td style="font-size:11px;color:var(--t3)">${d.rough?d.rough.costcode||'--':d.final?d.final.costcode||'--':'--'}</td>
+      <td style="font-size:11px;color:#777">${d.rough?d.rough.costcode||'--':d.final?d.final.costcode||'--':'--'}</td>
       <td style="font-size:12px">${d.rough?d.rough.worker:'--'}</td>
       <td style="color:var(--amber);font-weight:700">${d.rough?d.rough.hrs+'h':'--'}</td>
-      <td style="color:var(--rye)">${d.rough?d.rough.boxes:'--'}</td>
+      <td style="color:#2980b9">${d.rough?d.rough.boxes:'--'}</td>
       <td style="font-size:12px">${d.final?d.final.worker:'--'}</td>
       <td style="color:var(--green);font-weight:700">${d.final?d.final.hrs+'h':'--'}</td>
-      <td style="color:var(--rye)">${d.final?d.final.boxes:'--'}</td>
-      <td style="color:var(--rye)">${d.final&&d.final.lights!=null?d.final.lights:'--'}</td>
-      <td style="font-weight:700;color:var(--rye)">${totalHrs.toFixed(1)}h</td>
+      <td style="color:#2980b9">${d.final?d.final.boxes:'--'}</td>
+      <td style="color:#2980b9">${d.final&&d.final.lights!=null?d.final.lights:'--'}</td>
+      <td style="font-weight:700;color:#2980b9">${totalHrs.toFixed(1)}h</td>
       <td>${bdg(statusLabel)}</td></tr>`;
   }).join('');
 }
@@ -2238,11 +2245,11 @@ function renderDLStats(){
   const el=document.getElementById('dl-stats');
   if(!el) return;
   el.innerHTML=[
-    {lbl:'Today entries',val:todayLogs.length,sub:'logged today',color:'var(--rye)'},
-    {lbl:'Today hours',val:todayLogs.reduce((a,l)=>a+l.hours,0).toFixed(1)+'h',sub:'field hours',color:'var(--t1)'},
+    {lbl:'Today entries',val:todayLogs.length,sub:'logged today',color:'#2980b9'},
+    {lbl:'Today hours',val:todayLogs.reduce((a,l)=>a+l.hours,0).toFixed(1)+'h',sub:'field hours',color:'#1a1a1a'},
     {lbl:'Week hours',val:totalHrs.toFixed(1)+'h',sub:'this week',color:'var(--sb)'},
-    {lbl:'Active workers',val:workers,sub:'this week',color:'var(--green)'},
-    {lbl:'Total logged',val:dailyLogs.length+' entries',sub:allHrs.toFixed(1)+'h all time',color:'var(--rye)'},
+    {lbl:'Active workers',val:workers,sub:'this week',color:'#27ae60'},
+    {lbl:'Total logged',val:dailyLogs.length+' entries',sub:allHrs.toFixed(1)+'h all time',color:'#2980b9'},
   ].map(k=>`<div class="sc"><div class="sl">${k.lbl}</div><div class="sv" style="color:${k.color}">${k.val}</div><div class="ss">${k.sub}</div></div>`).join('');
 
   // Update storage bar
@@ -2262,7 +2269,7 @@ function setDLView(v){
   dlView=v;
   ['today','week','all','timesheet'].forEach(x=>{
     const btn=document.getElementById('dlv-'+x);
-    if(btn) btn.style.cssText=x===v?'background:var(--rye);color:var(--black);border-color:var(--rye)':'';
+    if(btn) btn.style.cssText=x===v?'background:#2980b9;color:#fff;border-color:#2980b9':'';
   });
   renderDailyLogView();
 }
@@ -2291,7 +2298,7 @@ function renderDailyLogView(){
     return true;
   }).slice().reverse();
   if(filtered.length===0){
-    container.innerHTML='<div style="text-align:center;padding:30px;color:var(--t3)">No entries yet for this view</div>';
+    container.innerHTML='<div style="text-align:center;padding:30px;color:#777">No entries yet for this view</div>';
     return;
   }
   const totalHrs=filtered.reduce((a,l)=>a+l.hours,0);
@@ -2300,27 +2307,27 @@ function renderDailyLogView(){
     ${filtered.length} entries &mdash; ${totalHrs.toFixed(1)}h total</div></div>
     <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
       <thead><tr>
-        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Date</th>
-        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Employee</th>
-        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Job</th>
-        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Code</th>
-        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Phase</th>
-        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Notes</th>
-        <th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:700;color:var(--t3);background:rgba(0,0,0,.3);text-transform:uppercase">Hrs</th>
+        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Date</th>
+        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Employee</th>
+        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Job</th>
+        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Code</th>
+        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Phase</th>
+        <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Notes</th>
+        <th style="padding:8px 12px;text-align:right;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.3);text-transform:uppercase">Hrs</th>
       </tr></thead>
       <tbody>${filtered.map(l=>`<tr>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);font-family:monospace;font-size:11px;color:var(--t3)">${l.date}</td>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--t1)">${l.worker}</td>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);font-size:11px;color:var(--rye)">${l.job}</td>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);font-family:monospace;font-size:11px;color:var(--t3)">${l.phaseCode}</td>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);color:var(--t2)">${l.phaseDesc}</td>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);font-size:11px;color:var(--t3)">${l.notes||'--'}</td>
-        <td style="padding:9px 12px;border-top:1px solid var(--border);font-weight:700;color:var(--rye);text-align:right">${l.hours}h</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);font-family:monospace;font-size:11px;color:#777">${l.date}</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);font-weight:700;color:#1a1a1a">${l.worker}</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);font-size:11px;color:#2980b9">${l.job}</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);font-family:monospace;font-size:11px;color:#777">${l.phaseCode}</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);color:#444">${l.phaseDesc}</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);font-size:11px;color:#777">${l.notes||'--'}</td>
+        <td style="padding:9px 12px;border-top:1px solid var(--border);font-weight:700;color:#2980b9;text-align:right">${l.hours}h</td>
       </tr>`).join('')}
       </tbody>
       <tfoot><tr>
-        <td colspan="6" style="padding:9px 12px;border-top:2px solid var(--border-hi);font-weight:700;color:var(--t1)">Total</td>
-        <td style="padding:9px 12px;border-top:2px solid var(--border-hi);font-weight:700;color:var(--rye);text-align:right">${totalHrs.toFixed(1)}h</td>
+        <td colspan="6" style="padding:9px 12px;border-top:2px solid var(--border-hi);font-weight:700;color:#1a1a1a">Total</td>
+        <td style="padding:9px 12px;border-top:2px solid var(--border-hi);font-weight:700;color:#2980b9;text-align:right">${totalHrs.toFixed(1)}h</td>
       </tr></tfoot>
     </table></div></div>`;
 }
@@ -2342,12 +2349,12 @@ function renderWhiteboardGrid(container, date, filterWorker, filterJob){
 
     if(jobsWithEntries.length === 0){
       container.innerHTML = `
-        <div style="background:#1a1f2e;border:1px solid var(--border);border-radius:10px;overflow:hidden">
-          <div style="padding:14px 18px;background:#111;border-bottom:1px solid var(--border)">
-            <div style="font-size:14px;font-weight:700;color:var(--rye)">Daily Whiteboard</div>
+        <div style="background:#1a1f2e;border:1px solid #e2e2e2;border-radius:10px;overflow:hidden">
+          <div style="padding:14px 18px;background:#111;border-bottom:1px solid #e2e2e2">
+            <div style="font-size:14px;font-weight:700;color:#2980b9">Daily Whiteboard</div>
             <div style="font-size:12px;color:#888;margin-top:2px">${dispDate}</div>
           </div>
-          <div style="padding:40px;text-align:center;color:var(--t3);font-size:13px">
+          <div style="padding:40px;text-align:center;color:#777;font-size:13px">
             No entries logged yet for this date.<br>
             <span style="font-size:11px;margin-top:6px;display:block">Use the form above or the Log Unit tab to add entries.</span>
           </div>
@@ -2386,7 +2393,7 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
     return `<div style="background:#141920;border:2px solid #2a3545;border-radius:10px;overflow:hidden">
       <div style="background:#0d1117;padding:12px 18px;border-bottom:2px solid #2a3545;display:flex;justify-content:space-between;align-items:center">
         <div>
-          <div style="font-size:18px;font-weight:700;color:var(--rye);font-family:'Arial Narrow',Arial,sans-serif">${jobNum} -- ${jobName}</div>
+          <div style="font-size:18px;font-weight:700;color:#2980b9;font-family:'Arial Narrow',Arial,sans-serif">${jobNum} -- ${jobName}</div>
           <div style="font-size:12px;color:#888;margin-top:2px">${dispDate}</div>
         </div>
         <div style="text-align:right">
@@ -2394,7 +2401,7 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
           <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:26px;font-weight:700;color:#EF9F27;line-height:1">0</div>
         </div>
       </div>
-      <div style="padding:30px;text-align:center;color:var(--t3);font-size:12px">No entries for this job today</div>
+      <div style="padding:30px;text-align:center;color:#777;font-size:12px">No entries for this job today</div>
     </div>`;
   }
 
@@ -2406,7 +2413,7 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
       return `<tr style="background:${bgColor};border-bottom:1px solid rgba(255,255,255,.06)">
         <td style="padding:10px 14px;color:#888;font-size:12px;font-family:monospace;border-right:1px solid rgba(255,255,255,.08)">${rowNum}</td>
         <td style="padding:10px 14px;color:#fff;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap">${i===0?e.worker.toUpperCase():''}</td>
-        <td style="padding:10px 14px;color:var(--rye);font-family:monospace;font-weight:700;font-size:13px;border-right:1px solid rgba(255,255,255,.08)">${e.phaseCode}</td>
+        <td style="padding:10px 14px;color:#2980b9;font-family:monospace;font-weight:700;font-size:13px;border-right:1px solid rgba(255,255,255,.08)">${e.phaseCode}</td>
         <td style="padding:10px 14px;color:#ccc;font-size:12px;border-right:1px solid rgba(255,255,255,.08)">
           <div>${(e.units||e.phaseDesc||'').toUpperCase()}</div>
           ${e.notes?`<div style="color:#888;font-size:11px;margin-top:3px">${e.notes}</div>`:''}
@@ -2417,9 +2424,9 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
   ).join('');
 
   return `
-    <div style="background:#141920;border:2px solid #2a3545;border-radius:10px;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif">
+    <div style="background:#141920;border:2px solid #2a3545;border-radius:10px;overflow:hidden;font-family:'Lato',Arial,sans-serif">
       <div style="background:#0d1117;padding:12px 18px;border-bottom:2px solid #2a3545;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center">
-        <div style="font-size:22px;font-weight:700;color:var(--rye);font-family:'Arial Narrow',Arial,sans-serif;letter-spacing:.04em">${jobNum}</div>
+        <div style="font-size:22px;font-weight:700;color:#2980b9;font-family:'Arial Narrow',Arial,sans-serif;letter-spacing:.04em">${jobNum}</div>
         <div>
           <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase">${jobName}</div>
           <div style="font-size:12px;color:#888;margin-top:2px">${dispDate}</div>
@@ -2517,7 +2524,7 @@ function renderTimesheets(container, filterWorker, filterJob){
   });
 
   if(Object.keys(byWorker).length===0){
-    container.innerHTML='<div style="text-align:center;padding:30px;color:var(--t3)">No entries logged yet. Log units or fill out the Sign In sheet first.</div>';
+    container.innerHTML='<div style="text-align:center;padding:30px;color:#777">No entries logged yet. Log units or fill out the Sign In sheet first.</div>';
     return;
   }
 
@@ -2749,8 +2756,8 @@ function renderTimesheets(container, filterWorker, filterJob){
     +'</div>';
   }).join('');
 
-  container.innerHTML='<div style="margin-bottom:12px;padding:10px 14px;background:var(--s2);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--t2)">'
-    +'<strong style="color:var(--t1)">'+Object.keys(byWorker).length+' timesheet'+(Object.keys(byWorker).length>1?'s':'')+'</strong>'
+  container.innerHTML='<div style="margin-bottom:12px;padding:10px 14px;background:#fff;border:1px solid #e2e2e2;border-radius:8px;font-size:12px;color:#444">'
+    +'<strong style="color:#1a1a1a">'+Object.keys(byWorker).length+' timesheet'+(Object.keys(byWorker).length>1?'s':'')+'</strong>'
     +(filterJob!=='all'?' <span style="background:var(--rye-glow);color:var(--rye-mid);border:1px solid rgba(101,173,229,.3);border-radius:4px;padding:1px 8px;font-size:10px;font-weight:700;margin:0 4px">'+filterJob+'</span>':'')
     +' &mdash; hours from Sign In Sheet &amp; Whiteboard entries &mdash; click <strong>Print / Save Timesheets</strong> to export as PDF'
   +'</div>'+cards;
@@ -2965,10 +2972,10 @@ function renderCCRef(){
   const el=document.getElementById('cc-ref-grid');
   if(!el) return;
   el.innerHTML=COST_CODES.map(c=>
-    '<div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:var(--s2);border:1px solid var(--border)">'
-    +'<span style="font-family:monospace;font-size:11px;font-weight:700;color:var(--rye);min-width:36px">'+c.code+'</span>'
-    +'<span style="font-size:12px;color:var(--t1);flex:1">'+c.desc+'</span>'
-    +'<span style="font-size:10px;font-weight:700;color:var(--t3);background:var(--black);padding:1px 6px;border-radius:4px">'+c.unit+'</span>'
+    '<div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2">'
+    +'<span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">'+c.code+'</span>'
+    +'<span style="font-size:12px;color:#1a1a1a;flex:1">'+c.desc+'</span>'
+    +'<span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">'+c.unit+'</span>'
     +'</div>'
   ).join('');
 }
@@ -3039,13 +3046,13 @@ function initDJR(){
   const ynContainer = document.getElementById('djr-yn-rows');
   if(ynContainer && !ynContainer.innerHTML.trim()){
     ynContainer.innerHTML = DJR_YN_FIELDS.map(f=>`
-      <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border)">
-        <div style="flex:1;font-size:12px;color:var(--t2)">${f.label}</div>
+      <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #e2e2e2">
+        <div style="flex:1;font-size:12px;color:#444">${f.label}</div>
         <div style="display:flex;gap:6px;flex-shrink:0">
           <button id="${f.id}-yes" onclick="toggleYN('${f.id}','yes')"
-            style="padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--border);background:var(--s2);color:var(--t3);cursor:pointer;transition:all .14s">YES</button>
+            style="padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid #e2e2e2;background:#fff;color:#777;cursor:pointer;transition:all .14s">YES</button>
           <button id="${f.id}-no" onclick="toggleYN('${f.id}','no')"
-            style="padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--border);background:var(--s2);color:var(--t3);cursor:pointer;transition:all .14s">NO</button>
+            style="padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid #e2e2e2;background:#fff;color:#777;cursor:pointer;transition:all .14s">NO</button>
         </div>
       </div>
       ${f.detail?`<div id="${f.id}-detail" style="display:none;padding:6px 0 10px 0">
@@ -3066,10 +3073,10 @@ function toggleYN(fieldId, val){
   if(!yBtn||!nBtn) return;
   yBtn.style.cssText = val==='yes'
     ? 'padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--green);background:rgba(76,175,125,.2);color:var(--green);cursor:pointer'
-    : 'padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--border);background:var(--s2);color:var(--t3);cursor:pointer';
+    : 'padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid #e2e2e2;background:#fff;color:#777;cursor:pointer';
   nBtn.style.cssText = val==='no'
     ? 'padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--red);background:rgba(224,90,90,.15);color:var(--red);cursor:pointer'
-    : 'padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid var(--border);background:var(--s2);color:var(--t3);cursor:pointer';
+    : 'padding:4px 14px;border-radius:6px;font-size:11px;font-weight:700;border:1px solid #e2e2e2;background:#fff;color:#777;cursor:pointer';
   yBtn.dataset.val = val==='yes'?'yes':'';
   nBtn.dataset.val = val==='no'?'no':'';
   // Show detail field for YES answers
@@ -3151,20 +3158,20 @@ function loadDJR(){
 function renderWorkforceRows(rows){
   const tbody = document.getElementById('djr-workforce-tbody');
   tbody.innerHTML = rows.map((r,i)=>`
-    <tr id="djr-row-${i}" style="border-bottom:1px solid var(--border)">
+    <tr id="djr-row-${i}" style="border-bottom:1px solid #e2e2e2">
       <td style="padding:6px 8px;vertical-align:top">
         <input type="text" class="djr-worker-name" value="${r.worker||''}"
-          style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:6px 8px;height:34px"
+          style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;height:34px"
           placeholder="Employee name">
       </td>
       <td style="padding:6px 8px;vertical-align:top">
         <textarea class="djr-work-desc" rows="2"
-          style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:6px 8px;resize:vertical;line-height:1.4"
+          style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;resize:vertical;line-height:1.4"
           placeholder="Building, location, description of work performed...">${r.description||''}</textarea>
       </td>
       <td style="padding:6px 8px;vertical-align:top">
         <input type="number" class="djr-work-hrs" value="${r.hours||''}" min="0" step="0.5"
-          style="width:60px;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:6px 8px;height:34px">
+          style="width:60px;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;height:34px">
       </td>
       <td style="padding:6px 8px;vertical-align:middle">
         <button onclick="removeDJRRow(this)" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">
@@ -3181,18 +3188,18 @@ function addDJRWorker(){
   tr.style.borderBottom = '1px solid var(--border)';
   tr.innerHTML = `
     <td style="padding:6px 8px;vertical-align:top">
-      <select class="djr-worker-name" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:6px 8px;height:34px">
+      <select class="djr-worker-name" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;height:34px">
         <option value="">-- Select employee --</option>
       </select>
     </td>
     <td style="padding:6px 8px;vertical-align:top">
       <textarea class="djr-work-desc" rows="2"
-        style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:6px 8px;resize:vertical;line-height:1.4"
+        style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;resize:vertical;line-height:1.4"
         placeholder="Building, location, description of work..."></textarea>
     </td>
     <td style="padding:6px 8px;vertical-align:top">
       <input type="number" class="djr-work-hrs" value="" min="0" step="0.5"
-        style="width:60px;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:6px 8px;height:34px">
+        style="width:60px;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;height:34px">
     </td>
     <td style="padding:6px 8px;vertical-align:middle">
       <button onclick="removeDJRRow(this)" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:6px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center">
@@ -3674,8 +3681,8 @@ function showSIForm(which){
   document.getElementById('si-form-incident').style.display = which==='incident' ? 'block' : 'none';
   var bSI  = document.getElementById('si-tab-signin');
   var bINC = document.getElementById('si-tab-incident');
-  bSI.style.cssText  = which==='signin'   ? 'flex:1;justify-content:center;background:var(--rye);color:var(--black);border-color:var(--rye)' : 'flex:1;justify-content:center';
-  bINC.style.cssText = which==='incident' ? 'flex:1;justify-content:center;background:var(--rye);color:var(--black);border-color:var(--rye)' : 'flex:1;justify-content:center';
+  bSI.style.cssText  = which==='signin'   ? 'flex:1;justify-content:center;background:#2980b9;color:#fff;border-color:#2980b9' : 'flex:1;justify-content:center';
+  bINC.style.cssText = which==='incident' ? 'flex:1;justify-content:center;background:#2980b9;color:#fff;border-color:#2980b9' : 'flex:1;justify-content:center';
   setTimeout(restoreSigs, 100);
 }
 
@@ -3745,13 +3752,13 @@ function renderSIRows(rows){
     var wid = 'SI_'+i;
     var opts = '<option value="">-- Select --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option>';
     if(r.name) opts = opts.replace('value="'+r.name+'"', 'value="'+r.name+'" selected');
-    return '<tr style="border-bottom:1px solid var(--border)" id="si-row-'+i+'">'
-      +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 6px;height:30px"></td>'
-      +'<td style="padding:4px 6px"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 6px;height:30px">'+opts+'</select></td>'
+    return '<tr style="border-bottom:1px solid #e2e2e2" id="si-row-'+i+'">'
+      +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
+      +'<td style="padding:4px 6px"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px">'+opts+'</select></td>'
       +'<td style="padding:4px 6px;vertical-align:middle">'
         +'<div style="display:flex;gap:3px;align-items:flex-start">'
           +'<div style="flex:1">'
-            +'<div style="font-size:8px;color:var(--rye);font-weight:700;margin-bottom:2px">IN</div>'
+            +'<div style="font-size:8px;color:#2980b9;font-weight:700;margin-bottom:2px">IN</div>'
             +'<canvas id="sig-canvas-'+wid+'" width="140" height="40" style="width:70px;height:40px;background:#fff;border:1.5px solid #65ADE5;border-radius:3px;display:block;touch-action:none" onmousedown="event.stopPropagation();sigStart(event,this)" ontouchstart="event.stopPropagation();sigStart(event,this)"></canvas>'
             +'<div style="display:flex;align-items:center;gap:3px;margin-top:2px">'
               +'<button onclick="sigClear(\''+wid+'\')" style="font-size:8px;padding:1px 4px;background:rgba(224,90,90,.2);border:1px solid rgba(224,90,90,.5);color:#e05a5a;border-radius:2px;cursor:pointer">x</button>'
@@ -3767,18 +3774,18 @@ function renderSIRows(rows){
             +'</div>'
           +'</div>'
         +'</div>'
-      +'</td>'     +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-start" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.start||'')+'"','value="'+(r.start||'')+'" selected')+'</select>'; })()
+      +'</td>'     +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-start" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.start||'')+'"','value="'+(r.start||'')+'" selected')+'</select>'; })()
       +'</td>'
-      +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-lunch-in" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.lunchIn||'')+'"','value="'+(r.lunchIn||'')+'" selected')+'</select>'; })()
+      +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-lunch-in" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.lunchIn||'')+'"','value="'+(r.lunchIn||'')+'" selected')+'</select>'; })()
       +'</td>'
-      +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-lunch-out" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.lunchOut||'')+'"','value="'+(r.lunchOut||'')+'" selected')+'</select>'; })()
+      +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-lunch-out" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.lunchOut||'')+'"','value="'+(r.lunchOut||'')+'" selected')+'</select>'; })()
       +'</td>'
-      +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-finish" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.finish||'')+'"','value="'+(r.finish||'')+'" selected')+'</select>'; })()
+      +'<td style="padding:4px 6px">'+(function(){ var o='<option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option>'; return '<select class="si-finish" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px">'+o.replace('value="'+(r.finish||'')+'"','value="'+(r.finish||'')+'" selected')+'</select>'; })()
       +'</td>'
-      +'<td style="padding:4px 6px;text-align:center"><input class="si-breaks" type="number" value="'+(r.breaks||'2')+'" min="0" max="9" style="width:40px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px;height:30px;text-align:center"></td>'
-      +'<td style="padding:4px 6px;vertical-align:middle;text-align:center"><input class="si-reg" type="number" value="'+(r.regHrs||'')+'" step="0.5" style="width:45px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px;height:30px;text-align:center"></td>'
-      +'<td style="padding:4px 6px;vertical-align:middle;text-align:center"><input class="si-ot" type="number" value="'+(r.otHrs||'')+'" step="0.5" style="width:45px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px;height:30px;text-align:center"></td>'
-      +'<td style="padding:4px 6px;vertical-align:middle;text-align:center"><input class="si-total" type="number" value="'+(r.total||'')+'" step="0.5" style="width:45px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--rye);font-size:11px;font-weight:700;padding:4px;height:30px;text-align:center"></td>'
+      +'<td style="padding:4px 6px;text-align:center"><input class="si-breaks" type="number" value="'+(r.breaks||'2')+'" min="0" max="9" style="width:40px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px;height:30px;text-align:center"></td>'
+      +'<td style="padding:4px 6px;vertical-align:middle;text-align:center"><input class="si-reg" type="number" value="'+(r.regHrs||'')+'" step="0.5" style="width:45px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px;height:30px;text-align:center"></td>'
+      +'<td style="padding:4px 6px;vertical-align:middle;text-align:center"><input class="si-ot" type="number" value="'+(r.otHrs||'')+'" step="0.5" style="width:45px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px;height:30px;text-align:center"></td>'
+      +'<td style="padding:4px 6px;vertical-align:middle;text-align:center"><input class="si-total" type="number" value="'+(r.total||'')+'" step="0.5" style="width:45px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#2980b9;font-size:11px;font-weight:700;padding:4px;height:30px;text-align:center"></td>'
       +'<td style="padding:4px 6px"><button onclick="removeSIRow(this)" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:5px;width:24px;height:24px;cursor:pointer">x</button></td>'
     +'</tr>';
   }).join('');
@@ -3796,7 +3803,7 @@ function renderIncidentRows(workers){
     var wid = 'INC_'+i;
     var wo  = WORKERS.find(function(w){ return w.name===r.name; });
     var empNum = wo && wo.empId ? wo.empId+') ' : '';
-    return '<tr style="border-bottom:1px solid var(--border)" id="inc-row-'+i+'">'
+    return '<tr style="border-bottom:1px solid #e2e2e2" id="inc-row-'+i+'">'
       +'<td style="padding:10px 14px;vertical-align:middle;font-size:13px;font-weight:700;border-right:1px solid var(--border);white-space:nowrap;min-width:180px">'
         + empNum + r.name
       +'</td>'
@@ -3844,7 +3851,7 @@ function addIncidentRow(){
   tr.id = 'inc-row-'+i;
   tr.style.borderBottom = '1px solid var(--border)';
   tr.innerHTML = '<td style="padding:8px 12px;vertical-align:middle;border-right:1px solid var(--border)">'
-    +'<select class="inc-emp-name" style="width:100%;background:var(--black);border:1px solid var(--bhi);border-radius:6px;color:var(--t1);font-size:12px;padding:5px 8px;height:34px">'
+    +'<select class="inc-emp-name" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:5px 8px;height:34px">'
       +workerOpts
     +'</select>'
   +'</td>'
@@ -3871,12 +3878,12 @@ function addSIRow(){
   tr.style.borderBottom = '1px solid var(--border)';
   var workerOpts = '<option value="">-- Select --</option>'
 +"<option value=\"Abiud Lopez\">Abiud Lopez</option>"+"<option value=\"Adrian Flores\">Adrian Flores</option>"+"<option value=\"Adrian Hernandez\">Adrian Hernandez</option>"+"<option value=\"Adrian Marquez\">Adrian Marquez</option>"+"<option value=\"Alberto Lopez Ruiz\">Alberto Lopez Ruiz</option>"+"<option value=\"Alejandro Lopez\">Alejandro Lopez</option>"+"<option value=\"Alex Osorio\">Alex Osorio</option>"+"<option value=\"Angel Hernandez\">Angel Hernandez</option>"+"<option value=\"Angel Ibanez\">Angel Ibanez</option>"+"<option value=\"Anthony Ibanez\">Anthony Ibanez</option>"+"<option value=\"Anthony Lyons\">Anthony Lyons</option>"+"<option value=\"Anthony Macias\">Anthony Macias</option>"+"<option value=\"Anthony Zetina\">Anthony Zetina</option>"+"<option value=\"Antonio Castillo\">Antonio Castillo</option>"+"<option value=\"Armando Lopez\">Armando Lopez</option>"+"<option value=\"Axel Salas\">Axel Salas</option>"+"<option value=\"Brandon Salazar\">Brandon Salazar</option>"+"<option value=\"Brenda Quijada\">Brenda Quijada</option>"+"<option value=\"Brian Campos\">Brian Campos</option>"+"<option value=\"Brian Flores\">Brian Flores</option>"+"<option value=\"Brian Kitajima\">Brian Kitajima</option>"+"<option value=\"Brian Ramirez\">Brian Ramirez</option>"+"<option value=\"Carla Quijada\">Carla Quijada</option>"+"<option value=\"Carlos Agapito\">Carlos Agapito</option>"+"<option value=\"Carlos Landaverde\">Carlos Landaverde</option>"+"<option value=\"Christian Moran\">Christian Moran</option>"+"<option value=\"Cristian Collin\">Cristian Collin</option>"+"<option value=\"Daniel Burleson\">Daniel Burleson</option>"+"<option value=\"Daniel Lopez\">Daniel Lopez</option>"+"<option value=\"Daniel Villegas\">Daniel Villegas</option>"+"<option value=\"David Casarez\">David Casarez</option>"+"<option value=\"David Smith\">David Smith</option>"+"<option value=\"Dillan Smith\">Dillan Smith</option>"+"<option value=\"Duvaldi Mazariegos\">Duvaldi Mazariegos</option>"+"<option value=\"Dyana Quijada\">Dyana Quijada</option>"+"<option value=\"Edgar Solis\">Edgar Solis</option>"+"<option value=\"Edith Del Carmen\">Edith Del Carmen</option>"+"<option value=\"Eduardo Echeverria\">Eduardo Echeverria</option>"+"<option value=\"Edwin Martinez\">Edwin Martinez</option>"+"<option value=\"Efrain Cornejo\">Efrain Cornejo</option>"+"<option value=\"Efren Hilario\">Efren Hilario</option>"+"<option value=\"Enrique Laguna\">Enrique Laguna</option>"+"<option value=\"Erik Lopez\">Erik Lopez</option>"+"<option value=\"Estevan Sandoval\">Estevan Sandoval</option>"+"<option value=\"Filiberto Ramos\">Filiberto Ramos</option>"+"<option value=\"Francisco Flores\">Francisco Flores</option>"+"<option value=\"Gabriel Flores\">Gabriel Flores</option>"+"<option value=\"Guillermo Silva\">Guillermo Silva</option>"+"<option value=\"Henri Sibrian\">Henri Sibrian</option>"+"<option value=\"Humberto Flores\">Humberto Flores</option>"+"<option value=\"Irvin Rivera\">Irvin Rivera</option>"+"<option value=\"Isaiah Ortiz Alvarado\">Isaiah Ortiz Alvarado</option>"+"<option value=\"Isidro Enciso\">Isidro Enciso</option>"+"<option value=\"Jaime Moya\">Jaime Moya</option>"+"<option value=\"Jaime Quintero\">Jaime Quintero</option>"+"<option value=\"James Marquez\">James Marquez</option>"+"<option value=\"Jayson Ortega\">Jayson Ortega</option>"+"<option value=\"Jeffrey Rivera\">Jeffrey Rivera</option>"+"<option value=\"Jerlin Mendoza\">Jerlin Mendoza</option>"+"<option value=\"Jerry Munoz\">Jerry Munoz</option>"+"<option value=\"Jesus Heredia\">Jesus Heredia</option>"+"<option value=\"Jimmy Cascio\">Jimmy Cascio</option>"+"<option value=\"Joaquin Garcia\">Joaquin Garcia</option>"+"<option value=\"Johnny Perez\">Johnny Perez</option>"+"<option value=\"Jonathan Jacobo\">Jonathan Jacobo</option>"+"<option value=\"Jorge Contreras\">Jorge Contreras</option>"+"<option value=\"Jose Luna\">Jose Luna</option>"+"<option value=\"Jose Preciado\">Jose Preciado</option>"+"<option value=\"Jose Ramirez\">Jose Ramirez</option>"+"<option value=\"Josue Villegas\">Josue Villegas</option>"+"<option value=\"Juan Mazariegos\">Juan Mazariegos</option>"+"<option value=\"Julio Munoz\">Julio Munoz</option>"+"<option value=\"Kenneth William\">Kenneth William</option>"+"<option value=\"Kevin Bautista\">Kevin Bautista</option>"+"<option value=\"Leonardo Mazariegos\">Leonardo Mazariegos</option>"+"<option value=\"Lizeth Marcos\">Lizeth Marcos</option>"+"<option value=\"Lorenzo Tanguma\">Lorenzo Tanguma</option>"+"<option value=\"Louis Aceves\">Louis Aceves</option>"+"<option value=\"Luis Ramirez\">Luis Ramirez</option>"+"<option value=\"Manuel Martinez\">Manuel Martinez</option>"+"<option value=\"Manuel Palacios\">Manuel Palacios</option>"+"<option value=\"Mario Arias\">Mario Arias</option>"+"<option value=\"Mario Lopez\">Mario Lopez</option>"+"<option value=\"Mathew Gonzalez\">Mathew Gonzalez</option>"+"<option value=\"Matthew Baciu\">Matthew Baciu</option>"+"<option value=\"Miguel Corral\">Miguel Corral</option>"+"<option value=\"Miguel Dominguez\">Miguel Dominguez</option>"+"<option value=\"Noah Villareal\">Noah Villareal</option>"+"<option value=\"Oliver Galicia\">Oliver Galicia</option>"+"<option value=\"Oscar Aguirre\">Oscar Aguirre</option>"+"<option value=\"Pedro Barrera\">Pedro Barrera</option>"+"<option value=\"Randdy De Paz\">Randdy De Paz</option>"+"<option value=\"Robert Stark\">Robert Stark</option>"+"<option value=\"Robert Welch\">Robert Welch</option>"+"<option value=\"Rusel Santiago\">Rusel Santiago</option>"+"<option value=\"Salvador Perez\">Salvador Perez</option>"+"<option value=\"Samuel Munoz\">Samuel Munoz</option>"+"<option value=\"Sergio Diaz\">Sergio Diaz</option>"+"<option value=\"Sergio Sandoval\">Sergio Sandoval</option>"+"<option value=\"Sotero Dominguez\">Sotero Dominguez</option>"+"<option value=\"Steven Sulewski\">Steven Sulewski</option>"+"<option value=\"Tony Broadnax\">Tony Broadnax</option>"+"<option value=\"Uriel Chavez\">Uriel Chavez</option>"+"<option value=\"Victor Armienta\">Victor Armienta</option>"+"<option value=\"Victor Carrillo\">Victor Carrillo</option>"+"<option value=\"Vincent Sopha\">Vincent Sopha</option>"+"<option value=\"Vincent Stancati\">Vincent Stancati</option>"+"<option value=\"Xavier Contreras\">Xavier Contreras</option>";
-  tr.innerHTML = '<td style="padding:4px 6px;vertical-align:top"><input type="text" class="si-emp-num" value="" style="width:50px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 6px;height:30px"></td>'
-    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 6px;height:30px">'+workerOpts+'</select></td>'
+  tr.innerHTML = '<td style="padding:4px 6px;vertical-align:top"><input type="text" class="si-emp-num" value="" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
+    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px">'+workerOpts+'</select></td>'
     +'<td style="padding:4px 6px;vertical-align:middle">'
         +'<div style="display:flex;gap:3px;align-items:flex-start">'
           +'<div style="flex:1">'
-            +'<div style="font-size:8px;color:var(--rye);font-weight:700;margin-bottom:2px">IN</div>'
+            +'<div style="font-size:8px;color:#2980b9;font-weight:700;margin-bottom:2px">IN</div>'
             +'<canvas id="sig-canvas-'+wid+'" width="140" height="40" style="width:70px;height:40px;background:#fff;border:1.5px solid #65ADE5;border-radius:3px;display:block;touch-action:none" onmousedown="event.stopPropagation();sigStart(event,this)" ontouchstart="event.stopPropagation();sigStart(event,this)"></canvas>'
             +'<div style="display:flex;align-items:center;gap:3px;margin-top:2px">'
               +'<button onclick="sigClear(\''+wid+'\')" style="font-size:8px;padding:1px 4px;background:rgba(224,90,90,.2);border:1px solid rgba(224,90,90,.5);color:#e05a5a;border-radius:2px;cursor:pointer">x</button>'
@@ -3892,14 +3899,14 @@ function addSIRow(){
             +'</div>'
           +'</div>'
         +'</div>'
-      +'</td>'   +'<td style="padding:4px 6px;vertical-align:top"><select class="si-start" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
-    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-lunch-in" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
-    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-lunch-out" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
-    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-finish" onchange="calcAllRows()" style="background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
-    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-breaks" value="2" style="width:40px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 4px;height:30px;text-align:center"></td>'
-    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-reg" value="" step="0.5" style="width:45px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 4px;height:30px;text-align:center"></td>'
-    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-ot" value="" step="0.5" style="width:45px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--t1);font-size:11px;padding:4px 4px;height:30px;text-align:center"></td>'
-    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-total" value="8" step="0.5" style="width:45px;background:var(--black);border:1px solid var(--bhi);border-radius:5px;color:var(--rye);font-size:11px;font-weight:700;padding:4px 4px;height:30px;text-align:center"></td>'
+      +'</td>'   +'<td style="padding:4px 6px;vertical-align:top"><select class="si-start" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
+    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-lunch-in" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
+    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-lunch-out" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
+    +'<td style="padding:4px 6px;vertical-align:top"><select class="si-finish" onchange="calcAllRows()" style="background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 5px;height:30px"><option value="">--</option><option value="4:00 AM">4:00 AM</option><option value="4:15 AM">4:15 AM</option><option value="4:30 AM">4:30 AM</option><option value="4:45 AM">4:45 AM</option><option value="5:00 AM">5:00 AM</option><option value="5:15 AM">5:15 AM</option><option value="5:30 AM">5:30 AM</option><option value="5:45 AM">5:45 AM</option><option value="6:00 AM">6:00 AM</option><option value="6:15 AM">6:15 AM</option><option value="6:30 AM">6:30 AM</option><option value="6:45 AM">6:45 AM</option><option value="7:00 AM">7:00 AM</option><option value="7:15 AM">7:15 AM</option><option value="7:30 AM">7:30 AM</option><option value="7:45 AM">7:45 AM</option><option value="8:00 AM">8:00 AM</option><option value="8:15 AM">8:15 AM</option><option value="8:30 AM">8:30 AM</option><option value="8:45 AM">8:45 AM</option><option value="9:00 AM">9:00 AM</option><option value="9:15 AM">9:15 AM</option><option value="9:30 AM">9:30 AM</option><option value="9:45 AM">9:45 AM</option><option value="10:00 AM">10:00 AM</option><option value="10:15 AM">10:15 AM</option><option value="10:30 AM">10:30 AM</option><option value="10:45 AM">10:45 AM</option><option value="11:00 AM">11:00 AM</option><option value="11:15 AM">11:15 AM</option><option value="11:30 AM">11:30 AM</option><option value="11:45 AM">11:45 AM</option><option value="12:00 PM">12:00 PM</option><option value="12:15 PM">12:15 PM</option><option value="12:30 PM">12:30 PM</option><option value="12:45 PM">12:45 PM</option><option value="1:00 PM">1:00 PM</option><option value="1:15 PM">1:15 PM</option><option value="1:30 PM">1:30 PM</option><option value="1:45 PM">1:45 PM</option><option value="2:00 PM">2:00 PM</option><option value="2:15 PM">2:15 PM</option><option value="2:30 PM">2:30 PM</option><option value="2:45 PM">2:45 PM</option><option value="3:00 PM">3:00 PM</option><option value="3:15 PM">3:15 PM</option><option value="3:30 PM">3:30 PM</option><option value="3:45 PM">3:45 PM</option><option value="4:00 PM">4:00 PM</option><option value="4:15 PM">4:15 PM</option><option value="4:30 PM">4:30 PM</option><option value="4:45 PM">4:45 PM</option><option value="5:00 PM">5:00 PM</option><option value="5:15 PM">5:15 PM</option><option value="5:30 PM">5:30 PM</option><option value="5:45 PM">5:45 PM</option><option value="6:00 PM">6:00 PM</option><option value="6:15 PM">6:15 PM</option><option value="6:30 PM">6:30 PM</option><option value="6:45 PM">6:45 PM</option><option value="7:00 PM">7:00 PM</option><option value="7:15 PM">7:15 PM</option><option value="7:30 PM">7:30 PM</option><option value="7:45 PM">7:45 PM</option><option value="8:00 PM">8:00 PM</option><option value="8:15 PM">8:15 PM</option><option value="8:30 PM">8:30 PM</option><option value="8:45 PM">8:45 PM</option><option value="9:00 PM">9:00 PM</option><option value="9:15 PM">9:15 PM</option><option value="9:30 PM">9:30 PM</option><option value="9:45 PM">9:45 PM</option><option value="10:00 PM">10:00 PM</option><option value="10:15 PM">10:15 PM</option><option value="10:30 PM">10:30 PM</option><option value="10:45 PM">10:45 PM</option><option value="10:45 PM">10:45 PM</option></select></td>'
+    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-breaks" value="2" style="width:40px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 4px;height:30px;text-align:center"></td>'
+    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-reg" value="" step="0.5" style="width:45px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 4px;height:30px;text-align:center"></td>'
+    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-ot" value="" step="0.5" style="width:45px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 4px;height:30px;text-align:center"></td>'
+    +'<td style="padding:4px 6px;text-align:center"><input type="number" class="si-total" value="8" step="0.5" style="width:45px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#2980b9;font-size:11px;font-weight:700;padding:4px 4px;height:30px;text-align:center"></td>'
     +'<td style="padding:4px 6px"><button onclick="removeSIRow(this)" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:var(--red);border-radius:5px;width:24px;height:24px;cursor:pointer;font-size:12px">x</button></td>';
   document.getElementById('si-tbody').appendChild(tr);
   setTimeout(restoreSigs, 50);
@@ -4227,10 +4234,10 @@ function calcRowHours(idx){
   if(regInp)   regInp.value   = regHrs.toFixed(1);
   if(otInp)    otInp.value    = otHrs > 0 ? otHrs.toFixed(1) : '0';
   if(totalInp) totalInp.value = totalHrs.toFixed(1);
-  if(totalInp) totalInp.style.color = otHrs > 0 ? 'var(--red)' : 'var(--rye)';
+  if(totalInp) totalInp.style.color = otHrs > 0 ? '#C0392B' : '#2980b9';
 
   // Highlight overtime
-  if(totalInp) totalInp.style.color = otHrs > 0 ? 'var(--red)' : 'var(--rye)';
+  if(totalInp) totalInp.style.color = otHrs > 0 ? '#C0392B' : '#2980b9';
 }
 
 function parseTime(t){
@@ -5060,7 +5067,7 @@ function renderTaskCalendar(){
   if(!cal) return;
 
   var today = new Date().toISOString().slice(0,10);
-  var typeColors = {task:'var(--rye)',appointment:'var(--amber)',delivery:'#4caf50',inspection:'#e91e63',
+  var typeColors = {task:'#2980b9',appointment:'#D4A843',delivery:'#4caf50',inspection:'#e91e63',
 reminder:'#9c27b0'};
 
   cal.innerHTML = dayNames.map(function(name,i){
@@ -5070,11 +5077,11 @@ reminder:'#9c27b0'};
     var dayTasks = taskData.filter(function(t){ return t.date===dateStr && t.status!=='done'; });
 
     return '<div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px">'
-      +'<div style="font-size:10px;font-weight:700;color:'+(isToday?'var(--rye)':'var(--t3)')+';margin-bottom:4px;text-align:center">'
-        +name+'<br><span style="font-size:13px;color:'+(isToday?'var(--rye)':'var(--t1)')+'">'+d.getDate()+'</span>'
+      +'<div style="font-size:10px;font-weight:700;color:'+(isToday?'#2980b9':'#777')+';margin-bottom:4px;text-align:center">'
+        +name+'<br><span style="font-size:13px;color:'+(isToday?'#2980b9':'#1a1a1a')+'">'+d.getDate()+'</span>'
       +'</div>'
       +dayTasks.map(function(t){
-        return '<div onclick="editTask('+t.id+')" style="background:'+typeColors[t.type]+';opacity:0.85;color:var(--black);border-radius:3px;padding:2px 4px;font-size:9px;font-weight:600;margin-bottom:2px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'
+        return '<div onclick="editTask('+t.id+')" style="background:'+typeColors[t.type]+';opacity:0.85;color:#1a1a1a;border-radius:3px;padding:2px 4px;font-size:9px;font-weight:600;margin-bottom:2px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'
           +t.title
         +'</div>';
       }).join('')
@@ -5089,9 +5096,9 @@ var TYPE_ICONS = {
   inspection:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>',
 reminder:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>'
 };
-var TYPE_COLORS = {task:'var(--rye)',appointment:'var(--amber)',delivery:'#4caf50',inspection:'#e91e63',
+var TYPE_COLORS = {task:'#2980b9',appointment:'#D4A843',delivery:'#4caf50',inspection:'#e91e63',
 reminder:'#9c27b0'};
-var PRIORITY_COLORS = {high:'var(--red)',medium:'var(--amber)',low:'var(--t3)'};
+var PRIORITY_COLORS = {high:'#C0392B',medium:'#D4A843',low:'#777'};
 
 function renderTasks(){
   var el = document.getElementById('task-list');
@@ -5105,24 +5112,24 @@ function renderTasks(){
   }).sort(function(a,b){ return a.date.localeCompare(b.date); });
 
   if(!filtered.length){
-    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--t3);font-size:12px">No items yet. Tap + Add Item to get started.</div>';
+    el.innerHTML='<div style="text-align:center;padding:30px;color:#777;font-size:12px">No items yet. Tap + Add Item to get started.</div>';
     return;
   }
 
   el.innerHTML = filtered.map(function(t){
     var isDone = t.status==='done';
-    return '<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;'+(isDone?'opacity:0.5':'')+'" onclick="editTask('+t.id+')">'
+    return '<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:1px solid #e2e2e2;cursor:pointer;'+(isDone?'opacity:0.5':'')+'" onclick="editTask('+t.id+')">'
       +'<div style="width:28px;height:28px;border-radius:50%;background:'+TYPE_COLORS[t.type]+';display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">'+TYPE_ICONS[t.type]+'</div>'
       +'<div style="flex:1;min-width:0">'
-        +'<div style="font-size:12px;font-weight:700;color:var(--t1);text-decoration:'+(isDone?'line-through':'none')+'">'+t.title+'</div>'
-        +(t.notes?'<div style="font-size:11px;color:var(--t3);margin-top:1px">'+t.notes+'</div>':'')
+        +'<div style="font-size:12px;font-weight:700;color:#1a1a1a;text-decoration:'+(isDone?'line-through':'none')+'">'+t.title+'</div>'
+        +(t.notes?'<div style="font-size:11px;color:#777;margin-top:1px">'+t.notes+'</div>':'')
         +'<div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">'
-          +'<span style="font-size:10px;color:var(--t3)">'+t.date+(t.time?' '+t.time:'')+'</span>'
+          +'<span style="font-size:10px;color:#777">'+t.date+(t.time?' '+t.time:'')+'</span>'
           +'<span style="font-size:10px;color:'+PRIORITY_COLORS[t.priority]+';font-weight:600">'+t.priority.toUpperCase()+'</span>'
-          +'<span style="font-size:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1px 6px;color:var(--t2)">'+t.type+'</span>'
+          +'<span style="font-size:10px;background:#fff;border:1px solid #e2e2e2;border-radius:10px;padding:1px 6px;color:#444">'+t.type+'</span>'
         +'</div>'
       +'</div>'
-      +'<button onclick="event.stopPropagation();toggleTaskDone('+t.id+')" style="background:'+(isDone?'var(--green)':'var(--s2)')+';border:1px solid var(--border);border-radius:50%;width:24px;height:24px;cursor:pointer;color:'+(isDone?'var(--black)':'var(--t3)')+';font-size:12px;flex-shrink:0">'+(isDone?'&#10003;':'&#9675;')+'</button>'
+      +'<button onclick="event.stopPropagation();toggleTaskDone('+t.id+')" style="background:'+(isDone?'#27ae60':'#f4f8f9')+';border:1px solid #e2e2e2;border-radius:50%;width:24px;height:24px;cursor:pointer;color:'+(isDone?'#1a1a1a':'#777')+';font-size:12px;flex-shrink:0">'+(isDone?'&#10003;':'&#9675;')+'</button>'
     +'</div>';
   }).join('');
 }
