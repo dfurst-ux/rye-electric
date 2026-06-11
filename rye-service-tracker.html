@@ -1941,7 +1941,9 @@ async function generateInvoice() {
   // Count how many invoices already exist for this ticket
   const existingInvCount = parseInt(localStorage.getItem('inv_count_' + t.id) || '0') + 1;
   localStorage.setItem('inv_count_' + t.id, existingInvCount);
-  const invNum = t.id + '-' + String(existingInvCount).padStart(3, '0');
+  // Use ticket ID directly — strip SVC- prefix if present, normalize to SP format
+  const ticketBase = t.id.startsWith('SVC-') ? 'SP' + t.id.replace('SVC-', '') : t.id;
+  const invNum = ticketBase + '-' + String(existingInvCount).padStart(3, '0');
 
   const doc = new jsPDFClass({ unit: 'pt', format: 'letter' });
 
@@ -2107,14 +2109,17 @@ async function generateInvoice() {
   // ── MATERIALS TABLE ──────────────────────────────────────────
   let matSubtotal = 0;
   const matRows = (t.materials || []).filter(r => r.desc).map(r => {
-    const total = parseFloat(r.total) || 0;
+    const qty      = parseFloat(r.qty)      || 0;
+    const unitCost = parseFloat(r.unitCost) || 0;
+    // Use stored total, or calculate from qty × unitCost, or use unitCost alone
+    const total = parseFloat(r.total) || (qty > 0 && unitCost > 0 ? qty * unitCost : unitCost);
     matSubtotal += total;
     return [
       r.desc,
       r.part || '—',
       r.qty  || '—',
       r.unit || '—',
-      r.unitCost ? '$' + r.unitCost : '—',
+      unitCost > 0 ? '$' + unitCost.toFixed(2) : '—',
       '$' + total.toFixed(2),
     ];
   });
