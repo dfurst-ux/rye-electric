@@ -8,6 +8,13 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+// Verify jsPDF loaded
+window.addEventListener('load', function() {
+  if (!window.jspdf) console.error('jsPDF failed to load');
+  else console.log('jsPDF loaded OK:', Object.keys(window.jspdf));
+});
+</script>
 <style>
 :root {
   --red: #C0392B;
@@ -1129,7 +1136,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('viewTicketModal')">Close</button>
       <button class="btn btn-gold btn-sm" onclick="printTicket()">🖨 Print / PDF</button>
-      <button class="btn btn-green btn-sm" id="btn-gen-invoice" onclick="generateInvoice()">📄 Generate Invoice</button>
+      <button class="btn btn-green btn-sm" id="btn-gen-invoice" onclick="completeAndInvoice()">✅ Complete &amp; Email Invoice</button>
     </div>
   </div>
 </div>
@@ -1614,7 +1621,7 @@ function renderTicketsTable() {
         <td>${starDisp}</td>
         <td>
           <button class="link-btn" onclick="viewTicket('${t.id}')">View</button>
-          <button class="link-btn" style="color:var(--green);margin-left:8px" onclick="currentViewTicketId='${t.id}';generateInvoice()">Invoice</button>
+          <button class="link-btn" style="color:var(--green);margin-left:8px" onclick="currentViewTicketId='${t.id}';completeAndInvoice()">Complete + Invoice</button>
           <button class="link-btn" style="color:var(--muted);margin-left:8px" onclick="deleteTicket('${t.id}')">Del</button>
         </td>
       </tr>`;
@@ -1890,22 +1897,53 @@ function printTicket() {
   window.print();
 }
 
+// ── COMPLETE & EMAIL INVOICE ──────────────────────────────────────────────────
+function completeAndInvoice() {
+  const id = currentViewTicketId;
+  if (!id) { toast('No ticket selected — open a ticket first', true); return; }
+  const t = tickets.find(x => x.id === id);
+  if (!t) { toast('Ticket not found', true); return; }
+
+  // Mark ticket as Completed
+  t.status = 'Completed';
+  save();
+  renderAll();
+
+  // Update the status badge in the open modal
+  const headerBar = document.querySelector('#view-ticket-content .ticket-status-col');
+  if (headerBar) headerBar.innerHTML = statusBadge('Completed');
+
+  toast('Ticket marked Completed — generating invoice…');
+  setTimeout(() => generateInvoice(), 400);
+}
+
 // ── GENERATE INVOICE ──────────────────────────────────────────────────────────
 async function generateInvoice() {
   const id = currentViewTicketId;
-  if (!id) { toast('No ticket selected', true); return; }
+  if (!id) { toast('No ticket selected — open a ticket first', true); return; }
   const t = tickets.find(x => x.id === id);
   if (!t) { toast('Ticket not found', true); return; }
+
+  // Check jsPDF is available
+  const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+  if (!jsPDFClass) {
+    alert('PDF library not loaded. Please refresh the page and try again.');
+    return;
+  }
 
   const btn = document.getElementById('btn-gen-invoice');
   if (btn) { btn.disabled = true; btn.textContent = '⏳ Generating…'; }
 
+  try {
+
   invoiceCounter++;
   localStorage.setItem('svc_invoice_counter', invoiceCounter);
-  const invNum = 'INV-' + String(invoiceCounter).padStart(5, '0');
+  // Count how many invoices already exist for this ticket
+  const existingInvCount = parseInt(localStorage.getItem('inv_count_' + t.id) || '0') + 1;
+  localStorage.setItem('inv_count_' + t.id, existingInvCount);
+  const invNum = t.id + '-' + String(existingInvCount).padStart(3, '0');
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+  const doc = new jsPDFClass({ unit: 'pt', format: 'letter' });
 
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
@@ -2249,6 +2287,12 @@ Notes: ${t.notes || t.scope || '—'}
   }
 
   if (btn) { btn.disabled = false; btn.textContent = '📄 Generate Invoice'; }
+
+  } catch(err) {
+    console.error('Invoice generation error:', err);
+    alert('Invoice error: ' + err.message + '\n\nCheck the browser console for details.');
+    if (btn) { btn.disabled = false; btn.textContent = '📄 Generate Invoice'; }
+  }
 }
 
 // ── DELETE ──
