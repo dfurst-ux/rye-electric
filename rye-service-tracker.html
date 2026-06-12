@@ -4,21 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric — Service Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+// Verify jsPDF loaded
+window.addEventListener('load', function() {
+  if (!window.jspdf) console.error('jsPDF failed to load');
+  else console.log('jsPDF loaded OK:', Object.keys(window.jspdf));
+});
+</script>
 <style>
 :root {
   --red: #C0392B;
   --red-dark: #962d22;
   --red-light: #f9eded;
+  --teal: #4E9DA8;
+  --teal-dark: #357884;
+  --teal-light: #EAF5F7;
   --gold: #D4A843;
   --gold-light: #fdf6e3;
   --dark: #1a1a1a;
   --dark2: #2a2a2a;
   --mid: #444;
   --muted: #777;
-  --border: #ddd;
-  --bg: #f4f4f4;
+  --border: #e2e2e2;
+  --bg: #F4F8F9;
   --white: #fff;
   --green: #27ae60;
   --green-light: #eafaf1;
@@ -27,44 +39,45 @@
   --blue: #2980b9;
   --blue-light: #eaf4fb;
   --radius: 6px;
-  --shadow: 0 2px 8px rgba(0,0,0,0.10);
-  --shadow-lg: 0 4px 20px rgba(0,0,0,0.14);
-  --font: 'Barlow', sans-serif;
-  --font-cond: 'Barlow Condensed', sans-serif;
+  --shadow: 0 2px 8px rgba(0,0,0,0.07);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.11);
+  --font: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-cond: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); background: var(--bg); color: var(--dark); font-size: 15px; min-height: 100vh; }
 
 /* ── TOP NAV ── */
 .topnav {
-  background: var(--dark);
-  color: #fff;
+  background: var(--white);
+  color: var(--dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 28px;
-  height: 56px;
+  height: 64px;
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 3px solid var(--red);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
 }
 .topnav-brand {
-  font-family: var(--font-cond);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #fff;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
-.topnav-brand span { color: var(--red); }
+.brand-logo { display: flex; flex-direction: column; line-height: 1; }
+.brand-logo .word-rye { font-size: 26px; font-weight: 700; color: var(--dark); letter-spacing: -.5px; }
+.brand-logo .word-electric { font-size: 11px; font-weight: 300; letter-spacing: 2.5px; color: var(--teal); text-transform: lowercase; margin-top: 2px; }
+.brand-divider { width: 1px; height: 28px; background: var(--border); }
+.brand-app-name { font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: .5px; text-transform: uppercase; }
+.topnav-brand span { color: var(--teal); }
 .topnav-tabs { display: flex; gap: 4px; }
 .nav-tab {
   background: none;
   border: none;
-  color: #aaa;
+  color: var(--muted);
   font-family: var(--font);
   font-size: 14px;
   font-weight: 500;
@@ -73,21 +86,21 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
   cursor: pointer;
   transition: all .15s;
 }
-.nav-tab:hover { background: rgba(255,255,255,.08); color: #fff; }
-.nav-tab.active { background: var(--red); color: #fff; }
+.nav-tab:hover { background: var(--teal-light); color: var(--teal); }
+.nav-tab.active { background: var(--teal); color: #fff; }
 .topnav-actions { display: flex; gap: 10px; }
 .btn { font-family: var(--font); font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: var(--radius); border: none; cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 7px; }
-.btn-red { background: var(--red); color: #fff; }
-.btn-red:hover { background: var(--red-dark); }
-.btn-outline { background: transparent; border: 1.5px solid #555; color: #ccc; }
-.btn-outline:hover { border-color: #888; color: #fff; }
+.btn-red { background: var(--teal); color: #fff; }
+.btn-red:hover { background: var(--teal-dark); }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--mid); }
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
 .btn-sm { padding: 5px 13px; font-size: 13px; }
 .btn-green { background: var(--green); color: #fff; }
 .btn-green:hover { background: #1e8449; }
 .btn-gold { background: var(--gold); color: var(--dark); }
 .btn-gold:hover { background: #b8902e; }
-.btn-ghost { background: transparent; border: 1.5px solid var(--border); color: var(--mid); }
-.btn-ghost:hover { border-color: var(--red); color: var(--red); }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-blue:hover { background: #1f6a9a; }
 
 /* ── VIEWS ── */
 .view { display: none; padding: 28px; max-width: 1400px; margin: 0 auto; }
@@ -109,7 +122,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
   flex-direction: column;
   gap: 6px;
 }
-.stat-card.red { border-left-color: var(--red); }
+.stat-card.red { border-left-color: var(--teal); }
 .stat-card.gold { border-left-color: var(--gold); }
 .stat-card.green { border-left-color: var(--green); }
 .stat-card.blue { border-left-color: var(--blue); }
@@ -121,7 +134,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
 .dash-main { display: flex; flex-direction: column; gap: 20px; }
 .dash-side { display: flex; flex-direction: column; gap: 20px; }
 
-.panel { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.panel { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border); }
 .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .panel-title { font-family: var(--font-cond); font-size: 16px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--dark); }
 .panel-body { padding: 20px; }
@@ -157,8 +170,8 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
 .dot-blue { background: var(--blue); }
 .dot-gray { background: #bbb; }
 
-.link-btn { background: none; border: none; color: var(--red); font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
-.link-btn:hover { color: var(--red-dark); }
+.link-btn { background: none; border: none; color: var(--teal); font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.link-btn:hover { color: var(--teal-dark); }
 
 /* ── TASKS PANEL ── */
 .task-list { display: flex; flex-direction: column; gap: 10px; }
@@ -171,7 +184,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
   gap: 6px;
   transition: border-color .15s;
 }
-.task-item:hover { border-color: var(--red); }
+.task-item:hover { border-color: var(--teal); }
 .task-item.done { opacity: .55; }
 .task-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .task-title { font-size: 14px; font-weight: 600; color: var(--dark); }
@@ -218,17 +231,17 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
 }
 @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform:none; } }
 .modal-header {
-  background: var(--dark);
-  color: #fff;
+  background: var(--white);
+  color: var(--dark);
   padding: 18px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 3px solid var(--red);
+  border-bottom: 3px solid var(--teal);
 }
-.modal-title { font-family: var(--font-cond); font-size: 20px; font-weight: 700; letter-spacing: .5px; }
-.modal-close { background: none; border: none; color: #aaa; font-size: 24px; cursor: pointer; line-height: 1; }
-.modal-close:hover { color: #fff; }
+.modal-title { font-family: var(--font-cond); font-size: 20px; font-weight: 700; letter-spacing: .5px; color: var(--dark); }
+.modal-close { background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer; line-height: 1; }
+.modal-close:hover { color: var(--dark); }
 .modal-body { padding: 24px; max-height: 80vh; overflow-y: auto; }
 .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); background: #fafafa; display: flex; justify-content: flex-end; gap: 10px; }
 
@@ -249,7 +262,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
   width: 100%;
   transition: border-color .15s;
 }
-.form-control:focus { outline: none; border-color: var(--red); }
+.form-control:focus { outline: none; border-color: var(--teal); }
 textarea.form-control { resize: vertical; min-height: 80px; }
 .form-section { margin-bottom: 22px; }
 .form-section-title {
@@ -263,11 +276,11 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   padding-bottom: 7px;
   margin-bottom: 14px;
 }
-.form-section-title.red { color: var(--red); border-color: var(--red-light); }
+.form-section-title.red { color: var(--teal); border-color: var(--teal-light); }
 
 /* ── TIMESHEET ── */
 .ts-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.ts-table th { background: var(--dark); color: #fff; padding: 8px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; text-align: left; }
+.ts-table th { background: var(--teal); color: #fff; padding: 8px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; text-align: left; }
 .ts-table td { padding: 7px 6px; border-bottom: 1px solid #f0f0f0; }
 .ts-table td input { border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 8px; font-family: var(--font); font-size: 13px; width: 100%; }
 .ts-table td input:focus { outline: none; border-color: var(--red); }
@@ -276,7 +289,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 
 /* ── MATERIAL TABLE ── */
 .mat-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.mat-table th { background: #2a2a2a; color: #fff; padding: 7px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; text-align: left; }
+.mat-table th { background: var(--teal); color: #fff; padding: 7px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; text-align: left; }
 .mat-table td { padding: 6px 6px; border-bottom: 1px solid #f0f0f0; }
 .mat-table td input { border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 8px; font-family: var(--font); font-size: 13px; width: 100%; }
 .mat-table td input:focus { outline: none; border-color: var(--red); }
@@ -294,7 +307,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 /* ── TICKET HEADER ── */
 .ticket-header-bar {
   background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
-  border-bottom: 3px solid var(--red);
+  border-bottom: 3px solid var(--teal);
   padding: 18px 24px;
   color: #fff;
   display: flex;
@@ -318,7 +331,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 
 /* ── 5-CATEGORY RATING ── */
 .rating-section {
-  background: var(--dark);
+  background: var(--teal-light);
   border-radius: var(--radius);
   padding: 20px 22px;
   margin-top: 4px;
@@ -329,8 +342,8 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--gold);
-  border-bottom: 1px solid #3a3a3a;
+  color: var(--teal);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 10px;
   margin-bottom: 16px;
   display: flex;
@@ -342,13 +355,13 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   align-items: center;
   justify-content: space-between;
   padding: 9px 0;
-  border-bottom: 1px solid #2e2e2e;
+  border-bottom: 1px solid var(--border);
 }
 .rating-row:last-child { border-bottom: none; }
 .rating-label {
   font-size: 13px;
   font-weight: 600;
-  color: #ddd;
+  color: var(--dark);
   flex: 1;
   min-width: 150px;
 }
@@ -356,7 +369,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 .rating-stars .star-btn {
   background: none; border: none;
   font-size: 22px; cursor: pointer;
-  color: #444; padding: 0;
+  color: #bbb; padding: 0;
   transition: color .1s; line-height: 1;
 }
 .rating-stars .star-btn.active { color: var(--gold); }
@@ -373,7 +386,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #111;
+  background: var(--white);
   border-radius: var(--radius);
   padding: 12px 16px;
   margin-top: 14px;
@@ -395,7 +408,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid var(--red);
+  border-bottom: 2px solid var(--teal);
 }
 .crew-card-exp-name { font-family: var(--font-cond); font-size: 16px; font-weight: 700; }
 .crew-card-exp-overall { font-family: var(--font-cond); font-size: 22px; font-weight: 700; color: var(--gold); }
@@ -437,8 +450,35 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 #toast.show { opacity: 1; transform: none; }
 #toast.error { border-left-color: var(--red); }
 
-/* ── STATUS FILTER BAR ── */
-.filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--border); background: #fafafa; }
+/* ── YES/NO CONDITION QUESTIONS ── */
+.yn-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--dark);
+}
+.yn-row:last-child { border-bottom: none; }
+.yn-row:nth-child(even) { background: var(--bg); }
+.yn-buttons { display: flex; gap: 6px; flex-shrink: 0; }
+.yn-btn {
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  border-radius: 4px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all .15s;
+  color: var(--mid);
+}
+.yn-btn:hover { border-color: var(--teal); color: var(--teal); }
+.yn-btn.yes-active { background: var(--green); border-color: var(--green); color: #fff; }
+.yn-btn.no-active  { background: var(--muted); border-color: var(--muted); color: #fff; }
+.filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--white); }
 .filter-pill {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -450,10 +490,10 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   cursor: pointer;
   transition: all .15s;
 }
-.filter-pill.active { background: var(--red); border-color: var(--red); color: #fff; }
-.filter-pill:hover:not(.active) { border-color: var(--red); color: var(--red); }
+.filter-pill.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+.filter-pill:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
 .search-input { border: 1.5px solid var(--border); border-radius: 20px; padding: 4px 16px; font-family: var(--font); font-size: 13px; color: var(--dark); margin-left: auto; width: 220px; }
-.search-input:focus { outline: none; border-color: var(--red); }
+.search-input:focus { outline: none; border-color: var(--teal); }
 
 /* ── RESPONSIVE HELPERS ── */
 .full-col { grid-column: 1 / -1; }
@@ -474,8 +514,12 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 <!-- TOP NAV -->
 <nav class="topnav">
   <div class="topnav-brand">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    RYE <span>ELECTRIC</span> &nbsp;|&nbsp; <span style="color:#aaa;font-size:18px;font-weight:500">Service Tracker</span>
+    <div class="brand-logo">
+      <span class="word-rye">rye</span>
+      <span class="word-electric">electric</span>
+    </div>
+    <div class="brand-divider"></div>
+    <span class="brand-app-name">Service Tracker</span>
   </div>
   <div class="topnav-tabs">
     <button class="nav-tab active" onclick="showView('dashboard')">Dashboard</button>
@@ -642,7 +686,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" id="task-board">
     <div class="panel">
       <div class="panel-header" style="background:#fafafa">
-        <span class="panel-title" style="color:var(--red)">● Open</span>
+        <span class="panel-title" style="color:var(--teal)">● Open</span>
         <span class="badge badge-red" id="count-open-tasks">0</span>
       </div>
       <div class="panel-body">
@@ -877,6 +921,73 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         <textarea class="form-control" id="t-notes" rows="3" placeholder="Work performed, findings, resolution..."></textarea>
       </div>
 
+      <!-- SECTION: Daily Report -->
+      <div class="form-section">
+        <div class="form-section-title red">Daily Report</div>
+
+        <div class="form-grid" style="margin-bottom:14px">
+          <div class="form-group">
+            <label class="form-label">Report Date</label>
+            <input class="form-control" type="date" id="dr-date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Weather Description</label>
+            <input class="form-control" id="dr-weather" placeholder="e.g. Clear, sunny, 72°F">
+          </div>
+          <div class="form-group">
+            <label class="form-label">AM Temp (°F)</label>
+            <input class="form-control" type="number" id="dr-temp-am" placeholder="e.g. 65">
+          </div>
+          <div class="form-group">
+            <label class="form-label">PM Temp (°F)</label>
+            <input class="form-control" type="number" id="dr-temp-pm" placeholder="e.g. 78">
+          </div>
+        </div>
+
+        <div class="form-section-title" style="font-size:11px;margin-bottom:8px">Workforce — Description of Work Performed</div>
+        <table class="ts-table" id="dr-workforce-table">
+          <thead>
+            <tr>
+              <th style="width:25%">Employee</th>
+              <th style="width:45%">Description of Work Performed</th>
+              <th style="width:15%">Hours</th>
+              <th style="width:15%"></th>
+            </tr>
+          </thead>
+          <tbody id="dr-workforce-tbody"></tbody>
+        </table>
+        <button class="btn btn-ghost btn-sm add-row-btn" onclick="addDrRow()">+ Add Employee</button>
+
+        <div class="form-grid" style="margin-top:14px">
+          <div class="form-group full-col">
+            <label class="form-label" style="margin-bottom:10px">Job Conditions</label>
+            <div id="dr-conditions" style="border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden">
+              <!-- Yes/No questions -->
+            </div>
+          </div>
+          <div class="form-group full-col">
+            <label class="form-label">Delays or Interference by Others</label>
+            <textarea class="form-control" id="dr-delays" rows="2" placeholder="Describe any areas where work is delayed, blocked, or interfered with by others..."></textarea>
+          </div>
+          <div class="form-group full-col">
+            <label class="form-label">Extra Work / Change Order Notes</label>
+            <textarea class="form-control" id="dr-extra-work" rows="2" placeholder="Describe any extra work performed or potential change orders..."></textarea>
+          </div>
+          <div class="form-group full-col">
+            <label class="form-label">Other Notes / Valuable Information</label>
+            <textarea class="form-control" id="dr-other-notes" rows="2" placeholder="Any other information valuable for cost recovery, claims, or project record..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Superintendent Name</label>
+            <input class="form-control" id="dr-super-name" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Title</label>
+            <input class="form-control" id="dr-super-title" placeholder="e.g. Field Superintendent">
+          </div>
+        </div>
+      </div>
+
       <!-- SECTION: Customer Rating + Signature -->
       <div class="form-section">
         <div class="form-section-title red">Customer Review &amp; Signature</div>
@@ -884,7 +995,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
           <div>
             <!-- 5-category rating -->
             <div class="rating-section">
-              <div class="rating-section-title">
+              <div class="rating-section-title" style="color:var(--teal)">
                 ★ Please Rate Your Service
               </div>
               <div class="rating-row">
@@ -1119,6 +1230,8 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('viewTicketModal')">Close</button>
       <button class="btn btn-gold btn-sm" onclick="printTicket()">🖨 Print / PDF</button>
+      <button class="btn btn-green btn-sm" id="btn-gen-invoice" onclick="completeAndInvoice()">✅ Complete &amp; Email Invoice</button>
+      <button class="btn btn-blue btn-sm" id="btn-foundation" onclick="exportToFoundation()">📊 Upload to Foundation</button>
     </div>
   </div>
 </div>
@@ -1138,15 +1251,144 @@ let taskCounter = tasks.length + 1;
 let tsCounter = timesheets.length + 1;
 let currentFilterStatus = 'all';
 let currentSearch = '';
+let currentViewTicketId = null;
+let invoiceCounter = parseInt(localStorage.getItem('svc_invoice_counter') || '1000');
+
+// ── SUPABASE CONFIG ──────────────────────────────────────────────────────────
+const SB_URL  = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+const SB_HDRS = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
+
+async function sbGet() {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/service_tickets?order=created_at.desc', { headers: SB_HDRS });
+    if (!res.ok) throw new Error(await res.text());
+    const rows = await res.json();
+    // Map snake_case columns back to camelCase for the UI
+    return rows.map(r => ({
+      id:          r.id,
+      customer:    r.customer,
+      address:     r.address,
+      type:        r.type,
+      date:        r.date,
+      tech:        r.tech,
+      po:          r.po,
+      nte:         r.nte,
+      status:      r.status,
+      scope:       r.scope,
+      notes:       r.notes,
+      equipment:   r.equipment,
+      sigName:     r.sig_name,
+      sigDate:     r.sig_date,
+      rating:      r.rating,
+      ratings:     r.ratings || {},
+      ratingNotes: r.rating_notes,
+      labor:       r.labor || [],
+      materials:   r.materials || [],
+      dailyReport: r.daily_report || {},
+      urgency:     r.urgency,
+      source:      r.source,
+      company:     r.company,
+      phone:       r.phone,
+      email:       r.email,
+      contactPref: r.contact_pref,
+      propType:    r.prop_type,
+      prefDate:    r.pref_date,
+      altDate:     r.alt_date,
+      timeWindow:  r.time_window,
+      extraNotes:  r.extra_notes,
+      createdAt:   r.created_at,
+    }));
+  } catch(e) {
+    console.warn('Supabase fetch failed, using localStorage:', e);
+    return JSON.parse(localStorage.getItem('svc_tickets') || '[]');
+  }
+}
+
+async function sbUpsert(ticket) {
+  // Map camelCase to snake_case for Supabase
+  const row = {
+    id:           ticket.id,
+    customer:     ticket.customer,
+    address:      ticket.address,
+    type:         ticket.type,
+    date:         ticket.date,
+    tech:         ticket.tech,
+    po:           ticket.po,
+    nte:          ticket.nte,
+    status:       ticket.status,
+    scope:        ticket.scope,
+    notes:        ticket.notes,
+    equipment:    ticket.equipment,
+    sig_name:     ticket.sigName,
+    sig_date:     ticket.sigDate,
+    rating:       ticket.rating || null,
+    ratings:      ticket.ratings || {},
+    rating_notes: ticket.ratingNotes,
+    labor:        ticket.labor || [],
+    materials:    ticket.materials || [],
+    daily_report: ticket.dailyReport || {},
+    urgency:      ticket.urgency,
+    source:       ticket.source || 'Manual',
+    company:      ticket.company,
+    phone:        ticket.phone,
+    email:        ticket.email,
+    contact_pref: ticket.contactPref,
+    prop_type:    ticket.propType,
+    pref_date:    ticket.prefDate,
+    alt_date:     ticket.altDate,
+    time_window:  ticket.timeWindow,
+    extra_notes:  ticket.extraNotes,
+  };
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/service_tickets', {
+      method:  'POST',
+      headers: { ...SB_HDRS, 'Prefer': 'resolution=merge-duplicates' },
+      body:    JSON.stringify(row),
+    });
+    if (!res.ok) throw new Error(await res.text());
+  } catch(e) {
+    console.warn('Supabase upsert failed:', e);
+  }
+}
+
+async function sbDelete(id) {
+  try {
+    await fetch(SB_URL + '/rest/v1/service_tickets?id=eq.' + encodeURIComponent(id), {
+      method: 'DELETE', headers: SB_HDRS,
+    });
+  } catch(e) { console.warn('Supabase delete failed:', e); }
+}
+
+async function sbUpdateStatus(id, status) {
+  try {
+    await fetch(SB_URL + '/rest/v1/service_tickets?id=eq.' + encodeURIComponent(id), {
+      method:  'PATCH',
+      headers: { ...SB_HDRS, 'Prefer': 'return=minimal' },
+      body:    JSON.stringify({ status }),
+    });
+  } catch(e) { console.warn('Supabase status update failed:', e); }
+}
 
 // Init EmailJS
-emailjs.init('YOUR_EMAILJS_PUBLIC_KEY'); // Replace with your EmailJS public key
+emailjs.init('HGciJDgZDCRS9v0Eo');
 
 // ── SAVE HELPERS ──
 function save() {
   localStorage.setItem('svc_tickets', JSON.stringify(tickets));
   localStorage.setItem('svc_tasks', JSON.stringify(tasks));
   localStorage.setItem('svc_timesheets', JSON.stringify(timesheets));
+}
+
+// Load tickets from Supabase on startup, fall back to localStorage
+async function loadTickets() {
+  const remote = await sbGet();
+  if (remote.length > 0) {
+    tickets = remote;
+    localStorage.setItem('svc_tickets', JSON.stringify(tickets));
+  }
+  ticketCounter = tickets.length + 1;
+  renderAll();
 }
 
 // ── VIEWS ──
@@ -1167,9 +1409,28 @@ function openModal(id) {
     document.getElementById('modal-ticket-num').textContent = 'TICKET #SVC-' + String(ticketCounter).padStart(4,'0');
     document.getElementById('t-date').value = today();
     document.getElementById('t-sig-date').value = today();
+    // Init daily report
+    const drDate = document.getElementById('dr-date');
+    if (drDate) drDate.value = today();
+    const drTbody = document.getElementById('dr-workforce-tbody');
+    if (drTbody && !drTbody.children.length) addDrRow();
+    buildDrConditions();
     if (!document.getElementById('labor-tbody').children.length) addLaborRow();
     if (!document.getElementById('materials-tbody').children.length) addMaterialRow();
     resetCatRatings();
+    // Fix signature pad — resize after modal is visible
+    setTimeout(() => {
+      const canvas = document.getElementById('sig-canvas');
+      const pad    = document.getElementById('sig-pad');
+      if (canvas && pad && pad.offsetWidth > 0) {
+        canvas.width  = pad.offsetWidth;
+        canvas.height = pad.offsetHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.strokeStyle = '#1a1a1a';
+        ctx.lineWidth   = 2;
+        ctx.lineCap     = 'round';
+      }
+    }, 100);
     populateTaskTicketDropdown();
   }
   if (id === 'taskModal') {
@@ -1237,7 +1498,7 @@ function addMaterialRow() {
   tr.innerHTML = `
     <td><input class="form-control" placeholder="Description"></td>
     <td><input class="form-control" placeholder="Part #"></td>
-    <td><input type="number" class="form-control mat-qty" placeholder="1" min="0" oninput="calcMatTotal(this)"></td>
+    <td><input type="number" class="form-control mat-qty" placeholder="1" min="0" value="1" oninput="calcMatTotal(this)"></td>
     <td><input class="form-control" placeholder="EA / LF / etc"></td>
     <td><input type="number" class="form-control mat-cost" placeholder="0.00" min="0" step="0.01" oninput="calcMatTotal(this)"></td>
     <td><input type="number" class="form-control mat-total" placeholder="0.00" readonly style="background:#f8f8f8"></td>
@@ -1247,9 +1508,95 @@ function addMaterialRow() {
 
 function calcMatTotal(input) {
   const tr = input.closest('tr');
-  const qty = parseFloat(tr.querySelector('.mat-qty').value) || 0;
+  const qty = parseFloat(tr.querySelector('.mat-qty').value) || 1;
   const cost = parseFloat(tr.querySelector('.mat-cost').value) || 0;
   tr.querySelector('.mat-total').value = (qty * cost).toFixed(2);
+}
+
+// ── DAILY REPORT ROWS ─────────────────────────────────────────────────────────
+const DR_QUESTIONS = [
+  { id: 'dr-q1', text: 'Did you perform any extra work?' },
+  { id: 'dr-q2', text: 'Will overtime be required?' },
+  { id: 'dr-q3', text: 'Was direction provided by the GC, Owner, or Sub?' },
+  { id: 'dr-q4', text: 'Will this direction result in extra work?' },
+  { id: 'dr-q5', text: 'Were any inspections called or received?' },
+  { id: 'dr-q6', text: 'Did you attend any meetings?' },
+  { id: 'dr-q7', text: 'Were there any visitors at the jobsite?' },
+  { id: 'dr-q8', text: 'Were any deliveries received today?' },
+];
+
+function buildDrConditions() {
+  const container = document.getElementById('dr-conditions');
+  if (!container || container.children.length) return;
+  container.innerHTML = DR_QUESTIONS.map(q => `
+    <div class="yn-row">
+      <span>${q.text}</span>
+      <div class="yn-buttons">
+        <button type="button" class="yn-btn" id="${q.id}-yes" onclick="setYN('${q.id}','yes')">YES</button>
+        <button type="button" class="yn-btn" id="${q.id}-no"  onclick="setYN('${q.id}','no')">NO</button>
+      </div>
+    </div>`).join('');
+}
+
+function setYN(id, val) {
+  const yesBtn = document.getElementById(id + '-yes');
+  const noBtn  = document.getElementById(id + '-no');
+  if (!yesBtn || !noBtn) return;
+  yesBtn.classList.toggle('yes-active', val === 'yes');
+  noBtn.classList.toggle('no-active',   val === 'no');
+  yesBtn.classList.toggle('no-active',  false);
+  noBtn.classList.toggle('yes-active',  false);
+}
+
+function collectConditions() {
+  return DR_QUESTIONS.map(q => ({
+    question: q.text,
+    answer: document.getElementById(q.id + '-yes')?.classList.contains('yes-active') ? 'Yes'
+          : document.getElementById(q.id + '-no')?.classList.contains('no-active')   ? 'No'
+          : '—',
+  }));
+}
+function addDrRow() {
+  const tbody = document.getElementById('dr-workforce-tbody');
+  if (!tbody) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><select class="form-control" style="min-width:130px">
+      <option value="">Select tech...</option>
+      <option>Mychal Kirschbaum</option>
+      <option>G</option>
+      <option>Erik</option>
+      <option>James</option>
+      <option>Mario</option>
+      <option>Dak</option>
+    </select></td>
+    <td><input class="form-control" placeholder="Description of work performed"></td>
+    <td><input type="number" class="form-control" placeholder="0" min="0" step="0.5"></td>
+    <td><button class="del-row" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function collectDailyReport() {
+  const workforce = [];
+  document.querySelectorAll('#dr-workforce-tbody tr').forEach(tr => {
+    const emp  = tr.querySelector('select')?.value || '';
+    const desc = tr.querySelectorAll('input')[0]?.value || '';
+    const hrs  = tr.querySelectorAll('input')[1]?.value || '';
+    if (emp || desc) workforce.push({ employee: emp, description: desc, hours: hrs });
+  });
+  return {
+    date:       document.getElementById('dr-date')?.value || '',
+    weather:    document.getElementById('dr-weather')?.value || '',
+    tempAM:     document.getElementById('dr-temp-am')?.value || '',
+    tempPM:     document.getElementById('dr-temp-pm')?.value || '',
+    workforce,
+    conditions: collectConditions(),
+    delays:     document.getElementById('dr-delays')?.value || '',
+    extraWork:  document.getElementById('dr-extra-work')?.value || '',
+    otherNotes: document.getElementById('dr-other-notes')?.value || '',
+    superName:  document.getElementById('dr-super-name')?.value || '',
+    superTitle: document.getElementById('dr-super-title')?.value || '',
+  };
 }
 
 // ── TIMESHEET ROWS ──
@@ -1388,11 +1735,13 @@ function saveTicket() {
     ratings: {...catRatings},
     rating: ticketRating,
     ratingNotes: document.getElementById('t-rating-notes').value,
+    dailyReport: collectDailyReport(),
     createdAt: new Date().toISOString()
   };
 
   tickets.unshift(ticket);
   save();
+  sbUpsert(ticket); // sync to Supabase
   sendTicketEmail(ticket);
   closeModal('ticketModal');
   clearTicketForm();
@@ -1413,6 +1762,14 @@ function clearTicketForm() {
   document.getElementById('t-sig-date').value = today();
   document.getElementById('labor-tbody').innerHTML = '';
   document.getElementById('materials-tbody').innerHTML = '';
+  // Clear daily report
+  ['dr-date','dr-weather','dr-temp-am','dr-temp-pm','dr-delays','dr-extra-work','dr-other-notes','dr-super-name','dr-super-title'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const drTbody = document.getElementById('dr-workforce-tbody');
+  if (drTbody) drTbody.innerHTML = '';
+  // Reset condition buttons
+  document.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('yes-active','no-active'));
   resetCatRatings();
 }
 
@@ -1601,6 +1958,8 @@ function renderTicketsTable() {
         <td>${starDisp}</td>
         <td>
           <button class="link-btn" onclick="viewTicket('${t.id}')">View</button>
+          <button class="link-btn" style="color:var(--green);margin-left:8px" onclick="currentViewTicketId='${t.id}';completeAndInvoice()">Complete + Invoice</button>
+          <button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="currentViewTicketId='${t.id}';exportToFoundation()">Foundation</button>
           <button class="link-btn" style="color:var(--muted);margin-left:8px" onclick="deleteTicket('${t.id}')">Del</button>
         </td>
       </tr>`;
@@ -1868,6 +2227,7 @@ function viewTicket(id) {
     </div>`;
 
   document.getElementById('view-ticket-content').innerHTML = html;
+  currentViewTicketId = id;
   openModal('viewTicketModal');
 }
 
@@ -1875,11 +2235,745 @@ function printTicket() {
   window.print();
 }
 
+// ── EXPORT TO FOUNDATION (EXCEL) ─────────────────────────────────────────────
+function exportToFoundation() {
+  const id = currentViewTicketId;
+  if (!id) { toast('No ticket selected — open a ticket first', true); return; }
+  const t = tickets.find(x => x.id === id);
+  if (!t) { toast('Ticket not found', true); return; }
+
+  const REG_RATE = 124.97;
+  const OT_RATE  = 164.35;
+  const OP_PCT   = 0.20;
+
+  // Build one row per line item
+  const rows = [];
+
+  // Header row
+  const headers = [
+    'Ticket #', 'Invoice Date', 'Service Date', 'Customer', 'Address',
+    'Tech / Employee', 'Line Type', 'Description', 'Quantity', 'Unit',
+    'Unit Cost', 'Amount', 'O&P (20%)', 'Total w/ O&P',
+    'PO / WO #', 'Service Type', 'Status', 'Source'
+  ];
+  rows.push(headers);
+
+  const invDate = new Date().toLocaleDateString('en-US');
+  const svcDate = fmtDate(t.date);
+  const baseInfo = [t.id, invDate, svcDate, t.customer || '', t.address || ''];
+
+  // Labor rows
+  (t.labor || []).filter(r => r.employee).forEach(r => {
+    const reg = parseFloat(r.regHours) || 0;
+    const ot  = parseFloat(r.otHours)  || 0;
+    if (reg > 0) {
+      const amt = reg * REG_RATE;
+      const op  = amt * OP_PCT;
+      rows.push([
+        ...baseInfo,
+        r.employee, 'Labor - Regular',
+        'Regular Time @ $' + REG_RATE + '/hr',
+        reg, 'hrs', REG_RATE,
+        amt.toFixed(2), op.toFixed(2), (amt + op).toFixed(2),
+        t.po || '', t.type || '', t.status || '', t.source || 'Manual'
+      ]);
+    }
+    if (ot > 0) {
+      const amt = ot * OT_RATE;
+      const op  = amt * OP_PCT;
+      rows.push([
+        ...baseInfo,
+        r.employee, 'Labor - Overtime',
+        'Overtime @ $' + OT_RATE + '/hr',
+        ot, 'hrs', OT_RATE,
+        amt.toFixed(2), op.toFixed(2), (amt + op).toFixed(2),
+        t.po || '', t.type || '', t.status || '', t.source || 'Manual'
+      ]);
+    }
+  });
+
+  // Material rows
+  (t.materials || []).filter(r => r.desc).forEach(r => {
+    const qty      = parseFloat(r.qty)      || 1;
+    const unitCost = parseFloat(r.unitCost) || 0;
+    const amt      = parseFloat(r.total)    || qty * unitCost;
+    const op       = amt * OP_PCT;
+    rows.push([
+      ...baseInfo,
+      t.tech || '', 'Material',
+      r.desc + (r.part ? ' [' + r.part + ']' : ''),
+      qty, r.unit || 'EA', unitCost,
+      amt.toFixed(2), op.toFixed(2), (amt + op).toFixed(2),
+      t.po || '', t.type || '', t.status || '', t.source || 'Manual'
+    ]);
+  });
+
+  // Equipment row
+  if (t.equipment) {
+    rows.push([
+      ...baseInfo,
+      t.tech || '', 'Equipment / Tools',
+      t.equipment,
+      1, 'LS', 0,
+      '0.00', '0.00', '0.00',
+      t.po || '', t.type || '', t.status || '', t.source || 'Manual'
+    ]);
+  }
+
+  // Totals summary row
+  const laborTotal = (t.labor || []).reduce((s, r) => {
+    return s + ((parseFloat(r.regHours)||0) * REG_RATE) + ((parseFloat(r.otHours)||0) * OT_RATE);
+  }, 0);
+  const matTotal = (t.materials || []).filter(r => r.desc).reduce((s, r) => {
+    const qty = parseFloat(r.qty) || 1;
+    const uc  = parseFloat(r.unitCost) || 0;
+    return s + (parseFloat(r.total) || qty * uc);
+  }, 0);
+  const subtotal = laborTotal + matTotal;
+  const op       = subtotal * OP_PCT;
+  const total    = subtotal + op;
+
+  rows.push([]); // blank separator
+  rows.push([
+    t.id, invDate, svcDate, t.customer || '', t.address || '',
+    '', 'TOTAL', '',
+    '', '', '',
+    subtotal.toFixed(2), op.toFixed(2), total.toFixed(2),
+    t.po || '', t.type || '', t.status || '', ''
+  ]);
+
+  // ── BUILD CSV (Excel-compatible) ─────────────────────────────
+  const csvContent = rows.map(row =>
+    row.map(cell => {
+      const val = cell === null || cell === undefined ? '' : String(cell);
+      // Wrap in quotes if contains comma, quote, or newline
+      return val.includes(',') || val.includes('"') || val.includes('\n')
+        ? '"' + val.replace(/"/g, '""') + '"'
+        : val;
+    }).join(',')
+  ).join('\r\n');
+
+  // Add BOM for Excel UTF-8 compatibility
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = t.id + '_Foundation_Import.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  toast('Foundation export downloaded — ' + (rows.length - 2) + ' line items ✓');
+}
+function completeAndInvoice() {
+  const id = currentViewTicketId;
+  if (!id) { toast('No ticket selected — open a ticket first', true); return; }
+  const t = tickets.find(x => x.id === id);
+  if (!t) { toast('Ticket not found', true); return; }
+
+  // Mark ticket as Completed
+  t.status = 'Completed';
+  save();
+  sbUpdateStatus(t.id, 'Completed'); // sync to Supabase
+  renderAll();
+
+  // Update the status badge in the open modal
+  const headerBar = document.querySelector('#view-ticket-content .ticket-status-col');
+  if (headerBar) headerBar.innerHTML = statusBadge('Completed');
+
+  toast('Ticket marked Completed — generating invoice…');
+  setTimeout(() => generateInvoice(), 400);
+}
+
+// ── GENERATE INVOICE ──────────────────────────────────────────────────────────
+async function generateInvoice() {
+  const id = currentViewTicketId;
+  if (!id) { toast('No ticket selected — open a ticket first', true); return; }
+  const t = tickets.find(x => x.id === id);
+  if (!t) { toast('Ticket not found', true); return; }
+
+  // Check jsPDF is available
+  const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+  if (!jsPDFClass) {
+    alert('PDF library not loaded. Please refresh the page and try again.');
+    return;
+  }
+
+  const btn = document.getElementById('btn-gen-invoice');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Generating…'; }
+
+  try {
+
+  invoiceCounter++;
+  localStorage.setItem('svc_invoice_counter', invoiceCounter);
+  // Count how many invoices already exist for this ticket
+  const existingInvCount = parseInt(localStorage.getItem('inv_count_' + t.id) || '0') + 1;
+  localStorage.setItem('inv_count_' + t.id, existingInvCount);
+  // Use ticket ID directly — strip SVC- prefix if present, normalize to SP format
+  const ticketBase = t.id.startsWith('SVC-') ? 'SP' + t.id.replace('SVC-', '') : t.id;
+  const invNum = ticketBase + '-' + String(existingInvCount).padStart(3, '0');
+
+  const doc = new jsPDFClass({ unit: 'pt', format: 'letter' });
+
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  const TEAL   = [78, 157, 168];
+  const DARK   = [26,  26,  26];
+  const WHITE  = [255, 255, 255];
+  const LTGRAY = [248, 250, 251];
+  const MIDGRAY= [120, 120, 120];
+  const BORDER = [226, 226, 226];
+
+  // ── HEADER BAR ─────────────────────────────────────────────
+  doc.setFillColor(...DARK);
+  doc.rect(0, 0, W, 80, 'F');
+
+  // Teal accent line
+  doc.setFillColor(...TEAL);
+  doc.rect(0, 80, W, 4, 'F');
+
+  // "rye" wordmark
+  doc.setTextColor(...WHITE);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(32);
+  doc.text('rye', 40, 50);
+
+  // "electric" sub-label
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...TEAL);
+  doc.setCharSpace(2);
+  doc.text('electric', 40, 65);
+  doc.setCharSpace(0);
+
+  // INVOICE label top right
+  doc.setTextColor(...WHITE);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(26);
+  doc.text('INVOICE', W - 40, 46, { align: 'right' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...TEAL);
+  doc.text(invNum, W - 40, 65, { align: 'right' });
+
+  // ── COMPANY INFO + INVOICE META ──────────────────────────────
+  let y = 110;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(...DARK);
+  doc.text('Rye Electric, Inc.', 40, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...MIDGRAY);
+  doc.text('75 Doppler, Irvine, CA 92618', 40, y + 14);
+  doc.text('(949) 441-0545  |  www.ryecompany.com', 40, y + 27);
+  doc.text('CA License 980345', 40, y + 40);
+
+  // Invoice meta right side
+  const metaX = W - 200;
+  const metaData = [
+    ['Invoice #:',   invNum],
+    ['Invoice Date:', fmtDate(new Date().toISOString().split('T')[0])],
+    ['Service Date:', fmtDate(t.date)],
+    ['Ticket #:',    t.id],
+    ['Status:',      'Due on Receipt'],
+  ];
+  doc.setFontSize(9);
+  metaData.forEach(([label, val], i) => {
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...MIDGRAY);
+    doc.text(label, metaX, y + (i * 14));
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...DARK);
+    doc.text(val, metaX + 85, y + (i * 14));
+  });
+
+  // ── DIVIDER ─────────────────────────────────────────────────
+  y += 62;
+  doc.setDrawColor(...BORDER);
+  doc.setLineWidth(0.5);
+  doc.line(40, y, W - 40, y);
+
+  // ── BILL TO ─────────────────────────────────────────────────
+  y += 18;
+  doc.setFillColor(...LTGRAY);
+  doc.roundedRect(40, y, (W - 80) / 2 - 10, 74, 4, 4, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(...TEAL);
+  doc.text('BILL TO', 52, y + 16);
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.setTextColor(...DARK);
+  doc.text(t.customer || '—', 52, y + 32);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...MIDGRAY);
+  if (t.address) doc.text(t.address, 52, y + 46);
+  if (t.po)      doc.text('PO / WO: ' + t.po, 52, y + 60);
+
+  // SERVICE INFO box
+  const sx = 40 + (W - 80) / 2 + 10;
+  doc.setFillColor(...LTGRAY);
+  doc.roundedRect(sx, y, (W - 80) / 2 - 10, 74, 4, 4, 'F');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(...TEAL);
+  doc.text('SERVICE INFO', sx + 12, y + 16);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...DARK);
+  doc.text('Type: ' + (t.type || '—'), sx + 12, y + 32);
+  doc.text('Tech: ' + (t.tech || '—'), sx + 12, y + 46);
+  if (t.nte) doc.text('NTE: $' + parseFloat(t.nte).toLocaleString(), sx + 12, y + 60);
+
+  y += 92;
+
+  // ── LABOR TABLE ─────────────────────────────────────────────
+  const REG_RATE = 124.97;
+  const OT_RATE  = 164.35;
+
+  let laborSubtotal = 0;
+  const laborRows = (t.labor || []).filter(r => r.employee).map(r => {
+    const reg = parseFloat(r.regHours) || 0;
+    const ot  = parseFloat(r.otHours)  || 0;
+    const amt = (reg * REG_RATE) + (ot * OT_RATE);
+    laborSubtotal += amt;
+    return [
+      r.employee,
+      r.timeIn  || '—',
+      r.timeOut || '—',
+      reg > 0 ? reg.toFixed(2) + ' hrs @ $' + REG_RATE : '—',
+      ot  > 0 ? ot.toFixed(2)  + ' hrs @ $' + OT_RATE  : '—',
+      '$' + amt.toFixed(2),
+    ];
+  });
+
+  if (laborRows.length) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('LABOR', 40, y);
+    y += 6;
+
+    doc.autoTable({
+      startY: y,
+      head: [['Employee', 'Time In', 'Time Out', 'Regular', 'Overtime', 'Amount']],
+      body: laborRows,
+      margin: { left: 40, right: 40 },
+      styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+      headStyles: { fillColor: DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+      alternateRowStyles: { fillColor: LTGRAY },
+      columnStyles: { 5: { halign: 'right', fontStyle: 'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 8;
+  }
+
+  // ── MATERIALS TABLE ──────────────────────────────────────────
+  let matSubtotal = 0;
+  const matRows = (t.materials || []).filter(r => r.desc).map(r => {
+    const qty      = parseFloat(r.qty)      || 0;
+    const unitCost = parseFloat(r.unitCost) || 0;
+    // Use stored total, or calculate from qty × unitCost, or use unitCost alone
+    const total = parseFloat(r.total) || (qty > 0 && unitCost > 0 ? qty * unitCost : unitCost);
+    matSubtotal += total;
+    return [
+      r.desc,
+      r.part || '—',
+      r.qty  || '—',
+      r.unit || '—',
+      unitCost > 0 ? '$' + unitCost.toFixed(2) : '—',
+      '$' + total.toFixed(2),
+    ];
+  });
+
+  if (matRows.length) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('MATERIALS', 40, y + 6);
+    y += 12;
+
+    doc.autoTable({
+      startY: y,
+      head: [['Description', 'Part #', 'Qty', 'Unit', 'Unit Cost', 'Total']],
+      body: matRows,
+      margin: { left: 40, right: 40 },
+      styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+      headStyles: { fillColor: DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+      alternateRowStyles: { fillColor: LTGRAY },
+      columnStyles: { 5: { halign: 'right', fontStyle: 'bold' } },
+    });
+    y = doc.lastAutoTable.finalY + 8;
+  }
+
+  // ── EQUIPMENT ────────────────────────────────────────────────
+  if (t.equipment) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('EQUIPMENT / TOOLS', 40, y + 6);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...DARK);
+    const eqLines = doc.splitTextToSize(t.equipment, W - 80);
+    doc.text(eqLines, 40, y + 20);
+    y += 20 + (eqLines.length * 12) + 8;
+  }
+
+  // ── TOTALS BOX ───────────────────────────────────────────────
+  const OP_PCT   = 0.20;
+  const subtotal = laborSubtotal + matSubtotal;
+  const op       = subtotal * OP_PCT;
+  const total    = subtotal + op;
+
+  const totW = 220;
+  const totX = W - 40 - totW;
+  y += 10;
+
+  // Box background
+  doc.setFillColor(...LTGRAY);
+  doc.roundedRect(totX, y, totW, 100, 4, 4, 'F');
+
+  // Teal left accent bar
+  doc.setFillColor(...TEAL);
+  doc.roundedRect(totX, y, 4, 100, 2, 2, 'F');
+
+  const totRows = [
+    ['Labor subtotal',     '$' + laborSubtotal.toFixed(2)],
+    ['Materials subtotal', '$' + matSubtotal.toFixed(2)],
+    ['Overhead & Profit (20%)', '$' + op.toFixed(2)],
+  ];
+
+  doc.setFontSize(9);
+  totRows.forEach(([label, val], i) => {
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...MIDGRAY);
+    doc.text(label, totX + 14, y + 18 + (i * 18));
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(...DARK);
+    doc.text(val, totX + totW - 12, y + 18 + (i * 18), { align: 'right' });
+  });
+
+  // Divider
+  doc.setDrawColor(...BORDER);
+  doc.line(totX + 12, y + 70, totX + totW - 12, y + 70);
+
+  // TOTAL DUE
+  doc.setFillColor(...TEAL);
+  doc.roundedRect(totX, y + 76, totW, 24, 3, 3, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.setTextColor(...WHITE);
+  doc.text('TOTAL DUE', totX + 14, y + 92);
+  doc.text('$' + total.toFixed(2), totX + totW - 12, y + 92, { align: 'right' });
+
+  y += 120;
+
+  // ── NOTES ────────────────────────────────────────────────────
+  if (t.notes || t.scope) {
+    const note = t.scope || t.notes;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...TEAL);
+    doc.text('WORK PERFORMED', 40, y);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...DARK);
+    const noteLines = doc.splitTextToSize(note, W - 80);
+    doc.text(noteLines, 40, y + 14);
+    y += 14 + noteLines.length * 11 + 10;
+  }
+
+  // ── DAILY REPORT ─────────────────────────────────────────────
+  const dr = t.dailyReport;
+  if (dr && (dr.workforce?.length || dr.delays || dr.extraWork || dr.superName)) {
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('DAILY REPORT', 40, y);
+    y += 8;
+
+    // Weather row
+    if (dr.weather || dr.tempAM || dr.tempPM) {
+      doc.setFillColor(...LTGRAY);
+      doc.roundedRect(40, y, W - 80, 20, 3, 3, 'F');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...MIDGRAY);
+      const weatherStr = [
+        dr.date ? 'Date: ' + fmtDate(dr.date) : '',
+        dr.weather ? 'Weather: ' + dr.weather : '',
+        dr.tempAM  ? 'AM: ' + dr.tempAM + '°F' : '',
+        dr.tempPM  ? 'PM: ' + dr.tempPM + '°F' : '',
+      ].filter(Boolean).join('   ·   ');
+      doc.text(weatherStr, 52, y + 13);
+      y += 26;
+    }
+
+    // Job conditions Yes/No table
+    if (dr.conditions?.length) {
+      const condRows = dr.conditions.map(c => [
+        c.question,
+        {
+          content: c.answer,
+          styles: {
+            fontStyle: 'bold',
+            textColor: c.answer === 'Yes' ? [39,174,96] : c.answer === 'No' ? [120,120,120] : DARK,
+            halign: 'center',
+          }
+        }
+      ]);
+      doc.autoTable({
+        startY: y,
+        head: [['Job Condition', 'Answer']],
+        body: condRows,
+        margin: { left: 40, right: 40 },
+        styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+        headStyles: { fillColor: TEAL, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+        alternateRowStyles: { fillColor: LTGRAY },
+        columnStyles: { 1: { halign: 'center', cellWidth: 60 } },
+      });
+      y = doc.lastAutoTable.finalY + 8;
+    }
+
+    // Workforce table
+    if (dr.workforce?.length) {
+      const wfRows = dr.workforce.map(w => [
+        w.employee || '—',
+        w.description || '—',
+        w.hours ? w.hours + ' hrs' : '—',
+      ]);
+      const totalDrHours = dr.workforce.reduce((s, w) => s + (parseFloat(w.hours) || 0), 0);
+      wfRows.push([{ content: 'Total Hours', colSpan: 2, styles: { fontStyle: 'bold', fillColor: DARK, textColor: WHITE } },
+                   { content: totalDrHours.toFixed(1) + ' hrs', styles: { fontStyle: 'bold', fillColor: DARK, textColor: WHITE } }]);
+
+      doc.autoTable({
+        startY: y,
+        head: [['Employee', 'Description of Work Performed', 'Hours']],
+        body: wfRows,
+        margin: { left: 40, right: 40 },
+        styles: { fontSize: 8.5, cellPadding: 5, textColor: DARK, lineColor: BORDER, lineWidth: 0.3 },
+        headStyles: { fillColor: TEAL, textColor: WHITE, fontStyle: 'bold', fontSize: 8 },
+        alternateRowStyles: { fillColor: LTGRAY },
+        columnStyles: { 2: { halign: 'right' } },
+      });
+      y = doc.lastAutoTable.finalY + 8;
+    }
+
+    // Conditions / delays
+    const drSections = [
+      { label: 'Job Conditions / Delays', val: dr.delays },
+      { label: 'Extra Work / Change Orders', val: dr.extraWork },
+      { label: 'Other Notes', val: dr.otherNotes },
+    ];
+    drSections.forEach(({ label, val }) => {
+      if (!val) return;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.setTextColor(...TEAL);
+      doc.text(label + ':', 40, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...DARK);
+      const lines = doc.splitTextToSize(val, W - 90);
+      doc.text(lines, 40, y + 12);
+      y += 12 + lines.length * 11 + 6;
+    });
+
+    // Superintendent
+    if (dr.superName) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...MIDGRAY);
+      doc.text('Superintendent: ' + dr.superName + (dr.superTitle ? ' — ' + dr.superTitle : ''), 40, y);
+      y += 14;
+    }
+    y += 6;
+  }
+
+  // ── CUSTOMER RATINGS ─────────────────────────────────────────
+  const r = t.ratings || {};
+  const ratedCats = Object.values(r).filter(v => v > 0);
+  if (ratedCats.length) {
+    const catLabels = {
+      timeliness:       'Timeliness',
+      customer_service: 'Customer Service',
+      cleanliness:      'Cleanliness',
+      knowledge:        'Overall Knowledge',
+      support:          'Customer Support',
+    };
+    const overallAvg = (ratedCats.reduce((a,b)=>a+b,0) / ratedCats.length).toFixed(1);
+
+    y += 10;
+    // Section label
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('CUSTOMER SATISFACTION RATING', 40, y);
+    y += 10;
+
+    // Rating box background
+    const rBoxH = 20 + (Object.keys(catLabels).length * 16) + 28;
+    doc.setFillColor(...LTGRAY);
+    doc.roundedRect(40, y, W - 80, rBoxH, 4, 4, 'F');
+    doc.setFillColor(...TEAL);
+    doc.roundedRect(40, y, 4, rBoxH, 2, 2, 'F');
+
+    y += 14;
+    Object.entries(catLabels).forEach(([key, label]) => {
+      const val = r[key] || 0;
+      // Draw filled and empty circles manually using jsPDF shapes
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...MIDGRAY);
+      doc.text(label, 55, y);
+
+      // Draw 5 circles — filled for rated, outline for unrated
+      const starColor = val >= 4 ? [39,174,96] : val >= 3 ? [180,140,10] : [192,57,43];
+      for (let s = 1; s <= 5; s++) {
+        const cx = 200 + (s - 1) * 14;
+        const cy = y - 5;
+        if (s <= val) {
+          doc.setFillColor(...starColor);
+          doc.circle(cx, cy, 4, 'F');
+        } else {
+          doc.setDrawColor(...MIDGRAY);
+          doc.setLineWidth(0.5);
+          doc.circle(cx, cy, 4, 'S');
+        }
+      }
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(...DARK);
+      doc.text(val + '/5', W - 60, y);
+      y += 16;
+    });
+
+    // Overall avg bar
+    doc.setDrawColor(...BORDER);
+    doc.line(55, y, W - 55, y);
+    y += 10;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...TEAL);
+    doc.text('Overall Average', 55, y);
+    doc.setFontSize(11);
+    doc.text(overallAvg + ' / 5.0', W - 60, y);
+    y += 6;
+
+    if (t.sigName) {
+      y += 8;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...MIDGRAY);
+      doc.text('Signed by: ' + t.sigName + (t.sigDate ? '   Date: ' + fmtDate(t.sigDate) : ''), 55, y);
+    }
+
+    if (t.ratingNotes) {
+      y += 12;
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(...MIDGRAY);
+      const noteLines = doc.splitTextToSize('"' + t.ratingNotes + '"', W - 110);
+      doc.text(noteLines, 55, y);
+      y += noteLines.length * 10;
+    }
+    y += 16;
+  }
+
+  // ── TERMS ────────────────────────────────────────────────────
+  y = Math.max(y, H - 120);
+  doc.setDrawColor(...BORDER);
+  doc.line(40, y, W - 40, y);
+  y += 12;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(...MIDGRAY);
+  doc.text('Payment Terms: Net 30 days. All T&M work invoiced per agreement. Minimum 4-hour service call applies.', 40, y);
+  doc.text('Late payments subject to 1.5% monthly interest. Thank you for your business.', 40, y + 11);
+
+  // ── FOOTER BAR ───────────────────────────────────────────────
+  doc.setFillColor(...DARK);
+  doc.rect(0, H - 36, W, 36, 'F');
+  doc.setFillColor(...TEAL);
+  doc.rect(0, H - 36, W, 3, 'F');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...MIDGRAY);
+  doc.text('Rye Electric, Inc.  ·  75 Doppler, Irvine, CA 92618  ·  (949) 441-0545  ·  ryecompany.com  ·  CA Lic. 980345', W / 2, H - 14, { align: 'center' });
+
+  // ── CONVERT TO BASE64 & EMAIL ─────────────────────────────────
+  const pdfBase64 = doc.output('datauristring');
+
+  // Also trigger download for Mychal's records
+  doc.save(invNum + '_' + (t.customer || t.id).replace(/\s+/g, '_') + '.pdf');
+
+  // Send via EmailJS with invoice details in body
+  const invoiceBody = `
+Invoice ${invNum} has been generated for the following service call:
+
+Ticket:   ${t.id}
+Customer: ${t.customer}
+Address:  ${t.address || '—'}
+Date:     ${fmtDate(t.date)}
+Tech:     ${t.tech}
+Type:     ${t.type || '—'}
+
+SUMMARY
+  Labor:        $${laborSubtotal.toFixed(2)}
+  Materials:    $${matSubtotal.toFixed(2)}
+  O&P (20%):    $${op.toFixed(2)}
+  ─────────────────────
+  TOTAL DUE:    $${total.toFixed(2)}
+
+The PDF invoice has been downloaded. Please attach it to your billing email.
+
+Notes: ${t.notes || t.scope || '—'}
+
+— Rye Electric Service Department
+  `.trim();
+
+  try {
+    await emailjs.send('service_jbdjjoh', 'template_q4xc3qp', {
+      to_email: 'amatias@ryecompany.com',
+      to_name:  'A. Matias',
+      subject:  `Invoice ${invNum} — ${t.customer} (${t.id})`,
+      invoice_number: invNum,
+      ticket_id:  t.id,
+      customer:   t.customer,
+      total_due:  '$' + total.toFixed(2),
+      message:    invoiceBody,
+    });
+    toast('Invoice ' + invNum + ' generated & emailed to accounting ✓');
+  } catch(e) {
+    console.warn('Email failed:', e);
+    toast('Invoice PDF downloaded — email delivery pending', true);
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = '📄 Generate Invoice'; }
+
+  } catch(err) {
+    console.error('Invoice generation error:', err);
+    alert('Invoice error: ' + err.message + '\n\nCheck the browser console for details.');
+    if (btn) { btn.disabled = false; btn.textContent = '📄 Generate Invoice'; }
+  }
+}
+
 // ── DELETE ──
 function deleteTicket(id) {
   if (!confirm('Delete ticket ' + id + '?')) return;
   tickets = tickets.filter(t => t.id !== id);
   save(); renderAll();
+  sbDelete(id); // sync to Supabase
   toast('Ticket deleted');
 }
 function deleteTask(id) {
@@ -1976,39 +3070,90 @@ function toast(msg, error) {
 
 // ── SIGNATURE PAD (basic canvas) ──
 (function initSig() {
-  const canvas = document.getElementById('sig-canvas');
-  const pad = document.getElementById('sig-pad');
-  if (!canvas || !pad) return;
-  const ctx = canvas.getContext('2d');
-  let drawing = false;
-  function resize() {
-    canvas.width = pad.offsetWidth;
+  let ctx, drawing = false;
+
+  function setupCanvas() {
+    const canvas = document.getElementById('sig-canvas');
+    const pad    = document.getElementById('sig-pad');
+    if (!canvas || !pad || pad.offsetWidth === 0) return false;
+    canvas.width  = pad.offsetWidth;
     canvas.height = pad.offsetHeight;
+    ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth   = 2;
+    ctx.lineCap     = 'round';
+    return true;
   }
-  resize();
-  ctx.strokeStyle = '#1a1a1a';
-  ctx.lineWidth = 2;
-  ctx.lineCap = 'round';
-  function pos(e) {
-    const r = canvas.getBoundingClientRect();
+
+  function getPos(e, canvas) {
+    const r   = canvas.getBoundingClientRect();
     const src = e.touches ? e.touches[0] : e;
     return { x: src.clientX - r.left, y: src.clientY - r.top };
   }
-  canvas.addEventListener('mousedown', e => { drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); document.getElementById('sig-pad').querySelector('.sig-placeholder').style.display='none'; });
-  canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); });
-  canvas.addEventListener('mouseup', () => drawing = false);
-  canvas.addEventListener('mouseleave', () => drawing = false);
-  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); }, {passive:false});
-  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); }, {passive:false});
-  canvas.addEventListener('touchend', () => drawing = false);
+
+  // Attach events using delegation so it works after modal open
+  document.addEventListener('mousedown', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (e.target !== canvas) return;
+    if (!ctx) setupCanvas();
+    if (!ctx) return;
+    drawing = true;
+    const p = getPos(e, canvas);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    const ph = document.querySelector('#sig-pad .sig-placeholder');
+    if (ph) ph.style.display = 'none';
+  });
+  document.addEventListener('mousemove', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (!drawing || !ctx || e.target !== canvas) return;
+    const p = getPos(e, canvas);
+    ctx.lineTo(p.x, p.y); ctx.stroke();
+  });
+  document.addEventListener('mouseup',    () => { drawing = false; });
+  document.addEventListener('mouseleave', () => { drawing = false; });
+
+  document.addEventListener('touchstart', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (e.target !== canvas) return;
+    e.preventDefault();
+    if (!ctx) setupCanvas();
+    if (!ctx) return;
+    drawing = true;
+    const p = getPos(e, canvas);
+    ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    const ph = document.querySelector('#sig-pad .sig-placeholder');
+    if (ph) ph.style.display = 'none';
+  }, { passive: false });
+  document.addEventListener('touchmove', e => {
+    const canvas = document.getElementById('sig-canvas');
+    if (!drawing || !ctx || e.target !== canvas) return;
+    e.preventDefault();
+    const p = getPos(e, canvas);
+    ctx.lineTo(p.x, p.y); ctx.stroke();
+  }, { passive: false });
+  document.addEventListener('touchend', () => { drawing = false; });
+
   window.clearSig = function() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    document.getElementById('sig-pad').querySelector('.sig-placeholder').style.display='';
+    const canvas = document.getElementById('sig-canvas');
+    if (!canvas) return;
+    if (!ctx) setupCanvas();
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const ph = document.querySelector('#sig-pad .sig-placeholder');
+    if (ph) ph.style.display = '';
+  };
+
+  window.getSigDataURL = function() {
+    const canvas = document.getElementById('sig-canvas');
+    if (!canvas) return null;
+    // Check if anything was drawn
+    const data = ctx && ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    const hasDrawing = data && Array.from(data).some(v => v !== 0);
+    return hasDrawing ? canvas.toDataURL() : null;
   };
 })();
 
 // ── INIT ──
-renderAll();
+loadTickets(); // pulls from Supabase, falls back to localStorage
 document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 </script>
 </body>
