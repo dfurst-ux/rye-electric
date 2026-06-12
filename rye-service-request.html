@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Request Service — Rye Electric</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;500;700&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 /* ─── RESET & BASE ─────────────────────────────────────────── */
@@ -13,33 +13,36 @@
   --red:       #C0392B;
   --red-dk:    #962D22;
   --red-lt:    #F9EDED;
+  --teal:      #4E9DA8;
+  --teal-dk:   #357884;
+  --teal-lt:   #EAF5F7;
   --gold:      #D4A843;
   --gold-lt:   #FDF6E3;
-  --dark:      #141414;
-  --dark2:     #1F1F1F;
-  --dark3:     #2A2A2A;
+  --dark:      #1A1A1A;
+  --dark2:     #2C2C2C;
+  --dark3:     #3A3A3A;
   --mid:       #555;
   --muted:     #888;
-  --border:    #E0E0E0;
-  --bg:        #F6F6F6;
+  --border:    #E2E2E2;
+  --bg:        #F8F8F8;
   --white:     #FFFFFF;
   --green:     #27AE60;
   --green-lt:  #EAF7F0;
-  --radius:    8px;
-  --shadow:    0 2px 12px rgba(0,0,0,.08);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.14);
-  --font:      'Barlow', sans-serif;
-  --font-cond: 'Barlow Condensed', sans-serif;
+  --radius:    6px;
+  --shadow:    0 2px 12px rgba(0,0,0,.07);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.11);
+  --font:      'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-cond: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --trans:     .18s ease;
 }
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font);
-  background: var(--bg);
+  background: var(--white);
   color: var(--dark);
   min-height: 100vh;
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 /* ─── LAYOUT ────────────────────────────────────────────────── */
@@ -51,41 +54,62 @@ body {
 
 /* ─── HEADER ────────────────────────────────────────────────── */
 .site-header {
-  background: var(--dark);
-  border-bottom: 3px solid var(--red);
-  padding: 0 24px;
-  height: 60px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 50;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
 }
 .brand {
-  font-family: var(--font-cond);
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: .5px;
-  color: var(--white);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
-.brand .bolt { color: var(--red); font-size: 20px; }
-.brand .accent { color: var(--red); }
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.brand-logo .word-rye {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--dark);
+  font-family: var(--font);
+  line-height: 1;
+}
+.brand-logo .word-electric {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--teal);
+  text-transform: lowercase;
+  margin-top: 1px;
+}
+.brand-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+}
 .header-tag {
   font-size: 12px;
-  font-weight: 600;
-  color: #666;
+  font-weight: 400;
+  color: var(--muted);
   letter-spacing: .5px;
   text-transform: uppercase;
 }
 
 /* ─── HERO ──────────────────────────────────────────────────── */
 .hero {
-  background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 60%, #1a0a08 100%);
-  padding: 52px 24px 44px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 24px 48px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -94,46 +118,45 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 24px,
-    rgba(192,57,43,.04) 24px,
-    rgba(192,57,43,.04) 25px
-  );
+  background: linear-gradient(180deg, #f0f8fa 0%, var(--white) 100%);
   pointer-events: none;
+  z-index: 0;
 }
+.hero > * { position: relative; z-index: 1; }
 .hero-eyebrow {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--red);
-  border: 1px solid rgba(192,57,43,.4);
-  border-radius: 20px;
-  padding: 4px 14px;
-  margin-bottom: 18px;
+  color: var(--teal);
+  margin-bottom: 16px;
 }
 .hero h1 {
-  font-family: var(--font-cond);
-  font-size: clamp(32px, 6vw, 52px);
-  font-weight: 800;
-  color: var(--white);
-  line-height: 1.05;
+  font-family: var(--font);
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1.15;
   margin-bottom: 14px;
-  letter-spacing: -.5px;
+  letter-spacing: -0.5px;
+}
+.hero h1 strong {
+  font-weight: 700;
+  color: var(--dark);
 }
 .hero h1 em {
-  color: var(--red);
+  color: var(--teal);
   font-style: normal;
+  font-weight: 700;
 }
 .hero p {
   font-size: 16px;
-  color: #aaa;
-  max-width: 480px;
+  color: var(--muted);
+  max-width: 460px;
   margin: 0 auto 28px;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-weight: 300;
 }
 .hero-pills {
   display: flex;
@@ -142,20 +165,21 @@ body {
   flex-wrap: wrap;
 }
 .hero-pill {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
+  background: var(--white);
+  border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 13px;
-  color: #ccc;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--mid);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  box-shadow: var(--shadow);
 }
 .hero-pill .dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--green);
+  background: var(--teal);
   flex-shrink: 0;
 }
 
@@ -168,9 +192,10 @@ body {
 }
 .form-card {
   background: var(--white);
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 /* ─── PROGRESS BAR ──────────────────────────────────────────── */
@@ -180,7 +205,7 @@ body {
 }
 .progress-fill {
   height: 100%;
-  background: var(--red);
+  background: var(--teal);
   transition: width .4s ease;
   border-radius: 0 2px 2px 0;
 }
@@ -225,10 +250,10 @@ body {
   transition: all var(--trans);
 }
 .step-ind.active .step-dot {
-  background: var(--red);
-  border-color: var(--red);
+  background: var(--teal);
+  border-color: var(--teal);
   color: var(--white);
-  box-shadow: 0 0 0 4px rgba(192,57,43,.15);
+  box-shadow: 0 0 0 4px rgba(78,157,168,.15);
 }
 .step-ind.done .step-dot {
   background: var(--green);
@@ -244,7 +269,7 @@ body {
   letter-spacing: .4px;
   color: var(--muted);
 }
-.step-ind.active .step-label { color: var(--red); }
+.step-ind.active .step-label { color: var(--teal); }
 .step-ind.done .step-label  { color: var(--green); }
 
 /* ─── FORM BODY ─────────────────────────────────────────────── */
@@ -297,8 +322,8 @@ body {
 }
 .field-input:focus {
   outline: none;
-  border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(192,57,43,.1);
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(78,157,168,.12);
 }
 .field-input.error { border-color: var(--red); background: var(--red-lt); }
 textarea.field-input { resize: vertical; min-height: 100px; }
@@ -328,11 +353,11 @@ textarea.field-input { resize: vertical; min-height: 100px; }
   background: var(--white);
   user-select: none;
 }
-.type-card:hover { border-color: var(--red); background: var(--red-lt); }
+.type-card:hover { border-color: var(--teal); background: var(--teal-lt); }
 .type-card.selected {
-  border-color: var(--red);
-  background: var(--red-lt);
-  box-shadow: 0 0 0 3px rgba(192,57,43,.12);
+  border-color: var(--teal);
+  background: var(--teal-lt);
+  box-shadow: 0 0 0 3px rgba(78,157,168,.12);
 }
 .type-icon { font-size: 26px; margin-bottom: 6px; display: block; }
 .type-name {
@@ -341,7 +366,7 @@ textarea.field-input { resize: vertical; min-height: 100px; }
   color: var(--dark);
   line-height: 1.2;
 }
-.type-card.selected .type-name { color: var(--red); }
+.type-card.selected .type-name { color: var(--teal); }
 .type-card input { display: none; }
 
 /* ─── URGENCY SELECTOR ──────────────────────────────────────── */
@@ -393,8 +418,8 @@ textarea.field-input { resize: vertical; min-height: 100px; }
   user-select: none;
 }
 .time-slot input { display: none; }
-.time-slot:hover  { border-color: var(--red); color: var(--red); }
-.time-slot.selected { border-color: var(--red); background: var(--red-lt); color: var(--red); }
+.time-slot:hover  { border-color: var(--teal); color: var(--teal); }
+.time-slot.selected { border-color: var(--teal); background: var(--teal-lt); color: var(--teal); }
 
 /* ─── REVIEW BLOCK ──────────────────────────────────────────── */
 .review-block {
@@ -464,12 +489,12 @@ textarea.field-input { resize: vertical; min-height: 100px; }
   gap: 8px;
 }
 .btn-primary {
-  background: var(--red);
+  background: var(--teal);
   color: var(--white);
   flex: 1;
   justify-content: center;
 }
-.btn-primary:hover { background: var(--red-dk); }
+.btn-primary:hover { background: var(--teal-dk); }
 .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
 .btn-back {
   background: transparent;
@@ -522,9 +547,9 @@ textarea.field-input { resize: vertical; min-height: 100px; }
   font-family: var(--font-cond);
   font-size: 22px;
   font-weight: 700;
-  color: var(--red);
-  background: var(--red-lt);
-  border: 1.5px solid rgba(192,57,43,.2);
+  color: var(--teal);
+  background: var(--teal-lt);
+  border: 1.5px solid rgba(78,157,168,.2);
   border-radius: var(--radius);
   padding: 10px 20px;
   display: inline-block;
@@ -558,7 +583,7 @@ textarea.field-input { resize: vertical; min-height: 100px; }
 }
 .what-next-item .num {
   width: 20px; height: 20px;
-  background: var(--red);
+  background: var(--teal);
   color: var(--white);
   border-radius: 50%;
   font-size: 11px;
@@ -594,14 +619,18 @@ textarea.field-input { resize: vertical; min-height: 100px; }
 
 /* ─── FOOTER ────────────────────────────────────────────────── */
 .site-footer {
-  background: var(--dark);
-  border-top: 3px solid var(--red);
-  padding: 18px 24px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 20px 40px;
   text-align: center;
-  font-size: 13px;
-  color: #555;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: .3px;
 }
-.site-footer strong { color: var(--red); }
+.site-footer strong { color: var(--dark); font-weight: 700; }
+.site-footer a { color: var(--teal); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
 
 /* ─── RESPONSIVE ────────────────────────────────────────────── */
 @media (max-width: 560px) {
@@ -622,16 +651,20 @@ textarea.field-input { resize: vertical; min-height: 100px; }
 <!-- ── HEADER ───────────────────────────────────────────────── -->
 <header class="site-header">
   <div class="brand">
-    <svg class="bolt" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    RYE <span class="accent">ELECTRIC</span>
+    <div class="brand-logo">
+      <span class="word-rye">rye</span>
+      <span class="word-electric">electric</span>
+    </div>
+    <div class="brand-divider"></div>
+    <span class="header-tag">Service Request</span>
   </div>
-  <span class="header-tag">Service Request Portal</span>
+  <a href="https://www.ryecompany.com" style="font-size:12px;color:var(--muted);text-decoration:none;font-weight:400">ryecompany.com</a>
 </header>
 
 <!-- ── HERO ─────────────────────────────────────────────────── -->
 <div class="hero">
-  <div class="hero-eyebrow">Licensed · Bonded · Insured</div>
-  <h1>Request <em>Electrical</em><br>Service</h1>
+  <div class="hero-eyebrow">Licensed · Bonded · Insured · CA Lic. 980345</div>
+  <h1><strong>Request</strong> <em>Electrical</em><br><strong>Service</strong></h1>
   <p>Fill out the form below and our service team will contact you to confirm your appointment.</p>
   <div class="hero-pills">
     <div class="hero-pill"><span class="dot"></span> Emergency calls answered same day</div>
@@ -891,11 +924,11 @@ textarea.field-input { resize: vertical; min-height: 100px; }
       <div class="success-icon">✓</div>
       <h2>Request submitted!</h2>
       <p>Your service request has been sent to our team. You'll hear from us shortly to confirm your appointment.</p>
-      <div class="conf-number" id="conf-num">SR-0000</div>
+      <div class="conf-number" id="conf-num">SP26021</div>
       <p style="font-size:13px">Save this number for your records.</p>
       <div class="what-next">
         <div class="what-next-title">What happens next</div>
-        <div class="what-next-item"><div class="num">1</div>Mychal will review your request and assign a technician.</div>
+        <div class="what-next-item"><div class="num">1</div>The Rye Electric Service Manager will review your request and assign a technician.</div>
         <div class="what-next-item"><div class="num">2</div>You'll receive a call or text to confirm your appointment time.</div>
         <div class="what-next-item"><div class="num">3</div>Your technician will arrive within the agreed window.</div>
       </div>
@@ -915,9 +948,10 @@ textarea.field-input { resize: vertical; min-height: 100px; }
 
 <!-- ── FOOTER ────────────────────────────────────────────────── -->
 <footer class="site-footer">
-  <strong>Rye Electric, Inc.</strong> &nbsp;·&nbsp; 28202 Cabot Road, Suite 300, Laguna Niguel, CA 92677 &nbsp;·&nbsp; 
-  <a href="tel:9494410545" style="color:#888">949-441-0545</a> &nbsp;·&nbsp; 
-  <a href="https://ryecompany.com" style="color:#888">ryecompany.com</a>
+  <strong>Rye Company</strong> &nbsp;·&nbsp; Rye Electric &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp;
+  <a href="tel:9494410545">949-441-0545</a> &nbsp;·&nbsp;
+  <a href="https://ryecompany.com">ryecompany.com</a> &nbsp;·&nbsp;
+  California License 980345
 </footer>
 
 </div><!-- /page-wrap -->
@@ -925,13 +959,19 @@ textarea.field-input { resize: vertical; min-height: 100px; }
 
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
-emailjs.init('YOUR_EMAILJS_PUBLIC_KEY'); // ← Replace with your EmailJS public key
+emailjs.init('HGciJDgZDCRS9v0Eo'); // ← Replace with your EmailJS public key
 
-const EMAILJS_SERVICE  = 'YOUR_SERVICE_ID';       // ← Replace
-const EMAILJS_TEMPLATE_MANAGER  = 'YOUR_MANAGER_TEMPLATE_ID';  // ← Replace
-const EMAILJS_TEMPLATE_TECH     = 'YOUR_TECH_TEMPLATE_ID';     // ← Replace
+const EMAILJS_SERVICE  = 'service_jbdjjoh';       // ← Replace
+const EMAILJS_TEMPLATE_MANAGER  = 'template_4daap5r';  // ← Replace
+const EMAILJS_TEMPLATE_TECH     = 'template_5inkmsl';     // ← Replace
 
-const MANAGER_EMAIL = 'mkirschbaum@ryecompany.com';
+const MANAGER_EMAIL  = 'mkirschbaum@ryecompany.com';
+const NOTIFY_EMAILS  = [
+  { name: 'Mychal', email: 'mkirschbaum@ryecompany.com' },
+  { name: 'Dennis', email: 'dfurst@ryecompany.com'      },
+  { name: 'Joey',   email: 'jjava@ryecompany.com'       },
+  { name: 'Jonathan', email: 'jjacobo@ryecompany.com'   },
+];
 
 const TECHS = [
   { name: 'G',     email: MANAGER_EMAIL }, // replace with real emails
@@ -947,7 +987,7 @@ const TOTAL_STEPS = 4;
 let selectedType = '';
 let selectedUrgency = '';
 let selectedTime = '';
-let requestCounter = parseInt(localStorage.getItem('svc_req_counter') || '1000');
+let requestCounter = parseInt(localStorage.getItem('svc_req_counter') || '26020');
 
 // ── STEP NAVIGATION ────────────────────────────────────────────────────────
 function showStep(n) {
@@ -1109,7 +1149,23 @@ async function submitForm() {
 
   requestCounter++;
   localStorage.setItem('svc_req_counter', requestCounter);
-  const srNum = 'SR-' + String(requestCounter).padStart(4, '0');
+  // Get max SP number from Supabase to avoid collisions
+  try {
+    const SB_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+    const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    const res = await fetch(SB_URL + '/rest/v1/service_tickets?select=id&order=id.desc&limit=1', {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows.length) {
+        const lastNum = parseInt(rows[0].id.replace('SP','')) || 26020;
+        requestCounter = Math.max(requestCounter, lastNum + 1);
+        localStorage.setItem('svc_req_counter', requestCounter);
+      }
+    }
+  } catch(e) { /* use localStorage counter as fallback */ }
+  const srNum = 'SP' + requestCounter;
 
   const data = {
     sr_number:    srNum,
@@ -1185,13 +1241,15 @@ Please contact the customer to confirm.
 `.trim();
 
   try {
-    // Email to manager
-    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE_MANAGER, {
-      ...data,
-      to_email: MANAGER_EMAIL,
-      to_name: 'Mychal',
-      subject: `[${data.urgency.toUpperCase()}] New Service Request ${srNum} — ${data.customer_name}`,
-    });
+    // Email to all four recipients
+    for (const recipient of NOTIFY_EMAILS) {
+      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE_MANAGER, {
+        ...data,
+        to_email: recipient.email,
+        to_name:  recipient.name,
+        subject:  `[${data.urgency.toUpperCase()}] New Service Request ${srNum} — ${data.customer_name}`,
+      });
+    }
 
     // Email to assigned tech
     await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE_TECH, {
@@ -1201,29 +1259,53 @@ Please contact the customer to confirm.
       subject: `Assigned: Service Request ${srNum} — ${data.customer_name} (${data.urgency})`,
     });
 
-    // Save to localStorage as a service ticket
-    const tickets = JSON.parse(localStorage.getItem('svc_tickets') || '[]');
-    tickets.unshift({
-      id: srNum,
-      customer: data.customer_name,
-      address: data.address,
-      type: data.service_type,
-      date: v('pref-date'),
-      tech: assignedTech.name,
-      status: selectedUrgency === 'Emergency' ? 'Open' : 'Open',
-      scope: data.description,
-      notes: data.notes,
-      nte: '',
-      rating: 0,
-      ratings: {},
-      createdAt: new Date().toISOString(),
-      source: 'Customer Portal',
-      urgency: selectedUrgency,
-    });
-    localStorage.setItem('svc_tickets', JSON.stringify(tickets));
+    // ── SAVE TO SUPABASE ──────────────────────────────────────────
+    const SB_URL  = 'https://okesnavkxmqucgvvhncx.supabase.co';
+    const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    const SB_HDRS = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Prefer': 'resolution=merge-duplicates' };
+
+    const ticketRow = {
+      id:           srNum,
+      customer:     data.customer_name,
+      address:      data.address,
+      type:         data.service_type,
+      date:         v('pref-date'),
+      tech:         assignedTech.name,
+      status:       'Open',
+      scope:        data.description,
+      notes:        data.notes,
+      urgency:      selectedUrgency,
+      source:       'Customer Portal',
+      company:      data.company !== 'N/A' ? data.company : null,
+      phone:        data.phone,
+      email:        data.email,
+      contact_pref: data.contact_pref,
+      prop_type:    data.prop_type,
+      pref_date:    v('pref-date'),
+      alt_date:     v('alt-date') || null,
+      time_window:  selectedTime,
+      extra_notes:  data.notes,
+      ratings:      {},
+      labor:        [],
+      materials:    [],
+    };
+
+    try {
+      const sbRes = await fetch(SB_URL + '/rest/v1/service_tickets', {
+        method:  'POST',
+        headers: SB_HDRS,
+        body:    JSON.stringify(ticketRow),
+      });
+      if (!sbRes.ok) console.warn('Supabase save warning:', await sbRes.text());
+    } catch(sbErr) {
+      console.warn('Supabase save failed, using localStorage fallback:', sbErr);
+      // Fallback to localStorage
+      const localTickets = JSON.parse(localStorage.getItem('svc_tickets') || '[]');
+      localTickets.unshift({ ...ticketRow, createdAt: new Date().toISOString() });
+      localStorage.setItem('svc_tickets', JSON.stringify(localTickets));
+    }
 
     // Show success
-    document.getElementById('form-body') && (document.querySelector('.form-body').style.display = 'none');
     document.querySelector('.form-body').style.display = 'none';
     document.getElementById('form-nav').style.display = 'none';
     document.querySelector('.progress-bar').style.display = 'none';
