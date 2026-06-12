@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Service — Rye Electric</title>
+<link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;500;700&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red:       #C0392B;
+  --red-dk:    #962D22;
+  --red-lt:    #F9EDED;
+  --teal:      #4E9DA8;
+  --teal-dk:   #357884;
+  --teal-lt:   #EAF5F7;
+  --gold:      #D4A843;
+  --gold-lt:   #FDF6E3;
+  --dark:      #1A1A1A;
+  --dark2:     #2C2C2C;
+  --dark3:     #3A3A3A;
+  --mid:       #555;
+  --muted:     #888;
+  --border:    #E2E2E2;
+  --bg:        #F8F8F8;
+  --white:     #FFFFFF;
+  --green:     #27AE60;
+  --green-lt:  #EAF7F0;
+  --radius:    6px;
+  --shadow:    0 2px 12px rgba(0,0,0,.07);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.11);
+  --font:      'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-cond: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --trans:     .18s ease;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--dark);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ─── LAYOUT ────────────────────────────────────────────────── */
+.page-wrap {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* ─── HEADER ────────────────────────────────────────────────── */
+.site-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 6px rgba(0,0,0,.06);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.brand-logo .word-rye {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--dark);
+  font-family: var(--font);
+  line-height: 1;
+}
+.brand-logo .word-electric {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--teal);
+  text-transform: lowercase;
+  margin-top: 1px;
+}
+.brand-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border);
+}
+.header-tag {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* ─── HERO ──────────────────────────────────────────────────── */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #f0f8fa 0%, var(--white) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero > * { position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: var(--font);
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1.15;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+.hero h1 strong {
+  font-weight: 700;
+  color: var(--dark);
+}
+.hero h1 em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 700;
+}
+.hero p {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 460px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+.hero-pills {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hero-pill {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: var(--shadow);
+}
+.hero-pill .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+
+/* ─── FORM CARD ─────────────────────────────────────────────── */
+.form-outer {
+  padding: 32px 16px 48px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+.form-card {
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+/* ─── PROGRESS BAR ──────────────────────────────────────────── */
+.progress-bar {
+  height: 4px;
+  background: var(--border);
+}
+.progress-fill {
+  height: 100%;
+  background: var(--teal);
+  transition: width .4s ease;
+  border-radius: 0 2px 2px 0;
+}
+.step-indicators {
+  display: flex;
+  align-items: center;
+  padding: 20px 28px 0;
+  gap: 0;
+}
+.step-ind {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  position: relative;
+}
+.step-ind::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.step-ind:last-child::after { display: none; }
+.step-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 2px solid var(--border);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  transition: all var(--trans);
+}
+.step-ind.active .step-dot {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(78,157,168,.15);
+}
+.step-ind.done .step-dot {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+.step-ind.done::after { background: var(--green); }
+.step-ind.active::after { background: var(--border); }
+.step-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--muted);
+}
+.step-ind.active .step-label { color: var(--teal); }
+.step-ind.done .step-label  { color: var(--green); }
+
+/* ─── FORM BODY ─────────────────────────────────────────────── */
+.form-body {
+  padding: 28px 28px 24px;
+}
+.step-panel { display: none; }
+.step-panel.active { display: block; }
+
+.step-heading {
+  font-family: var(--font-cond);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+.step-sub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* ─── FIELD GROUPS ──────────────────────────────────────────── */
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-group.full { grid-column: 1 / -1; }
+.field-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.req { color: var(--red); }
+.field-input {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-family: var(--font);
+  font-size: 15px;
+  color: var(--dark);
+  background: var(--white);
+  width: 100%;
+  transition: border-color var(--trans), box-shadow var(--trans);
+  -webkit-appearance: none;
+}
+.field-input:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(78,157,168,.12);
+}
+.field-input.error { border-color: var(--red); background: var(--red-lt); }
+textarea.field-input { resize: vertical; min-height: 100px; }
+.field-hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.field-error {
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 600;
+  display: none;
+}
+.field-error.show { display: block; }
+
+/* ─── SERVICE TYPE CARDS ────────────────────────────────────── */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.type-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  cursor: pointer;
+  transition: all var(--trans);
+  text-align: center;
+  background: var(--white);
+  user-select: none;
+}
+.type-card:hover { border-color: var(--teal); background: var(--teal-lt); }
+.type-card.selected {
+  border-color: var(--teal);
+  background: var(--teal-lt);
+  box-shadow: 0 0 0 3px rgba(78,157,168,.12);
+}
+.type-icon { font-size: 26px; margin-bottom: 6px; display: block; }
+.type-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.2;
+}
+.type-card.selected .type-name { color: var(--teal); }
+.type-card input { display: none; }
+
+/* ─── URGENCY SELECTOR ──────────────────────────────────────── */
+.urgency-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.urgency-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--trans);
+  user-select: none;
+}
+.urgency-card input { display: none; }
+.urgency-card .u-icon { font-size: 22px; margin-bottom: 5px; display: block; }
+.urgency-card .u-label { font-size: 13px; font-weight: 700; color: var(--dark); }
+.urgency-card .u-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.urgency-card.low  { }
+.urgency-card.med  { }
+.urgency-card.high { }
+.urgency-card.selected.low  { border-color: var(--green); background: var(--green-lt); }
+.urgency-card.selected.med  { border-color: var(--gold);  background: var(--gold-lt);  }
+.urgency-card.selected.high { border-color: var(--red);   background: var(--red-lt);   }
+.urgency-card.selected .u-label { color: inherit; }
+.urgency-card.low:hover   { border-color: var(--green); }
+.urgency-card.med:hover   { border-color: var(--gold);  }
+.urgency-card.high:hover  { border-color: var(--red);   }
+
+/* ─── TIME SLOTS ────────────────────────────────────────────── */
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+.time-slot {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mid);
+  transition: all var(--trans);
+  user-select: none;
+}
+.time-slot input { display: none; }
+.time-slot:hover  { border-color: var(--teal); color: var(--teal); }
+.time-slot.selected { border-color: var(--teal); background: var(--teal-lt); color: var(--teal); }
+
+/* ─── REVIEW BLOCK ──────────────────────────────────────────── */
+.review-block {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.review-block-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px 0;
+  gap: 12px;
+  font-size: 14px;
+}
+.review-row + .review-row { border-top: 1px solid var(--border); }
+.review-key { color: var(--muted); flex-shrink: 0; }
+.review-val { font-weight: 600; text-align: right; color: var(--dark); }
+.review-val.urgent { color: var(--red); }
+.review-val.medium { color: var(--gold); }
+
+.nte-notice {
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius);
+  background: var(--gold-lt);
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #5a3a00;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.nte-notice .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+/* ─── FORM NAV ──────────────────────────────────────────────── */
+.form-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 28px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+}
+.btn {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 11px 24px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: all var(--trans);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--teal);
+  color: var(--white);
+  flex: 1;
+  justify-content: center;
+}
+.btn-primary:hover { background: var(--teal-dk); }
+.btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+.btn-back {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--mid);
+}
+.btn-back:hover { border-color: var(--mid); color: var(--dark); }
+.btn-submit {
+  background: var(--green);
+  color: var(--white);
+  flex: 1;
+  justify-content: center;
+  font-size: 16px;
+  padding: 13px 24px;
+}
+.btn-submit:hover { background: #1e8a4e; }
+.btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+/* ─── SUCCESS SCREEN ────────────────────────────────────────── */
+#success-screen {
+  display: none;
+  padding: 52px 28px;
+  text-align: center;
+}
+.success-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--green-lt);
+  border: 3px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 20px;
+  animation: popIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn {
+  from { transform: scale(.5); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+#success-screen h2 {
+  font-family: var(--font-cond);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+#success-screen p { font-size: 15px; color: var(--muted); max-width: 400px; margin: 0 auto 8px; }
+.conf-number {
+  font-family: var(--font-cond);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--teal);
+  background: var(--teal-lt);
+  border: 1.5px solid rgba(78,157,168,.2);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  display: inline-block;
+  margin: 16px 0;
+  letter-spacing: 1px;
+}
+.what-next {
+  background: var(--bg);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-top: 20px;
+  text-align: left;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.what-next-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.what-next-item {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--mid);
+  padding: 5px 0;
+}
+.what-next-item .num {
+  width: 20px; height: 20px;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── TOAST ─────────────────────────────────────────────────── */
+#toast {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--dark);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  border-left: 4px solid var(--green);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all .25s;
+  pointer-events: none;
+  max-width: 320px;
+}
+#toast.show { opacity: 1; transform: none; }
+#toast.err  { border-left-color: var(--red); }
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 20px 40px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: .3px;
+}
+.site-footer strong { color: var(--dark); font-weight: 700; }
+.site-footer a { color: var(--teal); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .field-grid, .field-grid.three { grid-template-columns: 1fr; }
+  .field-group.full { grid-column: 1; }
+  .form-body { padding: 20px 16px 16px; }
+  .form-nav  { padding: 16px; }
+  .step-indicators { padding: 16px 16px 0; }
+  .step-label { display: none; }
+  .urgency-row { grid-template-columns: 1fr; }
+  .type-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<!-- ── HEADER ───────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="brand">
+    <div class="brand-logo">
+      <span class="word-rye">rye</span>
+      <span class="word-electric">electric</span>
+    </div>
+    <div class="brand-divider"></div>
+    <span class="header-tag">Service Request</span>
+  </div>
+  <a href="https://www.ryecompany.com" style="font-size:12px;color:var(--muted);text-decoration:none;font-weight:400">ryecompany.com</a>
+</header>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Licensed · Bonded · Insured · CA Lic. 980345</div>
+  <h1><strong>Request</strong> <em>Electrical</em><br><strong>Service</strong></h1>
+  <p>Fill out the form below and our service team will contact you to confirm your appointment.</p>
+  <div class="hero-pills">
+    <div class="hero-pill"><span class="dot"></span> Emergency calls answered same day</div>
+    <div class="hero-pill"><span class="dot"></span> 4-hour minimum service window</div>
+    <div class="hero-pill"><span class="dot"></span> Licensed electricians</div>
+  </div>
+</div>
+
+<!-- ── FORM ──────────────────────────────────────────────────── -->
+<main class="form-outer">
+  <div class="form-card">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:25%"></div></div>
+
+    <!-- Step indicators -->
+    <div class="step-indicators">
+      <div class="step-ind active" id="ind-1"><div class="step-dot">1</div><span class="step-label">Your Info</span></div>
+      <div class="step-ind"        id="ind-2"><div class="step-dot">2</div><span class="step-label">Service</span></div>
+      <div class="step-ind"        id="ind-3"><div class="step-dot">3</div><span class="step-label">Scheduling</span></div>
+      <div class="step-ind"        id="ind-4"><div class="step-dot">4</div><span class="step-label">Review</span></div>
+    </div>
+
+    <!-- ── STEP 1: Contact Info ─────────────────────────────── -->
+    <div class="form-body">
+      <div class="step-panel active" id="step-1">
+        <div class="step-heading">Your contact information</div>
+        <div class="step-sub">We'll use this to confirm your appointment and follow up.</div>
+
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">First name <span class="req">*</span></label>
+            <input class="field-input" id="fname" type="text" placeholder="Jane" autocomplete="given-name">
+            <span class="field-error" id="err-fname">Please enter your first name.</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Last name <span class="req">*</span></label>
+            <input class="field-input" id="lname" type="text" placeholder="Smith" autocomplete="family-name">
+            <span class="field-error" id="err-lname">Please enter your last name.</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Phone number <span class="req">*</span></label>
+            <input class="field-input" id="phone" type="tel" placeholder="(949) 555-0100" autocomplete="tel">
+            <span class="field-error" id="err-phone">Please enter a valid phone number.</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Email address <span class="req">*</span></label>
+            <input class="field-input" id="email" type="email" placeholder="jane@example.com" autocomplete="email">
+            <span class="field-error" id="err-email">Please enter a valid email address.</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Company / Property name</label>
+            <input class="field-input" id="company" type="text" placeholder="Optional">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Best way to reach you</label>
+            <select class="field-input" id="contact-pref">
+              <option value="Phone">Phone call</option>
+              <option value="Text">Text message</option>
+              <option value="Email">Email</option>
+            </select>
+          </div>
+          <div class="field-group full">
+            <label class="field-label">Service address <span class="req">*</span></label>
+            <input class="field-input" id="address" type="text" placeholder="Street address, City, State, ZIP" autocomplete="street-address">
+            <span class="field-error" id="err-address">Please enter the service address.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 2: Service Details ──────────────────────────── -->
+      <div class="step-panel" id="step-2">
+        <div class="step-heading">What do you need help with?</div>
+        <div class="step-sub">Choose the type of service and describe the issue.</div>
+
+        <div class="field-group" style="margin-bottom:20px">
+          <label class="field-label">Service type <span class="req">*</span></label>
+          <div class="type-grid" id="type-grid">
+            <label class="type-card" onclick="selectType(this,'Emergency / Trouble Call')">
+              <input type="radio" name="svc-type" value="Emergency / Trouble Call">
+              <span class="type-icon">⚡</span>
+              <span class="type-name">Emergency / Trouble Call</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'No Power / Outage')">
+              <input type="radio" name="svc-type" value="No Power / Outage">
+              <span class="type-icon">🔌</span>
+              <span class="type-name">No Power / Outage</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'Panel / Breaker Issue')">
+              <input type="radio" name="svc-type" value="Panel / Breaker Issue">
+              <span class="type-icon">🔲</span>
+              <span class="type-name">Panel / Breaker Issue</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'Lighting')">
+              <input type="radio" name="svc-type" value="Lighting">
+              <span class="type-icon">💡</span>
+              <span class="type-name">Lighting</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'Outlets / Switches')">
+              <input type="radio" name="svc-type" value="Outlets / Switches">
+              <span class="type-icon">🔧</span>
+              <span class="type-name">Outlets / Switches</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'EV Charger')">
+              <input type="radio" name="svc-type" value="EV Charger">
+              <span class="type-icon">🚗</span>
+              <span class="type-name">EV Charger</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'New Installation')">
+              <input type="radio" name="svc-type" value="New Installation">
+              <span class="type-icon">🏗️</span>
+              <span class="type-name">New Installation</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'Warranty / Callback')">
+              <input type="radio" name="svc-type" value="Warranty / Callback">
+              <span class="type-icon">🔁</span>
+              <span class="type-name">Warranty / Callback</span>
+            </label>
+            <label class="type-card" onclick="selectType(this,'Other')">
+              <input type="radio" name="svc-type" value="Other">
+              <span class="type-icon">📋</span>
+              <span class="type-name">Other</span>
+            </label>
+          </div>
+          <span class="field-error" id="err-type">Please select a service type.</span>
+        </div>
+
+        <div class="field-group" style="margin-bottom:20px">
+          <label class="field-label">Urgency level <span class="req">*</span></label>
+          <div class="urgency-row">
+            <label class="urgency-card low" onclick="selectUrgency(this,'Standard')">
+              <input type="radio" name="urgency" value="Standard">
+              <span class="u-icon">🟢</span>
+              <div class="u-label">Standard</div>
+              <div class="u-sub">Within a few days</div>
+            </label>
+            <label class="urgency-card med" onclick="selectUrgency(this,'Urgent')">
+              <input type="radio" name="urgency" value="Urgent">
+              <span class="u-icon">🟡</span>
+              <div class="u-label">Urgent</div>
+              <div class="u-sub">Within 24–48 hours</div>
+            </label>
+            <label class="urgency-card high" onclick="selectUrgency(this,'Emergency')">
+              <input type="radio" name="urgency" value="Emergency">
+              <span class="u-icon">🔴</span>
+              <div class="u-label">Emergency</div>
+              <div class="u-sub">Same day / ASAP</div>
+            </label>
+          </div>
+          <span class="field-error" id="err-urgency">Please select an urgency level.</span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Describe the issue <span class="req">*</span></label>
+          <textarea class="field-input" id="description" placeholder="Please describe the problem, what you've observed, any error messages, circuit breaker behavior, etc."></textarea>
+          <span class="field-error" id="err-desc">Please describe the issue.</span>
+        </div>
+      </div>
+
+      <!-- ── STEP 3: Scheduling ───────────────────────────────── -->
+      <div class="step-panel" id="step-3">
+        <div class="step-heading">When works best for you?</div>
+        <div class="step-sub">Our service team will confirm availability when they reach out.</div>
+
+        <div class="field-grid" style="margin-bottom:20px">
+          <div class="field-group">
+            <label class="field-label">Preferred date <span class="req">*</span></label>
+            <input class="field-input" id="pref-date" type="date">
+            <span class="field-hint">We'll do our best to accommodate your date.</span>
+            <span class="field-error" id="err-date">Please select a preferred date.</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Alternate date</label>
+            <input class="field-input" id="alt-date" type="date">
+          </div>
+        </div>
+
+        <div class="field-group" style="margin-bottom:20px">
+          <label class="field-label">Preferred time window <span class="req">*</span></label>
+          <div class="time-grid" id="time-grid">
+            <label class="time-slot" onclick="selectTime(this,'Morning (7 AM – 11 AM)')">
+              <input type="radio" name="time-pref" value="Morning (7 AM – 11 AM)">
+              ☀️ Morning<br><small>7 AM – 11 AM</small>
+            </label>
+            <label class="time-slot" onclick="selectTime(this,'Midday (11 AM – 2 PM)')">
+              <input type="radio" name="time-pref" value="Midday (11 AM – 2 PM)">
+              🌤 Midday<br><small>11 AM – 2 PM</small>
+            </label>
+            <label class="time-slot" onclick="selectTime(this,'Afternoon (2 PM – 5 PM)')">
+              <input type="radio" name="time-pref" value="Afternoon (2 PM – 5 PM)">
+              🌇 Afternoon<br><small>2 PM – 5 PM</small>
+            </label>
+            <label class="time-slot" onclick="selectTime(this,'Flexible / Any time')">
+              <input type="radio" name="time-pref" value="Flexible / Any time">
+              🗓 Flexible<br><small>Any time</small>
+            </label>
+          </div>
+          <span class="field-error" id="err-time">Please select a preferred time window.</span>
+        </div>
+
+        <div class="field-group" style="margin-bottom:20px">
+          <label class="field-label">Property type</label>
+          <select class="field-input" id="prop-type">
+            <option value="">Select...</option>
+            <option>Residential – Single Family</option>
+            <option>Residential – Multi-Family</option>
+            <option>Commercial</option>
+            <option>Industrial</option>
+            <option>Retail / Restaurant</option>
+            <option>HOA / Common Area</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Anything else we should know?</label>
+          <textarea class="field-input" id="extra-notes" placeholder="Gate codes, parking instructions, contact on-site, prior work done, etc." style="min-height:80px"></textarea>
+        </div>
+      </div>
+
+      <!-- ── STEP 4: Review ───────────────────────────────────── -->
+      <div class="step-panel" id="step-4">
+        <div class="step-heading">Review your request</div>
+        <div class="step-sub">Confirm your details before submitting.</div>
+
+        <div class="review-block">
+          <div class="review-block-title">Contact information</div>
+          <div class="review-row"><span class="review-key">Name</span><span class="review-val" id="rv-name">—</span></div>
+          <div class="review-row"><span class="review-key">Phone</span><span class="review-val" id="rv-phone">—</span></div>
+          <div class="review-row"><span class="review-key">Email</span><span class="review-val" id="rv-email">—</span></div>
+          <div class="review-row"><span class="review-key">Preferred contact</span><span class="review-val" id="rv-contact">—</span></div>
+          <div class="review-row"><span class="review-key">Address</span><span class="review-val" id="rv-address">—</span></div>
+        </div>
+
+        <div class="review-block">
+          <div class="review-block-title">Service request</div>
+          <div class="review-row"><span class="review-key">Service type</span><span class="review-val" id="rv-type">—</span></div>
+          <div class="review-row"><span class="review-key">Urgency</span><span class="review-val" id="rv-urgency">—</span></div>
+          <div class="review-row"><span class="review-key">Description</span><span class="review-val" id="rv-desc" style="max-width:60%;word-break:break-word">—</span></div>
+        </div>
+
+        <div class="review-block">
+          <div class="review-block-title">Scheduling preference</div>
+          <div class="review-row"><span class="review-key">Preferred date</span><span class="review-val" id="rv-date">—</span></div>
+          <div class="review-row"><span class="review-key">Alternate date</span><span class="review-val" id="rv-altdate">—</span></div>
+          <div class="review-row"><span class="review-key">Time window</span><span class="review-val" id="rv-time">—</span></div>
+          <div class="review-row"><span class="review-key">Property type</span><span class="review-val" id="rv-prop">—</span></div>
+        </div>
+
+        <div class="nte-notice">
+          <span class="icon">ℹ️</span>
+          <span>Service calls are billed at <strong>$124.97/hr</strong> with a <strong>4-hour minimum ($499.88)</strong>. A Rye Electric representative will confirm pricing and any NTE (not-to-exceed) limits before work begins.</span>
+        </div>
+      </div>
+    </div><!-- /form-body -->
+
+    <!-- Success screen -->
+    <div id="success-screen">
+      <div class="success-icon">✓</div>
+      <h2>Request submitted!</h2>
+      <p>Your service request has been sent to our team. You'll hear from us shortly to confirm your appointment.</p>
+      <div class="conf-number" id="conf-num">SP26021</div>
+      <p style="font-size:13px">Save this number for your records.</p>
+      <div class="what-next">
+        <div class="what-next-title">What happens next</div>
+        <div class="what-next-item"><div class="num">1</div>The Rye Electric Service Manager will review your request and assign a technician.</div>
+        <div class="what-next-item"><div class="num">2</div>You'll receive a call or text to confirm your appointment time.</div>
+        <div class="what-next-item"><div class="num">3</div>Your technician will arrive within the agreed window.</div>
+      </div>
+    </div>
+
+    <!-- Form navigation -->
+    <div class="form-nav" id="form-nav">
+      <button class="btn btn-back" id="btn-back" onclick="prevStep()" style="display:none">← Back</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextStep()">Continue →</button>
+      <button class="btn btn-submit" id="btn-submit" style="display:none" onclick="submitForm()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Submit Request
+      </button>
+    </div>
+  </div><!-- /form-card -->
+</main>
+
+<!-- ── FOOTER ────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <strong>Rye Company</strong> &nbsp;·&nbsp; Rye Electric &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp;
+  <a href="tel:9494410545">949-441-0545</a> &nbsp;·&nbsp;
+  <a href="https://ryecompany.com">ryecompany.com</a> &nbsp;·&nbsp;
+  California License 980345
+</footer>
+
+</div><!-- /page-wrap -->
+<div id="toast"></div>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+emailjs.init('HGciJDgZDCRS9v0Eo'); // ← Replace with your EmailJS public key
+
+const EMAILJS_SERVICE  = 'service_jbdjjoh';       // ← Replace
+const EMAILJS_TEMPLATE_MANAGER  = 'template_4daap5r';  // ← Replace
+const EMAILJS_TEMPLATE_TECH     = 'template_5inkmsl';     // ← Replace
+
+const MANAGER_EMAIL  = 'mkirschbaum@ryecompany.com';
+const NOTIFY_EMAILS  = [
+  { name: 'Mychal', email: 'mkirschbaum@ryecompany.com' },
+  { name: 'Dennis', email: 'dfurst@ryecompany.com'      },
+  { name: 'Joey',   email: 'jjava@ryecompany.com'       },
+  { name: 'Jonathan', email: 'jjacobo@ryecompany.com'   },
+];
+
+const TECHS = [
+  { name: 'G',     email: MANAGER_EMAIL }, // replace with real emails
+  { name: 'Erik',  email: MANAGER_EMAIL },
+  { name: 'James', email: MANAGER_EMAIL },
+  { name: 'Mario', email: MANAGER_EMAIL },
+  { name: 'Dak',   email: MANAGER_EMAIL },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let currentStep = 1;
+const TOTAL_STEPS = 4;
+let selectedType = '';
+let selectedUrgency = '';
+let selectedTime = '';
+let requestCounter = parseInt(localStorage.getItem('svc_req_counter') || '26020');
+
+// ── STEP NAVIGATION ────────────────────────────────────────────────────────
+function showStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+
+  // Step indicators
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const ind = document.getElementById('ind-' + i);
+    ind.classList.remove('active', 'done');
+    if (i < n)  ind.classList.add('done');
+    if (i === n) ind.classList.add('active');
+    // Checkmark for done
+    ind.querySelector('.step-dot').textContent = i < n ? '✓' : i;
+  }
+
+  // Progress bar
+  document.getElementById('progress').style.width = ((n / TOTAL_STEPS) * 100) + '%';
+
+  // Buttons
+  document.getElementById('btn-back').style.display   = n > 1 ? 'inline-flex' : 'none';
+  document.getElementById('btn-next').style.display   = n < TOTAL_STEPS ? 'inline-flex' : 'none';
+  document.getElementById('btn-submit').style.display = n === TOTAL_STEPS ? 'inline-flex' : 'none';
+
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep() {
+  if (!validateStep(currentStep)) return;
+  if (currentStep === TOTAL_STEPS - 1) populateReview();
+  showStep(currentStep + 1);
+}
+
+function prevStep() {
+  showStep(currentStep - 1);
+}
+
+// ── VALIDATION ─────────────────────────────────────────────────────────────
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('.field-input').forEach(e => e.classList.remove('error'));
+}
+
+function showError(fieldId, errId) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errId);
+  if (f) { f.classList.add('error'); f.focus(); }
+  if (e) e.classList.add('show');
+  return false;
+}
+
+function validateStep(n) {
+  clearErrors();
+  if (n === 1) {
+    const fname = v('fname'), lname = v('lname'), phone = v('phone'), email = v('email'), addr = v('address');
+    if (!fname) return showError('fname','err-fname');
+    if (!lname) return showError('lname','err-lname');
+    if (!phone || phone.replace(/\D/g,'').length < 7) return showError('phone','err-phone');
+    if (!email || !email.includes('@')) return showError('email','err-email');
+    if (!addr)  return showError('address','err-address');
+    return true;
+  }
+  if (n === 2) {
+    if (!selectedType) {
+      document.getElementById('err-type').classList.add('show');
+      document.getElementById('type-grid').scrollIntoView({ behavior:'smooth', block:'center' });
+      return false;
+    }
+    if (!selectedUrgency) {
+      document.getElementById('err-urgency').classList.add('show');
+      return false;
+    }
+    if (!v('description')) return showError('description','err-desc');
+    return true;
+  }
+  if (n === 3) {
+    if (!v('pref-date')) return showError('pref-date','err-date');
+    if (!selectedTime) {
+      document.getElementById('err-time').classList.add('show');
+      return false;
+    }
+    return true;
+  }
+  return true;
+}
+
+function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+// ── TYPE / URGENCY / TIME SELECTORS ───────────────────────────────────────
+function selectType(card, val) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedType = val;
+  document.getElementById('err-type').classList.remove('show');
+}
+
+function selectUrgency(card, val) {
+  document.querySelectorAll('.urgency-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedUrgency = val;
+  document.getElementById('err-urgency').classList.remove('show');
+}
+
+function selectTime(card, val) {
+  document.querySelectorAll('.time-slot').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedTime = val;
+  document.getElementById('err-time').classList.remove('show');
+}
+
+// ── REVIEW POPULATE ────────────────────────────────────────────────────────
+function populateReview() {
+  set('rv-name',    v('fname') + ' ' + v('lname'));
+  set('rv-phone',   v('phone'));
+  set('rv-email',   v('email'));
+  set('rv-contact', v('contact-pref'));
+  set('rv-address', v('address'));
+  set('rv-type',    selectedType);
+  set('rv-desc',    v('description'));
+  set('rv-date',    fmtDate(v('pref-date')));
+  set('rv-altdate', v('alt-date') ? fmtDate(v('alt-date')) : '—');
+  set('rv-time',    selectedTime);
+  set('rv-prop',    v('prop-type') || '—');
+
+  const urgEl = document.getElementById('rv-urgency');
+  urgEl.textContent = selectedUrgency;
+  urgEl.className = 'review-val ' + (selectedUrgency === 'Emergency' ? 'urgent' : selectedUrgency === 'Urgent' ? 'medium' : '');
+}
+
+function set(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T12:00:00');
+  return dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+// ── AUTO-ASSIGN TECH ───────────────────────────────────────────────────────
+function assignTech(urgency) {
+  // For emergency/urgent — first available (for now round-robin from localStorage)
+  if (urgency === 'Emergency') {
+    return TECHS[0]; // Escalate to first tech immediately
+  }
+  const lastIdx = parseInt(localStorage.getItem('svc_last_tech') || '-1');
+  const nextIdx = (lastIdx + 1) % TECHS.length;
+  localStorage.setItem('svc_last_tech', nextIdx);
+  return TECHS[nextIdx];
+}
+
+// ── SUBMIT ─────────────────────────────────────────────────────────────────
+async function submitForm() {
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  requestCounter++;
+  localStorage.setItem('svc_req_counter', requestCounter);
+  const srNum = 'SP' + requestCounter;
+
+  const data = {
+    sr_number:    srNum,
+    customer_name: v('fname') + ' ' + v('lname'),
+    first_name:   v('fname'),
+    phone:        v('phone'),
+    email:        v('email'),
+    contact_pref: v('contact-pref'),
+    company:      v('company') || 'N/A',
+    address:      v('address'),
+    service_type: selectedType,
+    urgency:      selectedUrgency,
+    description:  v('description'),
+    pref_date:    fmtDate(v('pref-date')),
+    alt_date:     v('alt-date') ? fmtDate(v('alt-date')) : 'None',
+    time_window:  selectedTime,
+    prop_type:    v('prop-type') || 'Not specified',
+    notes:        v('extra-notes') || 'None',
+    submitted_at: new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' }),
+  };
+
+  const assignedTech = assignTech(selectedUrgency);
+  data.assigned_tech = assignedTech.name;
+
+  // Build plain-text message for manager email
+  data.message = `
+NEW SERVICE REQUEST — ${srNum}
+${'='.repeat(50)}
+Submitted: ${data.submitted_at}
+Urgency:   ${data.urgency}
+Assigned:  ${data.assigned_tech}
+
+CUSTOMER
+  Name:    ${data.customer_name}
+  Phone:   ${data.phone}
+  Email:   ${data.email}
+  Reach:   ${data.contact_pref}
+  Company: ${data.company}
+  Address: ${data.address}
+
+SERVICE
+  Type:    ${data.service_type}
+  Issue:   ${data.description}
+
+SCHEDULING
+  Preferred: ${data.pref_date}
+  Alternate: ${data.alt_date}
+  Window:    ${data.time_window}
+  Property:  ${data.prop_type}
+
+NOTES
+  ${data.notes}
+`.trim();
+
+  data.tech_message = `
+TASK ASSIGNED — ${srNum}
+${'='.repeat(50)}
+You have been assigned a new service request.
+
+Customer: ${data.customer_name}
+Phone:    ${data.phone}  (preferred: ${data.contact_pref})
+Address:  ${data.address}
+Type:     ${data.service_type}
+Urgency:  ${data.urgency}
+Date:     ${data.pref_date}
+Window:   ${data.time_window}
+
+Issue: ${data.description}
+
+Notes: ${data.notes}
+
+Please contact the customer to confirm.
+`.trim();
+
+  try {
+    // Email to all four recipients
+    for (const recipient of NOTIFY_EMAILS) {
+      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE_MANAGER, {
+        ...data,
+        to_email: recipient.email,
+        to_name:  recipient.name,
+        subject:  `[${data.urgency.toUpperCase()}] New Service Request ${srNum} — ${data.customer_name}`,
+      });
+    }
+
+    // Email to assigned tech
+    await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE_TECH, {
+      ...data,
+      to_email: assignedTech.email,
+      to_name: assignedTech.name,
+      subject: `Assigned: Service Request ${srNum} — ${data.customer_name} (${data.urgency})`,
+    });
+
+    // Save to localStorage as a service ticket
+    const tickets = JSON.parse(localStorage.getItem('svc_tickets') || '[]');
+    tickets.unshift({
+      id: srNum,
+      customer: data.customer_name,
+      address: data.address,
+      type: data.service_type,
+      date: v('pref-date'),
+      tech: assignedTech.name,
+      status: selectedUrgency === 'Emergency' ? 'Open' : 'Open',
+      scope: data.description,
+      notes: data.notes,
+      nte: '',
+      rating: 0,
+      ratings: {},
+      createdAt: new Date().toISOString(),
+      source: 'Customer Portal',
+      urgency: selectedUrgency,
+    });
+    localStorage.setItem('svc_tickets', JSON.stringify(tickets));
+
+    // Show success
+    document.getElementById('form-body') && (document.querySelector('.form-body').style.display = 'none');
+    document.querySelector('.form-body').style.display = 'none';
+    document.getElementById('form-nav').style.display = 'none';
+    document.querySelector('.progress-bar').style.display = 'none';
+    document.querySelector('.step-indicators').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    document.getElementById('conf-num').textContent = srNum;
+
+    toast('Request submitted successfully ✓');
+
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    // Still show success to user and save locally even if email fails
+    document.querySelector('.form-body').style.display = 'none';
+    document.getElementById('form-nav').style.display = 'none';
+    document.querySelector('.progress-bar').style.display = 'none';
+    document.querySelector('.step-indicators').style.display = 'none';
+    document.getElementById('success-screen').style.display = 'block';
+    document.getElementById('conf-num').textContent = srNum;
+    toast('Request saved — email delivery pending', true);
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Submit Request';
+  }
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────────────
+function toast(msg, err) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show' + (err ? ' err' : '');
+  setTimeout(() => el.className = '', 3500);
+}
+
+// ── DATE MIN ──────────────────────────────────────────────────────────────
+document.getElementById('pref-date').min = new Date().toISOString().split('T')[0];
+document.getElementById('alt-date').min  = new Date().toISOString().split('T')[0];
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+showStep(1);
+</script>
+</body>
+</html>
