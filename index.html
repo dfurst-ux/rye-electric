@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///C:/Users/Dennis%20Furst/Downloads/index.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric — New Hire Onboarding</title>
-<link rel="stylesheet" href="./Rye Electric — New Hire Onboarding_files/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; }
@@ -90,46 +90,8 @@
   </div>
 
   <div id="error-bar" class="error-bar"></div>
-  <div class="progress" id="progress"><div class="pdot active" title="Personal info">1</div><div class="pline"></div><div class="pdot" title="W-4 / DE 4">2</div><div class="pline"></div><div class="pdot" title="Direct deposit">3</div><div class="pline"></div><div class="pdot" title="Form I-9">4</div><div class="pline"></div><div class="pdot" title="Policies">5</div><div class="pline"></div><div class="pdot" title="Review &amp; sign">6</div></div>
-  <div id="content">
-    <div class="card">
-      <div class="card-title">Personal information</div>
-      <div class="card-sub">Complete your new hire record. Fields marked * are required.</div>
-      <div class="row col3">
-        <div class="field"><label>First name *</label><input id="p_first" value="" placeholder="First"></div>
-        <div class="field"><label>Middle initial</label><input id="p_mi" value="" maxlength="1" placeholder="M"></div>
-        <div class="field"><label>Last name *</label><input id="p_last" value="" placeholder="Last"></div>
-      </div>
-      <div class="row col1"><div class="field"><label>Street address</label><input id="p_addr" value="" placeholder="123 Main St"></div></div>
-      <div class="row col3">
-        <div class="field"><label>City</label><input id="p_city" value="" placeholder="City"></div>
-        <div class="field"><label>State</label><input id="p_state" value="" maxlength="2" placeholder="CA"></div>
-        <div class="field"><label>ZIP</label><input id="p_zip" value="" placeholder="90210"></div>
-      </div>
-      <div class="row col2">
-        <div class="field"><label>Home phone</label><input id="p_phone" value="" placeholder="(xxx) xxx-xxxx"></div>
-        <div class="field"><label>Cell phone</label><input id="p_cell" value="" placeholder="(xxx) xxx-xxxx"></div>
-      </div>
-      <div class="row col2">
-        <div class="field"><label>Email *</label><input type="email" id="p_email" value="" placeholder="you@example.com"></div>
-        <div class="field"><label>Date of birth</label><input type="date" id="p_dob" value=""></div>
-      </div>
-      <div class="row col2">
-        <div class="field"><label>Job title *</label><input id="p_title" value="" placeholder="e.g. Electrician"></div>
-        <div class="field"><label>Start date *</label><input type="date" id="p_start" value=""></div>
-      </div>
-      <div class="divider">Emergency contact</div>
-      <div class="row col2">
-        <div class="field"><label>Contact name</label><input id="p_ec_name" value="" placeholder="Full name"></div>
-        <div class="field"><label>Relationship</label><input id="p_ec_rel" value="" placeholder="Spouse, parent…"></div>
-      </div>
-      <div class="row col1"><div class="field"><label>Contact phone</label><input id="p_ec_phone" value="" placeholder="(xxx) xxx-xxxx"></div></div>
-    </div>
-    
-    <div class="btn-row">
-      <span class="step-label">Step 1 of 6</span>
-      <button class="btn primary" onclick="savePersonal()">Next <i class="ti ti-arrow-right"></i></button>
-    </div></div>
+  <div class="progress" id="progress"></div>
+  <div id="content"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -502,12 +464,30 @@ async function submitAll() {
       status: 'completed', submitted_at: new Date().toISOString()
     });
 
-    // Fire confirmation emails
+    // Fire confirmation emails with full data for PDF generation
     try {
       await fetch(`${SUPABASE_URL}/functions/v1/send-onboarding-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
-        body: JSON.stringify({ hireName: hireName, hireEmail: fd.email, startDate: fd.startDate })
+        body: JSON.stringify({
+          first_name: fd.first, last_name: fd.last, middle_initial: fd.mi||null,
+          address: fd.addr||null, city: fd.city||null, state: fd.state||null, zip: fd.zip||null,
+          phone: fd.phone||null, cell: fd.cell||null, email: fd.email,
+          date_of_birth: fd.dob||null, job_title: fd.title||null, start_date: fd.startDate,
+          ec_name: fd.ecName||null, ec_relationship: fd.ecRel||null, ec_phone: fd.ecPhone||null,
+          w4_filing_status: fd.w4Status||null, w4_multiple_jobs: fd.multiJob==='yes', w4_exempt: fd.exempt==='yes',
+          w4_dependent_credits: parseFloat(fd.depCredits)||0, w4_other_income: parseFloat(fd.otherIncome)||0, w4_extra_withholding: parseFloat(fd.extraWH)||0,
+          de4_filing_status: fd.de4Status||null, de4_allowances: parseInt(fd.caAllowances)||0,
+          de4_extra_withholding: parseFloat(fd.caExtra)||0, de4_exempt: fd.caExempt==='yes',
+          bank1_type: fd.acct1Type||null, bank1_name: fd.bank1||null, bank1_routing: fd.routing1||null,
+          bank1_account: fd.account1||null, bank1_deposit_amount: fd.deposit1||null,
+          bank2_type: fd.acct2Type||null, bank2_name: fd.bank2||null, bank2_routing: fd.routing2||null, bank2_account: fd.account2||null,
+          i9_citizenship_status: fd.i9Cit||null, i9_ssn: fd.i9Ssn||null,
+          ack_confidentiality: !!fd.ackC, ack_drug_alcohol: !!fd.ackD, ack_harassment: !!fd.ackH,
+          ack_at_will: !!fd.ackA, ack_arbitration: !!fd.ackArb, ack_handbook: !!fd.ackHb,
+          e_signature: fd.sig, drivers_license: fd.dl||null,
+          submitted_at: new Date().toISOString()
+        })
       });
     } catch(e) { console.warn('Email failed:', e); }
 
@@ -530,6 +510,5 @@ function prevStep() { step = Math.max(step-1, 0); render(); window.scrollTo(0,0)
 
 render();
 </script>
-
-
-</body></html>
+</body>
+</html>
