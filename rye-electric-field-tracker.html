@@ -6492,23 +6492,117 @@ renderCCRef();
     var idx = rows.querySelectorAll('.tbt-sig-row-wrap').length;
     var workerOpts = '<option value="">-- Select employee --</option>'
       + TBT_WORKERS.map(function(w) { return '<option value="' + w + '">' + w + '</option>'; }).join('');
+
     var div = document.createElement('div');
     div.className = 'tbt-sig-row-wrap';
     div.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:center;background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;';
-    div.innerHTML = '<div>'
-        + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;display:block;margin-bottom:4px;">Employee ' + (idx + 1) + '</label>'
-        + '<select class="tbt-emp-select" style="width:100%;padding:6px 8px;border:1px solid #cbd5e0;border-radius:6px;font-size:12px;background:#fff;">' + workerOpts + '</select>'
-      + '</div>'
-      + '<div>'
-        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">'
-          + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;">Signature</label>'
-          + '<button onclick="tbtClearSig(' + idx + ')" style="font-size:10px;background:none;border:none;color:#e53e3e;cursor:pointer;padding:0;">&#10005; Clear</button>'
-        + '</div>'
-        + '<div style="position:relative;background:#fff;border:1.5px solid #cbd5e0;border-radius:6px;overflow:hidden;cursor:crosshair;">'
-          + '<canvas id="tbt-sig-canvas-' + idx + '" data-idx="' + idx + '" width="300" height="60" style="width:100%;height:60px;display:block;touch-action:none;" onmousedown="tbtSigStart(event,this)" ontouchstart="tbtSigStart(event,this)"></canvas>'
-          + '<div class="tbt-sig-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#a0aec0;pointer-events:none;white-space:nowrap;">Sign here</div>'
-        + '</div>'
-      + '</div>';
+
+    // Left: employee dropdown
+    var leftDiv = document.createElement('div');
+    var lbl = document.createElement('label');
+    lbl.style.cssText = 'font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;display:block;margin-bottom:4px;';
+    lbl.textContent = 'Employee ' + (idx + 1);
+    var sel = document.createElement('select');
+    sel.className = 'tbt-emp-select';
+    sel.style.cssText = 'width:100%;padding:6px 8px;border:1px solid #cbd5e0;border-radius:6px;font-size:12px;background:#fff;';
+    sel.innerHTML = workerOpts;
+    leftDiv.appendChild(lbl);
+    leftDiv.appendChild(sel);
+
+    // Right: signature canvas
+    var rightDiv = document.createElement('div');
+    var sigHdr = document.createElement('div');
+    sigHdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;';
+    var sigLbl = document.createElement('label');
+    sigLbl.style.cssText = 'font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;';
+    sigLbl.textContent = 'Signature';
+    var clearBtn = document.createElement('button');
+    clearBtn.style.cssText = 'font-size:10px;background:none;border:none;color:#e53e3e;cursor:pointer;padding:0;';
+    clearBtn.textContent = '✕ Clear';
+    clearBtn.addEventListener('click', function() { tbtClearSig(idx); });
+    sigHdr.appendChild(sigLbl);
+    sigHdr.appendChild(clearBtn);
+
+    var canvasWrap = document.createElement('div');
+    canvasWrap.style.cssText = 'position:relative;background:#fff;border:1.5px solid #cbd5e0;border-radius:6px;overflow:hidden;cursor:crosshair;';
+
+    var canvas = document.createElement('canvas');
+    canvas.id = 'tbt-sig-canvas-' + idx;
+    canvas.setAttribute('data-idx', idx);
+    canvas.width = 400;
+    canvas.height = 80;
+    canvas.style.cssText = 'width:100%;height:80px;display:block;touch-action:none;';
+
+    var ph = document.createElement('div');
+    ph.className = 'tbt-sig-ph';
+    ph.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#a0aec0;pointer-events:none;white-space:nowrap;';
+    ph.textContent = 'Sign here';
+
+    // Attach drawing events directly to the canvas element
+    var drawing = false;
+    var lastX = 0, lastY = 0;
+
+    function getXY(e) {
+      var r = canvas.getBoundingClientRect();
+      var scaleX = canvas.width / r.width;
+      var scaleY = canvas.height / r.height;
+      var src = e.touches ? e.touches[0] : e;
+      return { x: (src.clientX - r.left) * scaleX, y: (src.clientY - r.top) * scaleY };
+    }
+
+    function onStart(e) {
+      e.preventDefault();
+      drawing = true;
+      ph.style.display = 'none';
+      var p = getXY(e);
+      lastX = p.x; lastY = p.y;
+      var ctx = canvas.getContext('2d');
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a202c';
+      ctx.fill();
+    }
+
+    function onMove(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      var p = getXY(e);
+      var ctx = canvas.getContext('2d');
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = '#1a202c';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      lastX = p.x; lastY = p.y;
+    }
+
+    function onEnd(e) {
+      if (!drawing) return;
+      drawing = false;
+      // Save signature data
+      var data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      var hasContent = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+      if (hasContent) tbtSigData[idx] = canvas.toDataURL('image/png');
+    }
+
+    canvas.addEventListener('mousedown',  onStart);
+    canvas.addEventListener('mousemove',  onMove);
+    canvas.addEventListener('mouseup',    onEnd);
+    canvas.addEventListener('mouseleave', onEnd);
+    canvas.addEventListener('touchstart', onStart, { passive: false });
+    canvas.addEventListener('touchmove',  onMove,  { passive: false });
+    canvas.addEventListener('touchend',   onEnd);
+
+    canvasWrap.appendChild(canvas);
+    canvasWrap.appendChild(ph);
+    rightDiv.appendChild(sigHdr);
+    rightDiv.appendChild(canvasWrap);
+
+    div.appendChild(leftDiv);
+    div.appendChild(rightDiv);
     rows.appendChild(div);
   };
 
