@@ -192,6 +192,107 @@ tbody tr:hover td{background:#f7fbfc}
 .sig-btn{padding:4px 12px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;font-family:var(--font)}
 .sig-btn-clear{background:var(--red-light);border:1px solid var(--red);color:var(--red)}
 .sig-btn-done{background:var(--green-light);border:1px solid var(--green);color:var(--green)}
+/* ── Safety Tab ── */
+.safety-friday-badge{position:absolute;top:-6px;right:-6px;background:#e53e3e;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px}
+.safety-header{padding:16px 0 8px;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
+.safety-header h2{margin:0 0 4px;font-size:20px;font-weight:700;color:#1a202c}
+.safety-meta{display:flex;align-items:center;gap:12px;font-size:13px;color:#718096;flex-wrap:wrap}
+.safety-required-badge{background:#fff5f5;border:1px solid #feb2b2;color:#c53030;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+.safety-optional-badge{background:#f7fafc;border:1px solid #cbd5e0;color:#718096;padding:2px 8px;border-radius:6px;font-size:12px}
+.safety-submitted-banner{margin-top:10px;background:#f0fff4;border:1px solid #9ae6b4;color:#276749;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600}
+.safety-form-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:16px;overflow:hidden}
+.safety-form-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:#f7fafc;border-bottom:1px solid #e2e8f0;user-select:none}
+.safety-form-header:hover{background:#edf2f7}
+.safety-form-icon{font-size:20px;flex-shrink:0}
+.safety-form-title{font-size:15px;font-weight:700;color:#1a202c}
+.safety-form-subtitle{font-size:11px;color:#718096;margin-top:1px}
+.safety-check-status{margin-left:auto;font-size:18px;min-width:28px;text-align:center}
+.safety-chevron{font-size:12px;color:#a0aec0;flex-shrink:0;transition:transform .2s}
+.safety-chevron.open{transform:rotate(180deg)}
+.safety-form-body{padding:16px;display:none}
+.safety-form-body.open{display:block}
+.safety-checklist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 20px;margin-top:8px}
+.safety-checklist-section{margin-bottom:12px}
+.safety-section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#4a5568;margin-bottom:6px}
+.safety-check-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#2d3748;padding:3px 0;cursor:pointer;line-height:1.3}
+.safety-check-item input[type="checkbox"]{flex-shrink:0;accent-color:#2b6cb0}
+.safety-obs-hint{font-size:12px;color:#718096;margin-bottom:10px}
+.safety-obs-row{display:grid;grid-template-columns:28px 1fr 100px 1fr;gap:6px;align-items:center;margin-bottom:6px}
+.safety-obs-num{font-size:12px;color:#718096;text-align:center;font-weight:600}
+.safety-yesno{display:flex;gap:6px;justify-content:center}
+.safety-yesno label{display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer}
+.safety-yesno input[type="radio"]{accent-color:#2b6cb0}
+.safety-signatories{margin-top:20px;border-top:1px dashed #e2e8f0;padding-top:16px}
+.safety-sig-row{display:flex;gap:12px;margin-bottom:10px;align-items:flex-end;flex-wrap:wrap}
+.safety-sig-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
+.safety-sig-field label{font-size:12px;font-weight:600;color:#4a5568}
+.safety-sig-field input{font-size:13px;padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px}
+.safety-field-row{display:flex;flex-wrap:wrap;gap:12px}
+.safety-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
+.safety-field label{font-size:12px;font-weight:600;color:#4a5568}
+.safety-field input,.safety-field textarea{padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;color:#2d3748;background:#fff}
+.safety-field textarea{resize:vertical;font-family:inherit}
+.safety-weather-toggle{display:flex;gap:4px}
+.weather-btn{flex:1;padding:7px 6px;border:1px solid #cbd5e0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#4a5568;cursor:pointer;transition:all .15s}
+.weather-btn.active{background:#2b6cb0;color:#fff;border-color:#2b6cb0}
+.ptp-numbered-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.ptp-numbered-row span{font-size:12px;font-weight:700;color:#718096;width:18px;text-align:right;flex-shrink:0}
+.ptp-numbered-row input{flex:1;padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px}
+.ptp-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.ptp-tools-grid input{padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px}
+.safety-hz-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px}
+.safety-radio-item{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer}
+.jha-table-wrapper{overflow-x:auto;margin-top:10px}
+.jha-table{width:100%;border-collapse:collapse;font-size:13px}
+.jha-table th{background:#edf2f7;color:#4a5568;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;text-align:left;border-bottom:2px solid #e2e8f0}
+.jha-table td{padding:5px 6px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+.jha-table input[type="text"]{width:100%;padding:5px 8px;border:1px solid #e2e8f0;border-radius:5px;font-size:13px;font-family:inherit}
+.jha-table input[type="text"]:focus{border-color:#63b3ed;outline:none}
+.jha-del-btn{background:none;border:none;color:#fc8181;cursor:pointer;font-size:16px;padding:2px 6px}
+.ptp-sig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:8px}
+.ptp-sig-entry{display:flex;flex-direction:column;gap:4px;background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px}
+.ptp-sig-entry label{font-size:11px;font-weight:600;color:#718096}
+.ptp-sig-entry input{padding:5px 8px;border:1px solid #cbd5e0;border-radius:5px;font-size:13px}
+.safety-add-row-btn{background:none;border:1px dashed #a0aec0;color:#4a5568;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;margin-top:8px;transition:all .15s}
+.safety-add-row-btn:hover{border-color:#2b6cb0;color:#2b6cb0;background:#ebf8ff}
+.safety-submit-area{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-top:8px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+.safety-submitter-row{display:flex;flex-direction:column;gap:4px;flex:1;min-width:180px}
+.safety-submitter-row label{font-size:12px;font-weight:600;color:#4a5568}
+.safety-submitter-row input{padding:8px 12px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px}
+.safety-submit-btn{background:#2b6cb0;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
+.safety-submit-btn:hover{background:#2c5282}
+.safety-submit-btn:disabled{background:#90cdf4;cursor:not-allowed}
+.safety-submit-status{font-size:13px;font-weight:600;width:100%}
+.safety-submit-status.success{color:#276749}
+.safety-submit-status.error{color:#c53030}
+@media(max-width:600px){.safety-obs-row{grid-template-columns:28px 1fr}.ptp-tools-grid{grid-template-columns:1fr}}
+
+  /* TBT Library */
+  .tbt-intro{font-size:12px;color:#718096;margin-bottom:14px;padding:10px 12px;background:#f7fafc;border-radius:6px;border-left:3px solid #2b6cb0;}
+  .tbt-category{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden;}
+  .tbt-cat-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;background:#f7fafc;user-select:none;}
+  .tbt-cat-header:hover{background:#edf2f7;}
+  .tbt-cat-icon{font-size:18px;flex-shrink:0;}
+  .tbt-cat-title{font-size:14px;font-weight:700;color:#1a202c;flex:1;}
+  .tbt-cat-count{font-size:11px;color:#718096;background:#e2e8f0;padding:2px 8px;border-radius:10px;}
+  .tbt-cat-chevron{font-size:11px;color:#a0aec0;transition:transform .2s;}
+  .tbt-cat-chevron.open{transform:rotate(180deg);}
+  .tbt-cat-body{display:none;padding:6px 0;}
+  .tbt-cat-body.open{display:block;}
+  .tbt-item{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid #f0f0f0;}
+  .tbt-item:last-child{border-bottom:none;}
+  .tbt-item:hover{background:#fafafa;}
+  .tbt-item-info{display:flex;align-items:center;gap:8px;flex:1;}
+  .tbt-num{font-size:11px;font-weight:700;color:#718096;min-width:28px;}
+  .tbt-name{font-size:13px;color:#2d3748;}
+  .tbt-item-actions{display:flex;gap:6px;flex-shrink:0;}
+  .tbt-view-btn{padding:5px 10px;border:1px solid #cbd5e0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#4a5568;cursor:pointer;}
+  .tbt-view-btn:hover{border-color:#2b6cb0;color:#2b6cb0;}
+  .tbt-sign-btn{padding:5px 10px;border:1px solid #2b6cb0;border-radius:6px;background:#ebf8ff;font-size:12px;font-weight:600;color:#2b6cb0;cursor:pointer;}
+  .tbt-sign-btn:hover{background:#2b6cb0;color:#fff;}
+  .tbt-sign-btn.signed{border-color:#38a169;background:#f0fff4;color:#276749;}
+  .tbt-remaining-note{margin-top:12px;font-size:11px;color:#a0aec0;text-align:center;}
+  .tbt-remaining-note code{background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:11px;}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -275,6 +376,11 @@ tbody tr:hover td{background:#f7fbfc}
         <button class="tab" onclick="goTab(this,'tasks')">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span>Tasks</span>
+        </button>
+        <button class="tab safety-tab-btn" onclick="goTab(this,'safety')" id="tab-btn-safety" style="position:relative;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Safety</span>
+          <span class="safety-friday-badge" id="safetyFridayBadge" style="display:none;">Required</span>
         </button>
   </div>
 
@@ -1741,6 +1847,364 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
     </div>
   </div>
+
+<!-- ===== SAFETY TAB ===== -->
+<div class="pane" id="pane-safety">
+  <div class="safety-header">
+    <h2>Safety Documentation</h2>
+    <div class="safety-meta">
+      <span id="safetyDateDisplay"></span>
+      <span id="safetyFridayNotice" class="safety-required-badge" style="display:none;">📋 Friday — All 3 forms required</span>
+      <span id="safetyOptionalNotice" class="safety-optional-badge" style="display:none;">Optional today — required on Fridays</span>
+    </div>
+    <div id="safetySubmittedBanner" class="safety-submitted-banner" style="display:none;">
+      ✅ Safety forms submitted for this week — <span id="safetySubmittedBy"></span>
+    </div>
+  </div>
+
+  <!-- WJSI -->
+  <div class="safety-form-card">
+    <div class="safety-form-header" onclick="toggleSafetySection('wjsi')">
+      <span class="safety-form-icon">📋</span>
+      <div>
+        <div class="safety-form-title">Weekly Jobsite Safety Inspection</div>
+        <div class="safety-form-subtitle">WJSI · Required at start of job and weekly thereafter</div>
+      </div>
+      <span class="safety-check-status" id="wjsiStatus">—</span>
+      <span class="safety-chevron" id="wjsiChevron">▼</span>
+    </div>
+    <div class="safety-form-body" id="wjsiBody">
+      <div class="safety-checklist-grid">
+        <div class="safety-checklist-section">
+          <div class="safety-section-label">General Conditions</div>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_fire"> Fire Protection Equipment</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_firstaid"> First Aid &amp; Emergency Equipment</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_phone"> Emergency Phone Numbers Posted</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_sanitary"> Sanitary Toilets &amp; Wash Water</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_water"> Drinking Water</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_lighting"> Task Lighting</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_cranes"> Cranes, Rigging, Forklifts, Scissor &amp; Aerial Lifts</label>
+        </div>
+        <div class="safety-checklist-section">
+          <div class="safety-section-label">Access, Egress &amp; Walking Surfaces</div>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_access"> Safe access and egress to all work areas</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_ladders"> Ladders and stairs safe and used correctly</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_aisles"> Aisles and passageways free from hazards</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_scaffolds"> Scaffolds — proper construction and free from hazards</label>
+        </div>
+        <div class="safety-checklist-section">
+          <div class="safety-section-label">Fall Protection</div>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_ppe"> Personal Protective Equipment is safe</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_rigging"> Rigging and Anchors are safe</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_compliance"> Workers in compliance with fall protection rules</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_guardrails"> Guardrails and Handrails are safe</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_holes"> Floor holes and openings are covered or guarded</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_walls"> Wall openings or open-sided floors are guarded</label>
+        </div>
+        <div class="safety-checklist-section">
+          <div class="safety-section-label">Tools, Cords &amp; Hoses</div>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="tc_electrical"> Electrical tools and cords</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="tc_pneumatic"> Pneumatic (air) hoses and connections</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="tc_oxyacetylene"> Oxy-Acetylene gauges, cylinders, hoses &amp; torch</label>
+        </div>
+        <div class="safety-checklist-section">
+          <div class="safety-section-label">Personal Protective Equipment</div>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_clothing"> Proper work clothing and footwear</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_head"> Head Protection</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_eye"> Eye Protection</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_hearing"> Hearing Protection</label>
+          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_task"> Task Specific PPE (gloves, face shield, respirator)</label>
+        </div>
+      </div>
+      <div class="safety-section-label" style="margin-top:20px;">Inspection Observations &amp; Findings</div>
+      <div class="safety-obs-hint">Include positive comments and note corrective action for any unsafe conditions.</div>
+      <div id="wjsiObsTable"></div>
+      <button class="safety-add-row-btn" onclick="addWjsiObsRow()">+ Add observation</button>
+      <div class="safety-signatories">
+        <div class="safety-sig-row">
+          <div class="safety-sig-field"><label>Field Representative Name</label><input type="text" id="wjsiFieldRep" placeholder="Print name"></div>
+          <div class="safety-sig-field"><label>Initials</label><input type="text" id="wjsiFieldRepInitials" placeholder="Initials" maxlength="4" style="width:80px;"></div>
+        </div>
+        <div class="safety-sig-row">
+          <div class="safety-sig-field"><label>Management Representative Name</label><input type="text" id="wjsiMgmtRep" placeholder="Print name"></div>
+          <div class="safety-sig-field"><label>Initials</label><input type="text" id="wjsiMgmtRepInitials" placeholder="Initials" maxlength="4" style="width:80px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JHA -->
+  <div class="safety-form-card">
+    <div class="safety-form-header" onclick="toggleSafetySection('jha')">
+      <span class="safety-form-icon">⚠️</span>
+      <div>
+        <div class="safety-form-title">Job Hazard Analysis</div>
+        <div class="safety-form-subtitle">JHA · Identify task steps, hazards, and controls</div>
+      </div>
+      <span class="safety-check-status" id="jhaStatus">—</span>
+      <span class="safety-chevron" id="jhaChevron">▼</span>
+    </div>
+    <div class="safety-form-body" id="jhaBody">
+      <div class="safety-field-row">
+        <div class="safety-field"><label>Job Position</label><input type="text" id="jhaPosition" placeholder="e.g. Foreman, Electrician"></div>
+        <div class="safety-field"><label>Division</label><input type="text" id="jhaDivision" placeholder="e.g. Electrical"></div>
+        <div class="safety-field"><label>Supervisor</label><input type="text" id="jhaSupervisor" placeholder="Supervisor name"></div>
+        <div class="safety-field"><label>Approved By</label><input type="text" id="jhaApprovedBy" placeholder="Name"></div>
+      </div>
+      <div class="safety-section-label" style="margin-top:16px;">Required / Recommended PPE</div>
+      <div class="safety-checklist-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:8px;">
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="hard_hat"> Hard Hat</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="safety_glasses"> Safety Glasses</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="hi_vis"> Hi-Vis Vest</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="gloves"> Gloves</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="steel_toe"> Steel-Toe Boots</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="face_shield"> Face Shield</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="respirator"> Respirator</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="hearing_prot"> Hearing Protection</label>
+        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="fall_arrest"> Fall Arrest Equipment</label>
+      </div>
+      <div class="safety-section-label" style="margin-top:20px;">Task Analysis</div>
+      <div class="safety-obs-hint">Break down each task step with its potential hazards and safety controls.</div>
+      <div class="jha-table-wrapper">
+        <table class="jha-table">
+          <thead><tr><th style="width:32px;">#</th><th>Job Task Step</th><th>Potential Hazards</th><th>Safety Controls</th><th style="width:32px;"></th></tr></thead>
+          <tbody id="jhaTableBody"></tbody>
+        </table>
+      </div>
+      <button class="safety-add-row-btn" onclick="addJhaRow()">+ Add task step</button>
+    </div>
+  </div>
+
+  <!-- PTP -->
+  <div class="safety-form-card">
+    <div class="safety-form-header" onclick="toggleSafetySection('ptp')">
+      <span class="safety-form-icon">📝</span>
+      <div>
+        <div class="safety-form-title">Pre-Task Plan</div>
+        <div class="safety-form-subtitle">PTP · Complete before starting work each day</div>
+      </div>
+      <span class="safety-check-status" id="ptpStatus">—</span>
+      <span class="safety-chevron" id="ptpChevron">▼</span>
+    </div>
+    <div class="safety-form-body" id="ptpBody">
+      <div class="safety-field-row">
+        <div class="safety-field"><label>Task Location</label><input type="text" id="ptpTaskLocation" placeholder="Floor, area, or unit"></div>
+        <div class="safety-field">
+          <label>Weather</label>
+          <div class="safety-weather-toggle">
+            <button class="weather-btn" data-val="under80" onclick="setWeather(this)">Under 80°</button>
+            <button class="weather-btn" data-val="80plus" onclick="setWeather(this)">80°+</button>
+            <button class="weather-btn" data-val="95plus" onclick="setWeather(this)">95°+</button>
+          </div>
+        </div>
+        <div class="safety-field"><label>Time</label><input type="time" id="ptpTime"></div>
+      </div>
+      <div class="safety-field" style="margin-top:12px;">
+        <label>Task Description</label>
+        <textarea id="ptpTaskDesc" rows="3" placeholder="Brief description of the task to be performed..."></textarea>
+      </div>
+      <div class="safety-section-label" style="margin-top:16px;">Task Steps</div>
+      <div id="ptpTaskSteps">
+        <div class="ptp-numbered-row"><span>1</span><input type="text" placeholder="Step 1"></div>
+        <div class="ptp-numbered-row"><span>2</span><input type="text" placeholder="Step 2"></div>
+        <div class="ptp-numbered-row"><span>3</span><input type="text" placeholder="Step 3"></div>
+        <div class="ptp-numbered-row"><span>4</span><input type="text" placeholder="Step 4"></div>
+        <div class="ptp-numbered-row"><span>5</span><input type="text" placeholder="Step 5"></div>
+      </div>
+      <div class="safety-section-label" style="margin-top:16px;">Tools, Equipment &amp; Material</div>
+      <div class="ptp-tools-grid">
+        <input type="text" placeholder="1."><input type="text" placeholder="6.">
+        <input type="text" placeholder="2."><input type="text" placeholder="7.">
+        <input type="text" placeholder="3."><input type="text" placeholder="8.">
+        <input type="text" placeholder="4."><input type="text" placeholder="9.">
+        <input type="text" placeholder="5."><input type="text" placeholder="10.">
+      </div>
+      <div class="safety-section-label" style="margin-top:16px;">Hazardous Chemicals</div>
+      <div class="safety-hz-row">
+        <label class="safety-radio-item"><input type="radio" name="ptpHazChem" value="no" checked> No</label>
+        <label class="safety-radio-item"><input type="radio" name="ptpHazChem" value="yes"> Yes</label>
+        <label class="safety-check-item" id="ptpSdsLabel" style="display:none;margin-left:16px;"><input type="checkbox" id="ptpSdsAvail"> SDS Sheet available for review</label>
+      </div>
+      <div class="safety-section-label" style="margin-top:16px;">Certifications, Inspections, Training &amp; Permits</div>
+      <div class="safety-checklist-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:8px;">
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="forklift_cert"> Forklift Operator Certification</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="forklift_pre"> Forklift Pre-Use Inspection</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="mewp_cert"> MEWP Certification</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="mewp_pre"> MEWP Pre-Use Inspection</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="fall_training"> Personal Fall Arrest Equipment Training</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="fall_pre"> Personal Fall Arrest Equipment Pre-Use Inspection</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="ladder_pre"> Portable Ladder Pre-Use Inspection</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="trench_training"> Trench &amp; Excavation Awareness Training</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="scaffold_training"> Scaffold User Training</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="silica_training"> Silica Awareness Training</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="loto_training"> LOTO Exposed Employee Training</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="hot_work"> Hot Work Permit</label>
+      </div>
+      <div class="safety-section-label" style="margin-top:16px;">Additional PPE Required</div>
+      <div class="safety-checklist-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:8px;">
+        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="face_shield"> Face Shield or Goggles</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="fall_arrest"> Personal Fall Arrest Equipment</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="leather_gloves"> Leather Gloves</label>
+        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="hearing"> Hearing Protection</label>
+      </div>
+      <div class="safety-section-label" style="margin-top:20px;">Hazards &amp; Controls</div>
+      <div class="safety-obs-hint">Identify hazards and a control for each. List highest-risk hazards first.</div>
+      <div class="jha-table-wrapper">
+        <table class="jha-table">
+          <thead><tr><th style="width:32px;">#</th><th>Hazard</th><th>Hazard Control</th><th style="width:32px;"></th></tr></thead>
+          <tbody id="ptpHazardBody"></tbody>
+        </table>
+      </div>
+      <button class="safety-add-row-btn" onclick="addPtpHazardRow()">+ Add hazard</button>
+      <div class="safety-section-label" style="margin-top:20px;">Crew Signatures</div>
+      <div class="safety-obs-hint">All employees involved must sign before starting the task.</div>
+      <div class="ptp-sig-grid" id="ptpSigGrid"></div>
+      <button class="safety-add-row-btn" onclick="addPtpSigRow()">+ Add crew member</button>
+      <div class="safety-section-label" style="margin-top:20px;">Supervisor Review</div>
+      <div class="safety-field"><label>Supervisor Notes</label><textarea id="ptpSupervisorNotes" rows="2" placeholder="Review notes and feedback to the team..."></textarea></div>
+      <div class="safety-field" style="margin-top:8px;"><label>Supervisor Name</label><input type="text" id="ptpSupervisorName" placeholder="Supervisor name"></div>
+    </div>
+  </div>
+
+  <!-- TOOLBOX TALK LIBRARY -->
+  <div class="safety-form-card" id="tbtLibraryCard" style="margin-top:8px;">
+    <div class="safety-form-header" onclick="toggleSafetySection('tbtLibrary')">
+      <span class="safety-form-icon">📚</span>
+      <div>
+        <div class="safety-form-title">Toolbox Talk Library</div>
+        <div class="safety-form-subtitle">Select a talk, review with crew, collect signatures</div>
+      </div>
+      <span class="safety-check-status" id="tbtLibraryStatus">—</span>
+      <span class="safety-chevron" id="tbtLibraryChevron">▼</span>
+    </div>
+    <div class="safety-form-body" id="tbtLibraryBody">
+
+      <div class="tbt-intro">Tap a category to expand, then choose a Toolbox Talk to review with your crew. After the discussion, collect crew signatures below each talk.</div>
+
+      <div class="tbt-category">
+        <div class="tbt-cat-header" onclick="toggleTBTCat('equip')">
+          <span class="tbt-cat-icon">🏗️</span>
+          <span class="tbt-cat-title">Equipment &amp; Operations</span>
+          <span class="tbt-cat-count">8 talks</span>
+          <span class="tbt-cat-chevron" id="tbt-chevron-equip">▼</span>
+        </div>
+        <div class="tbt-cat-body" id="tbt-cat-equip">
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#1</span><span class="tbt-name">Aerial Lift Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 1 Aerial Lift Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 1 Aerial Lift Safety.pdf','#1 Aerial Lift Safety')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#2</span><span class="tbt-name">Buried Utilities</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 2 Buried Utilites.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 2 Buried Utilites.pdf','#2 Buried Utilities')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#7</span><span class="tbt-name">Cranes: Stability &amp; Tipping</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 7 Cranes Stability.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 7 Cranes Stability.pdf','#7 Cranes: Stability and Tipping')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#11</span><span class="tbt-name">Equipment Maintenance</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 11 Equipment Maintenance.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 11 Equipment Maintenance.pdf','#11 Equipment Maintenance')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#12</span><span class="tbt-name">Equipment: Falling Objects</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 12 Equipment Falling Objects.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 12 Equipment Falling Objects.pdf','#12 Equipment: Falling Objects')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#13</span><span class="tbt-name">Equipment: Getting On &amp; Off</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 13 Equipment Geting on and Off.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 13 Equipment Geting on and Off.pdf','#13 Equipment: Getting On and Off')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#27</span><span class="tbt-name">Overhead Power Lines</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 27 Overhead Power Lines.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 27 Overhead Power Lines.pdf','#27 Overhead Power Lines')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#29</span><span class="tbt-name">Power Saw Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 29 Power Saw Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 29 Power Saw Safety.pdf','#29 Power Saw Safety')">✍️ Sign</button></div></div>
+        </div>
+      </div>
+
+      <div class="tbt-category">
+        <div class="tbt-cat-header" onclick="toggleTBTCat('electric')">
+          <span class="tbt-cat-icon">⚡</span>
+          <span class="tbt-cat-title">Electrical &amp; Fire</span>
+          <span class="tbt-cat-count">3 talks</span>
+          <span class="tbt-cat-chevron" id="tbt-chevron-electric">▼</span>
+        </div>
+        <div class="tbt-cat-body" id="tbt-cat-electric">
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#8</span><span class="tbt-name">Electrical Power</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 8 Electric Power.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 8 Electric Power.pdf','#8 Electrical Power')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#18</span><span class="tbt-name">Fire Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 18 Fire Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 18 Fire Safety.pdf','#18 Fire Safety')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#3</span><span class="tbt-name">Carbon Monoxide Poisoning</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 3 Carbon Monoxide Poisoning.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 3 Carbon Monoxide Poisoning.pdf','#3 Carbon Monoxide Poisoning')">✍️ Sign</button></div></div>
+        </div>
+      </div>
+
+      <div class="tbt-category">
+        <div class="tbt-cat-header" onclick="toggleTBTCat('falls')">
+          <span class="tbt-cat-icon">🪜</span>
+          <span class="tbt-cat-title">Fall Protection</span>
+          <span class="tbt-cat-count">3 talks</span>
+          <span class="tbt-cat-chevron" id="tbt-chevron-falls">▼</span>
+        </div>
+        <div class="tbt-cat-body" id="tbt-cat-falls">
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#15</span><span class="tbt-name">Preventing Falls Through Holes</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 15 Preventing Falls Through Holes.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 15 Preventing Falls Through Holes.pdf','#15 Preventing Falls Through Holes')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#16</span><span class="tbt-name">Falls: Extension Ladders</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 16 Extension Ladders.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 16 Extension Ladders.pdf','#16 Falls: Extension Ladders')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#17</span><span class="tbt-name">Guardrails: General Fall Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 17 Guard Rails.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 17 Guard Rails.pdf','#17 Guardrails: General Fall Protection')">✍️ Sign</button></div></div>
+        </div>
+      </div>
+
+      <div class="tbt-category">
+        <div class="tbt-cat-header" onclick="toggleTBTCat('ppe')">
+          <span class="tbt-cat-icon">🦺</span>
+          <span class="tbt-cat-title">PPE &amp; Personal Safety</span>
+          <span class="tbt-cat-count">8 talks</span>
+          <span class="tbt-cat-chevron" id="tbt-chevron-ppe">▼</span>
+        </div>
+        <div class="tbt-cat-body" id="tbt-cat-ppe">
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#9</span><span class="tbt-name">Eye Protection (v1)</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 9 Eye Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 9 Eye Protection.pdf','#9 Eye Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#14</span><span class="tbt-name">Eye Protection (v2)</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 14 Eye Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 14 Eye Protection.pdf','#14 Eye Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#20</span><span class="tbt-name">Hammer Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 20 Hammer Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 20 Hammer Safety.pdf','#20 Hammer Safety')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#21</span><span class="tbt-name">Head Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 21 Head Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 21 Head Protection.pdf','#21 Head Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#4</span><span class="tbt-name">Carpal Tunnel Syndrome</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 4 Carpal Tunnel Syndrome.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 4 Carpal Tunnel Syndrome.pdf','#4 Carpal Tunnel Syndrome')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#5</span><span class="tbt-name">Cold Weather</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 5 Cold Weather.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 5 Cold Weather.pdf','#5 Cold Weather')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#22</span><span class="tbt-name">Hearing Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 22 Hearing Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 22 Hearing Protection.pdf','#22 Hearing Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">Hot</span><span class="tbt-name">Working in Hot Weather</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('Toolbox-Talk-12-Working-in-Hot-Weather.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('Toolbox-Talk-12-Working-in-Hot-Weather.pdf','Working in Hot Weather')">✍️ Sign</button></div></div>
+        </div>
+      </div>
+
+      <div class="tbt-category">
+        <div class="tbt-cat-header" onclick="toggleTBTCat('awareness')">
+          <span class="tbt-cat-icon">🧠</span>
+          <span class="tbt-cat-title">Safety Awareness</span>
+          <span class="tbt-cat-count">6 talks</span>
+          <span class="tbt-cat-chevron" id="tbt-chevron-awareness">▼</span>
+        </div>
+        <div class="tbt-cat-body" id="tbt-cat-awareness">
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#6</span><span class="tbt-name">Confined Spaces</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 6 Confined Spaces.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 6 Confined Spaces.pdf','#6 Confined Spaces')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#47</span><span class="tbt-name">Horseplay</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 47 Horseplay.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 47 Horseplay.pdf','#47 Horseplay')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#48</span><span class="tbt-name">Why Accidents Occur</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 48 Why Incidents Occur.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 48 Why Incidents Occur.pdf','#48 Why Accidents Occur')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#49</span><span class="tbt-name">Near Misses</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 49 Near Misses.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 49 Near Misses.pdf','#49 Near Misses')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#50</span><span class="tbt-name">Cost of Incidents</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 50 Cost of Incidents.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 50 Cost of Incidents.pdf','#50 Cost of Incidents')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#52</span><span class="tbt-name">The Deadly Dozen</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 52 Deadly Dozen.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 52 Deadly Dozen.pdf','#52 The Deadly Dozen')">✍️ Sign</button></div></div>
+        </div>
+      </div>
+
+      <div class="tbt-remaining-note">📋 Have more Toolbox Talks to add? Upload remaining PDFs to the <code>toolbox-talks/</code> folder and they will appear here after the next update.</div>
+    </div>
+  </div>
+
+  <!-- TBT Sign Modal -->
+  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
+    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
+      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
+      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
+      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
+      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
+      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
+      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
+      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
+      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
+    </div>
+  </div>
+
+
+  <!-- Submit -->
+  <div class="safety-submit-area">
+    <div class="safety-submitter-row">
+      <label>Submitted by</label>
+      <input type="text" id="safetySubmittedByInput" placeholder="Your name">
+    </div>
+    <button class="safety-submit-btn" id="safetySubmitBtn" onclick="submitSafetyForms()">Submit Safety Forms</button>
+    <div id="safetySubmitStatus" class="safety-submit-status"></div>
+  </div>
+
+  <div style="margin-top:12px;padding:12px 16px;background:#fffbeb;border:1px solid #f6e05e;border-radius:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:13px;font-weight:700;color:#744210;">📤 Send to Safety</div>
+      <div style="font-size:12px;color:#92400e;margin-top:2px;">Print as PDF → email to <strong>jjacobo@ryecompany.com</strong></div>
+    </div>
+    <button class="safety-submit-btn" onclick="printSafetyForms()" style="background:#d97706;">🖨️ Print / Save PDF</button>
+  </div>
+</div>
+<!-- ===== END SAFETY TAB ===== -->
 
 <div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg><span id="toast-txt"></span></div>
 
@@ -3257,7 +3721,7 @@ function renderCCRef(){
 function goTab(btn,name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  ['log','units','workers','jobs','whiteboard','djr','signin','tasks'].forEach(n=>{
+  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety'].forEach(n=>{
     const el=document.getElementById('pane-'+n);
     if(el) el.className='pane'+(n===name?' on':'');
   });
@@ -5689,6 +6153,454 @@ loadSIFromStorage();
 loadSigData();
 renderTodayLog();
 renderCCRef();
+
+/* === SAFETY TAB === */
+(function initSafetyTab(){
+  var SUPABASE_URL='https://okesnavkxmqucgvvhncx.supabase.co';
+  var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+  function isFriday(){return new Date().getDay()===5}
+  function getWeekEnding(){var n=new Date(),day=n.getDay(),diff=day<=5?5-day:5-day+7,f=new Date(n);f.setDate(n.getDate()+diff);return f.toISOString().slice(0,10)}
+  function getSafetyJobId(){if(typeof jobSlug!=='undefined'&&jobSlug)return jobSlug;if(typeof JOB_ID!=='undefined')return JOB_ID;var m=window.location.search.match(/job=([^&]+)/);return m?m[1]:'UNKNOWN'}
+
+  // Register safety pane with existing tab system
+  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety'].forEach(function(n){
+    var p=document.getElementById('pane-'+n);
+    if(p&&!document.getElementById('pane-'+n+'_registered')){/* already in DOM */}
+  });
+
+  window.addEventListener('DOMContentLoaded',function(){
+    // date display
+    var el=document.getElementById('safetyDateDisplay');
+    if(el)el.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
+    if(isFriday()){
+      var b=document.getElementById('safetyFridayBadge');if(b)b.style.display='inline-block';
+      var fn=document.getElementById('safetyFridayNotice');if(fn)fn.style.display='inline-block';
+    } else {
+      var on=document.getElementById('safetyOptionalNotice');if(on)on.style.display='inline-block';
+    }
+    var t=document.getElementById('ptpTime');if(t){var now=new Date();t.value=now.toTimeString().slice(0,5)}
+    for(var i=0;i<5;i++)addWjsiObsRow();
+    for(var i=0;i<5;i++)addJhaRow();
+    for(var i=0;i<10;i++)addPtpHazardRow();
+    for(var i=0;i<5;i++)addPtpSigRow();
+    document.querySelectorAll('input[name="ptpHazChem"]').forEach(function(r){
+      r.addEventListener('change',function(){var l=document.getElementById('ptpSdsLabel');if(l)l.style.display=this.value==='yes'?'flex':'none'});
+    });
+    checkExistingSubmission();
+  });
+
+  window.toggleSafetySection=function(id){
+    var b=document.getElementById(id+'Body'),c=document.getElementById(id+'Chevron');
+    if(!b)return;
+    var open=b.classList.contains('open');
+    b.classList.toggle('open',!open);
+    if(c)c.classList.toggle('open',!open);
+  };
+  window.setWeather=function(btn){document.querySelectorAll('.weather-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active')};
+
+  window.addWjsiObsRow=function(){
+    var c=document.getElementById('wjsiObsTable');if(!c)return;
+    var n=c.querySelectorAll('.safety-obs-row').length;if(n>=10)return;
+    var i=n+1,row=document.createElement('div');row.className='safety-obs-row';
+    row.innerHTML='<div class="safety-obs-num">'+i+'</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs'+i+'" value="yes"> YES</label><label><input type="radio" name="wjsiObs'+i+'" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)">';
+    c.appendChild(row);
+  };
+  window.addJhaRow=function(){
+    var t=document.getElementById('jhaTableBody');if(!t)return;
+    var n=t.querySelectorAll('tr').length+1,tr=document.createElement('tr');
+    tr.innerHTML='<td class="safety-obs-num">'+n+'</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(\'tr\').remove()">×</button></td>';
+    t.appendChild(tr);
+  };
+  window.addPtpHazardRow=function(){
+    var t=document.getElementById('ptpHazardBody');if(!t)return;
+    var n=t.querySelectorAll('tr').length+1,tr=document.createElement('tr');
+    tr.innerHTML='<td class="safety-obs-num">'+n+'</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(\'tr\').remove()">×</button></td>';
+    t.appendChild(tr);
+  };
+  window.addPtpSigRow=function(){
+    var g=document.getElementById('ptpSigGrid');if(!g)return;
+    var n=g.querySelectorAll('.ptp-sig-entry').length+1,d=document.createElement('div');d.className='ptp-sig-entry';
+    d.innerHTML='<label>Employee '+n+'</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6">';
+    g.appendChild(d);
+  };
+
+  function getChecked(name){var v=[];document.querySelectorAll('input[name="'+name+'"]:checked').forEach(function(c){v.push(c.value)});return v}
+  function val(id){var e=document.getElementById(id);return e?e.value:''}
+  function getWjsiObs(){return Array.from(document.querySelectorAll('#wjsiObsTable .safety-obs-row')).map(function(r,i){var t=r.querySelectorAll('input[type="text"]'),cor=r.querySelector('input[value="yes"]:checked')?'yes':r.querySelector('input[value="no"]:checked')?'no':null;return{n:i+1,observation:t[0]?t[0].value:'',corrected:cor,responsible:t[1]?t[1].value:''}}).filter(function(r){return r.observation})}
+  function getJhaRows(){return Array.from(document.querySelectorAll('#jhaTableBody tr')).map(function(tr){var i=tr.querySelectorAll('input[type="text"]');return{step:i[0]?i[0].value:'',hazard:i[1]?i[1].value:'',control:i[2]?i[2].value:''}}).filter(function(r){return r.step||r.hazard})}
+  function getPtpHazards(){return Array.from(document.querySelectorAll('#ptpHazardBody tr')).map(function(tr){var i=tr.querySelectorAll('input[type="text"]');return{hazard:i[0]?i[0].value:'',control:i[1]?i[1].value:''}}).filter(function(r){return r.hazard})}
+  function getPtpSigs(){return Array.from(document.querySelectorAll('#ptpSigGrid .ptp-sig-entry')).map(function(d){var i=d.querySelectorAll('input');return{name:i[0]?i[0].value:'',msr:i[1]?i[1].value:''}}).filter(function(r){return r.name})}
+
+  function updateStatusIcons(){
+    var wOk=document.querySelectorAll('input[name="wjsi"]:checked').length>0;
+    var jOk=getJhaRows().length>0;
+    var pOk=val('ptpTaskDesc').trim().length>0;
+    var m={wjsi:'wjsiStatus',jha:'jhaStatus',ptp:'ptpStatus'};
+    var v={wjsi:wOk,jha:jOk,ptp:pOk};
+    Object.keys(m).forEach(function(k){var e=document.getElementById(m[k]);if(e)e.textContent=v[k]?'✅':'—'});
+  }
+  document.addEventListener('change',updateStatusIcons);
+  document.addEventListener('input',updateStatusIcons);
+
+  async function checkExistingSubmission(){
+    try{
+      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs?job_id=eq.'+getSafetyJobId()+'&week_ending=eq.'+getWeekEnding()+'&select=submitted_by,submitted_at&limit=1',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+      var d=await r.json();
+      if(d&&d.length>0){
+        var ban=document.getElementById('safetySubmittedBanner'),by=document.getElementById('safetySubmittedBy'),btn=document.getElementById('safetySubmitBtn');
+        if(ban)ban.style.display='block';
+        if(by)by.textContent=d[0].submitted_by+' · '+new Date(d[0].submitted_at).toLocaleDateString();
+        if(btn)btn.textContent='Re-submit (Update)';
+      }
+    }catch(e){console.warn('Safety check:',e)}
+  }
+
+  window.submitSafetyForms=async function(){
+    var by=val('safetySubmittedByInput').trim();
+    var statusEl=document.getElementById('safetySubmitStatus');
+    var btn=document.getElementById('safetySubmitBtn');
+    if(!by){if(statusEl){statusEl.textContent='Please enter your name before submitting.';statusEl.className='safety-submit-status error'}return}
+    if(btn){btn.disabled=true;btn.textContent='Submitting…'}
+    if(statusEl){statusEl.textContent='';statusEl.className='safety-submit-status'}
+    var payload={
+      job_id:getSafetyJobId(),submitted_by:by,week_ending:getWeekEnding(),friday_required:isFriday(),
+      wjsi:{checklist:(function(){var o={};document.querySelectorAll('input[name="wjsi"]').forEach(function(c){o[c.value]=c.checked});return o})(),observations:getWjsiObs(),field_rep:val('wjsiFieldRep'),field_rep_initials:val('wjsiFieldRepInitials'),mgmt_rep:val('wjsiMgmtRep'),mgmt_rep_initials:val('wjsiMgmtRepInitials')},
+      jha:{position:val('jhaPosition'),division:val('jhaDivision'),supervisor:val('jhaSupervisor'),approved_by:val('jhaApprovedBy'),ppe:getChecked('jhaPPE'),tasks:getJhaRows()},
+      ptp:{task_location:val('ptpTaskLocation'),weather:(function(){var b=document.querySelector('.weather-btn.active');return b?b.dataset.val:''})(),time:val('ptpTime'),task_description:val('ptpTaskDesc'),task_steps:Array.from(document.querySelectorAll('#ptpTaskSteps input')).map(function(i){return i.value}).filter(Boolean),tools:Array.from(document.querySelectorAll('.ptp-tools-grid input')).map(function(i){return i.value}).filter(Boolean),hazardous_chemicals:(function(){var r=document.querySelector('input[name="ptpHazChem"]:checked');return r?r.value:'no'})(),sds_available:(function(){var e=document.getElementById('ptpSdsAvail');return e?e.checked:false})(),certifications:getChecked('ptpCert'),additional_ppe:getChecked('ptpAddPPE'),hazards:getPtpHazards(),signatures:getPtpSigs(),supervisor_notes:val('ptpSupervisorNotes'),supervisor_name:val('ptpSupervisorName')}
+    };
+    try{
+      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
+      if(r.ok||r.status===201){
+        if(statusEl){statusEl.textContent='✅ Safety forms submitted successfully.';statusEl.className='safety-submit-status success'}
+        if(btn){btn.disabled=false;btn.textContent='Re-submit (Update)'}
+        var ban=document.getElementById('safetySubmittedBanner'),byEl=document.getElementById('safetySubmittedBy');
+        if(ban)ban.style.display='block';if(byEl)byEl.textContent=by+' · Today';
+      } else {
+        var err=await r.text();
+        if(statusEl){statusEl.textContent='Error: '+err;statusEl.className='safety-submit-status error'}
+        if(btn){btn.disabled=false;btn.textContent='Submit Safety Forms'}
+      }
+    }catch(e){
+      if(statusEl){statusEl.textContent='Network error — check connection and try again.';statusEl.className='safety-submit-status error'}
+      if(btn){btn.disabled=false;btn.textContent='Submit Safety Forms'}
+    }
+  };
+
+
+  window.printSafetyForms=function(){
+    var jobName=typeof jobSlug!=='undefined'?jobSlug:(typeof JOB_ID!=='undefined'?JOB_ID:'');
+    var submittedBy=document.getElementById('safetySubmittedByInput')?document.getElementById('safetySubmittedByInput').value:'';
+    var dateStr=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    var checkLabels={gc_fire:'Fire Protection Equipment',gc_firstaid:'First Aid & Emergency Equipment',gc_phone:'Emergency Phone Numbers Posted',gc_sanitary:'Sanitary Toilets & Wash Water',gc_water:'Drinking Water',gc_lighting:'Task Lighting',gc_cranes:'Cranes, Rigging, Forklifts, Scissor & Aerial Lifts',ae_access:'Safe access and egress to all work areas',ae_ladders:'Ladders and stairs safe and used correctly',ae_aisles:'Aisles and passageways free from hazards',ae_scaffolds:'Scaffolds - proper construction and free from hazards',fp_ppe:'PPE is safe',fp_rigging:'Rigging and Anchors are safe',fp_compliance:'Workers in compliance with fall protection rules',fp_guardrails:'Guardrails and Handrails are safe',fp_holes:'Floor holes and openings are covered or guarded',fp_walls:'Wall openings or open-sided floors are guarded',tc_electrical:'Electrical tools and cords',tc_pneumatic:'Pneumatic hoses and connections',tc_oxyacetylene:'Oxy-Acetylene gauges, cylinders, hoses & torch',ppe_clothing:'Proper work clothing and footwear',ppe_head:'Head Protection',ppe_eye:'Eye Protection',ppe_hearing:'Hearing Protection',ppe_task:'Task Specific PPE'};
+    var wjsiChecks='';
+    document.querySelectorAll('input[name="wjsi"]').forEach(function(cb){wjsiChecks+='<tr><td style="padding:4px 8px;font-size:12px;">'+(cb.checked?'[X]':'[ ]')+'</td><td style="padding:4px 8px;font-size:12px;">'+(checkLabels[cb.value]||cb.value)+'</td></tr>';});
+    var wjsiObs='';
+    document.querySelectorAll('#wjsiObsTable .safety-obs-row').forEach(function(row,i){var t=row.querySelectorAll('input[type="text"]');var obs=t[0]?t[0].value:'';if(!obs)return;var cor=row.querySelector('input[value="yes"]:checked')?'YES':row.querySelector('input[value="no"]:checked')?'NO':'--';wjsiObs+='<tr><td style="padding:4px 8px;font-size:12px;">'+(i+1)+'</td><td style="padding:4px 8px;font-size:12px;">'+obs+'</td><td style="padding:4px 8px;font-size:12px;text-align:center;">'+cor+'</td><td style="padding:4px 8px;font-size:12px;">'+(t[1]?t[1].value:'')+'</td></tr>';});
+    var fieldRep=document.getElementById('wjsiFieldRep')?document.getElementById('wjsiFieldRep').value:'';
+    var fieldRepI=document.getElementById('wjsiFieldRepInitials')?document.getElementById('wjsiFieldRepInitials').value:'';
+    var mgmtRep=document.getElementById('wjsiMgmtRep')?document.getElementById('wjsiMgmtRep').value:'';
+    var mgmtRepI=document.getElementById('wjsiMgmtRepInitials')?document.getElementById('wjsiMgmtRepInitials').value:'';
+    var jhaPPE=[];document.querySelectorAll('input[name="jhaPPE"]:checked').forEach(function(c){jhaPPE.push(c.value.replace(/_/g,' '));});
+    var jhaRows='';document.querySelectorAll('#jhaTableBody tr').forEach(function(tr,i){var inputs=tr.querySelectorAll('input[type="text"]');var step=inputs[0]?inputs[0].value:'';if(!step&&!(inputs[1]&&inputs[1].value))return;jhaRows+='<tr><td style="padding:4px 8px;font-size:12px;text-align:center;">'+(i+1)+'</td><td style="padding:4px 8px;font-size:12px;">'+step+'</td><td style="padding:4px 8px;font-size:12px;">'+(inputs[1]?inputs[1].value:'')+'</td><td style="padding:4px 8px;font-size:12px;">'+(inputs[2]?inputs[2].value:'')+'</td></tr>';});
+    var ptpSteps='';document.querySelectorAll('#ptpTaskSteps input').forEach(function(i){if(i.value)ptpSteps+='<li style="font-size:12px;margin-bottom:3px;">'+i.value+'</li>';});
+    var ptpTools=[];document.querySelectorAll('.ptp-tools-grid input').forEach(function(i){if(i.value)ptpTools.push(i.value);});
+    var ptpCerts=[];document.querySelectorAll('input[name="ptpCert"]:checked').forEach(function(c){ptpCerts.push(c.value.replace(/_/g,' '));});
+    var ptpAddPPE=[];document.querySelectorAll('input[name="ptpAddPPE"]:checked').forEach(function(c){ptpAddPPE.push(c.value.replace(/_/g,' '));});
+    var ptpHazards='';document.querySelectorAll('#ptpHazardBody tr').forEach(function(tr,i){var inputs=tr.querySelectorAll('input[type="text"]');if(!(inputs[0]&&inputs[0].value))return;ptpHazards+='<tr><td style="padding:4px 8px;font-size:12px;text-align:center;">'+(i+1)+'</td><td style="padding:4px 8px;font-size:12px;">'+inputs[0].value+'</td><td style="padding:4px 8px;font-size:12px;">'+(inputs[1]?inputs[1].value:'')+'</td></tr>';});
+    var ptpSigs='';document.querySelectorAll('#ptpSigGrid .ptp-sig-entry').forEach(function(d){var inputs=d.querySelectorAll('input');if(!(inputs[0]&&inputs[0].value))return;ptpSigs+='<tr><td style="padding:4px 8px;font-size:12px;">'+inputs[0].value+'</td><td style="padding:4px 8px;font-size:12px;">'+(inputs[1]?inputs[1].value:'')+'</td><td style="padding:4px 8px;border-bottom:1px solid #ccc;min-width:120px;">&nbsp;</td></tr>';});
+    var hazChem=document.querySelector('input[name="ptpHazChem"]:checked')?document.querySelector('input[name="ptpHazChem"]:checked').value:'no';
+    var weatherBtn=document.querySelector('.weather-btn.active');var weatherVal=weatherBtn?weatherBtn.textContent:'--';
+    var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Rye Electric Safety Forms</title>'
+      +'<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:#111;background:#fff;padding:24px}.print-header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:3px solid #1a1a1a;padding-bottom:12px;margin-bottom:20px}.email-notice{background:#fffbeb;border:1px solid #f6e05e;border-radius:6px;padding:10px 14px;margin-bottom:24px;font-size:12px;color:#744210}.section{margin-bottom:28px;page-break-inside:avoid}.section-title{background:#1a1a1a;color:#fff;font-size:13px;font-weight:700;padding:7px 12px;letter-spacing:.5px;text-transform:uppercase}.section-sub{background:#f0f0f0;font-size:11px;font-weight:700;color:#555;padding:4px 12px;text-transform:uppercase;letter-spacing:.4px;margin:10px 0 6px}.inner{padding:10px 12px}table{width:100%;border-collapse:collapse}th{background:#eee;font-size:11px;font-weight:700;text-transform:uppercase;padding:5px 8px;text-align:left;border-bottom:2px solid #ccc}.field-row{display:flex;gap:16px;margin-bottom:8px;flex-wrap:wrap}.field{flex:1;min-width:120px}.field label{font-size:10px;font-weight:700;text-transform:uppercase;color:#777;display:block;margin-bottom:2px}.field .val{font-size:12px;border-bottom:1px solid #ccc;padding-bottom:2px;min-height:18px}.sig-row{display:flex;gap:20px;margin-bottom:8px;padding-top:12px;border-top:1px solid #ddd}.sig-name{flex:2;border-bottom:1px solid #333;font-size:12px;padding-bottom:2px}.sig-init{flex:0 0 60px;border-bottom:1px solid #333;font-size:12px;padding-bottom:2px;text-align:center}.footer{margin-top:32px;border-top:2px solid #1a1a1a;padding-top:10px;font-size:11px;color:#777;display:flex;justify-content:space-between}@media print{body{padding:12px}}</style>'
+      +'</head><body>'
+      +'<div class="print-header"><div><div style="font-size:22px;font-weight:900;letter-spacing:-1px;">rye <span style="color:#2b6cb0;">electric</span></div><div style="font-size:16px;font-weight:700;margin-top:4px;">Weekly Safety Documentation</div></div>'
+      +'<div style="font-size:11px;color:#555;text-align:right;line-height:1.7;"><strong>Job:</strong> '+jobName+'<br><strong>Date:</strong> '+dateStr+'<br><strong>Submitted by:</strong> '+(submittedBy||'--')+'</div></div>'
+      +'<div class="email-notice">&#128228; <strong>Save as PDF and email to: jjacobo@ryecompany.com</strong><br>Browser: File &rarr; Print &rarr; Save as PDF &rarr; then email the PDF.</div>'
+      +'<div class="section"><div class="section-title">1. Weekly Jobsite Safety Inspection (WJSI)</div><div class="inner"><table><tbody>'+wjsiChecks+'</tbody></table>'
+      +(wjsiObs?'<div class="section-sub">Observations &amp; Findings</div><table><thead><tr><th style="width:30px;">#</th><th>Observation</th><th style="width:60px;text-align:center;">Corrected</th><th>Responsible</th></tr></thead><tbody>'+wjsiObs+'</tbody></table>':'')
+      +'<div class="sig-row"><div class="sig-name"><span style="font-size:10px;color:#777;display:block;">Field Representative</span>'+fieldRep+'</div><div class="sig-init"><span style="font-size:10px;color:#777;display:block;">Initials</span>'+fieldRepI+'</div></div>'
+      +'<div class="sig-row"><div class="sig-name"><span style="font-size:10px;color:#777;display:block;">Management Representative</span>'+mgmtRep+'</div><div class="sig-init"><span style="font-size:10px;color:#777;display:block;">Initials</span>'+mgmtRepI+'</div></div>'
+      +'</div></div>'
+      +'<div class="section"><div class="section-title">2. Job Hazard Analysis (JHA)</div><div class="inner">'
+      +'<div class="field-row"><div class="field"><label>Job Position</label><div class="val">'+(document.getElementById('jhaPosition')?document.getElementById('jhaPosition').value:'')+'</div></div><div class="field"><label>Division</label><div class="val">'+(document.getElementById('jhaDivision')?document.getElementById('jhaDivision').value:'')+'</div></div><div class="field"><label>Supervisor</label><div class="val">'+(document.getElementById('jhaSupervisor')?document.getElementById('jhaSupervisor').value:'')+'</div></div><div class="field"><label>Approved By</label><div class="val">'+(document.getElementById('jhaApprovedBy')?document.getElementById('jhaApprovedBy').value:'')+'</div></div></div>'
+      +(jhaPPE.length?'<div style="margin:8px 0;font-size:12px;"><strong>PPE Required:</strong> '+jhaPPE.join(', ')+'</div>':'')
+      +(jhaRows?'<div class="section-sub">Task Analysis</div><table><thead><tr><th style="width:30px;">#</th><th>Task Step</th><th>Potential Hazards</th><th>Safety Controls</th></tr></thead><tbody>'+jhaRows+'</tbody></table>':'')
+      +'</div></div>'
+      +'<div class="section"><div class="section-title">3. Pre-Task Plan (PTP)</div><div class="inner">'
+      +'<div class="field-row"><div class="field"><label>Task Location</label><div class="val">'+(document.getElementById('ptpTaskLocation')?document.getElementById('ptpTaskLocation').value:'')+'</div></div><div class="field"><label>Weather</label><div class="val">'+weatherVal+'</div></div><div class="field"><label>Time</label><div class="val">'+(document.getElementById('ptpTime')?document.getElementById('ptpTime').value:'')+'</div></div></div>'
+      +'<div style="margin:8px 0;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;color:#777;">Task Description</span><div style="font-size:12px;border:1px solid #ddd;border-radius:4px;padding:6px;margin-top:3px;min-height:36px;">'+(document.getElementById('ptpTaskDesc')?document.getElementById('ptpTaskDesc').value:'')+'</div></div>'
+      +(ptpSteps?'<div class="section-sub">Task Steps</div><ol style="padding-left:20px;margin:4px 0;">'+ptpSteps+'</ol>':'')
+      +(ptpTools.length?'<div style="margin:8px 0;font-size:12px;"><strong>Tools &amp; Equipment:</strong> '+ptpTools.join(', ')+'</div>':'')
+      +'<div style="margin:8px 0;font-size:12px;"><strong>Hazardous Chemicals:</strong> '+hazChem.toUpperCase()+'</div>'
+      +(ptpCerts.length?'<div style="margin:8px 0;font-size:12px;"><strong>Certifications/Permits:</strong> '+ptpCerts.join(', ')+'</div>':'')
+      +(ptpAddPPE.length?'<div style="margin:8px 0;font-size:12px;"><strong>Additional PPE:</strong> '+ptpAddPPE.join(', ')+'</div>':'')
+      +(ptpHazards?'<div class="section-sub">Hazards &amp; Controls</div><table><thead><tr><th style="width:30px;">#</th><th>Hazard</th><th>Control</th></tr></thead><tbody>'+ptpHazards+'</tbody></table>':'')
+      +(ptpSigs?'<div class="section-sub">Crew Signatures</div><table><thead><tr><th>Employee Name</th><th style="width:80px;">MSR</th><th>Signature</th></tr></thead><tbody>'+ptpSigs+'</tbody></table>':'')
+      +'<div style="margin-top:12px;font-size:10px;font-weight:700;text-transform:uppercase;color:#777;">Supervisor Notes</div><div style="font-size:12px;border:1px solid #ddd;border-radius:4px;padding:6px;min-height:32px;margin-top:3px;">'+(document.getElementById('ptpSupervisorNotes')?document.getElementById('ptpSupervisorNotes').value:'')+'</div>'
+      +'<div class="sig-row"><div class="sig-name"><span style="font-size:10px;color:#777;display:block;">Supervisor Signature</span>'+(document.getElementById('ptpSupervisorName')?document.getElementById('ptpSupervisorName').value:'')+'</div></div>'
+      +'</div></div>'
+      +'<div class="footer"><span>Rye Electric, Inc. &mdash; Safety Documentation</span><span>'+jobName+' &middot; '+dateStr+'</span></div>'
+      +'</body></html>';
+    var w=window.open('','_blank','width=850,height=1100');
+    w.document.open();w.document.write(html);w.document.close();
+    setTimeout(function(){w.focus();w.print();},600);
+  };
+
+
+  // ── TBT Library ──────────────────────────────────────────────────────────
+  var TBT_BASE_URL = 'https://raw.githubusercontent.com/dfurst-ux/rye-electric/main/toolbox-talks/';
+  var currentTBTFile = '';
+  var currentTBTTitle = '';
+  var signedTBTs = {};
+
+  var tbtSigData = {};
+  var tbtSigDrawing = false;
+  var tbtSigCanvas = null;
+  var tbtSigCtx = null;
+  var tbtSigLastX = 0, tbtSigLastY = 0;
+
+  var TBT_WORKERS = [
+    "Abiud Lopez","Adrian Flores","Adrian Hernandez","Adrian Marquez",
+    "Alberto Lopez Ruiz","Alejandro Lopez","Alex Osorio","Angel Hernandez",
+    "Angel Ibanez","Anthony Ibanez","Anthony Lyons","Anthony Macias",
+    "Anthony Zetina","Antonio Castillo","Armando Lopez","Axel Salas",
+    "Brandon Salazar","Brenda Quijada","Brian Campos","Brian Flores",
+    "Brian Kitajima","Brian Ramirez","Carla Quijada","Carlos Agapito",
+    "Carlos Landaverde","Christian Moran","Cristian Collin","Daniel Burleson",
+    "Daniel Lopez","Daniel Villegas","David Casarez","David Smith",
+    "Dillan Smith","Duvaldi Mazariegos","Dyana Quijada","Edgar Solis",
+    "Edith Del Carmen","Eduardo Echeverria","Edwin Martinez","Efrain Cornejo",
+    "Efren Hilario","Enrique Laguna","Erik Lopez","Estevan Sandoval",
+    "Filiberto Ramos","Francisco Flores","Gabriel Flores","Guillermo Silva",
+    "Henri Sibrian","Humberto Flores","Irvin Rivera","Isaiah Ortiz Alvarado",
+    "Isidro Enciso","Jaime Moya","Jaime Quintero","James Marquez",
+    "Jayson Ortega","Jeffrey Rivera","Jerlin Mendoza","Jerry Munoz",
+    "Jesus Heredia","Jimmy Cascio","Joaquin Garcia","Johnny Perez",
+    "Jonathan Jacobo","Jorge Contreras","Jose Luna","Jose Preciado",
+    "Jose Ramirez","Josue Villegas","Juan Mazariegos","Julio Munoz",
+    "Kenneth William","Kevin Bautista","Leonardo Mazariegos","Lizeth Marcos",
+    "Lorenzo Tanguma","Louis Aceves","Luis Ramirez","Manuel Martinez",
+    "Manuel Palacios","Mario Arias","Mario Lopez","Mathew Gonzalez",
+    "Matthew Baciu","Miguel Corral","Miguel Dominguez","Noah Villareal",
+    "Oliver Galicia","Oscar Aguirre","Pedro Barrera","Randdy De Paz",
+    "Robert Stark","Robert Welch","Rusel Santiago","Salvador Perez",
+    "Samuel Munoz","Sergio Diaz","Sergio Sandoval","Sotero Dominguez",
+    "Steven Sulewski","Tony Broadnax","Uriel Chavez","Victor Armienta",
+    "Victor Carrillo","Vincent Sopha","Vincent Stancati","Xavier Contreras"
+  ];
+
+  function tbtGetPos(e, canvas) {
+    var r = canvas.getBoundingClientRect();
+    var scaleX = canvas.width / r.width;
+    var scaleY = canvas.height / r.height;
+    if (e.touches) {
+      return { x: (e.touches[0].clientX - r.left) * scaleX, y: (e.touches[0].clientY - r.top) * scaleY };
+    }
+    return { x: (e.clientX - r.left) * scaleX, y: (e.clientY - r.top) * scaleY };
+  }
+
+  function tbtSigStart(e, canvas) {
+    e.preventDefault(); e.stopPropagation();
+    tbtSigDrawing = true; tbtSigCanvas = canvas;
+    tbtSigCtx = canvas.getContext('2d');
+    tbtSigCtx.strokeStyle = '#1a202c'; tbtSigCtx.lineWidth = 2;
+    tbtSigCtx.lineCap = 'round'; tbtSigCtx.lineJoin = 'round';
+    var pos = tbtGetPos(e, canvas);
+    tbtSigLastX = pos.x; tbtSigLastY = pos.y;
+    tbtSigCtx.beginPath(); tbtSigCtx.arc(pos.x, pos.y, 1, 0, Math.PI * 2); tbtSigCtx.fill();
+    var ph = canvas.parentNode.querySelector('.tbt-sig-ph');
+    if (ph) ph.style.display = 'none';
+    document.addEventListener('mousemove', tbtSigMove);
+    document.addEventListener('mouseup', tbtSigEnd);
+    document.addEventListener('touchmove', tbtSigMove, { passive: false });
+    document.addEventListener('touchend', tbtSigEnd);
+  }
+
+  function tbtSigMove(e) {
+    if (!tbtSigDrawing || !tbtSigCtx) return;
+    e.preventDefault();
+    var pos = tbtGetPos(e, tbtSigCanvas);
+    tbtSigCtx.beginPath(); tbtSigCtx.moveTo(tbtSigLastX, tbtSigLastY);
+    tbtSigCtx.lineTo(pos.x, pos.y); tbtSigCtx.stroke();
+    tbtSigLastX = pos.x; tbtSigLastY = pos.y;
+  }
+
+  function tbtSigEnd(e) {
+    tbtSigDrawing = false;
+    document.removeEventListener('mousemove', tbtSigMove);
+    document.removeEventListener('mouseup', tbtSigEnd);
+    document.removeEventListener('touchmove', tbtSigMove);
+    document.removeEventListener('touchend', tbtSigEnd);
+    if (tbtSigCanvas) {
+      var idx = tbtSigCanvas.getAttribute('data-idx');
+      var data = tbtSigCanvas.getContext('2d').getImageData(0, 0, tbtSigCanvas.width, tbtSigCanvas.height).data;
+      var hasContent = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+      if (hasContent && idx !== null) tbtSigData[idx] = tbtSigCanvas.toDataURL('image/png');
+    }
+  }
+
+  function tbtClearSig(idx) {
+    var canvas = document.getElementById('tbt-sig-canvas-' + idx);
+    if (!canvas) return;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    var ph = canvas.parentNode.querySelector('.tbt-sig-ph');
+    if (ph) ph.style.display = 'block';
+    delete tbtSigData[idx];
+  }
+
+  window.toggleTBTCat = function(id) {
+    var body = document.getElementById('tbt-cat-' + id);
+    var chev = document.getElementById('tbt-chevron-' + id);
+    if (!body) return;
+    var open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    if (chev) chev.classList.toggle('open', !open);
+  };
+
+  window.viewTBT = function(filename) {
+    window.open(TBT_BASE_URL + filename, '_blank');
+  };
+
+  window.openTBTSign = function(filename, title) {
+    currentTBTFile = filename;
+    currentTBTTitle = title;
+    tbtSigData = {};
+    var titleEl = document.getElementById('tbtSignTitle');
+    var rows = document.getElementById('tbtSignRows');
+    var status = document.getElementById('tbtSignStatus');
+    var presenter = document.getElementById('tbtPresenter');
+    if (titleEl) titleEl.textContent = title;
+    if (rows) rows.innerHTML = '';
+    if (status) { status.textContent = ''; status.style.color = ''; }
+    if (presenter) presenter.value = '';
+    for (var i = 0; i < 4; i++) addTBTSignRow();
+    var modal = document.getElementById('tbtSignModal');
+    if (modal) modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeTBTSign = function() {
+    var modal = document.getElementById('tbtSignModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+    tbtSigData = {};
+  };
+
+  window.addTBTSignRow = function() {
+    var rows = document.getElementById('tbtSignRows');
+    if (!rows) return;
+    var idx = rows.querySelectorAll('.tbt-sig-row-wrap').length;
+    var workerOpts = '<option value="">-- Select employee --</option>'
+      + TBT_WORKERS.map(function(w) { return '<option value="' + w + '">' + w + '</option>'; }).join('');
+    var div = document.createElement('div');
+    div.className = 'tbt-sig-row-wrap';
+    div.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:center;background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;';
+    div.innerHTML = '<div>'
+        + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;display:block;margin-bottom:4px;">Employee ' + (idx + 1) + '</label>'
+        + '<select class="tbt-emp-select" style="width:100%;padding:6px 8px;border:1px solid #cbd5e0;border-radius:6px;font-size:12px;background:#fff;">' + workerOpts + '</select>'
+      + '</div>'
+      + '<div>'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">'
+          + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;">Signature</label>'
+          + '<button onclick="tbtClearSig(' + idx + ')" style="font-size:10px;background:none;border:none;color:#e53e3e;cursor:pointer;padding:0;">&#10005; Clear</button>'
+        + '</div>'
+        + '<div style="position:relative;background:#fff;border:1.5px solid #cbd5e0;border-radius:6px;overflow:hidden;cursor:crosshair;">'
+          + '<canvas id="tbt-sig-canvas-' + idx + '" data-idx="' + idx + '" width="300" height="60" style="width:100%;height:60px;display:block;touch-action:none;" onmousedown="tbtSigStart(event,this)" ontouchstart="tbtSigStart(event,this)"></canvas>'
+          + '<div class="tbt-sig-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#a0aec0;pointer-events:none;white-space:nowrap;">Sign here</div>'
+        + '</div>'
+      + '</div>';
+    rows.appendChild(div);
+  };
+
+  window.submitTBTSignOff = async function() {
+    var SUPABASE_URL_TBT = 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPABASE_KEY_TBT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var statusEl = document.getElementById('tbtSignStatus');
+    var presenter = document.getElementById('tbtPresenter') ? document.getElementById('tbtPresenter').value.trim() : '';
+
+    var entries = [];
+    document.querySelectorAll('#tbtSignRows .tbt-sig-row-wrap').forEach(function(row, idx) {
+      var sel = row.querySelector('.tbt-emp-select');
+      var name = sel ? sel.value : '';
+      var canvas = document.getElementById('tbt-sig-canvas-' + idx);
+      if (canvas) {
+        var data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+        var hasSig = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+        if (hasSig) tbtSigData[idx] = canvas.toDataURL('image/png');
+      }
+      if (name) entries.push({ name: name, signature: tbtSigData[idx] || null });
+    });
+
+    if (!presenter) {
+      if (statusEl) { statusEl.textContent = 'Please enter the presenter name.'; statusEl.style.color = '#c53030'; }
+      return;
+    }
+    if (entries.length === 0) {
+      if (statusEl) { statusEl.textContent = 'Please select at least one employee.'; statusEl.style.color = '#c53030'; }
+      return;
+    }
+
+    if (statusEl) { statusEl.textContent = 'Saving...'; statusEl.style.color = '#718096'; }
+
+    var jobId = (typeof jobSlug !== 'undefined' && jobSlug) ? jobSlug : (typeof JOB_ID !== 'undefined' ? JOB_ID : 'UNKNOWN');
+
+    var payload = {
+      job_id: jobId,
+      talk_file: currentTBTFile,
+      talk_title: currentTBTTitle,
+      presenter: presenter,
+      signatures: entries.map(function(e) { return e.name; }),
+      signature_images: entries.map(function(e) { return e.signature; }),
+      signed_at: new Date().toISOString(),
+      week_ending: (function() {
+        var n = new Date(), day = n.getDay(), diff = day <= 5 ? 5 - day : 5 - day + 7, f = new Date(n);
+        f.setDate(n.getDate() + diff); return f.toISOString().slice(0, 10);
+      })()
+    };
+
+    try {
+      var r = await fetch(SUPABASE_URL_TBT + '/rest/v1/toolbox_talk_signoffs', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY_TBT,
+          'Authorization': 'Bearer ' + SUPABASE_KEY_TBT,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (r.ok || r.status === 201) {
+        if (statusEl) { statusEl.textContent = '✅ Sign-off saved — ' + entries.length + ' employee(s) recorded.'; statusEl.style.color = '#276749'; }
+        signedTBTs[currentTBTFile] = true;
+        document.querySelectorAll('.tbt-sign-btn').forEach(function(btn) {
+          if (btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf(currentTBTFile) !== -1) {
+            btn.textContent = '✅ Signed'; btn.classList.add('signed');
+          }
+        });
+        var si = document.getElementById('tbtLibraryStatus');
+        if (si) si.textContent = '✅';
+        setTimeout(closeTBTSign, 2000);
+      } else {
+        var err = await r.text();
+        if (statusEl) { statusEl.textContent = 'Error: ' + err; statusEl.style.color = '#c53030'; }
+      }
+    } catch(e) {
+      if (statusEl) { statusEl.textContent = 'Network error — check connection.'; statusEl.style.color = '#c53030'; }
+    }
+  };
+
+  // Close TBT modal on backdrop click
+  document.addEventListener('click', function(e) {
+    var modal = document.getElementById('tbtSignModal');
+    if (modal && e.target === modal) closeTBTSign();
+  });
+
+  window.getSafetyStatusForReport=async function(){
+    if(!isFriday())return{submitted:false,required:false};
+    try{var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs?job_id=eq.'+getSafetyJobId()+'&week_ending=eq.'+getWeekEnding()+'&select=submitted_by&limit=1',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});var d=await r.json();return{submitted:d&&d.length>0,required:true,by:d&&d.length>0?d[0].submitted_by:null}}catch(e){return{submitted:false,required:true,error:true}}
+  };
+})();
+/* === END SAFETY TAB === */
 
 
 </script>
