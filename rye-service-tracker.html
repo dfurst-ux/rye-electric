@@ -988,81 +988,21 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         </div>
       </div>
 
-      <!-- SECTION: Customer Rating + Signature -->
+      <!-- SECTION: Customer Contact + Signature -->
       <div class="form-section">
-        <div class="form-section-title red">Customer Review &amp; Signature</div>
+        <div class="form-section-title red">Customer Contact &amp; Signature</div>
         <div class="form-grid">
-          <div>
-            <!-- 5-category rating -->
-            <div class="rating-section">
-              <div class="rating-section-title" style="color:var(--teal)">
-                ★ Please Rate Your Service
-              </div>
-              <div class="rating-row">
-                <div class="rating-label">Timeliness</div>
-                <div class="rating-stars" id="stars-timeliness" data-cat="timeliness">
-                  <button type="button" class="star-btn" data-val="1" onclick="setCatRating('timeliness',1)">★</button>
-                  <button type="button" class="star-btn" data-val="2" onclick="setCatRating('timeliness',2)">★</button>
-                  <button type="button" class="star-btn" data-val="3" onclick="setCatRating('timeliness',3)">★</button>
-                  <button type="button" class="star-btn" data-val="4" onclick="setCatRating('timeliness',4)">★</button>
-                  <button type="button" class="star-btn" data-val="5" onclick="setCatRating('timeliness',5)">★</button>
-                </div>
-                <div class="rating-val" id="val-timeliness">—</div>
-              </div>
-              <div class="rating-row">
-                <div class="rating-label">Customer Service</div>
-                <div class="rating-stars" id="stars-customer_service" data-cat="customer_service">
-                  <button type="button" class="star-btn" data-val="1" onclick="setCatRating('customer_service',1)">★</button>
-                  <button type="button" class="star-btn" data-val="2" onclick="setCatRating('customer_service',2)">★</button>
-                  <button type="button" class="star-btn" data-val="3" onclick="setCatRating('customer_service',3)">★</button>
-                  <button type="button" class="star-btn" data-val="4" onclick="setCatRating('customer_service',4)">★</button>
-                  <button type="button" class="star-btn" data-val="5" onclick="setCatRating('customer_service',5)">★</button>
-                </div>
-                <div class="rating-val" id="val-customer_service">—</div>
-              </div>
-              <div class="rating-row">
-                <div class="rating-label">Cleanliness</div>
-                <div class="rating-stars" id="stars-cleanliness" data-cat="cleanliness">
-                  <button type="button" class="star-btn" data-val="1" onclick="setCatRating('cleanliness',1)">★</button>
-                  <button type="button" class="star-btn" data-val="2" onclick="setCatRating('cleanliness',2)">★</button>
-                  <button type="button" class="star-btn" data-val="3" onclick="setCatRating('cleanliness',3)">★</button>
-                  <button type="button" class="star-btn" data-val="4" onclick="setCatRating('cleanliness',4)">★</button>
-                  <button type="button" class="star-btn" data-val="5" onclick="setCatRating('cleanliness',5)">★</button>
-                </div>
-                <div class="rating-val" id="val-cleanliness">—</div>
-              </div>
-              <div class="rating-row">
-                <div class="rating-label">Overall Knowledge</div>
-                <div class="rating-stars" id="stars-knowledge" data-cat="knowledge">
-                  <button type="button" class="star-btn" data-val="1" onclick="setCatRating('knowledge',1)">★</button>
-                  <button type="button" class="star-btn" data-val="2" onclick="setCatRating('knowledge',2)">★</button>
-                  <button type="button" class="star-btn" data-val="3" onclick="setCatRating('knowledge',3)">★</button>
-                  <button type="button" class="star-btn" data-val="4" onclick="setCatRating('knowledge',4)">★</button>
-                  <button type="button" class="star-btn" data-val="5" onclick="setCatRating('knowledge',5)">★</button>
-                </div>
-                <div class="rating-val" id="val-knowledge">—</div>
-              </div>
-              <div class="rating-row">
-                <div class="rating-label">Customer Support</div>
-                <div class="rating-stars" id="stars-support" data-cat="support">
-                  <button type="button" class="star-btn" data-val="1" onclick="setCatRating('support',1)">★</button>
-                  <button type="button" class="star-btn" data-val="2" onclick="setCatRating('support',2)">★</button>
-                  <button type="button" class="star-btn" data-val="3" onclick="setCatRating('support',3)">★</button>
-                  <button type="button" class="star-btn" data-val="4" onclick="setCatRating('support',4)">★</button>
-                  <button type="button" class="star-btn" data-val="5" onclick="setCatRating('support',5)">★</button>
-                </div>
-                <div class="rating-val" id="val-support">—</div>
-              </div>
-              <div class="overall-avg-display">
-                <div><div class="avg-label">Overall Average</div><div class="avg-stars" id="avg-stars-display">☆☆☆☆☆</div></div>
-                <div class="avg-score" id="avg-score-display">—</div>
-              </div>
-            </div>
-            <div class="form-group mt-8">
-              <label class="form-label">Customer Comments</label>
-              <textarea class="form-control" id="t-rating-notes" rows="2" placeholder="Any comments about the service..."></textarea>
-            </div>
+          <div class="form-group">
+            <label class="form-label">Customer Email <span style="color:var(--red)">*</span></label>
+            <input class="form-control" id="t-customer-email" type="email" placeholder="customer@email.com">
+            <div class="field-hint" style="font-size:12px;color:var(--muted);margin-top:4px">A satisfaction survey will be automatically emailed when the ticket is marked Complete.</div>
           </div>
+          <div class="form-group">
+            <label class="form-label">Customer Phone</label>
+            <input class="form-control" id="t-customer-phone" type="tel" placeholder="(949) 555-0100">
+          </div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
           <div>
             <div class="form-section-title" style="margin-bottom:12px">Customer Signature</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:8px">By signing below, I confirm the above work was completed to my satisfaction.</div>
@@ -1078,6 +1018,11 @@ textarea.form-control { resize: vertical; min-height: 80px; }
               <label class="form-label">Date Signed</label>
               <input class="form-control" type="date" id="t-sig-date">
             </div>
+          </div>
+          <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--teal-light);border-radius:var(--radius);padding:20px;text-align:center;gap:10px">
+            <div style="font-size:32px">📧</div>
+            <div style="font-size:14px;font-weight:700;color:var(--teal)">Automated Rating Survey</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.5">When this ticket is marked <strong>Complete</strong>, the customer will automatically receive a satisfaction survey covering Timeliness, Customer Service, Cleanliness, Knowledge, and Support.</div>
           </div>
         </div>
       </div>
@@ -1331,8 +1276,8 @@ async function sbUpsert(ticket) {
     urgency:      ticket.urgency,
     source:       ticket.source || 'Manual',
     company:      ticket.company,
-    phone:        ticket.phone,
-    email:        ticket.email,
+    phone:        ticket.customerPhone || ticket.phone,
+    email:        ticket.customerEmail || ticket.email,
     contact_pref: ticket.contactPref,
     prop_type:    ticket.propType,
     pref_date:    ticket.prefDate,
@@ -1417,7 +1362,6 @@ function openModal(id) {
     buildDrConditions();
     if (!document.getElementById('labor-tbody').children.length) addLaborRow();
     if (!document.getElementById('materials-tbody').children.length) addMaterialRow();
-    resetCatRatings();
     // Fix signature pad — resize after modal is visible
     setTimeout(() => {
       const canvas = document.getElementById('sig-canvas');
@@ -1732,9 +1676,11 @@ function saveTicket() {
     notes: document.getElementById('t-notes').value,
     sigName: document.getElementById('t-sig-name').value,
     sigDate: document.getElementById('t-sig-date').value,
-    ratings: {...catRatings},
-    rating: ticketRating,
-    ratingNotes: document.getElementById('t-rating-notes').value,
+    customerEmail: document.getElementById('t-customer-email').value.trim(),
+    customerPhone: document.getElementById('t-customer-phone').value.trim(),
+    ratings: {},
+    rating: 0,
+    ratingNotes: '',
     dailyReport: collectDailyReport(),
     createdAt: new Date().toISOString()
   };
@@ -1750,7 +1696,7 @@ function saveTicket() {
 }
 
 function clearTicketForm() {
-  ['t-customer','t-address','t-po','t-scope','t-equipment','t-notes','t-sig-name','t-rating-notes'].forEach(id => {
+  ['t-customer','t-address','t-po','t-scope','t-equipment','t-notes','t-sig-name','t-customer-email','t-customer-phone'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -1770,7 +1716,6 @@ function clearTicketForm() {
   if (drTbody) drTbody.innerHTML = '';
   // Reset condition buttons
   document.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('yes-active','no-active'));
-  resetCatRatings();
 }
 
 // ── SAVE TASK ──
@@ -2042,7 +1987,7 @@ const CAT_LABELS = {
   customer_service: 'Customer Service',
   cleanliness: 'Cleanliness',
   knowledge: 'Overall Knowledge',
-  support: 'Customer Support'
+  support: 'Efficiency'
 };
 
 function getCrewStats() {
@@ -2214,7 +2159,7 @@ function viewTicket(id) {
         <table class="ticket-table" style="max-width:500px">
           <thead><tr><th>Category</th><th>Rating</th><th>Stars</th></tr></thead>
           <tbody>
-            ${Object.entries({timeliness:'Timeliness',customer_service:'Customer Service',cleanliness:'Cleanliness',knowledge:'Overall Knowledge',support:'Customer Support'}).map(([k,label]) => {
+            ${Object.entries({timeliness:'Timeliness',customer_service:'Customer Service',cleanliness:'Cleanliness',knowledge:'Overall Knowledge',support:'Efficiency'}).map(([k,label]) => {
               const v = t.ratings[k];
               return v ? `<tr><td>${label}</td><td style="font-weight:700;color:var(--gold)">${v}/5</td><td style="color:var(--gold)">${'★'.repeat(v)}${'☆'.repeat(5-v)}</td></tr>` : '';
             }).join('')}
@@ -2377,6 +2322,21 @@ function completeAndInvoice() {
   save();
   sbUpdateStatus(t.id, 'Completed'); // sync to Supabase
   renderAll();
+
+  // Send automated rating survey to customer
+  const custEmail = t.customerEmail || t.email;
+  if (custEmail) {
+    const ratingUrl = 'https://dfurst-ux.github.io/rye-electric/rye-service-rating.html?ticket=' + encodeURIComponent(t.id) + '&customer=' + encodeURIComponent(t.customer || '') + '&tech=' + encodeURIComponent(t.tech || '');
+    emailjs.send('service_jbdjjoh', 'template_4daap5r', {
+      to_email:  custEmail,
+      to_name:   t.customer || 'Valued Customer',
+      subject:   'How did we do? — Rye Electric Service Call ' + t.id,
+      message:   `Hi ${t.customer || 'there'},\n\nThank you for choosing Rye Electric. Your service call (${t.id}) has been completed.\n\nWe'd love to hear about your experience. Please take a moment to rate your service:\n\n${ratingUrl}\n\nYour feedback helps us improve and recognize our team.\n\nThank you,\nRye Electric Service Department\n(949) 441-0545 | ryecompany.com`,
+    }).catch(e => console.warn('Rating email failed:', e));
+    toast('Ticket completed — rating survey sent to ' + custEmail);
+  } else {
+    toast('Ticket marked Completed — no customer email on file for survey');
+  }
 
   // Update the status badge in the open modal
   const headerBar = document.querySelector('#view-ticket-content .ticket-status-col');
@@ -2808,7 +2768,7 @@ async function generateInvoice() {
       customer_service: 'Customer Service',
       cleanliness:      'Cleanliness',
       knowledge:        'Overall Knowledge',
-      support:          'Customer Support',
+      support:          'Efficiency',
     };
     const overallAvg = (ratedCats.reduce((a,b)=>a+b,0) / ratedCats.length).toFixed(1);
 

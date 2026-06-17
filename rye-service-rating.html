@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rate Your Service — Rye Electric</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#4E9DA8;--teal-dk:#357884;--teal-lt:#EAF5F7;
+  --dark:#1A1A1A;--mid:#555;--muted:#888;--border:#E2E2E2;
+  --bg:#F4F8F9;--white:#fff;--green:#27AE60;--green-lt:#EAF7F0;
+  --gold:#D4A843;--gold-lt:#FDF6E3;--red:#C0392B;--red-lt:#F9EDED;
+  --radius:8px;--shadow:0 4px 24px rgba(0,0,0,.10);
+  --font:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+body{font-family:var(--font);background:var(--bg);min-height:100vh;display:flex;flex-direction:column}
+.header{background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.brand-logo{display:flex;flex-direction:column;line-height:1}
+.brand-logo .wr{font-size:26px;font-weight:700;color:var(--dark)}
+.brand-logo .we{font-size:11px;font-weight:300;letter-spacing:2.5px;color:var(--teal);text-transform:lowercase;margin-top:2px}
+.hero{background:linear-gradient(160deg,var(--dark) 0%,#1e3a3e 100%);padding:44px 24px 36px;text-align:center;border-bottom:3px solid var(--teal)}
+.hero h1{font-size:clamp(24px,5vw,38px);font-weight:300;color:var(--white);margin-bottom:8px}
+.hero h1 strong{font-weight:700}
+.hero h1 em{color:var(--teal);font-style:normal}
+.hero p{font-size:15px;color:#aaa;max-width:420px;margin:0 auto}
+.ticket-badge{display:inline-block;background:rgba(78,157,168,.2);border:1px solid rgba(78,157,168,.4);color:var(--teal);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:14px}
+.wrap{max-width:620px;margin:0 auto;padding:32px 16px 48px;width:100%}
+.card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
+.card-header{padding:20px 24px;border-bottom:1px solid var(--border);background:#fafafa}
+.card-header h2{font-size:17px;font-weight:700;color:var(--dark)}
+.card-header p{font-size:13px;color:var(--muted);margin-top:3px}
+.card-body{padding:24px}
+.cat-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.cat-row:last-child{border-bottom:none}
+.cat-label{font-size:15px;font-weight:600;color:var(--dark);min-width:160px}
+.stars{display:flex;gap:6px}
+.star-btn{background:none;border:none;font-size:28px;cursor:pointer;color:#ddd;padding:0;line-height:1;transition:color .1s;-webkit-tap-highlight-color:transparent}
+.star-btn.active{color:var(--gold)}
+.star-btn:hover{color:var(--gold)}
+.cat-val{font-size:14px;font-weight:700;color:var(--gold);min-width:28px;text-align:right}
+.overall-bar{background:var(--dark);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-top:20px}
+.overall-label{font-size:13px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.overall-score{font-size:32px;font-weight:700;color:var(--gold)}
+.overall-stars{font-size:20px;color:var(--gold)}
+.comments{margin-top:16px}
+.comments label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);display:block;margin-bottom:6px}
+.comments textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 14px;font-family:var(--font);font-size:14px;resize:vertical;min-height:90px;transition:border-color .15s}
+.comments textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(78,157,168,.12)}
+.submit-btn{width:100%;background:var(--teal);color:#fff;border:none;border-radius:var(--radius);padding:15px;font-family:var(--font);font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.submit-btn:hover{background:var(--teal-dk)}
+.submit-btn:disabled{background:#ccc;cursor:not-allowed}
+/* Success */
+#success-screen{display:none;text-align:center;padding:48px 24px}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--green-lt);border:3px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;animation:popIn .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+#success-screen h2{font-size:26px;font-weight:700;color:var(--dark);margin-bottom:10px}
+#success-screen p{font-size:15px;color:var(--muted);max-width:380px;margin:0 auto}
+.footer{background:var(--white);border-top:1px solid var(--border);padding:16px 32px;text-align:center;font-size:12px;color:var(--muted);margin-top:auto}
+.footer a{color:var(--teal);text-decoration:none}
+@media(max-width:480px){.cat-row{flex-wrap:wrap;gap:8px}.cat-label{min-width:100%}.star-btn{font-size:32px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand-logo">
+    <span class="wr">rye</span>
+    <span class="we">electric</span>
+  </div>
+  <span style="font-size:12px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase">Service Rating</span>
+</header>
+
+<div class="hero">
+  <div class="ticket-badge" id="hero-ticket">Loading...</div>
+  <h1>How did we <em>do</em>?</h1>
+  <p>Your feedback helps us improve and recognize our team. This takes less than a minute.</p>
+</div>
+
+<main class="wrap">
+  <div class="card" id="rating-card">
+    <div class="card-header">
+      <h2>Rate your service experience</h2>
+      <p id="card-sub">Please rate each category from 1 to 5 stars.</p>
+    </div>
+    <div class="card-body">
+
+      <div id="rating-form">
+        <div class="cat-row">
+          <div class="cat-label">Timeliness</div>
+          <div class="stars" id="stars-timeliness"></div>
+          <div class="cat-val" id="val-timeliness">—</div>
+        </div>
+        <div class="cat-row">
+          <div class="cat-label">Customer Service</div>
+          <div class="stars" id="stars-customer_service"></div>
+          <div class="cat-val" id="val-customer_service">—</div>
+        </div>
+        <div class="cat-row">
+          <div class="cat-label">Cleanliness</div>
+          <div class="stars" id="stars-cleanliness"></div>
+          <div class="cat-val" id="val-cleanliness">—</div>
+        </div>
+        <div class="cat-row">
+          <div class="cat-label">Overall Knowledge</div>
+          <div class="stars" id="stars-knowledge"></div>
+          <div class="cat-val" id="val-knowledge">—</div>
+        </div>
+        <div class="cat-row">
+          <div class="cat-label">Efficiency</div>
+          <div class="stars" id="stars-support"></div>
+          <div class="cat-val" id="val-support">—</div>
+        </div>
+
+        <div class="overall-bar">
+          <div>
+            <div class="overall-label">Overall Average</div>
+            <div class="overall-stars" id="overall-stars">☆☆☆☆☆</div>
+          </div>
+          <div class="overall-score" id="overall-score">—</div>
+        </div>
+
+        <div class="comments">
+          <label>Comments (optional)</label>
+          <textarea id="comments" placeholder="Tell us about your experience — what went well, what could be improved..."></textarea>
+        </div>
+
+        <button class="submit-btn" id="submit-btn" onclick="submitRating()">
+          ✓ Submit Rating
+        </button>
+      </div>
+
+      <div id="success-screen">
+        <div class="success-icon">★</div>
+        <h2>Thank you!</h2>
+        <p>Your feedback has been submitted and shared with the Rye Electric team. We appreciate your time.</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <strong style="color:var(--dark)">Rye Electric</strong> &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp;
+  <a href="tel:9494410545">949-441-0545</a> &nbsp;·&nbsp;
+  <a href="https://ryecompany.com">ryecompany.com</a>
+</footer>
+
+<script>
+emailjs.init('HGciJDgZDCRS9v0Eo');
+
+const SB_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+const SB_HDRS = { 'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY };
+
+// Parse URL params
+const params  = new URLSearchParams(window.location.search);
+const ticketId = params.get('ticket') || '';
+const customer = params.get('customer') || 'Valued Customer';
+const tech     = params.get('tech') || 'our technician';
+
+document.getElementById('hero-ticket').textContent = ticketId || 'Service Call';
+document.getElementById('card-sub').textContent = 'Service call ' + ticketId + ' · Tech: ' + tech;
+
+// Categories
+const CATS = [
+  { id: 'timeliness',       label: 'Timeliness' },
+  { id: 'customer_service', label: 'Customer Service' },
+  { id: 'cleanliness',      label: 'Cleanliness' },
+  { id: 'knowledge',        label: 'Overall Knowledge' },
+  { id: 'support',          label: 'Efficiency' },
+];
+
+const ratings = {};
+
+// Build star buttons
+CATS.forEach(cat => {
+  const container = document.getElementById('stars-' + cat.id);
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'star-btn';
+    btn.textContent = '★';
+    btn.dataset.val = i;
+    btn.onclick = () => setRating(cat.id, i);
+    container.appendChild(btn);
+  }
+});
+
+function setRating(catId, val) {
+  ratings[catId] = val;
+  const container = document.getElementById('stars-' + catId);
+  container.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.val) <= val);
+  });
+  document.getElementById('val-' + catId).textContent = val + '/5';
+  updateOverall();
+}
+
+function updateOverall() {
+  const vals = Object.values(ratings).filter(v => v > 0);
+  if (!vals.length) return;
+  const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+  document.getElementById('overall-score').textContent = avg.toFixed(1);
+  const full = Math.round(avg);
+  document.getElementById('overall-stars').textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
+}
+
+async function submitRating() {
+  const filled = Object.keys(ratings).length;
+  if (filled < 5) {
+    alert('Please rate all 5 categories before submitting.');
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Submitting…';
+
+  const vals = Object.values(ratings);
+  const overall = (vals.reduce((a,b) => a+b, 0) / vals.length).toFixed(1);
+  const comments = document.getElementById('comments').value.trim();
+
+  // Save ratings back to Supabase ticket
+  try {
+    await fetch(SB_URL + '/rest/v1/service_tickets?id=eq.' + encodeURIComponent(ticketId), {
+      method: 'PATCH',
+      headers: { ...SB_HDRS, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        ratings:      ratings,
+        rating:       parseFloat(overall),
+        rating_notes: comments,
+      }),
+    });
+  } catch(e) { console.warn('Supabase rating save failed:', e); }
+
+  // Notify Mychal of new rating
+  const summary = CATS.map(c => c.label + ': ' + (ratings[c.id] || '—') + '/5').join('\n');
+  try {
+    await emailjs.send('service_jbdjjoh', 'template_4daap5r', {
+      to_email: 'mkirschbaum@ryecompany.com',
+      to_name:  'Mychal',
+      subject:  'Customer Rating Received — ' + ticketId + ' (' + overall + '/5)',
+      message:  'A customer rating has been submitted for ticket ' + ticketId + '.\n\nCustomer: ' + customer + '\nTech: ' + tech + '\nOverall: ' + overall + '/5\n\n' + summary + (comments ? '\n\nComments: ' + comments : ''),
+    });
+  } catch(e) { console.warn('Rating notification email failed:', e); }
+
+  // Show success
+  document.getElementById('rating-form').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+}
+</script>
+</body>
+</html>
