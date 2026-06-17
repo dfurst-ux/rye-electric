@@ -266,6 +266,7 @@ tbody tr:hover td{background:#f7fbfc}
 .safety-submit-status.success{color:#276749}
 .safety-submit-status.error{color:#c53030}
 @media(max-width:600px){.safety-obs-row{grid-template-columns:28px 1fr}.ptp-tools-grid{grid-template-columns:1fr}}
+
   /* TBT Library */
   .tbt-intro{font-size:12px;color:#718096;margin-bottom:14px;padding:10px 12px;background:#f7fafc;border-radius:6px;border-left:3px solid #2b6cb0;}
   .tbt-category{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden;}
@@ -285,13 +286,14 @@ tbody tr:hover td{background:#f7fbfc}
   .tbt-num{font-size:11px;font-weight:700;color:#718096;min-width:28px;}
   .tbt-name{font-size:13px;color:#2d3748;}
   .tbt-item-actions{display:flex;gap:6px;flex-shrink:0;}
-  .tbt-view-btn{padding:5px 10px;border:1px solid #cbd5e0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#4a5568;cursor:pointer;white-space:nowrap;}
+  .tbt-view-btn{padding:5px 10px;border:1px solid #cbd5e0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#4a5568;cursor:pointer;}
   .tbt-view-btn:hover{border-color:#2b6cb0;color:#2b6cb0;}
-  .tbt-sign-btn{padding:5px 10px;border:1px solid #2b6cb0;border-radius:6px;background:#ebf8ff;font-size:12px;font-weight:600;color:#2b6cb0;cursor:pointer;white-space:nowrap;}
+  .tbt-sign-btn{padding:5px 10px;border:1px solid #2b6cb0;border-radius:6px;background:#ebf8ff;font-size:12px;font-weight:600;color:#2b6cb0;cursor:pointer;}
   .tbt-sign-btn:hover{background:#2b6cb0;color:#fff;}
   .tbt-sign-btn.signed{border-color:#38a169;background:#f0fff4;color:#276749;}
   .tbt-remaining-note{margin-top:12px;font-size:11px;color:#a0aec0;text-align:center;}
   .tbt-remaining-note code{background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:11px;}
+
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -311,18 +313,13 @@ tbody tr:hover td{background:#f7fbfc}
 </header>
 
 <div class="shell">
-  <div class="quick-nav">
-    <span class="qn-label">GO TO:</span>
-    <a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="qn-dash">
-      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard
-    </a>
-    <span class="qn-label" style="margin-left:4px">JOB TRACKER:</span>
-    <select class="qn-select" onchange="if(this.value) window.open(this.value,'_blank'); this.value=''">
-      <option value="">-- Select job --</option>
-      <option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24001-biola.html">24001 - BIOLA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html">24002 - SEPULVEDA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html">24005 - VNV</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html">24006 - VF</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24010-commons.html">24010 - COMMONS</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html">25001 - DECENA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html">25002 - BAH</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html">26002 - WILSHIRE</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html">SP25018 - CDC PLAZA</option><option value="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html">26003 - CARINA</option>
-    </select>
-  </div>
+  <div class="job-banner">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="#1a1a1a"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+  <span class="jb-num">26003</span>
+  <span class="jb-name">CARINA</span>
+  <span class="jb-badge">Job Tracker</span>
+  <a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="dash-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+</div>
   <div class="vh">
     <div class="vh-left">
       <div class="vh-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
@@ -414,131 +411,119 @@ tbody tr:hover td{background:#f7fbfc}
             <div class="flbl">Employee</div>
             <select id="sel-worker">
               <option value="">-- Select employee --</option>
-              <option value="Jonathan Jacobo">Jonathan Jacobo - Dofo</option>
+              <option value="Abiud Lopez">Abiud Lopez - Electrician</option>
+              <option value="Adrian Flores">Adrian Flores - Foreman</option>
+              <option value="Adrian Hernandez">Adrian Hernandez - Electrician</option>
+              <option value="Adrian Marquez">Adrian Marquez - Electrician</option>
+              <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz - Electrician</option>
+              <option value="Alejandro Lopez">Alejandro Lopez - Electrician</option>
+              <option value="Alex Osorio">Alex Osorio - Electrician</option>
+              <option value="Angel Hernandez">Angel Hernandez - Electrician</option>
+              <option value="Angel Ibanez">Angel Ibanez - Electrician</option>
+              <option value="Anthony Ibanez">Anthony Ibanez - Electrician</option>
+              <option value="Anthony Lyons">Anthony Lyons - Electrician</option>
+              <option value="Anthony Macias">Anthony Macias - Electrician</option>
               <option value="Anthony Zetina">Anthony Zetina - Electrician</option>
-              <option value="Xavier Contreras">Xavier Contreras - General</option>
+              <option value="Antonio Castillo">Antonio Castillo - Iw</option>
+              <option value="Armando Lopez">Armando Lopez - Electrician</option>
+              <option value="Axel Salas">Axel Salas - Electrician</option>
+              <option value="Brandon Salazar">Brandon Salazar - Field</option>
+              <option value="Brenda Quijada">Brenda Quijada - Electrician</option>
+              <option value="Brian Campos">Brian Campos - Electrician</option>
+              <option value="Brian Flores">Brian Flores - Apprentice</option>
               <option value="Brian Kitajima">Brian Kitajima - Foreman</option>
+              <option value="Brian Ramirez">Brian Ramirez - Electrician</option>
+              <option value="Carla Quijada">Carla Quijada - Electrician</option>
+              <option value="Carlos Agapito">Carlos Agapito - Electrician</option>
+              <option value="Carlos Landaverde">Carlos Landaverde - Electrician</option>
+              <option value="Christian Moran">Christian Moran - Electrician</option>
+              <option value="Cristian Collin">Cristian Collin - Electrician</option>
+              <option value="Daniel Burleson">Daniel Burleson - Electrician</option>
+              <option value="Daniel Lopez">Daniel Lopez - Electrician</option>
+              <option value="Daniel Villegas">Daniel Villegas - Electrician</option>
+              <option value="David Casarez">David Casarez - Electrician</option>
               <option value="David Smith">David Smith - Electrician</option>
               <option value="Dillan Smith">Dillan Smith - Foreman</option>
-              <option value="Efren Hilario">Efren Hilario - Electrician</option>
-              <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz - Electrician</option>
-              <option value="Jorge Contreras">Jorge Contreras - Foreman</option>
-              <option value="Johnny Perez">Johnny Perez - Foreman</option>
-              <option value="Armando Lopez">Armando Lopez - Electrician</option>
-              <option value="Francisco Flores">Francisco Flores - Electrician</option>
-              <option value="Adrian Flores">Adrian Flores - Foreman</option>
-              <option value="Alejandro Lopez">Alejandro Lopez - Electrician</option>
-              <option value="Brian Campos">Brian Campos - Electrician</option>
-              <option value="Pedro Barrera">Pedro Barrera - Electrician</option>
-              <option value="Kenneth William">Kenneth William - Foreman</option>
               <option value="Duvaldi Mazariegos">Duvaldi Mazariegos - Electrician</option>
-              <option value="Gabriel Flores">Gabriel Flores - Apprentice</option>
-              <option value="Louis Aceves">Louis Aceves - Electrician</option>
-              <option value="Juan Mazariegos">Juan Mazariegos - Electrician</option>
-              <option value="Leonardo Mazariegos">Leonardo Mazariegos - Foreman</option>
-              <option value="Manuel Palacios">Manuel Palacios - Electrician</option>
-              <option value="Anthony Lyons">Anthony Lyons - Electrician</option>
-              <option value="Filiberto Ramos">Filiberto Ramos - Foreman</option>
-              <option value="Jose Ramirez">Jose Ramirez - Lv</option>
-              <option value="Jeffrey Rivera">Jeffrey Rivera - Lv</option>
-              <option value="Irvin Rivera">Irvin Rivera - Apprentice</option>
-              <option value="Edgar Solis">Edgar Solis - Electrician</option>
-              <option value="Vincent Sopha">Vincent Sopha - Electrician</option>
-              <option value="Anthony Macias">Anthony Macias - Electrician</option>
-              <option value="Enrique Laguna">Enrique Laguna - Electrician</option>
-              <option value="Matthew Baciu">Matthew Baciu - Electrician</option>
-              <option value="Humberto Flores">Humberto Flores - Foreman</option>
-              <option value="Jaime Moya">Jaime Moya - Electrician</option>
-              <option value="Edith Del Carmen">Edith Del Carmen - Lv</option>
-              <option value="Daniel Villegas">Daniel Villegas - Electrician</option>
-              <option value="Carla Quijada">Carla Quijada - Electrician</option>
-              <option value="Jose Preciado">Jose Preciado - Foreman</option>
-              <option value="Brian Flores">Brian Flores - Apprentice</option>
-              <option value="Carlos Landaverde">Carlos Landaverde - Electrician</option>
-              <option value="Jimmy Cascio">Jimmy Cascio - Electrician</option>
-              <option value="Sergio Sandoval">Sergio Sandoval - Electrician</option>
-              <option value="Brenda Quijada">Brenda Quijada - Electrician</option>
               <option value="Dyana Quijada">Dyana Quijada - Electrician</option>
-              <option value="Oliver Galicia">Oliver Galicia - Electrician</option>
-              <option value="Sotero Dominguez">Sotero Dominguez - Electrician</option>
-              <option value="Miguel Dominguez">Miguel Dominguez - Electrician</option>
-              <option value="Efrain Cornejo">Efrain Cornejo - Electrician</option>
-              <option value="Rusel Santiago">Rusel Santiago - Electrician</option>
-              <option value="Kevin Bautista">Kevin Bautista - Electrician</option>
-              <option value="Luis Ramirez">Luis Ramirez - Electrician</option>
-              <option value="Josue Villegas">Josue Villegas - Electrician</option>
-              <option value="Salvador Perez">Salvador Perez - Electrician</option>
-              <option value="David Casarez">David Casarez - Electrician</option>
-              <option value="Lizeth Marcos">Lizeth Marcos - Electrician</option>
-              <option value="Randdy De Paz">Randdy De Paz - Electrician</option>
-              <option value="Angel Ibanez">Angel Ibanez - Electrician</option>
-              <option value="Robert Stark">Robert Stark - Electrician</option>
-              <option value="Anthony Ibanez">Anthony Ibanez - Electrician</option>
-              <option value="Daniel Burleson">Daniel Burleson - Electrician</option>
-              <option value="Abiud Lopez">Abiud Lopez - Electrician</option>
-              <option value="Mario Arias">Mario Arias - Electrician</option>
-              <option value="Jaime Quintero">Jaime Quintero - Electrician</option>
-              <option value="Mario Lopez">Mario Lopez - Electrician</option>
-              <option value="Steven Sulewski">Steven Sulewski - Electrician</option>
-              <option value="Cristian Collin">Cristian Collin - Electrician</option>
-              <option value="Jesus Heredia">Jesus Heredia - Electrician</option>
-              <option value="Daniel Lopez">Daniel Lopez - Electrician</option>
-              <option value="Axel Salas">Axel Salas - Electrician</option>
-              <option value="Oscar Aguirre">Oscar Aguirre - Apprentice</option>
-              <option value="Alex Osorio">Alex Osorio - Electrician</option>
-              <option value="Julio Munoz">Julio Munoz - Apprentice</option>
-              <option value="Angel Hernandez">Angel Hernandez - Electrician</option>
-              <option value="Adrian Hernandez">Adrian Hernandez - Electrician</option>
-              <option value="Samuel Munoz">Samuel Munoz - Iw</option>
-              <option value="Antonio Castillo">Antonio Castillo - Iw</option>
-              <option value="Jerry Munoz">Jerry Munoz - Iw</option>
-              <option value="Noah Villareal">Noah Villareal - Electrician</option>
-              <option value="Jayson Ortega">Jayson Ortega - Electrician</option>
-              <option value="Carlos Agapito">Carlos Agapito - Electrician</option>
-              <option value="Jose Luna">Jose Luna - Electrician</option>
-              <option value="Manuel Martinez">Manuel Martinez - Electrician</option>
-              <option value="Mathew Gonzalez">Mathew Gonzalez - Electrician</option>
-              <option value="Sergio Diaz">Sergio Diaz - Electrician</option>
-              <option value="Tony Broadnax">Tony Broadnax - Electrician</option>
-              <option value="Isidro Enciso">Isidro Enciso - Electrician</option>
-              <option value="Brian Ramirez">Brian Ramirez - Electrician</option>
-              <option value="Jerlin Mendoza">Jerlin Mendoza - Apprentice</option>
-              <option value="Estevan Sandoval">Estevan Sandoval - Electrician</option>
-              <option value="Lorenzo Tanguma">Lorenzo Tanguma - Electrician</option>
+              <option value="Edgar Solis">Edgar Solis - Electrician</option>
+              <option value="Edith Del Carmen">Edith Del Carmen - Lv</option>
               <option value="Eduardo Echeverria">Eduardo Echeverria - Electrician</option>
-              <option value="Victor Armienta">Victor Armienta - Apprentice</option>
-              <option value="Guillermo Silva">Guillermo Silva - Electrician</option>
-              <option value="Erik Lopez">Erik Lopez - Electrician</option>
-              <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado - Apprentice</option>
-              <option value="James Marquez">James Marquez - Apprentice</option>
-              <option value="Henri Sibrian">Henri Sibrian - Electrician</option>
-              <option value="Vincent Stancati">Vincent Stancati - Electrician</option>
-              <option value="Christian Moran">Christian Moran - Electrician</option>
               <option value="Edwin Martinez">Edwin Martinez - Electrician</option>
-              <option value="Adrian Marquez">Adrian Marquez - Electrician</option>
-              <option value="Victor Carrillo">Victor Carrillo - Field</option>
-              <option value="Miguel Corral">Miguel Corral - Field</option>
+              <option value="Efrain Cornejo">Efrain Cornejo - Electrician</option>
+              <option value="Efren Hilario">Efren Hilario - Electrician</option>
+              <option value="Enrique Laguna">Enrique Laguna - Electrician</option>
+              <option value="Erik Lopez">Erik Lopez - Electrician</option>
+              <option value="Estevan Sandoval">Estevan Sandoval - Electrician</option>
+              <option value="Filiberto Ramos">Filiberto Ramos - Foreman</option>
+              <option value="Francisco Flores">Francisco Flores - Electrician</option>
+              <option value="Gabriel Flores">Gabriel Flores - Apprentice</option>
+              <option value="Guillermo Silva">Guillermo Silva - Electrician</option>
+              <option value="Henri Sibrian">Henri Sibrian - Electrician</option>
+              <option value="Humberto Flores">Humberto Flores - Foreman</option>
+              <option value="Irvin Rivera">Irvin Rivera - Apprentice</option>
+              <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado - Apprentice</option>
+              <option value="Isidro Enciso">Isidro Enciso - Electrician</option>
+              <option value="Jaime Moya">Jaime Moya - Electrician</option>
+              <option value="Jaime Quintero">Jaime Quintero - Electrician</option>
+              <option value="James Marquez">James Marquez - Apprentice</option>
+              <option value="Jayson Ortega">Jayson Ortega - Electrician</option>
+              <option value="Jeffrey Rivera">Jeffrey Rivera - Lv</option>
+              <option value="Jerlin Mendoza">Jerlin Mendoza - Apprentice</option>
+              <option value="Jerry Munoz">Jerry Munoz - Iw</option>
+              <option value="Jesus Heredia">Jesus Heredia - Electrician</option>
+              <option value="Jimmy Cascio">Jimmy Cascio - Electrician</option>
               <option value="Joaquin Garcia">Joaquin Garcia - Journeyman</option>
+              <option value="Johnny Perez">Johnny Perez - Foreman</option>
+              <option value="Jonathan Jacobo">Jonathan Jacobo - Dofo</option>
+              <option value="Jorge Contreras">Jorge Contreras - Foreman</option>
+              <option value="Jose Luna">Jose Luna - Electrician</option>
+              <option value="Jose Preciado">Jose Preciado - Foreman</option>
+              <option value="Jose Ramirez">Jose Ramirez - Lv</option>
+              <option value="Josue Villegas">Josue Villegas - Electrician</option>
+              <option value="Juan Mazariegos">Juan Mazariegos - Electrician</option>
+              <option value="Julio Munoz">Julio Munoz - Apprentice</option>
+              <option value="Kenneth William">Kenneth William - Foreman</option>
+              <option value="Kevin Bautista">Kevin Bautista - Electrician</option>
+              <option value="Leonardo Mazariegos">Leonardo Mazariegos - Foreman</option>
+              <option value="Lizeth Marcos">Lizeth Marcos - Electrician</option>
+              <option value="Lorenzo Tanguma">Lorenzo Tanguma - Electrician</option>
+              <option value="Louis Aceves">Louis Aceves - Electrician</option>
+              <option value="Luis Ramirez">Luis Ramirez - Electrician</option>
+              <option value="Manuel Martinez">Manuel Martinez - Electrician</option>
+              <option value="Manuel Palacios">Manuel Palacios - Electrician</option>
+              <option value="Mario Arias">Mario Arias - Electrician</option>
+              <option value="Mario Lopez">Mario Lopez - Electrician</option>
+              <option value="Mathew Gonzalez">Mathew Gonzalez - Electrician</option>
+              <option value="Matthew Baciu">Matthew Baciu - Electrician</option>
+              <option value="Miguel Corral">Miguel Corral - Field</option>
+              <option value="Miguel Dominguez">Miguel Dominguez - Electrician</option>
+              <option value="Noah Villareal">Noah Villareal - Electrician</option>
+              <option value="Oliver Galicia">Oliver Galicia - Electrician</option>
+              <option value="Oscar Aguirre">Oscar Aguirre - Apprentice</option>
+              <option value="Pedro Barrera">Pedro Barrera - Electrician</option>
+              <option value="Randdy De Paz">Randdy De Paz - Electrician</option>
+              <option value="Robert Stark">Robert Stark - Electrician</option>
               <option value="Robert Welch">Robert Welch - Foreman</option>
+              <option value="Rusel Santiago">Rusel Santiago - Electrician</option>
+              <option value="Salvador Perez">Salvador Perez - Electrician</option>
+              <option value="Samuel Munoz">Samuel Munoz - Iw</option>
+              <option value="Sergio Diaz">Sergio Diaz - Electrician</option>
+              <option value="Sergio Sandoval">Sergio Sandoval - Electrician</option>
+              <option value="Sotero Dominguez">Sotero Dominguez - Electrician</option>
+              <option value="Steven Sulewski">Steven Sulewski - Electrician</option>
+              <option value="Tony Broadnax">Tony Broadnax - Electrician</option>
               <option value="Uriel Chavez">Uriel Chavez - Foreman</option>
-              <option value="Brandon Salazar">Brandon Salazar - Field</option>
+              <option value="Victor Armienta">Victor Armienta - Apprentice</option>
+              <option value="Victor Carrillo">Victor Carrillo - Field</option>
+              <option value="Vincent Sopha">Vincent Sopha - Electrician</option>
+              <option value="Vincent Stancati">Vincent Stancati - Electrician</option>
+              <option value="Xavier Contreras">Xavier Contreras - General</option>
             </select>
           </div>
-          <div class="fgroup">
+          <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
-            <select id="sel-job">
-              <option value="">-- Select job --</option>
-              <option value="24001 - BIOLA">24001 &mdash; BIOLA</option>
-              <option value="24002 - SEPULVEDA">24002 &mdash; SEPULVEDA</option>
-              <option value="24005 - VNV">24005 &mdash; VNV</option>
-              <option value="24006 - VF">24006 &mdash; VF</option>
-              <option value="24010 - COMMONS">24010 &mdash; COMMONS</option>
-              <option value="25001 - DECENA">25001 &mdash; DECENA</option>
-              <option value="25002 - BAH">25002 &mdash; BAH</option>
-              <option value="26002 - WILSHIRE">26002 &mdash; WILSHIRE</option>
-              <option value="SP25018 - CDC PLAZA">SP25018 &mdash; CDC PLAZA</option>
-              <option value="26003 - CARINA MAIN PLACE MALL">26003 &mdash; CARINA MAIN PLACE MALL</option>
-            </select>
+            <select id="sel-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="26003 - CARINA" selected>26003 - CARINA</option></select>
           </div>
         </div>
 
@@ -869,21 +854,9 @@ tbody tr:hover td{background:#f7fbfc}
               <option value="Xavier Contreras">Xavier Contreras</option>
             </select>
           </div>
-          <div class="fgroup">
+          <div class="fgroup" style="display:none">
             <div class="flbl">Job</div>
-            <select id="wb-job">
-              <option value="">-- Select job --</option>
-              <option value="24001 - BIOLA">24001 - BIOLA</option>
-              <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
-              <option value="24005 - VNV">24005 - VNV</option>
-              <option value="24006 - VF">24006 - VF</option>
-              <option value="24010 - COMMONS">24010 - COMMONS</option>
-              <option value="25001 - DECENA">25001 - DECENA</option>
-              <option value="25002 - BAH">25002 - BAH</option>
-              <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
-              <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
-              <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
-            </select>
+            <select id="wb-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="26003 - CARINA" selected>26003 - CARINA</option></select>
           </div>
         </div>
         <div class="form-grid">
@@ -1024,6 +997,7 @@ tbody tr:hover td{background:#f7fbfc}
               <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
               <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
               <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
+              <option value="26005 - MARINA SHORES">26005 - MARINA SHORES</option>
       </select>
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
         <option value="all">All employees</option>
@@ -1174,19 +1148,7 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
       <div class="fgroup" style="flex:1;min-width:160px">
         <div class="flbl">Job</div>
-        <select id="djr-job" onchange="loadDJR()" style="height:38px;width:100%">
-          <option value="">-- Select job --</option>
-              <option value="24001 - BIOLA">24001 - BIOLA</option>
-              <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
-              <option value="24005 - VNV">24005 - VNV</option>
-              <option value="24006 - VF">24006 - VF</option>
-              <option value="24010 - COMMONS">24010 - COMMONS</option>
-              <option value="25001 - DECENA">25001 - DECENA</option>
-              <option value="25002 - BAH">25002 - BAH</option>
-              <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
-              <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
-              <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
-        </select>
+        <select id="djr-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="26003 - CARINA" selected>26003 - CARINA</option></select>
       </div>
       <button class="btn btn-rye" onclick="loadDJR()" style="margin-top:18px">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -1332,19 +1294,7 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
       <div class="fgroup" style="flex:2;min-width:180px">
         <div class="flbl">Job</div>
-        <select id="si-job" style="height:38px;width:100%">
-          <option value="">-- Select job --</option>
-              <option value="24001 - BIOLA">24001 - BIOLA</option>
-              <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
-              <option value="24005 - VNV">24005 - VNV</option>
-              <option value="24006 - VF">24006 - VF</option>
-              <option value="24010 - COMMONS">24010 - COMMONS</option>
-              <option value="25001 - DECENA">25001 - DECENA</option>
-              <option value="25002 - BAH">25002 - BAH</option>
-              <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
-              <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
-              <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
-        </select>
+        <select id="si-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="26003 - CARINA" selected>26003 - CARINA</option></select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Supervisor</div>
@@ -1518,120 +1468,121 @@ tbody tr:hover td{background:#f7fbfc}
           <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
           <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
           <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
+              <option value="26005 - MARINA SHORES">26005 - MARINA SHORES</option>
         </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by employee</div>
         <select id="unit-filter-worker" onchange="renderUnitsTab()">
           <option value="all">All employees</option>
-          <option value="Jonathan Jacobo">Jonathan Jacobo</option>
+          <option value="Abiud Lopez">Abiud Lopez</option>
+          <option value="Adrian Flores">Adrian Flores</option>
+          <option value="Adrian Hernandez">Adrian Hernandez</option>
+          <option value="Adrian Marquez">Adrian Marquez</option>
+          <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option>
+          <option value="Alejandro Lopez">Alejandro Lopez</option>
+          <option value="Alex Osorio">Alex Osorio</option>
+          <option value="Angel Hernandez">Angel Hernandez</option>
+          <option value="Angel Ibanez">Angel Ibanez</option>
+          <option value="Anthony Ibanez">Anthony Ibanez</option>
+          <option value="Anthony Lyons">Anthony Lyons</option>
+          <option value="Anthony Macias">Anthony Macias</option>
           <option value="Anthony Zetina">Anthony Zetina</option>
-          <option value="Xavier Contreras">Xavier Contreras</option>
+          <option value="Antonio Castillo">Antonio Castillo</option>
+          <option value="Armando Lopez">Armando Lopez</option>
+          <option value="Axel Salas">Axel Salas</option>
+          <option value="Brandon Salazar">Brandon Salazar</option>
+          <option value="Brenda Quijada">Brenda Quijada</option>
+          <option value="Brian Campos">Brian Campos</option>
+          <option value="Brian Flores">Brian Flores</option>
           <option value="Brian Kitajima">Brian Kitajima</option>
+          <option value="Brian Ramirez">Brian Ramirez</option>
+          <option value="Carla Quijada">Carla Quijada</option>
+          <option value="Carlos Agapito">Carlos Agapito</option>
+          <option value="Carlos Landaverde">Carlos Landaverde</option>
+          <option value="Christian Moran">Christian Moran</option>
+          <option value="Cristian Collin">Cristian Collin</option>
+          <option value="Daniel Burleson">Daniel Burleson</option>
+          <option value="Daniel Lopez">Daniel Lopez</option>
+          <option value="Daniel Villegas">Daniel Villegas</option>
+          <option value="David Casarez">David Casarez</option>
           <option value="David Smith">David Smith</option>
           <option value="Dillan Smith">Dillan Smith</option>
-          <option value="Efren Hilario">Efren Hilario</option>
-          <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option>
-          <option value="Jorge Contreras">Jorge Contreras</option>
-          <option value="Johnny Perez">Johnny Perez</option>
-          <option value="Armando Lopez">Armando Lopez</option>
-          <option value="Francisco Flores">Francisco Flores</option>
-          <option value="Adrian Flores">Adrian Flores</option>
-          <option value="Alejandro Lopez">Alejandro Lopez</option>
-          <option value="Brian Campos">Brian Campos</option>
-          <option value="Pedro Barrera">Pedro Barrera</option>
-          <option value="Kenneth William">Kenneth William</option>
           <option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option>
-          <option value="Gabriel Flores">Gabriel Flores</option>
-          <option value="Louis Aceves">Louis Aceves</option>
-          <option value="Juan Mazariegos">Juan Mazariegos</option>
-          <option value="Leonardo Mazariegos">Leonardo Mazariegos</option>
-          <option value="Manuel Palacios">Manuel Palacios</option>
-          <option value="Anthony Lyons">Anthony Lyons</option>
-          <option value="Filiberto Ramos">Filiberto Ramos</option>
-          <option value="Jose Ramirez">Jose Ramirez</option>
-          <option value="Jeffrey Rivera">Jeffrey Rivera</option>
-          <option value="Irvin Rivera">Irvin Rivera</option>
-          <option value="Edgar Solis">Edgar Solis</option>
-          <option value="Vincent Sopha">Vincent Sopha</option>
-          <option value="Anthony Macias">Anthony Macias</option>
-          <option value="Enrique Laguna">Enrique Laguna</option>
-          <option value="Matthew Baciu">Matthew Baciu</option>
-          <option value="Humberto Flores">Humberto Flores</option>
-          <option value="Jaime Moya">Jaime Moya</option>
-          <option value="Edith Del Carmen">Edith Del Carmen</option>
-          <option value="Daniel Villegas">Daniel Villegas</option>
-          <option value="Carla Quijada">Carla Quijada</option>
-          <option value="Jose Preciado">Jose Preciado</option>
-          <option value="Brian Flores">Brian Flores</option>
-          <option value="Carlos Landaverde">Carlos Landaverde</option>
-          <option value="Jimmy Cascio">Jimmy Cascio</option>
-          <option value="Sergio Sandoval">Sergio Sandoval</option>
-          <option value="Brenda Quijada">Brenda Quijada</option>
           <option value="Dyana Quijada">Dyana Quijada</option>
-          <option value="Oliver Galicia">Oliver Galicia</option>
-          <option value="Sotero Dominguez">Sotero Dominguez</option>
-          <option value="Miguel Dominguez">Miguel Dominguez</option>
-          <option value="Efrain Cornejo">Efrain Cornejo</option>
-          <option value="Rusel Santiago">Rusel Santiago</option>
-          <option value="Kevin Bautista">Kevin Bautista</option>
-          <option value="Luis Ramirez">Luis Ramirez</option>
-          <option value="Josue Villegas">Josue Villegas</option>
-          <option value="Salvador Perez">Salvador Perez</option>
-          <option value="David Casarez">David Casarez</option>
-          <option value="Lizeth Marcos">Lizeth Marcos</option>
-          <option value="Randdy De Paz">Randdy De Paz</option>
-          <option value="Angel Ibanez">Angel Ibanez</option>
-          <option value="Robert Stark">Robert Stark</option>
-          <option value="Anthony Ibanez">Anthony Ibanez</option>
-          <option value="Daniel Burleson">Daniel Burleson</option>
-          <option value="Abiud Lopez">Abiud Lopez</option>
-          <option value="Mario Arias">Mario Arias</option>
-          <option value="Jaime Quintero">Jaime Quintero</option>
-          <option value="Mario Lopez">Mario Lopez</option>
-          <option value="Steven Sulewski">Steven Sulewski</option>
-          <option value="Cristian Collin">Cristian Collin</option>
-          <option value="Jesus Heredia">Jesus Heredia</option>
-          <option value="Daniel Lopez">Daniel Lopez</option>
-          <option value="Axel Salas">Axel Salas</option>
-          <option value="Oscar Aguirre">Oscar Aguirre</option>
-          <option value="Alex Osorio">Alex Osorio</option>
-          <option value="Julio Munoz">Julio Munoz</option>
-          <option value="Angel Hernandez">Angel Hernandez</option>
-          <option value="Adrian Hernandez">Adrian Hernandez</option>
-          <option value="Samuel Munoz">Samuel Munoz</option>
-          <option value="Antonio Castillo">Antonio Castillo</option>
-          <option value="Jerry Munoz">Jerry Munoz</option>
-          <option value="Noah Villareal">Noah Villareal</option>
-          <option value="Jayson Ortega">Jayson Ortega</option>
-          <option value="Carlos Agapito">Carlos Agapito</option>
-          <option value="Jose Luna">Jose Luna</option>
-          <option value="Manuel Martinez">Manuel Martinez</option>
-          <option value="Mathew Gonzalez">Mathew Gonzalez</option>
-          <option value="Sergio Diaz">Sergio Diaz</option>
-          <option value="Tony Broadnax">Tony Broadnax</option>
-          <option value="Isidro Enciso">Isidro Enciso</option>
-          <option value="Brian Ramirez">Brian Ramirez</option>
-          <option value="Jerlin Mendoza">Jerlin Mendoza</option>
-          <option value="Estevan Sandoval">Estevan Sandoval</option>
-          <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
+          <option value="Edgar Solis">Edgar Solis</option>
+          <option value="Edith Del Carmen">Edith Del Carmen</option>
           <option value="Eduardo Echeverria">Eduardo Echeverria</option>
-          <option value="Victor Armienta">Victor Armienta</option>
-          <option value="Guillermo Silva">Guillermo Silva</option>
-          <option value="Erik Lopez">Erik Lopez</option>
-          <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option>
-          <option value="James Marquez">James Marquez</option>
-          <option value="Henri Sibrian">Henri Sibrian</option>
-          <option value="Vincent Stancati">Vincent Stancati</option>
-          <option value="Christian Moran">Christian Moran</option>
           <option value="Edwin Martinez">Edwin Martinez</option>
-          <option value="Adrian Marquez">Adrian Marquez</option>
-          <option value="Victor Carrillo">Victor Carrillo</option>
-          <option value="Miguel Corral">Miguel Corral</option>
+          <option value="Efrain Cornejo">Efrain Cornejo</option>
+          <option value="Efren Hilario">Efren Hilario</option>
+          <option value="Enrique Laguna">Enrique Laguna</option>
+          <option value="Erik Lopez">Erik Lopez</option>
+          <option value="Estevan Sandoval">Estevan Sandoval</option>
+          <option value="Filiberto Ramos">Filiberto Ramos</option>
+          <option value="Francisco Flores">Francisco Flores</option>
+          <option value="Gabriel Flores">Gabriel Flores</option>
+          <option value="Guillermo Silva">Guillermo Silva</option>
+          <option value="Henri Sibrian">Henri Sibrian</option>
+          <option value="Humberto Flores">Humberto Flores</option>
+          <option value="Irvin Rivera">Irvin Rivera</option>
+          <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option>
+          <option value="Isidro Enciso">Isidro Enciso</option>
+          <option value="Jaime Moya">Jaime Moya</option>
+          <option value="Jaime Quintero">Jaime Quintero</option>
+          <option value="James Marquez">James Marquez</option>
+          <option value="Jayson Ortega">Jayson Ortega</option>
+          <option value="Jeffrey Rivera">Jeffrey Rivera</option>
+          <option value="Jerlin Mendoza">Jerlin Mendoza</option>
+          <option value="Jerry Munoz">Jerry Munoz</option>
+          <option value="Jesus Heredia">Jesus Heredia</option>
+          <option value="Jimmy Cascio">Jimmy Cascio</option>
           <option value="Joaquin Garcia">Joaquin Garcia</option>
+          <option value="Johnny Perez">Johnny Perez</option>
+          <option value="Jonathan Jacobo">Jonathan Jacobo</option>
+          <option value="Jorge Contreras">Jorge Contreras</option>
+          <option value="Jose Luna">Jose Luna</option>
+          <option value="Jose Preciado">Jose Preciado</option>
+          <option value="Jose Ramirez">Jose Ramirez</option>
+          <option value="Josue Villegas">Josue Villegas</option>
+          <option value="Juan Mazariegos">Juan Mazariegos</option>
+          <option value="Julio Munoz">Julio Munoz</option>
+          <option value="Kenneth William">Kenneth William</option>
+          <option value="Kevin Bautista">Kevin Bautista</option>
+          <option value="Leonardo Mazariegos">Leonardo Mazariegos</option>
+          <option value="Lizeth Marcos">Lizeth Marcos</option>
+          <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
+          <option value="Louis Aceves">Louis Aceves</option>
+          <option value="Luis Ramirez">Luis Ramirez</option>
+          <option value="Manuel Martinez">Manuel Martinez</option>
+          <option value="Manuel Palacios">Manuel Palacios</option>
+          <option value="Mario Arias">Mario Arias</option>
+          <option value="Mario Lopez">Mario Lopez</option>
+          <option value="Mathew Gonzalez">Mathew Gonzalez</option>
+          <option value="Matthew Baciu">Matthew Baciu</option>
+          <option value="Miguel Corral">Miguel Corral</option>
+          <option value="Miguel Dominguez">Miguel Dominguez</option>
+          <option value="Noah Villareal">Noah Villareal</option>
+          <option value="Oliver Galicia">Oliver Galicia</option>
+          <option value="Oscar Aguirre">Oscar Aguirre</option>
+          <option value="Pedro Barrera">Pedro Barrera</option>
+          <option value="Randdy De Paz">Randdy De Paz</option>
+          <option value="Robert Stark">Robert Stark</option>
           <option value="Robert Welch">Robert Welch</option>
+          <option value="Rusel Santiago">Rusel Santiago</option>
+          <option value="Salvador Perez">Salvador Perez</option>
+          <option value="Samuel Munoz">Samuel Munoz</option>
+          <option value="Sergio Diaz">Sergio Diaz</option>
+          <option value="Sergio Sandoval">Sergio Sandoval</option>
+          <option value="Sotero Dominguez">Sotero Dominguez</option>
+          <option value="Steven Sulewski">Steven Sulewski</option>
+          <option value="Tony Broadnax">Tony Broadnax</option>
           <option value="Uriel Chavez">Uriel Chavez</option>
-          <option value="Brandon Salazar">Brandon Salazar</option>
+          <option value="Victor Armienta">Victor Armienta</option>
+          <option value="Victor Carrillo">Victor Carrillo</option>
+          <option value="Vincent Sopha">Vincent Sopha</option>
+          <option value="Vincent Stancati">Vincent Stancati</option>
+          <option value="Xavier Contreras">Xavier Contreras</option>
         </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
@@ -2080,7 +2031,6 @@ tbody tr:hover td{background:#f7fbfc}
 
       <div class="tbt-intro">Tap a category to expand, then choose a Toolbox Talk to review with your crew. After the discussion, collect crew signatures below each talk.</div>
 
-      <!-- Category: Equipment & Operations -->
       <div class="tbt-category">
         <div class="tbt-cat-header" onclick="toggleTBTCat('equip')">
           <span class="tbt-cat-icon">🏗️</span>
@@ -2089,66 +2039,17 @@ tbody tr:hover td{background:#f7fbfc}
           <span class="tbt-cat-chevron" id="tbt-chevron-equip">▼</span>
         </div>
         <div class="tbt-cat-body" id="tbt-cat-equip">
-          <div class="tbt-item" data-file="TBT 1 Aerial Lift Safety.pdf" data-title="#1 Aerial Lift Safety">
-            <div class="tbt-item-info"><span class="tbt-num">#1</span><span class="tbt-name">Aerial Lift Safety</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 1 Aerial Lift Safety.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 1 Aerial Lift Safety.pdf','#1 Aerial Lift Safety')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 2 Buried Utilites.pdf" data-title="#2 Buried Utilities">
-            <div class="tbt-item-info"><span class="tbt-num">#2</span><span class="tbt-name">Buried Utilities</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 2 Buried Utilites.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 2 Buried Utilites.pdf','#2 Buried Utilities')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 7 Cranes Stability.pdf" data-title="#7 Cranes: Stability and Tipping">
-            <div class="tbt-item-info"><span class="tbt-num">#7</span><span class="tbt-name">Cranes: Stability &amp; Tipping</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 7 Cranes Stability.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 7 Cranes Stability.pdf','#7 Cranes: Stability and Tipping')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 11 Equipment Maintenance.pdf" data-title="#11 Equipment Maintenance">
-            <div class="tbt-item-info"><span class="tbt-num">#11</span><span class="tbt-name">Equipment Maintenance</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 11 Equipment Maintenance.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 11 Equipment Maintenance.pdf','#11 Equipment Maintenance')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 12 Equipment Falling Objects.pdf" data-title="#12 Equipment: Falling Objects">
-            <div class="tbt-item-info"><span class="tbt-num">#12</span><span class="tbt-name">Equipment: Falling Objects</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 12 Equipment Falling Objects.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 12 Equipment Falling Objects.pdf','#12 Equipment: Falling Objects')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 13 Equipment Geting on and Off.pdf" data-title="#13 Equipment: Getting On and Off">
-            <div class="tbt-item-info"><span class="tbt-num">#13</span><span class="tbt-name">Equipment: Getting On &amp; Off</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 13 Equipment Geting on and Off.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 13 Equipment Geting on and Off.pdf','#13 Equipment: Getting On and Off')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 27 Overhead Power Lines.pdf" data-title="#27 Overhead Power Lines">
-            <div class="tbt-item-info"><span class="tbt-num">#27</span><span class="tbt-name">Overhead Power Lines</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 27 Overhead Power Lines.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 27 Overhead Power Lines.pdf','#27 Overhead Power Lines')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item" data-file="TBT 29 Power Saw Safety.pdf" data-title="#29 Power Saw Safety">
-            <div class="tbt-item-info"><span class="tbt-num">#29</span><span class="tbt-name">Power Saw Safety</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 29 Power Saw Safety.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 29 Power Saw Safety.pdf','#29 Power Saw Safety')">✍️ Sign</button>
-            </div>
-          </div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#1</span><span class="tbt-name">Aerial Lift Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 1 Aerial Lift Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 1 Aerial Lift Safety.pdf','#1 Aerial Lift Safety')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#2</span><span class="tbt-name">Buried Utilities</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 2 Buried Utilites.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 2 Buried Utilites.pdf','#2 Buried Utilities')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#7</span><span class="tbt-name">Cranes: Stability &amp; Tipping</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 7 Cranes Stability.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 7 Cranes Stability.pdf','#7 Cranes: Stability and Tipping')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#11</span><span class="tbt-name">Equipment Maintenance</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 11 Equipment Maintenance.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 11 Equipment Maintenance.pdf','#11 Equipment Maintenance')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#12</span><span class="tbt-name">Equipment: Falling Objects</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 12 Equipment Falling Objects.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 12 Equipment Falling Objects.pdf','#12 Equipment: Falling Objects')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#13</span><span class="tbt-name">Equipment: Getting On &amp; Off</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 13 Equipment Geting on and Off.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 13 Equipment Geting on and Off.pdf','#13 Equipment: Getting On and Off')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#27</span><span class="tbt-name">Overhead Power Lines</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 27 Overhead Power Lines.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 27 Overhead Power Lines.pdf','#27 Overhead Power Lines')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#29</span><span class="tbt-name">Power Saw Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 29 Power Saw Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 29 Power Saw Safety.pdf','#29 Power Saw Safety')">✍️ Sign</button></div></div>
         </div>
       </div>
 
-      <!-- Category: Electrical & Fire -->
       <div class="tbt-category">
         <div class="tbt-cat-header" onclick="toggleTBTCat('electric')">
           <span class="tbt-cat-icon">⚡</span>
@@ -2157,31 +2058,12 @@ tbody tr:hover td{background:#f7fbfc}
           <span class="tbt-cat-chevron" id="tbt-chevron-electric">▼</span>
         </div>
         <div class="tbt-cat-body" id="tbt-cat-electric">
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#8</span><span class="tbt-name">Electrical Power</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 8 Electric Power.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 8 Electric Power.pdf','#8 Electrical Power')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#18</span><span class="tbt-name">Fire Safety</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 18 Fire Safety.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 18 Fire Safety.pdf','#18 Fire Safety')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#3</span><span class="tbt-name">Carbon Monoxide Poisoning</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 3 Carbon Monoxide Poisoning.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 3 Carbon Monoxide Poisoning.pdf','#3 Carbon Monoxide Poisoning')">✍️ Sign</button>
-            </div>
-          </div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#8</span><span class="tbt-name">Electrical Power</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 8 Electric Power.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 8 Electric Power.pdf','#8 Electrical Power')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#18</span><span class="tbt-name">Fire Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 18 Fire Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 18 Fire Safety.pdf','#18 Fire Safety')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#3</span><span class="tbt-name">Carbon Monoxide Poisoning</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 3 Carbon Monoxide Poisoning.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 3 Carbon Monoxide Poisoning.pdf','#3 Carbon Monoxide Poisoning')">✍️ Sign</button></div></div>
         </div>
       </div>
 
-      <!-- Category: Fall Protection -->
       <div class="tbt-category">
         <div class="tbt-cat-header" onclick="toggleTBTCat('falls')">
           <span class="tbt-cat-icon">🪜</span>
@@ -2190,31 +2072,12 @@ tbody tr:hover td{background:#f7fbfc}
           <span class="tbt-cat-chevron" id="tbt-chevron-falls">▼</span>
         </div>
         <div class="tbt-cat-body" id="tbt-cat-falls">
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#15</span><span class="tbt-name">Preventing Falls Through Holes</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 15 Preventing Falls Through Holes.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 15 Preventing Falls Through Holes.pdf','#15 Preventing Falls Through Holes')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#16</span><span class="tbt-name">Falls: Extension Ladders</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 16 Extension Ladders.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 16 Extension Ladders.pdf','#16 Falls: Extension Ladders')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#17</span><span class="tbt-name">Guardrails: General Fall Protection</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 17 Guard Rails.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 17 Guard Rails.pdf','#17 Guardrails: General Fall Protection')">✍️ Sign</button>
-            </div>
-          </div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#15</span><span class="tbt-name">Preventing Falls Through Holes</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 15 Preventing Falls Through Holes.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 15 Preventing Falls Through Holes.pdf','#15 Preventing Falls Through Holes')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#16</span><span class="tbt-name">Falls: Extension Ladders</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 16 Extension Ladders.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 16 Extension Ladders.pdf','#16 Falls: Extension Ladders')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#17</span><span class="tbt-name">Guardrails: General Fall Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 17 Guard Rails.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 17 Guard Rails.pdf','#17 Guardrails: General Fall Protection')">✍️ Sign</button></div></div>
         </div>
       </div>
 
-      <!-- Category: PPE & Personal Safety -->
       <div class="tbt-category">
         <div class="tbt-cat-header" onclick="toggleTBTCat('ppe')">
           <span class="tbt-cat-icon">🦺</span>
@@ -2223,66 +2086,17 @@ tbody tr:hover td{background:#f7fbfc}
           <span class="tbt-cat-chevron" id="tbt-chevron-ppe">▼</span>
         </div>
         <div class="tbt-cat-body" id="tbt-cat-ppe">
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#9</span><span class="tbt-name">Eye Protection (v1)</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 9 Eye Protection.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 9 Eye Protection.pdf','#9 Eye Protection')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#14</span><span class="tbt-name">Eye Protection (v2)</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 14 Eye Protection.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 14 Eye Protection.pdf','#14 Eye Protection')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#20</span><span class="tbt-name">Hammer Safety</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 20 Hammer Safety.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 20 Hammer Safety.pdf','#20 Hammer Safety')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#21</span><span class="tbt-name">Head Protection</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 21 Head Protection.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 21 Head Protection.pdf','#21 Head Protection')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#51</span><span class="tbt-name">Clothing</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT_51_Clothing.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT_51_Clothing.pdf','#51 Clothing')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#4</span><span class="tbt-name">Carpal Tunnel Syndrome</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 4 Carpal Tunnel Syndrome.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 4 Carpal Tunnel Syndrome.pdf','#4 Carpal Tunnel Syndrome')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#5</span><span class="tbt-name">Cold Weather</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 5 Cold Weather.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 5 Cold Weather.pdf','#5 Cold Weather')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#12</span><span class="tbt-name">Working in Hot Weather</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('Toolbox-Talk-12-Working-in-Hot-Weather.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('Toolbox-Talk-12-Working-in-Hot-Weather.pdf','Working in Hot Weather')">✍️ Sign</button>
-            </div>
-          </div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#9</span><span class="tbt-name">Eye Protection (v1)</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 9 Eye Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 9 Eye Protection.pdf','#9 Eye Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#14</span><span class="tbt-name">Eye Protection (v2)</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 14 Eye Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 14 Eye Protection.pdf','#14 Eye Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#20</span><span class="tbt-name">Hammer Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 20 Hammer Safety.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 20 Hammer Safety.pdf','#20 Hammer Safety')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#21</span><span class="tbt-name">Head Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 21 Head Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 21 Head Protection.pdf','#21 Head Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#4</span><span class="tbt-name">Carpal Tunnel Syndrome</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 4 Carpal Tunnel Syndrome.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 4 Carpal Tunnel Syndrome.pdf','#4 Carpal Tunnel Syndrome')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#5</span><span class="tbt-name">Cold Weather</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 5 Cold Weather.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 5 Cold Weather.pdf','#5 Cold Weather')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#22</span><span class="tbt-name">Hearing Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 22 Hearing Protection.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 22 Hearing Protection.pdf','#22 Hearing Protection')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">Hot</span><span class="tbt-name">Working in Hot Weather</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('Toolbox-Talk-12-Working-in-Hot-Weather.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('Toolbox-Talk-12-Working-in-Hot-Weather.pdf','Working in Hot Weather')">✍️ Sign</button></div></div>
         </div>
       </div>
 
-      <!-- Category: Safety Awareness -->
       <div class="tbt-category">
         <div class="tbt-cat-header" onclick="toggleTBTCat('awareness')">
           <span class="tbt-cat-icon">🧠</span>
@@ -2291,65 +2105,28 @@ tbody tr:hover td{background:#f7fbfc}
           <span class="tbt-cat-chevron" id="tbt-chevron-awareness">▼</span>
         </div>
         <div class="tbt-cat-body" id="tbt-cat-awareness">
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#6</span><span class="tbt-name">Confined Spaces</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 6 Confined Spaces.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 6 Confined Spaces.pdf','#6 Confined Spaces')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#47</span><span class="tbt-name">Horseplay</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 47 Horseplay.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 47 Horseplay.pdf','#47 Horseplay')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#48</span><span class="tbt-name">Why Accidents Occur</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 48 Why Incidents Occur.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 48 Why Incidents Occur.pdf','#48 Why Accidents Occur')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#49</span><span class="tbt-name">Near Misses</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 49 Near Misses.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 49 Near Misses.pdf','#49 Near Misses')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#50</span><span class="tbt-name">Cost of Incidents</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 50 Cost of Incidents.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 50 Cost of Incidents.pdf','#50 Cost of Incidents')">✍️ Sign</button>
-            </div>
-          </div>
-          <div class="tbt-item">
-            <div class="tbt-item-info"><span class="tbt-num">#52</span><span class="tbt-name">The Deadly Dozen</span></div>
-            <div class="tbt-item-actions">
-              <button class="tbt-view-btn" onclick="viewTBT('TBT 52 Deadly Dozen.pdf')">📄 View</button>
-              <button class="tbt-sign-btn" onclick="openTBTSign('TBT 52 Deadly Dozen.pdf','#52 The Deadly Dozen')">✍️ Sign</button>
-            </div>
-          </div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#6</span><span class="tbt-name">Confined Spaces</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 6 Confined Spaces.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 6 Confined Spaces.pdf','#6 Confined Spaces')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#47</span><span class="tbt-name">Horseplay</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 47 Horseplay.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 47 Horseplay.pdf','#47 Horseplay')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#48</span><span class="tbt-name">Why Accidents Occur</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 48 Why Incidents Occur.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 48 Why Incidents Occur.pdf','#48 Why Accidents Occur')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#49</span><span class="tbt-name">Near Misses</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 49 Near Misses.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 49 Near Misses.pdf','#49 Near Misses')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#50</span><span class="tbt-name">Cost of Incidents</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 50 Cost of Incidents.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 50 Cost of Incidents.pdf','#50 Cost of Incidents')">✍️ Sign</button></div></div>
+          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#52</span><span class="tbt-name">The Deadly Dozen</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT('TBT 52 Deadly Dozen.pdf')">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign('TBT 52 Deadly Dozen.pdf','#52 The Deadly Dozen')">✍️ Sign</button></div></div>
         </div>
       </div>
 
-      <div class="tbt-remaining-note">📋 Have more Toolbox Talks to add? Upload remaining PDFs to the <code>toolbox-talks/</code> folder and they'll appear here after the next update.</div>
-
+      <div class="tbt-remaining-note">📋 Have more Toolbox Talks to add? Upload remaining PDFs to the <code>toolbox-talks/</code> folder and they will appear here after the next update.</div>
     </div>
   </div>
 
   <!-- TBT Sign Modal -->
   <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
-    <div style="background:#fff;border-radius:12px;max-width:520px;margin:40px auto;padding:24px;position:relative;">
+    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
       <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
       <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
       <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Presented by</div>
-      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
+      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
       <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
       <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
@@ -2357,6 +2134,7 @@ tbody tr:hover td{background:#f7fbfc}
       <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
     </div>
   </div>
+
 
   <!-- Submit -->
   <div class="safety-submit-area">
@@ -2422,6 +2200,7 @@ const JOBS_CONFIG = {
   '26002 - WILSHIRE':           { buildings: ["Bldg 1","Bldg 2","Bldg 3"], unitsPerBldg: 20 },
   'SP25018 - CDC PLAZA':        { buildings: ["Tower A","Tower B"], unitsPerBldg: 30 },
   '26003 - CARINA MAIN PLACE MALL': { buildings: ["Bldg North","Bldg South"], unitsPerBldg: 25 },
+  '26005 - MARINA SHORES':          { buildings: ["Bldg A","Bldg B","Bldg C"], unitsPerBldg: 20 },
 };
 
 const COST_CODES = [
@@ -4160,6 +3939,25 @@ function saveDJR(){
   const msg = document.getElementById('djr-saved-msg');
   if(msg){ msg.style.display='block'; setTimeout(()=>msg.style.display='none',3000); }
   toast('Daily report saved');
+  // Auto-email DJR
+  (function(){
+    var djrEmails2 = getJobEmail(job);
+    var workforce2 = data.workforce || [];
+    var names2 = workforce2.filter(function(r){return r.worker;}).map(function(r){return r.worker;}).join(', ');
+    var totalHrs2 = workforce2.reduce(function(a,r){return a+(parseFloat(r.hours)||0);},0);
+    var dateObj2 = new Date(date+'T12:00:00');
+    var dispDate2 = dateObj2.toLocaleDateString('en-US',{weekday:'long',month:'numeric',day:'numeric',year:'2-digit'});
+    if(typeof emailjs !== 'undefined'){
+      try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
+      emailjs.send('service_q9t1mnk','template_tgzqipn',{
+        to_email: djrEmails2.to,
+        task_title: 'Daily Job Report - ' + job + ' - ' + dispDate2,
+        job: job, task_date: dispDate2, task_time: new Date().toLocaleTimeString(),
+        task_notes: 'Manpower: ' + workforce2.filter(function(r){return r.worker;}).length + ' workers\nTotal hours: ' + totalHrs2.toFixed(1) + '\nWorkers: ' + names2 + '\n\nPrint and attach PDF from the Daily Report tab.',
+        task_priority: 'completed', calendar_link: ''
+      });
+    }
+  })();
 }
 
 function printDJR(){
@@ -4860,6 +4658,23 @@ function saveSignIn(){
   saveSIToStorage();
   var siKey=document.getElementById("si-job").value+"|"+document.getElementById("si-date").value;
   if(siData[siKey]) saveSignInToCloud(siKey.split("|")[0], siKey.split("|")[1], siData[siKey]);
+  (function(){
+    var siJob2=document.getElementById('si-job')?document.getElementById('si-job').value:'';
+    var siDate2=document.getElementById('si-date')?document.getElementById('si-date').value:'';
+    var siEmails2=getJobEmail(siJob2);
+    var siRows2=collectSIRows?collectSIRows():[];
+    var names2=siRows2.filter(function(r){return r.name;}).map(function(r){return r.name;}).join(', ');
+    var totalHrs2=siRows2.reduce(function(a,r){return a+(parseFloat(r.total)||0);},0);
+    if(siJob2&&typeof emailjs!=='undefined'){
+      try{emailjs.init('HGciJDgZDCRS9v0Eo');}catch(ei){}
+      emailjs.send('service_q9t1mnk','template_tgzqipn',{
+        to_email:siEmails2.to,task_title:'Sign-In Sheet - '+siJob2+' - '+siDate2,
+        job:siJob2,task_date:siDate2,task_time:new Date().toLocaleTimeString(),
+        task_notes:'Workers: '+siRows2.filter(function(r){return r.name;}).length+'\nTotal hours: '+totalHrs2.toFixed(1)+'\nEmployees: '+names2+'\n\nPrint and attach PDF from the Sign In tab.',
+        task_priority:'completed',calendar_link:''
+      });
+    }
+  })();
 }
 
 function printSignIn(){
@@ -5888,16 +5703,18 @@ function pad(str, len){
 
 /* === JOB EMAIL ROUTING === */
 const JOB_EMAILS = {
-  '25002 - BAH':          {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '25001 - DECENA':       {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '24005 - VNV':          {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '24010 - COMMONS':      {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '24006 - VF':           {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '24001 - BIOLA':        {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '24002 - SEPULVEDA':    {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  'SP25018 - CDC PLAZA':  {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '26002 - WILSHIRE':     {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
-  '26003 - CARINA':       {to:'dfurst@ryecompany.com', cc:'jjava@ryecompany.com'},
+  '24001 - BIOLA':                   {to:'biola24001@ryecompany.com',              cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '24002 - SEPULVEDA':               {to:'sepulveda24002@ryecompany.com',          cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '24005 - VNV':                     {to:'vannuys24005@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '24006 - VF':                      {to:'vintagefarms24006@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '24010 - COMMONS':                 {to:'commons24010@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '25001 - DECENA':                  {to:'decena25001@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '25002 - BAH':                     {to:'bellamyagourahills25002@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '26002 - WILSHIRE':                {to:'wilshire26002@ryecompany.com',           cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '26003 - CARINA MAIN PLACE MALL':  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '26003 - CARINA':                  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '26005 - MARINA SHORES':           {to:'MarinaShores26005@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  'SP25018 - CDC PLAZA':             {to:'cdcplazasp25018@ryecompany.com',         cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
 };
 
 function getJobEmail(job){
@@ -6164,7 +5981,8 @@ function saveTask(){
           '25002 - BAH':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html',
           '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
           'SP25018 - CDC PLAZA': 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html',
-          '26003 - CARINA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html'
+          '26003 - CARINA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html',
+          '26005 - MARINA SHORES':'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26005-marina.html'
         };
         var jobLink = jobTrackerLinks[job] || 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker.html';
         var smsBody = 'Rye Electric - Task Assigned to You\n\n'
@@ -6326,6 +6144,8 @@ loadSigData();
 renderTodayLog();
 renderCCRef();
 
+
+
 /* === SAFETY TAB === */
 (function initSafetyTab(){
   var SUPABASE_URL='https://okesnavkxmqucgvvhncx.supabase.co';
@@ -6445,6 +6265,24 @@ renderCCRef();
       if(r.ok||r.status===201){
         if(statusEl){statusEl.textContent='✅ Safety forms submitted successfully.';statusEl.className='safety-submit-status success'}
         if(btn){btn.disabled=false;btn.textContent='Re-submit (Update)'}
+        // Auto-email safety forms
+        (function(){
+          var sJobId = getSafetyJobId();
+          var sEmails = getJobEmail(sJobId);
+          if(typeof emailjs !== 'undefined'){
+            try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
+            emailjs.send('service_q9t1mnk','template_tgzqipn',{
+              to_email: sEmails.to,
+              task_title: 'Safety Forms Submitted - ' + sJobId,
+              job: sJobId,
+              task_date: new Date().toLocaleDateString(),
+              task_time: new Date().toLocaleTimeString(),
+              task_notes: 'WJSI, JHA, and PTP submitted by ' + by + '.\nWeek ending: ' + getWeekEnding() + '\n\nPrint and attach PDF from the Safety tab.',
+              task_priority: 'completed',
+              calendar_link: ''
+            });
+          }
+        })();
         var ban=document.getElementById('safetySubmittedBanner'),byEl=document.getElementById('safetySubmittedBy');
         if(ban)ban.style.display='block';if(byEl)byEl.textContent=by+' · Today';
       } else {
@@ -6519,50 +6357,12 @@ renderCCRef();
   };
 
 
-  // ── TBT Library ──────────────────────────────
+  // ── TBT Library ──────────────────────────────────────────────────────────
   var TBT_BASE_URL = 'https://raw.githubusercontent.com/dfurst-ux/rye-electric/main/toolbox-talks/';
   var currentTBTFile = '';
   var currentTBTTitle = '';
   var signedTBTs = {};
 
-  window.toggleTBTCat = function(id) {
-    var body = document.getElementById('tbt-cat-' + id);
-    var chev = document.getElementById('tbt-chevron-' + id);
-    if (!body) return;
-    var open = body.classList.contains('open');
-    body.classList.toggle('open', !open);
-    if (chev) chev.classList.toggle('open', !open);
-  };
-
-  window.viewTBT = function(filename) {
-    window.open(TBT_BASE_URL + filename, '_blank');
-  };
-
-  window.openTBTSign = function(filename, title) {
-    currentTBTFile = filename;
-    currentTBTTitle = title;
-    var modal = document.getElementById('tbtSignModal');
-    var titleEl = document.getElementById('tbtSignTitle');
-    var rows = document.getElementById('tbtSignRows');
-    var status = document.getElementById('tbtSignStatus');
-    var presenter = document.getElementById('tbtPresenter');
-    if (titleEl) titleEl.textContent = title;
-    if (rows) rows.innerHTML = '';
-    if (status) { status.textContent = ''; status.style.color = ''; }
-    if (presenter) presenter.value = '';
-    // seed 4 signature rows
-    for (var i = 0; i < 4; i++) addTBTSignRow();
-    if (modal) modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.closeTBTSign = function() {
-    var modal = document.getElementById('tbtSignModal');
-    if (modal) modal.style.display = 'none';
-    document.body.style.overflow = '';
-  };
-
-// TBT digital signature state
   var tbtSigData = {};
   var tbtSigDrawing = false;
   var tbtSigCanvas = null;
@@ -6658,38 +6458,171 @@ renderCCRef();
     delete tbtSigData[idx];
   }
 
+  window.toggleTBTCat = function(id) {
+    var body = document.getElementById('tbt-cat-' + id);
+    var chev = document.getElementById('tbt-chevron-' + id);
+    if (!body) return;
+    var open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    if (chev) chev.classList.toggle('open', !open);
+  };
+
+  window.viewTBT = function(filename) {
+    window.open(TBT_BASE_URL + filename, '_blank');
+  };
+
+  window.openTBTSign = function(filename, title) {
+    currentTBTFile = filename;
+    currentTBTTitle = title;
+    tbtSigData = {};
+    var titleEl = document.getElementById('tbtSignTitle');
+    var rows = document.getElementById('tbtSignRows');
+    var status = document.getElementById('tbtSignStatus');
+    var presenter = document.getElementById('tbtPresenter');
+    if (titleEl) titleEl.textContent = title;
+    if (rows) rows.innerHTML = '';
+    if (status) { status.textContent = ''; status.style.color = ''; }
+    if (presenter) presenter.value = '';
+    for (var i = 0; i < 4; i++) addTBTSignRow();
+    var modal = document.getElementById('tbtSignModal');
+    if (modal) modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeTBTSign = function() {
+    var modal = document.getElementById('tbtSignModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+    tbtSigData = {};
+  };
+
   window.addTBTSignRow = function() {
     var rows = document.getElementById('tbtSignRows');
     if (!rows) return;
     var idx = rows.querySelectorAll('.tbt-sig-row-wrap').length;
     var workerOpts = '<option value="">-- Select employee --</option>'
       + TBT_WORKERS.map(function(w) { return '<option value="' + w + '">' + w + '</option>'; }).join('');
+
     var div = document.createElement('div');
     div.className = 'tbt-sig-row-wrap';
     div.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:center;background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;';
-    div.innerHTML = '<div>'
-        + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;display:block;margin-bottom:4px;">Employee ' + (idx + 1) + '</label>'
-        + '<select class="tbt-emp-select" style="width:100%;padding:6px 8px;border:1px solid #cbd5e0;border-radius:6px;font-size:12px;background:#fff;">' + workerOpts + '</select>'
-      + '</div>'
-      + '<div>'
-        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">'
-          + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;">Signature</label>'
-          + '<button onclick="tbtClearSig(' + idx + ')" style="font-size:10px;background:none;border:none;color:#e53e3e;cursor:pointer;padding:0;">&#10005; Clear</button>'
-        + '</div>'
-        + '<div style="position:relative;background:#fff;border:1.5px solid #cbd5e0;border-radius:6px;overflow:hidden;cursor:crosshair;">'
-          + '<canvas id="tbt-sig-canvas-' + idx + '" data-idx="' + idx + '" width="300" height="60" style="width:100%;height:60px;display:block;touch-action:none;" onmousedown="tbtSigStart(event,this)" ontouchstart="tbtSigStart(event,this)"></canvas>'
-          + '<div class="tbt-sig-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#a0aec0;pointer-events:none;white-space:nowrap;">Sign here</div>'
-        + '</div>'
-      + '</div>';
+
+    // Left: employee dropdown
+    var leftDiv = document.createElement('div');
+    var lbl = document.createElement('label');
+    lbl.style.cssText = 'font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;display:block;margin-bottom:4px;';
+    lbl.textContent = 'Employee ' + (idx + 1);
+    var sel = document.createElement('select');
+    sel.className = 'tbt-emp-select';
+    sel.style.cssText = 'width:100%;padding:6px 8px;border:1px solid #cbd5e0;border-radius:6px;font-size:12px;background:#fff;';
+    sel.innerHTML = workerOpts;
+    leftDiv.appendChild(lbl);
+    leftDiv.appendChild(sel);
+
+    // Right: signature canvas
+    var rightDiv = document.createElement('div');
+    var sigHdr = document.createElement('div');
+    sigHdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;';
+    var sigLbl = document.createElement('label');
+    sigLbl.style.cssText = 'font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;';
+    sigLbl.textContent = 'Signature';
+    var clearBtn = document.createElement('button');
+    clearBtn.style.cssText = 'font-size:10px;background:none;border:none;color:#e53e3e;cursor:pointer;padding:0;';
+    clearBtn.textContent = '✕ Clear';
+    clearBtn.addEventListener('click', function() { tbtClearSig(idx); });
+    sigHdr.appendChild(sigLbl);
+    sigHdr.appendChild(clearBtn);
+
+    var canvasWrap = document.createElement('div');
+    canvasWrap.style.cssText = 'position:relative;background:#fff;border:1.5px solid #cbd5e0;border-radius:6px;overflow:hidden;cursor:crosshair;';
+
+    var canvas = document.createElement('canvas');
+    canvas.id = 'tbt-sig-canvas-' + idx;
+    canvas.setAttribute('data-idx', idx);
+    canvas.width = 400;
+    canvas.height = 80;
+    canvas.style.cssText = 'width:100%;height:80px;display:block;touch-action:none;';
+
+    var ph = document.createElement('div');
+    ph.className = 'tbt-sig-ph';
+    ph.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#a0aec0;pointer-events:none;white-space:nowrap;';
+    ph.textContent = 'Sign here';
+
+    // Attach drawing events directly to the canvas element
+    var drawing = false;
+    var lastX = 0, lastY = 0;
+
+    function getXY(e) {
+      var r = canvas.getBoundingClientRect();
+      var scaleX = canvas.width / r.width;
+      var scaleY = canvas.height / r.height;
+      var src = e.touches ? e.touches[0] : e;
+      return { x: (src.clientX - r.left) * scaleX, y: (src.clientY - r.top) * scaleY };
+    }
+
+    function onStart(e) {
+      e.preventDefault();
+      drawing = true;
+      ph.style.display = 'none';
+      var p = getXY(e);
+      lastX = p.x; lastY = p.y;
+      var ctx = canvas.getContext('2d');
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a202c';
+      ctx.fill();
+    }
+
+    function onMove(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      var p = getXY(e);
+      var ctx = canvas.getContext('2d');
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = '#1a202c';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      lastX = p.x; lastY = p.y;
+    }
+
+    function onEnd(e) {
+      if (!drawing) return;
+      drawing = false;
+      // Save signature data
+      var data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      var hasContent = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+      if (hasContent) tbtSigData[idx] = canvas.toDataURL('image/png');
+    }
+
+    canvas.addEventListener('mousedown',  onStart);
+    canvas.addEventListener('mousemove',  onMove);
+    canvas.addEventListener('mouseup',    onEnd);
+    canvas.addEventListener('mouseleave', onEnd);
+    canvas.addEventListener('touchstart', onStart, { passive: false });
+    canvas.addEventListener('touchmove',  onMove,  { passive: false });
+    canvas.addEventListener('touchend',   onEnd);
+
+    canvasWrap.appendChild(canvas);
+    canvasWrap.appendChild(ph);
+    rightDiv.appendChild(sigHdr);
+    rightDiv.appendChild(canvasWrap);
+
+    div.appendChild(leftDiv);
+    div.appendChild(rightDiv);
     rows.appendChild(div);
-  }; 
+  };
 
   window.submitTBTSignOff = async function() {
-    var SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
-    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var SUPABASE_URL_TBT = 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPABASE_KEY_TBT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
     var statusEl = document.getElementById('tbtSignStatus');
     var presenter = document.getElementById('tbtPresenter') ? document.getElementById('tbtPresenter').value.trim() : '';
-var entries = [];
+
+    var entries = [];
     document.querySelectorAll('#tbtSignRows .tbt-sig-row-wrap').forEach(function(row, idx) {
       var sel = row.querySelector('.tbt-emp-select');
       var name = sel ? sel.value : '';
@@ -6701,14 +6634,12 @@ var entries = [];
       }
       if (name) entries.push({ name: name, signature: tbtSigData[idx] || null });
     });
-    var signatures = entries.map(function(e) { return e.name; });
-    var signatureImages = entries.map(function(e) { return e.signature; });
 
     if (!presenter) {
       if (statusEl) { statusEl.textContent = 'Please enter the presenter name.'; statusEl.style.color = '#c53030'; }
       return;
     }
-    if (signatures.length === 0) {
+    if (entries.length === 0) {
       if (statusEl) { statusEl.textContent = 'Please select at least one employee.'; statusEl.style.color = '#c53030'; }
       return;
     }
@@ -6722,9 +6653,8 @@ var entries = [];
       talk_file: currentTBTFile,
       talk_title: currentTBTTitle,
       presenter: presenter,
-      signatures: signatures,
-      signature_images: signatureImages,
-    
+      signatures: entries.map(function(e) { return e.name; }),
+      signature_images: entries.map(function(e) { return e.signature; }),
       signed_at: new Date().toISOString(),
       week_ending: (function() {
         var n = new Date(), day = n.getDay(), diff = day <= 5 ? 5 - day : 5 - day + 7, f = new Date(n);
@@ -6733,46 +6663,56 @@ var entries = [];
     };
 
     try {
-      var r = await fetch(SUPABASE_URL + '/rest/v1/toolbox_talk_signoffs', {
+      var r = await fetch(SUPABASE_URL_TBT + '/rest/v1/toolbox_talk_signoffs', {
         method: 'POST',
         headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'apikey': SUPABASE_KEY_TBT,
+          'Authorization': 'Bearer ' + SUPABASE_KEY_TBT,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify(payload)
       });
-
       if (r.ok || r.status === 201) {
-        if (statusEl) { statusEl.textContent = '✅ Sign-off saved — ' + signatures.length + ' employee(s) recorded.'; statusEl.style.color = '#276749'; }
-        // Mark talk as signed in UI
+        if (statusEl) { statusEl.textContent = '✅ Sign-off saved — ' + entries.length + ' employee(s) recorded.'; statusEl.style.color = '#276749'; }
         signedTBTs[currentTBTFile] = true;
+        // Auto-email TBT sign-off
+        (function(){
+          var jobId2 = (typeof jobSlug !== 'undefined' && jobSlug) ? jobSlug : (typeof JOB_ID !== 'undefined' ? JOB_ID : '');
+          var emails2 = getJobEmail(jobId2);
+          var names2 = entries.map(function(e){return e.name;}).join(', ');
+          if(typeof emailjs !== 'undefined'){
+            try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
+            emailjs.send('service_q9t1mnk','template_tgzqipn',{
+              to_email: emails2.to,
+              task_title: 'TBT Sign-Off: ' + currentTBTTitle,
+              job: jobId2,
+              task_date: new Date().toLocaleDateString(),
+              task_time: new Date().toLocaleTimeString(),
+              task_notes: 'Presenter: ' + presenter + '\nEmployees (' + entries.length + '): ' + names2,
+              task_priority: 'completed',
+              calendar_link: ''
+            });
+          }
+        })();
         document.querySelectorAll('.tbt-sign-btn').forEach(function(btn) {
           if (btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf(currentTBTFile) !== -1) {
-            btn.textContent = '✅ Signed';
-            btn.classList.add('signed');
+            btn.textContent = '✅ Signed'; btn.classList.add('signed');
           }
         });
-        // Update library status icon
-        var statusIcon = document.getElementById('tbtLibraryStatus');
-        if (statusIcon) statusIcon.textContent = '✅';
-        setTimeout(closeTBTSign, 1800);
+        var si = document.getElementById('tbtLibraryStatus');
+        if (si) si.textContent = '✅';
+        setTimeout(closeTBTSign, 2000);
       } else {
         var err = await r.text();
-        // If table doesn't exist yet, show helpful message
-        if (err.indexOf('does not exist') !== -1 || r.status === 404) {
-          if (statusEl) { statusEl.textContent = 'Table not created yet — run the SQL below in Supabase first.'; statusEl.style.color = '#c53030'; }
-        } else {
-          if (statusEl) { statusEl.textContent = 'Error: ' + err; statusEl.style.color = '#c53030'; }
-        }
+        if (statusEl) { statusEl.textContent = 'Error: ' + err; statusEl.style.color = '#c53030'; }
       }
     } catch(e) {
       if (statusEl) { statusEl.textContent = 'Network error — check connection.'; statusEl.style.color = '#c53030'; }
     }
   };
 
-  // Close modal on backdrop click
+  // Close TBT modal on backdrop click
   document.addEventListener('click', function(e) {
     var modal = document.getElementById('tbtSignModal');
     if (modal && e.target === modal) closeTBTSign();
@@ -6784,8 +6724,6 @@ var entries = [];
   };
 })();
 /* === END SAFETY TAB === */
-
-
 </script>
 </body>
 </html>
