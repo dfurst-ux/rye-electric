@@ -825,6 +825,11 @@ textarea.form-control { resize: vertical; min-height: 80px; }
             <select class="form-control" id="t-tech">
               <option value="">Select tech...</option>
               <option>Mychal Kirschbaum</option>
+              <option>Guillermo Silva</option>
+              <option>Erik Lopez</option>
+              <option>James Marquez</option>
+              <option>Mario Arias</option>
+              <option>Dak Golden</option>
             </select>
           </div>
           <div class="form-group">
@@ -1066,6 +1071,11 @@ textarea.form-control { resize: vertical; min-height: 80px; }
             <select class="form-control" id="task-assignee">
               <option value="">Select employee...</option>
               <option>Mychal Kirschbaum</option>
+              <option>Guillermo Silva</option>
+              <option>Erik Lopez</option>
+              <option>James Marquez</option>
+              <option>Mario Arias</option>
+              <option>Dak Golden</option>
             </select>
           </div>
           <div class="form-group">
@@ -1126,6 +1136,11 @@ textarea.form-control { resize: vertical; min-height: 80px; }
             <select class="form-control" id="ts-employee">
               <option value="">Select...</option>
               <option>Mychal Kirschbaum</option>
+              <option>Guillermo Silva</option>
+              <option>Erik Lopez</option>
+              <option>James Marquez</option>
+              <option>Mario Arias</option>
+              <option>Dak Golden</option>
             </select>
           </div>
           <div class="form-group">
@@ -1422,11 +1437,11 @@ function addLaborRow() {
   tr.innerHTML = `
     <td><select class="form-control" style="min-width:150px">
       <option>Mychal Kirschbaum</option>
-      <option>G</option>
-      <option>Erik</option>
-      <option>James</option>
-      <option>Mario</option>
-      <option>Dak</option>
+      <option>Guillermo Silva</option>
+      <option>Erik Lopez</option>
+      <option>James Marquez</option>
+      <option>Mario Arias</option>
+      <option>Dak Golden</option>
     </select></td>
     <td><input type="time" class="form-control labor-in" oninput="calcHours(this)"></td>
     <td><input type="time" class="form-control labor-out" oninput="calcHours(this)"></td>
@@ -1434,7 +1449,23 @@ function addLaborRow() {
     <td><input type="number" class="form-control labor-ot" placeholder="0" step="0.25" min="0" oninput="calcLaborLine(this)"></td>
     <td><input type="number" class="form-control labor-rate" value="124.97" step="0.01" min="0" style="width:90px" oninput="calcLaborLine(this)"></td>
     <td><input type="number" class="form-control labor-line-total" placeholder="0.00" readonly style="background:#f0faf8;font-weight:700;color:var(--teal)"></td>
-    <td><input class="form-control labor-job" placeholder="Job / ticket #"></td>
+    <td><select class="form-control labor-job" style="min-width:200px">
+      <option value="">— Billed To —</option>
+      <optgroup label="Service Call">
+        <option value="Service Call">Service Call (default)</option>
+      </optgroup>
+      <optgroup label="Construction Projects — Cost Code 1000-01">
+        <option value="24001 - BIOLA | 1000-01">24001 - BIOLA | 1000-01</option>
+        <option value="24002 - SEPULVEDA | 1000-01">24002 - SEPULVEDA | 1000-01</option>
+        <option value="24005 - VNV | 1000-01">24005 - VNV | 1000-01</option>
+        <option value="24006 - VF | 1000-01">24006 - VF | 1000-01</option>
+        <option value="25001 - DECENA | 1000-01">25001 - DECENA | 1000-01</option>
+        <option value="25002 - BAH | 1000-01">25002 - BAH | 1000-01</option>
+        <option value="SP25018 - CDC PLAZA | 1000-01">SP25018 - CDC PLAZA | 1000-01</option>
+        <option value="26003 - CARINA | 1000-01">26003 - CARINA | 1000-01</option>
+        <option value="26005 - MARINA SHORES | 1000-01">26005 - MARINA SHORES | 1000-01</option>
+      </optgroup>
+    </select></td>
     <td><button class="del-row" onclick="this.closest('tr').remove();updateLaborTotal()">✕</button></td>`;
   tbody.appendChild(tr);
 }
@@ -1547,11 +1578,11 @@ function addDrRow() {
     <td><select class="form-control" style="min-width:130px">
       <option value="">Select tech...</option>
       <option>Mychal Kirschbaum</option>
-      <option>G</option>
-      <option>Erik</option>
-      <option>James</option>
-      <option>Mario</option>
-      <option>Dak</option>
+      <option>Guillermo Silva</option>
+      <option>Erik Lopez</option>
+      <option>James Marquez</option>
+      <option>Mario Arias</option>
+      <option>Dak Golden</option>
     </select></td>
     <td><input class="form-control" placeholder="Description of work performed"></td>
     <td><input type="number" class="form-control" placeholder="0" min="0" step="0.5"></td>
@@ -1660,17 +1691,17 @@ function resetCatRatings() {
 function collectLabor() {
   const rows = [];
   document.querySelectorAll('#labor-tbody tr').forEach(tr => {
-    const sel    = tr.querySelector('select');
-    const inputs = tr.querySelectorAll('input');
+    const selects = tr.querySelectorAll('select');
+    const inputs  = tr.querySelectorAll('input');
     rows.push({
-      employee:  sel?.value || inputs[0]?.value || '',
-      timeIn:    inputs[0]?.value || '',
-      timeOut:   inputs[1]?.value || '',
-      regHours:  inputs[2]?.value || '',
-      otHours:   inputs[3]?.value || '',
-      rate:      inputs[4]?.value || '124.97',
-      lineTotal: inputs[5]?.value || '',
-      jobRef:    inputs[6]?.value || '',
+      employee:  selects[0]?.value || '',
+      timeIn:    inputs[0]?.value  || '',
+      timeOut:   inputs[1]?.value  || '',
+      regHours:  inputs[2]?.value  || '',
+      otHours:   inputs[3]?.value  || '',
+      rate:      inputs[4]?.value  || '124.97',
+      lineTotal: inputs[5]?.value  || '',
+      jobRef:    selects[1]?.value || '',
     });
   });
   return rows;
