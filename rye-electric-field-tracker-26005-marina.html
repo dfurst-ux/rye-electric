@@ -2129,22 +2129,6 @@ tbody tr:hover td{background:#f7fbfc}
     </div>
   </div>
 
-  <!-- TBT Sign Modal -->
-  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
-    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
-      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
-      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
-      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
-      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
-      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
-      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
-      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
-      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
-    </div>
-  </div>
 
 
   <!-- Submit -->
@@ -2168,6 +2152,23 @@ tbody tr:hover td{background:#f7fbfc}
 </div>
 <!-- ===== END SAFETY TAB ===== -->
 
+
+  <!-- TBT Sign Modal -->
+  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
+    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
+      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
+      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
+      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
+      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
+      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
+      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
+      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
+      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
+    </div>
+  </div>
 <div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg><span id="toast-txt"></span></div>
 
 <script>
