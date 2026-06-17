@@ -2351,8 +2351,8 @@ tbody tr:hover td{background:#f7fbfc}
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Presented by</div>
       <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:14px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
-      <div id="tbtSignRows" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;"></div>
-      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:14px;">+ Add employee</button>
+      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
+      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
       <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
       <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
     </div>
@@ -6562,34 +6562,154 @@ renderCCRef();
     document.body.style.overflow = '';
   };
 
+// TBT digital signature state
+  var tbtSigData = {};
+  var tbtSigDrawing = false;
+  var tbtSigCanvas = null;
+  var tbtSigCtx = null;
+  var tbtSigLastX = 0, tbtSigLastY = 0;
+
+  var TBT_WORKERS = [
+    "Abiud Lopez","Adrian Flores","Adrian Hernandez","Adrian Marquez",
+    "Alberto Lopez Ruiz","Alejandro Lopez","Alex Osorio","Angel Hernandez",
+    "Angel Ibanez","Anthony Ibanez","Anthony Lyons","Anthony Macias",
+    "Anthony Zetina","Antonio Castillo","Armando Lopez","Axel Salas",
+    "Brandon Salazar","Brenda Quijada","Brian Campos","Brian Flores",
+    "Brian Kitajima","Brian Ramirez","Carla Quijada","Carlos Agapito",
+    "Carlos Landaverde","Christian Moran","Cristian Collin","Daniel Burleson",
+    "Daniel Lopez","Daniel Villegas","David Casarez","David Smith",
+    "Dillan Smith","Duvaldi Mazariegos","Dyana Quijada","Edgar Solis",
+    "Edith Del Carmen","Eduardo Echeverria","Edwin Martinez","Efrain Cornejo",
+    "Efren Hilario","Enrique Laguna","Erik Lopez","Estevan Sandoval",
+    "Filiberto Ramos","Francisco Flores","Gabriel Flores","Guillermo Silva",
+    "Henri Sibrian","Humberto Flores","Irvin Rivera","Isaiah Ortiz Alvarado",
+    "Isidro Enciso","Jaime Moya","Jaime Quintero","James Marquez",
+    "Jayson Ortega","Jeffrey Rivera","Jerlin Mendoza","Jerry Munoz",
+    "Jesus Heredia","Jimmy Cascio","Joaquin Garcia","Johnny Perez",
+    "Jonathan Jacobo","Jorge Contreras","Jose Luna","Jose Preciado",
+    "Jose Ramirez","Josue Villegas","Juan Mazariegos","Julio Munoz",
+    "Kenneth William","Kevin Bautista","Leonardo Mazariegos","Lizeth Marcos",
+    "Lorenzo Tanguma","Louis Aceves","Luis Ramirez","Manuel Martinez",
+    "Manuel Palacios","Mario Arias","Mario Lopez","Mathew Gonzalez",
+    "Matthew Baciu","Miguel Corral","Miguel Dominguez","Noah Villareal",
+    "Oliver Galicia","Oscar Aguirre","Pedro Barrera","Randdy De Paz",
+    "Robert Stark","Robert Welch","Rusel Santiago","Salvador Perez",
+    "Samuel Munoz","Sergio Diaz","Sergio Sandoval","Sotero Dominguez",
+    "Steven Sulewski","Tony Broadnax","Uriel Chavez","Victor Armienta",
+    "Victor Carrillo","Vincent Sopha","Vincent Stancati","Xavier Contreras"
+  ];
+
+  function tbtGetPos(e, canvas) {
+    var r = canvas.getBoundingClientRect();
+    var scaleX = canvas.width / r.width;
+    var scaleY = canvas.height / r.height;
+    if (e.touches) {
+      return { x: (e.touches[0].clientX - r.left) * scaleX, y: (e.touches[0].clientY - r.top) * scaleY };
+    }
+    return { x: (e.clientX - r.left) * scaleX, y: (e.clientY - r.top) * scaleY };
+  }
+
+  function tbtSigStart(e, canvas) {
+    e.preventDefault(); e.stopPropagation();
+    tbtSigDrawing = true; tbtSigCanvas = canvas;
+    tbtSigCtx = canvas.getContext('2d');
+    tbtSigCtx.strokeStyle = '#1a202c'; tbtSigCtx.lineWidth = 2;
+    tbtSigCtx.lineCap = 'round'; tbtSigCtx.lineJoin = 'round';
+    var pos = tbtGetPos(e, canvas);
+    tbtSigLastX = pos.x; tbtSigLastY = pos.y;
+    tbtSigCtx.beginPath(); tbtSigCtx.arc(pos.x, pos.y, 1, 0, Math.PI * 2); tbtSigCtx.fill();
+    var ph = canvas.parentNode.querySelector('.tbt-sig-ph');
+    if (ph) ph.style.display = 'none';
+    document.addEventListener('mousemove', tbtSigMove);
+    document.addEventListener('mouseup', tbtSigEnd);
+    document.addEventListener('touchmove', tbtSigMove, { passive: false });
+    document.addEventListener('touchend', tbtSigEnd);
+  }
+
+  function tbtSigMove(e) {
+    if (!tbtSigDrawing || !tbtSigCtx) return;
+    e.preventDefault();
+    var pos = tbtGetPos(e, tbtSigCanvas);
+    tbtSigCtx.beginPath(); tbtSigCtx.moveTo(tbtSigLastX, tbtSigLastY);
+    tbtSigCtx.lineTo(pos.x, pos.y); tbtSigCtx.stroke();
+    tbtSigLastX = pos.x; tbtSigLastY = pos.y;
+  }
+
+  function tbtSigEnd(e) {
+    tbtSigDrawing = false;
+    document.removeEventListener('mousemove', tbtSigMove);
+    document.removeEventListener('mouseup', tbtSigEnd);
+    document.removeEventListener('touchmove', tbtSigMove);
+    document.removeEventListener('touchend', tbtSigEnd);
+    if (tbtSigCanvas) {
+      var idx = tbtSigCanvas.getAttribute('data-idx');
+      var data = tbtSigCanvas.getContext('2d').getImageData(0, 0, tbtSigCanvas.width, tbtSigCanvas.height).data;
+      var hasContent = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+      if (hasContent && idx !== null) tbtSigData[idx] = tbtSigCanvas.toDataURL('image/png');
+    }
+  }
+
+  function tbtClearSig(idx) {
+    var canvas = document.getElementById('tbt-sig-canvas-' + idx);
+    if (!canvas) return;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    var ph = canvas.parentNode.querySelector('.tbt-sig-ph');
+    if (ph) ph.style.display = 'block';
+    delete tbtSigData[idx];
+  }
+
   window.addTBTSignRow = function() {
     var rows = document.getElementById('tbtSignRows');
     if (!rows) return;
-    var n = rows.querySelectorAll('.tbt-sig-entry').length + 1;
+    var idx = rows.querySelectorAll('.tbt-sig-row-wrap').length;
+    var workerOpts = '<option value="">-- Select employee --</option>'
+      + TBT_WORKERS.map(function(w) { return '<option value="' + w + '">' + w + '</option>'; }).join('');
     var div = document.createElement('div');
-    div.className = 'tbt-sig-entry';
-    div.style.cssText = 'display:flex;flex-direction:column;gap:4px;background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px;';
-    div.innerHTML = '<span style="font-size:11px;font-weight:600;color:#718096;">Employee ' + n + '</span>'
-      + '<input type="text" placeholder="Full name" style="padding:5px 8px;border:1px solid #cbd5e0;border-radius:5px;font-size:13px;">';
+    div.className = 'tbt-sig-row-wrap';
+    div.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:center;background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;';
+    div.innerHTML = '<div>'
+        + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;display:block;margin-bottom:4px;">Employee ' + (idx + 1) + '</label>'
+        + '<select class="tbt-emp-select" style="width:100%;padding:6px 8px;border:1px solid #cbd5e0;border-radius:6px;font-size:12px;background:#fff;">' + workerOpts + '</select>'
+      + '</div>'
+      + '<div>'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">'
+          + '<label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;">Signature</label>'
+          + '<button onclick="tbtClearSig(' + idx + ')" style="font-size:10px;background:none;border:none;color:#e53e3e;cursor:pointer;padding:0;">&#10005; Clear</button>'
+        + '</div>'
+        + '<div style="position:relative;background:#fff;border:1.5px solid #cbd5e0;border-radius:6px;overflow:hidden;cursor:crosshair;">'
+          + '<canvas id="tbt-sig-canvas-' + idx + '" data-idx="' + idx + '" width="300" height="60" style="width:100%;height:60px;display:block;touch-action:none;" onmousedown="tbtSigStart(event,this)" ontouchstart="tbtSigStart(event,this)"></canvas>'
+          + '<div class="tbt-sig-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#a0aec0;pointer-events:none;white-space:nowrap;">Sign here</div>'
+        + '</div>'
+      + '</div>';
     rows.appendChild(div);
-  };
+  }; 
 
   window.submitTBTSignOff = async function() {
     var SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
     var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
     var statusEl = document.getElementById('tbtSignStatus');
     var presenter = document.getElementById('tbtPresenter') ? document.getElementById('tbtPresenter').value.trim() : '';
-
-    var signatures = Array.from(document.querySelectorAll('#tbtSignRows .tbt-sig-entry input'))
-      .map(function(i) { return i.value.trim(); })
-      .filter(Boolean);
+var entries = [];
+    document.querySelectorAll('#tbtSignRows .tbt-sig-row-wrap').forEach(function(row, idx) {
+      var sel = row.querySelector('.tbt-emp-select');
+      var name = sel ? sel.value : '';
+      var canvas = document.getElementById('tbt-sig-canvas-' + idx);
+      if (canvas) {
+        var data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+        var hasSig = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+        if (hasSig) tbtSigData[idx] = canvas.toDataURL('image/png');
+      }
+      if (name) entries.push({ name: name, signature: tbtSigData[idx] || null });
+    });
+    var signatures = entries.map(function(e) { return e.name; });
+    var signatureImages = entries.map(function(e) { return e.signature; });
 
     if (!presenter) {
       if (statusEl) { statusEl.textContent = 'Please enter the presenter name.'; statusEl.style.color = '#c53030'; }
       return;
     }
     if (signatures.length === 0) {
-      if (statusEl) { statusEl.textContent = 'Please add at least one employee signature.'; statusEl.style.color = '#c53030'; }
+      if (statusEl) { statusEl.textContent = 'Please select at least one employee.'; statusEl.style.color = '#c53030'; }
       return;
     }
 
@@ -6603,6 +6723,8 @@ renderCCRef();
       talk_title: currentTBTTitle,
       presenter: presenter,
       signatures: signatures,
+      signature_images: signatureImages,
+    
       signed_at: new Date().toISOString(),
       week_ending: (function() {
         var n = new Date(), day = n.getDay(), diff = day <= 5 ? 5 - day : 5 - day + 7, f = new Date(n);
