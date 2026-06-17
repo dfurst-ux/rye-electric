@@ -1810,6 +1810,25 @@ tbody tr:hover td{background:#f7fbfc}
     </div>
   </div>
 
+
+
+
+  <!-- TBT Sign Modal -->
+  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
+    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
+      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
+      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
+      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
+      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
+      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
+      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
+      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
+      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
+    </div>
+  </div>
 <!-- ===== SAFETY TAB ===== -->
 <div class="pane" id="pane-safety">
   <div class="safety-header">
@@ -1822,6 +1841,7 @@ tbody tr:hover td{background:#f7fbfc}
     <div id="safetySubmittedBanner" class="safety-submitted-banner" style="display:none;">
       ✅ Safety forms submitted for this week — <span id="safetySubmittedBy"></span>
     </div>
+  </div>
 
   <!-- WJSI -->
   <div class="safety-form-card">
@@ -2129,6 +2149,22 @@ tbody tr:hover td{background:#f7fbfc}
     </div>
   </div>
 
+  <!-- TBT Sign Modal -->
+  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
+    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
+      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
+      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
+      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
+      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
+      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
+      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
+      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
+      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
+    </div>
+  </div>
 
 
   <!-- Submit -->
@@ -2149,26 +2185,8 @@ tbody tr:hover td{background:#f7fbfc}
     <button class="safety-submit-btn" onclick="printSafetyForms()" style="background:#d97706;">🖨️ Print / Save PDF</button>
   </div>
 </div>
-</div>
 <!-- ===== END SAFETY TAB ===== -->
 
-
-  <!-- TBT Sign Modal -->
-  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
-    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
-      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
-      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
-      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
-      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
-      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
-      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
-      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
-      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
-    </div>
-  </div>
 <div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg><span id="toast-txt"></span></div>
 
 <script>
@@ -6123,6 +6141,8 @@ renderCCRef();
 
 
 
+
+
 /* === SAFETY TAB === */
 (function initSafetyTab(){
   var SUPABASE_URL='https://okesnavkxmqucgvvhncx.supabase.co';
@@ -6340,7 +6360,100 @@ renderCCRef();
   var currentTBTTitle = '';
   var signedTBTs = {};
 
-  var tbtSigData = {};  // signature data store - drawing handled per-canvas in addTBTSignRow
+  var tbtSigData = {};
+  var tbtSigDrawing = false;
+  var tbtSigCanvas = null;
+  var tbtSigCtx = null;
+  var tbtSigLastX = 0, tbtSigLastY = 0;
+
+  var TBT_WORKERS = [
+    "Abiud Lopez","Adrian Flores","Adrian Hernandez","Adrian Marquez",
+    "Alberto Lopez Ruiz","Alejandro Lopez","Alex Osorio","Angel Hernandez",
+    "Angel Ibanez","Anthony Ibanez","Anthony Lyons","Anthony Macias",
+    "Anthony Zetina","Antonio Castillo","Armando Lopez","Axel Salas",
+    "Brandon Salazar","Brenda Quijada","Brian Campos","Brian Flores",
+    "Brian Kitajima","Brian Ramirez","Carla Quijada","Carlos Agapito",
+    "Carlos Landaverde","Christian Moran","Cristian Collin","Daniel Burleson",
+    "Daniel Lopez","Daniel Villegas","David Casarez","David Smith",
+    "Dillan Smith","Duvaldi Mazariegos","Dyana Quijada","Edgar Solis",
+    "Edith Del Carmen","Eduardo Echeverria","Edwin Martinez","Efrain Cornejo",
+    "Efren Hilario","Enrique Laguna","Erik Lopez","Estevan Sandoval",
+    "Filiberto Ramos","Francisco Flores","Gabriel Flores","Guillermo Silva",
+    "Henri Sibrian","Humberto Flores","Irvin Rivera","Isaiah Ortiz Alvarado",
+    "Isidro Enciso","Jaime Moya","Jaime Quintero","James Marquez",
+    "Jayson Ortega","Jeffrey Rivera","Jerlin Mendoza","Jerry Munoz",
+    "Jesus Heredia","Jimmy Cascio","Joaquin Garcia","Johnny Perez",
+    "Jonathan Jacobo","Jorge Contreras","Jose Luna","Jose Preciado",
+    "Jose Ramirez","Josue Villegas","Juan Mazariegos","Julio Munoz",
+    "Kenneth William","Kevin Bautista","Leonardo Mazariegos","Lizeth Marcos",
+    "Lorenzo Tanguma","Louis Aceves","Luis Ramirez","Manuel Martinez",
+    "Manuel Palacios","Mario Arias","Mario Lopez","Mathew Gonzalez",
+    "Matthew Baciu","Miguel Corral","Miguel Dominguez","Noah Villareal",
+    "Oliver Galicia","Oscar Aguirre","Pedro Barrera","Randdy De Paz",
+    "Robert Stark","Robert Welch","Rusel Santiago","Salvador Perez",
+    "Samuel Munoz","Sergio Diaz","Sergio Sandoval","Sotero Dominguez",
+    "Steven Sulewski","Tony Broadnax","Uriel Chavez","Victor Armienta",
+    "Victor Carrillo","Vincent Sopha","Vincent Stancati","Xavier Contreras"
+  ];
+
+  function tbtGetPos(e, canvas) {
+    var r = canvas.getBoundingClientRect();
+    var scaleX = canvas.width / r.width;
+    var scaleY = canvas.height / r.height;
+    if (e.touches) {
+      return { x: (e.touches[0].clientX - r.left) * scaleX, y: (e.touches[0].clientY - r.top) * scaleY };
+    }
+    return { x: (e.clientX - r.left) * scaleX, y: (e.clientY - r.top) * scaleY };
+  }
+
+  function tbtSigStart(e, canvas) {
+    e.preventDefault(); e.stopPropagation();
+    tbtSigDrawing = true; tbtSigCanvas = canvas;
+    tbtSigCtx = canvas.getContext('2d');
+    tbtSigCtx.strokeStyle = '#1a202c'; tbtSigCtx.lineWidth = 2;
+    tbtSigCtx.lineCap = 'round'; tbtSigCtx.lineJoin = 'round';
+    var pos = tbtGetPos(e, canvas);
+    tbtSigLastX = pos.x; tbtSigLastY = pos.y;
+    tbtSigCtx.beginPath(); tbtSigCtx.arc(pos.x, pos.y, 1, 0, Math.PI * 2); tbtSigCtx.fill();
+    var ph = canvas.parentNode.querySelector('.tbt-sig-ph');
+    if (ph) ph.style.display = 'none';
+    document.addEventListener('mousemove', tbtSigMove);
+    document.addEventListener('mouseup', tbtSigEnd);
+    document.addEventListener('touchmove', tbtSigMove, { passive: false });
+    document.addEventListener('touchend', tbtSigEnd);
+  }
+
+  function tbtSigMove(e) {
+    if (!tbtSigDrawing || !tbtSigCtx) return;
+    e.preventDefault();
+    var pos = tbtGetPos(e, tbtSigCanvas);
+    tbtSigCtx.beginPath(); tbtSigCtx.moveTo(tbtSigLastX, tbtSigLastY);
+    tbtSigCtx.lineTo(pos.x, pos.y); tbtSigCtx.stroke();
+    tbtSigLastX = pos.x; tbtSigLastY = pos.y;
+  }
+
+  function tbtSigEnd(e) {
+    tbtSigDrawing = false;
+    document.removeEventListener('mousemove', tbtSigMove);
+    document.removeEventListener('mouseup', tbtSigEnd);
+    document.removeEventListener('touchmove', tbtSigMove);
+    document.removeEventListener('touchend', tbtSigEnd);
+    if (tbtSigCanvas) {
+      var idx = tbtSigCanvas.getAttribute('data-idx');
+      var data = tbtSigCanvas.getContext('2d').getImageData(0, 0, tbtSigCanvas.width, tbtSigCanvas.height).data;
+      var hasContent = data.some(function(v, i) { return i % 4 === 3 && v > 0; });
+      if (hasContent && idx !== null) tbtSigData[idx] = tbtSigCanvas.toDataURL('image/png');
+    }
+  }
+
+  function tbtClearSig(idx) {
+    var canvas = document.getElementById('tbt-sig-canvas-' + idx);
+    if (!canvas) return;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    var ph = canvas.parentNode.querySelector('.tbt-sig-ph');
+    if (ph) ph.style.display = 'block';
+    delete tbtSigData[idx];
+  }
 
   window.toggleTBTCat = function(id) {
     var body = document.getElementById('tbt-cat-' + id);
