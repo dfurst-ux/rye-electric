@@ -531,35 +531,15 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Unit number</div>
-            <select id="sel-unit">
-              <option value="">-- Select unit --</option>
-            </select>
+            <input type="text" id="sel-unit" placeholder="Enter unit number" style="height:40px;">
           </div>
           <div class="fgroup">
             <div class="flbl" id="bldg-label">Building / Floor</div>
-            <select id="sel-bldg" onchange="onBldgChange()">
-              <option value="">-- Select building --</option>
-            </select>
+            <input type="text" id="sel-bldg" placeholder="Enter building / floor" style="height:40px;">
           </div>
         </div>
 
-        <!-- Floor dropdown — shown for BAH -->
-        <div class="form-grid" id="floor-row" style="display:none;margin-bottom:10px">
-          <div class="fgroup">
-            <div class="flbl">Floor / Level</div>
-            <select id="sel-floor">
-              <option value="">-- Select floor --</option>
-              <option value="1st Floor">1st Floor</option>
-              <option value="2nd Floor">2nd Floor</option>
-              <option value="3rd Floor">3rd Floor</option>
-              <option value="4th Floor">4th Floor</option>
-              <option value="5th Floor">5th Floor</option>
-              <option value="Roof">Roof</option>
-              <option value="Parking">Parking</option>
-              <option value="Ground">Ground</option>
-            </select>
-          </div>
-        </div>
+
 
         <!-- Phase toggle -->
         <div style="display:flex;gap:8px;margin-bottom:10px">
@@ -1114,18 +1094,13 @@ tbody tr:hover td{background:#f7fbfc}
 
     <!-- Print + Export -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
-      <button class="btn btn-rye" style="width:100%;justify-content:center" onclick="printWhiteboard()">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Print Whiteboard
-      </button>
-      <button class="btn btn-g" style="width:100%;justify-content:center" onclick="emailWhiteboard()">
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Email Whiteboard
-      </button>
-      <button class="btn btn-g" style="width:100%;justify-content:center" onclick="exportCSV()">
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Export to Foundation
-      </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printWhiteboard()">🖨️ Print</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailWhiteboard()">✉️ Email</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportCSV()">📥 Export CSV</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById('dl-filter-job')?document.getElementById('dl-filter-job').value:'all'; var dateVal=document.getElementById('dl-date')?document.getElementById('dl-date').value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal&&(job==='all'||l.job===job);}); if(!entries.length){toast('No entries for this date');return;} saveToDrive('whiteboard',job==='all'?'All Jobs':job,{job:job,date:dateVal,entries:entries},'wb-drive-status'); })()">🗂️ Save to Drive</button>
+      </div>
+      <div id="wb-drive-status" style="font-size:12px;text-align:center;margin-bottom:4px;"></div>
     </div>
 
     <!-- View output -->
@@ -1150,18 +1125,9 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Job</div>
         <select id="djr-job" disabled style="border-color:#2980b9;opacity:0.9"><option value="26003 - CARINA" selected>26003 - CARINA</option></select>
       </div>
-      <button class="btn btn-rye" onclick="loadDJR()" style="margin-top:18px">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
-        Load
-      </button>
-      <button class="btn btn-g" onclick="printDJR()" style="margin-top:18px">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Print / PDF
-      </button>
-      <button class="btn btn-g" onclick="emailDJR()" style="margin-top:18px">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Email report
-      </button>
+      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="loadDJR()">🔄 Load</button>
+      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="printDJR()">🖨️ Print</button>
+      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="emailDJR()">✉️ Email</button>
     </div>
 
     <!-- Report form -->
@@ -1263,10 +1229,11 @@ tbody tr:hover td{background:#f7fbfc}
               <input type="text" id="djr-title" value="RYE SUPERINTENDENT">
             </div>
           </div>
-          <button class="btn btn-rye" style="width:100%;margin-top:10px" onclick="saveDJR()">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
-            Save report
-          </button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+            <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="saveDJR()">💾 Save Report</button>
+            <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById('djr-job').value; var date=document.getElementById('djr-date').value; if(!job||!date){toast('Load a report first');return;} var data=collectDJRData(); saveToDrive('daily_report',job,data,'djr-drive-status'); })()">🗂️ Save to Drive</button>
+          </div>
+          <div id="djr-drive-status" style="margin-top:6px;font-size:12px;text-align:center;"></div>
           <div id="djr-saved-msg" style="display:none;text-align:center;padding:8px;font-size:12px;color:var(--green);margin-top:8px">
             &#10003; Report saved to device
           </div>
@@ -1319,20 +1286,13 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
 
       <!-- Action buttons -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-        <button class="btn btn-rye" style="width:100%;justify-content:center" onclick="printSignIn()">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          Print / Save PDF
-        </button>
-        <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:6px" onclick="exportSignInCSV()">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Export to Foundation CSV
-        </button>
-        <button class="btn btn-g" style="width:100%;justify-content:center" onclick="emailSignIn()">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email forms
-        </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printSignIn()">🖨️ Print / PDF</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailSignIn()">✉️ Email</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportSignInCSV()">📥 Export CSV</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById('si-job').value; var date=document.getElementById('si-date').value; if(!job||!date){toast('Load sign-in sheet first');return;} calcAllRows(); var rows=collectSIRows(); saveToDrive('sign_in',job,{job:job,date:date,supervisor:document.getElementById('si-supervisor')?document.getElementById('si-supervisor').value:'',rows:rows},'si-drive-status'); })()">🗂️ Save to Drive</button>
       </div>
+      <div id="si-drive-status" style="font-size:12px;text-align:center;margin-bottom:8px;"></div>
 
       <!-- SIGN IN SHEET FORM -->
       <div id="si-form-signin">
@@ -2130,7 +2090,11 @@ tbody tr:hover td{background:#f7fbfc}
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
       <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
       <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
-      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;">
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="submitTBTSignOff()">💾 Save Sign-Off</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var presenter=document.getElementById('tbtPresenter')?document.getElementById('tbtPresenter').value.trim():''; if(!presenter){toast('Enter presenter name first');return;} var entries=[]; document.querySelectorAll('#tbtSignRows .tbt-sig-row-wrap').forEach(function(row,idx){var sel=row.querySelector('.tbt-emp-select');var name=sel?sel.value:'';if(name)entries.push(name);}); if(!entries.length){toast('Add at least one employee');return;} var jobId=typeof getSafetyJobId!=='undefined'?getSafetyJobId():''; saveToDrive('tbt',jobId,{job_id:jobId,talk_file:currentTBTFile,talk_title:currentTBTTitle,presenter:presenter,signatures:entries,signed_at:new Date().toISOString(),week_ending:(function(){var n=new Date(),day=n.getDay(),diff=day===0?0:7-day,f=new Date(n);f.setDate(n.getDate()+diff);return f.toISOString().slice(0,10);})()},'tbt-drive-status'); })()">🗂️ Save to Drive</button>
+      </div>
+      <div id="tbt-drive-status" style="margin-bottom:6px;font-size:12px;text-align:center;"></div>
       <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
     </div>
   </div>
@@ -2146,12 +2110,12 @@ tbody tr:hover td{background:#f7fbfc}
     <div id="safetySubmitStatus" class="safety-submit-status"></div>
   </div>
 
-  <div style="margin-top:12px;padding:12px 16px;background:#fffbeb;border:1px solid #f6e05e;border-radius:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-    <div style="flex:1;min-width:200px;">
-      <div style="font-size:13px;font-weight:700;color:#744210;">📤 Send to Safety</div>
-      <div style="font-size:12px;color:#92400e;margin-top:2px;">Print as PDF → email to <strong>jjacobo@ryecompany.com</strong></div>
+  <div style="margin-top:12px;padding:12px 16px;background:#f0f4ff;border:1px solid #c3d4f7;border-radius:10px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printSafetyForms()">🖨️ Print / PDF</button>
+      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var by=document.getElementById('safetySubmittedByInput')?document.getElementById('safetySubmittedByInput').value.trim():''; if(!by){toast('Enter your name first');return;} var jobId=typeof getSafetyJobId!=='undefined'?getSafetyJobId():''; saveToDrive('safety',jobId,{job_id:jobId,submitted_by:by,week_ending:(function(){var n=new Date(),day=n.getDay(),diff=day===0?0:7-day,f=new Date(n);f.setDate(n.getDate()+diff);return f.toISOString().slice(0,10);})()},'safety-drive-status'); })()">🗂️ Save to Drive</button>
     </div>
-    <button class="safety-submit-btn" onclick="printSafetyForms()" style="background:#d97706;">🖨️ Print / Save PDF</button>
+    <div id="safety-drive-status" style="margin-top:6px;font-size:12px;text-align:center;"></div>
   </div>
 </div>
 <!-- ===== END SAFETY TAB ===== -->
@@ -3939,6 +3903,7 @@ function saveDJR(){
   const msg = document.getElementById('djr-saved-msg');
   if(msg){ msg.style.display='block'; setTimeout(()=>msg.style.display='none',3000); }
   toast('Daily report saved');
+  saveToDrive('daily_report', job, data);
   // Auto-email DJR
   (function(){
     var djrEmails2 = getJobEmail(job);
@@ -4308,6 +4273,11 @@ function emailDJR(){
     var a=document.createElement('a');
     var djrJob = document.getElementById('djr-job') ? document.getElementById('djr-job').value : '';
   var djrEmails = getJobEmail(djrJob);
+  if(driveLinks && driveLinks['daily_report']) {
+    bod += '%0D%0A%0D%0A%F0%9F%97%82%EF%B8%8F%20View%20in%20Google%20Drive%3A%20' + encodeURIComponent(driveLinks['daily_report']);
+  } else {
+    bod += '%0D%0A%0D%0ATip%3A%20Press%20%22Save%20to%20Drive%22%20first%20to%20attach%20a%20Drive%20link.';
+  }
   window.open('https://mail.google.com/mail/?view=cm&to='+encodeURIComponent(djrEmails.to)+'&cc='+encodeURIComponent(djrEmails.cc)+'&su='+subj+'&body='+bod,'_blank');
   toast('Opening Gmail...');
   }catch(err){
@@ -4656,6 +4626,7 @@ function saveSignIn(){
     savedAt: new Date().toISOString()
   };
   saveSIToStorage();
+  saveToDrive('sign_in', document.getElementById('si-job')?document.getElementById('si-job').value:'', {job: document.getElementById('si-job')?document.getElementById('si-job').value:'', date: document.getElementById('si-date')?document.getElementById('si-date').value:'', supervisor: document.getElementById('si-supervisor')?document.getElementById('si-supervisor').value:'', rows: collectSIRows?collectSIRows():[]});
   var siKey=document.getElementById("si-job").value+"|"+document.getElementById("si-date").value;
   if(siData[siKey]) saveSignInToCloud(siKey.split("|")[0], siKey.split("|")[1], siData[siKey]);
   (function(){
@@ -4900,6 +4871,11 @@ function emailSignIn(){
 
   var siJob2 = document.getElementById('si-job') ? document.getElementById('si-job').value : '';
   var siEmails = getJobEmail(siJob2);
+  if(driveLinks && driveLinks['sign_in']) {
+    bod += '%0D%0A%0D%0A%F0%9F%97%82%EF%B8%8F%20View%20in%20Google%20Drive%3A%20' + encodeURIComponent(driveLinks['sign_in']);
+  } else {
+    bod += '%0D%0A%0D%0ATip%3A%20Press%20%22Save%20to%20Drive%22%20first%20to%20attach%20a%20Drive%20link.';
+  }
   window.open('https://mail.google.com/mail/?view=cm&to='+encodeURIComponent(siEmails.to)+'&cc='+encodeURIComponent(siEmails.cc)+'&su='+subj+'&body='+bod,'_blank');
   toast('Opening Gmail...');
 }
@@ -5214,6 +5190,7 @@ function saveWBEntry(){
 
   saveToStorage();
   saveDailyToCloud(dailyLogs[dailyLogs.length-1]);
+  saveToDrive('whiteboard', document.getElementById('wb-job')?document.getElementById('wb-job').value:'', {job: document.getElementById('wb-job')?document.getElementById('wb-job').value:'', date: new Date().toISOString().slice(0,10), entries: dailyLogs.slice(-20)});
   renderDLStats();
   renderDailyLogView();
 
@@ -5691,6 +5668,11 @@ function emailWhiteboard(){
   var bod  = encodeURIComponent(bodyLines.join('\n'));
 
   var wbEmails = getJobEmail(filterJob === 'all' ? '' : filterJob);
+  if(driveLinks && driveLinks['whiteboard']) {
+    bod += '%0D%0A%0D%0A%F0%9F%97%82%EF%B8%8F%20View%20in%20Google%20Drive%3A%20' + encodeURIComponent(driveLinks['whiteboard']);
+  } else {
+    bod += '%0D%0A%0D%0ATip%3A%20Press%20%22Save%20to%20Drive%22%20first%20to%20attach%20a%20Drive%20link.';
+  }
   window.open('https://mail.google.com/mail/?view=cm&to='+encodeURIComponent(wbEmails.to)
     +'&cc='+encodeURIComponent(wbEmails.cc)
     +'&su='+subj+'&body='+bod,'_blank');
@@ -6271,13 +6253,14 @@ renderCCRef();
           var sEmails = getJobEmail(sJobId);
           if(typeof emailjs !== 'undefined'){
             try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
+            var safDriveNote = (driveLinks && driveLinks['safety']) ? '\n\nView in Google Drive: ' + driveLinks['safety'] : '\n\nTip: Press Save to Drive first to include a Drive link.';
             emailjs.send('service_q9t1mnk','template_tgzqipn',{
               to_email: sEmails.to,
               task_title: 'Safety Forms Submitted - ' + sJobId,
               job: sJobId,
               task_date: new Date().toLocaleDateString(),
               task_time: new Date().toLocaleTimeString(),
-              task_notes: 'WJSI, JHA, and PTP submitted by ' + by + '.\nWeek ending: ' + getWeekEnding() + '\n\nPrint and attach PDF from the Safety tab.',
+              task_notes: 'WJSI, JHA, and PTP submitted by ' + by + '.\nWeek ending: ' + getWeekEnding() + safDriveNote,
               task_priority: 'completed',
               calendar_link: ''
             });
@@ -6285,6 +6268,7 @@ renderCCRef();
         })();
         var ban=document.getElementById('safetySubmittedBanner'),byEl=document.getElementById('safetySubmittedBy');
         if(ban)ban.style.display='block';if(byEl)byEl.textContent=by+' · Today';
+        saveToDrive('safety', getSafetyJobId(), payload);
       } else {
         var err=await r.text();
         if(statusEl){statusEl.textContent='Error: '+err;statusEl.className='safety-submit-status error'}
@@ -6676,6 +6660,7 @@ renderCCRef();
       if (r.ok || r.status === 201) {
         if (statusEl) { statusEl.textContent = '✅ Sign-off saved — ' + entries.length + ' employee(s) recorded.'; statusEl.style.color = '#276749'; }
         signedTBTs[currentTBTFile] = true;
+        saveToDrive('tbt', jobId, payload);
         // Auto-email TBT sign-off
         (function(){
           var jobId2 = (typeof jobSlug !== 'undefined' && jobSlug) ? jobSlug : (typeof JOB_ID !== 'undefined' ? JOB_ID : '');
@@ -6724,6 +6709,36 @@ renderCCRef();
   };
 })();
 /* === END SAFETY TAB === */
+
+
+/* === GOOGLE DRIVE SAVE === */
+const DRIVE_WORKER = 'https://rye-drive.dfurst.workers.dev';
+
+var driveLinks = {};
+
+async function saveToDrive(docType, job, data, statusElId) {
+  var statusEl = statusElId ? document.getElementById(statusElId) : null;
+  if(statusEl) { statusEl.textContent = '⏳ Saving to Drive...'; statusEl.style.color = '#1a73e8'; }
+  try {
+    var resp = await fetch(DRIVE_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ doc_type: docType, job: job, data: data })
+    });
+    var result = await resp.json();
+    if(result.success) {
+      driveLinks[docType] = result.url;
+      if(statusEl) { statusEl.innerHTML = '✅ Saved to Drive — <a href="' + result.url + '" target="_blank" style="color:#1a73e8;">Open Doc</a>'; statusEl.style.color = '#276749'; }
+    } else {
+      if(statusEl) { statusEl.textContent = '❌ Drive save failed: ' + (result.error||'Unknown error'); statusEl.style.color = '#c53030'; }
+    }
+  } catch(e) {
+    if(statusEl) { statusEl.textContent = '❌ Drive save failed: ' + e.message; statusEl.style.color = '#c53030'; }
+    console.warn('Drive save failed:', e.message);
+  }
+}
+/* === END GOOGLE DRIVE SAVE === */
+
 </script>
 </body>
 </html>
