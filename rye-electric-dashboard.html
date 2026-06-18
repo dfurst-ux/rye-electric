@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0098)file:///C:/Users/Dennis%20Furst/Downloads/Main_Office_Dashboard___Rye_Electric___Simple_Build.html -->
+<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_60.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -358,7 +358,7 @@ tbody tr:hover td{background:#f7fbfc}
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:#777777">Last sync: 3:44:00 PM</span>
+      <span id="sync-time" style="font-size:10px;color:#777777">Last sync: 3:51:00 PM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -379,7 +379,7 @@ tbody tr:hover td{background:#f7fbfc}
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
-    <button class="tab on" onclick="showTab(this,&#39;overview&#39;)">
+    <button class="tab" onclick="showTab(this,&#39;overview&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       <span>Overview</span>
     </button>
@@ -399,7 +399,7 @@ tbody tr:hover td{background:#f7fbfc}
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>
       <span>Production</span>
     </button>
-    <button class="tab" onclick="showTab(this,&#39;reports&#39;)">
+    <button class="tab on" onclick="showTab(this,&#39;reports&#39;)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
       <span>Prod Reports</span>
     </button>
@@ -419,7 +419,7 @@ tbody tr:hover td{background:#f7fbfc}
   </div>
 
   <!-- OVERVIEW -->
-  <div class="pane on" id="pane-overview">
+  <div class="pane" id="pane-overview">
     <div class="main-grid">
       <!-- Job Progress -->
       <div class="card">
@@ -657,6 +657,34 @@ tbody tr:hover td{background:#f7fbfc}
           <div style="font-size:10px;color:#777777">$0k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">26003</div>
+          <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <span style="font-size:8px;color:#777777">Total</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="width:100%;background:#2980b9;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <span style="font-size:8px;color:#777777">Last wk</span>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$0k</div>
+          <div style="font-size:10px;color:#777777">$0k last wk</div>
+        </div><div>
+          <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">26005</div>
+          <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <span style="font-size:8px;color:#777777">Total</span>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
+              <div style="width:100%;background:#2980b9;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <span style="font-size:8px;color:#777777">Last wk</span>
+            </div>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$0k</div>
+          <div style="font-size:10px;color:#777777">$0k last wk</div>
+        </div><div>
+          <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SP26006</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
               <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
@@ -920,7 +948,7 @@ tbody tr:hover td{background:#f7fbfc}
         </div>
         <div class="cb" id="activity-full"></div>
         <select id="activity-filter" style="display:none"><option value="all">all</option></select>
-        <div id="activity-feed"></div>
+        <div id="activity-feed"><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #e2e2e2"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:#27ae60;color:#1a1a1a;font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:#1a1a1a">3 workers</div><div style="font-size:11px;color:#444444;margin-top:1px">26003 - CARINA MAIN PLACE MALL</div><div style="font-size:11px;color:#777777;margin-top:2px">Sign-in: Jorge Contreras, Mathew Gonzalez, Adrian Marquez</div></div><div style="font-size:10px;color:#777777;flex-shrink:0;font-family:monospace">2026-06-18</div></div><div class="act-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #e2e2e2"><div style="min-width:80px;padding:3px 6px;border-radius:4px;background:#27ae60;color:#1a1a1a;font-size:9px;font-weight:700;text-align:center;flex-shrink:0;white-space:nowrap">SIGN IN</div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:#1a1a1a">1 workers</div><div style="font-size:11px;color:#444444;margin-top:1px">26003 - CARINA</div><div style="font-size:11px;color:#777777;margin-top:2px">Sign-in: Jorge Contreras</div></div><div style="font-size:10px;color:#777777;flex-shrink:0;font-family:monospace">2026-06-17</div></div></div>
       </div>
     </div>
   </div>
@@ -928,16 +956,568 @@ tbody tr:hover td{background:#f7fbfc}
 
   
 
-<div class="pane" id="pane-reports">
+<div class="pane on" id="pane-reports">
     <div style="font-size:11px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px">
       Week of May 11-17, 2026 — 7 jobs
     </div>
 
     <!-- KPI summary row -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="rpt-kpi-row"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="rpt-kpi-row"><div class="kpi">
+    <div class="kpi-lbl">Total manpower</div>
+    <div class="kpi-val" style="color:#2980b9;font-size:24px">65.1</div>
+    <div class="kpi-sub">field workers</div>
+  </div><div class="kpi">
+    <div class="kpi-lbl">Last week hours</div>
+    <div class="kpi-val" style="color:#1a1a1a;font-size:24px">2515h</div>
+    <div class="kpi-sub">all jobs combined</div>
+  </div><div class="kpi">
+    <div class="kpi-lbl">Last week cost</div>
+    <div class="kpi-val" style="color:#f5a623;font-size:24px">$112,107</div>
+    <div class="kpi-sub">labor dollars</div>
+  </div><div class="kpi">
+    <div class="kpi-lbl">Avg labor rate</div>
+    <div class="kpi-val" style="color:#1a1a1a;font-size:24px">$47.91</div>
+    <div class="kpi-sub">per hour</div>
+  </div><div class="kpi">
+    <div class="kpi-lbl">Proj gain/loss</div>
+    <div class="kpi-val" style="color:#C0392B;font-size:24px">-1,392,290</div>
+    <div class="kpi-sub">all jobs total</div>
+  </div><div class="kpi">
+    <div class="kpi-lbl">Jobs over budget</div>
+    <div class="kpi-val" style="color:#C0392B;font-size:24px">4/12</div>
+    <div class="kpi-sub">need attention</div>
+  </div></div>
 
     <!-- Job cards -->
-    <div id="rpt-job-cards"></div>
+    <div id="rpt-job-cards"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:14px"><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">24001 - BIOLA</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Biola Cinema &amp; Media Arts Bldg • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#C0392B">-$421,269.47</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$45.73</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">5.4</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">216</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#C0392B">141.4%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#C0392B;width:100%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 30,807 spent</span>
+            <span style="font-size:11px;color:#777777">-10,219 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-red">Over budget</span>
+            <span class="bdg b-warn">Units exceeded</span>
+            <span class="bdg b-rye">5.4 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">24002 - SEPULVEDA</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">6733 Sepulveda • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#C0392B">-$153,586.78</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$50.03</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">9.2</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">368</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">84.4%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:84.4%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 27,633 spent</span>
+            <span style="font-size:11px;color:#777777">-545 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-red">Over budget</span>
+            
+            <span class="bdg b-rye">9.2 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">24005 - VNV</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Van Nuys &amp; Vose • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#C0392B">-$759,190.86</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$53.18</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">11.22</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">360</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">61.9%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:61.9%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 37,163 spent</span>
+            <span style="font-size:11px;color:#777777">-848 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-red">Over budget</span>
+            
+            <span class="bdg b-rye">11.22 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">24006 - VF</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Vintage Farms • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$185,395</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$45.41</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">17</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">680</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#D4A843">99.7%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#D4A843;width:99.7%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 39,278 spent</span>
+            <span style="font-size:11px;color:#777777">1,823 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            <span class="bdg b-rye">17 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">25001 - DECENA</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Mission Gorge-Decena Apts • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#C0392B">-$678,911.23</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.59</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">9.66</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">387</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">36.6%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:36.6%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 9,986 spent</span>
+            <span style="font-size:11px;color:#777777">18,775 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-red">Over budget</span>
+            
+            <span class="bdg b-rye">9.66 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">25002 - BAH</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Bellamy Agoura Hills • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$426,997.47</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.63</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">12</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">480</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">61.6%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:61.6%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 6,756 spent</span>
+            <span style="font-size:11px;color:#777777">30,919 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            <span class="bdg b-rye">12 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">SP25018 - CDC PLAZA</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">CDC Plaza • May 25-31, 2026</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$8,275.64</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$52.81</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">0.6</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">24</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">0.0%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 856 spent</span>
+            <span style="font-size:11px;color:#777777">2,077 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            <span class="bdg b-rye">0.6 workers</span>
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">24010 - COMMONS</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Commons Calabasas • </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$0</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.9</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">0</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">0</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">0.0%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 0 spent</span>
+            <span style="font-size:11px;color:#777777">0 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">26002 - WILSHIRE</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">600 Wilshire • </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$0</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.9</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">0</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">0</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">0.0%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 0 spent</span>
+            <span style="font-size:11px;color:#777777">0 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">26003 - CARINA MAIN PLACE MALL</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Carina Main Place Mall • </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$0</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.9</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">0</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">0</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">0.0%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 0 spent</span>
+            <span style="font-size:11px;color:#777777">0 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">26005 - MARINA SHORES</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Marina Shores • </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$0</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.9</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">0</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">0</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">0.0%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 0 spent</span>
+            <span style="font-size:11px;color:#777777">0 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            
+          </div>
+        </div>
+      </div><div class="card">
+        <div class="ch" style="background:rgba(0,0,0,.25)">
+          <div>
+            <div style="font-size:13px;font-weight:700">SP26006 - LOS ANGELES TIMES</div>
+            <div style="font-size:11px;color:#777777;margin-top:1px">Los Angeles Times (ONNI) • </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:#777777;text-transform:uppercase;letter-spacing:.06em">Proj L/G</div>
+            <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#27ae60">+$0</div>
+          </div>
+        </div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px">
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Rate</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">$46.9</div>
+              <div style="font-size:10px;color:#777777">/hr</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Manpower</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#2980b9">0</div>
+              <div style="font-size:10px;color:#777777">on site</div>
+            </div>
+            <div class="sc" style="padding:8px 10px">
+              <div class="sl">Last wk hrs</div>
+              <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:18px;font-weight:700;color:#1a1a1a">0</div>
+              <div style="font-size:10px;color:#777777">hrs worked</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:11px;color:#444444">Units % of budget</span>
+            <span style="font-size:11px;font-weight:700;color:#2980b9">0.0%</span>
+          </div>
+          <div class="pbar" style="height:6px"><div class="pfill" style="background:#2980b9;width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:#777777">Hours: 0 spent</span>
+            <span style="font-size:11px;color:#777777">0 remaining</span>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+            <span class="bdg b-ok">On / under budget</span>
+            
+            
+          </div>
+        </div>
+      </div></div></div>
 
     <!-- Cost code detail table per job -->
     <div class="card" style="margin-top:4px">
@@ -946,9 +1526,7 @@ tbody tr:hover td{background:#f7fbfc}
           <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path></svg>
           Cost code detail
         </div>
-        <select id="rpt-job-filter" onchange="renderCCTable()" style="font-size:11px;height:30px;padding:0 8px">
-          <option value="all">All jobs</option>
-        </select>
+        <select id="rpt-job-filter" onchange="renderCCTable()" style="font-size:11px;height:30px;padding:0 8px"><option value="all">All jobs</option><option value="24001 - BIOLA">24001 - BIOLA</option><option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option><option value="24005 - VNV">24005 - VNV</option><option value="24006 - VF">24006 - VF</option><option value="25001 - DECENA">25001 - DECENA</option><option value="25002 - BAH">25002 - BAH</option><option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option><option value="24010 - COMMONS">24010 - COMMONS</option><option value="26002 - WILSHIRE">26002 - WILSHIRE</option><option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option><option value="26005 - MARINA SHORES">26005 - MARINA SHORES</option><option value="SP26006 - LOS ANGELES TIMES">SP26006 - LOS ANGELES TIMES</option></select>
       </div>
       <div style="overflow-x:auto">
         <table class="cost-table" id="rpt-cc-table">
@@ -965,15 +1543,15 @@ tbody tr:hover td{background:#f7fbfc}
 
   <!-- FIELD DATA PANE -->
   <div class="pane" id="pane-field">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="field-kpi-row"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px" id="field-kpi-row"><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Hours this week</div><div class="kpi-val" style="color:#2980b9;font-size:24px">0.0h</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Active workers</div><div class="kpi-val" style="color:#27ae60;font-size:24px">0</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Units rough done</div><div class="kpi-val" style="color:#D4A843;font-size:24px">0</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Units final done</div><div class="kpi-val" style="color:#27ae60;font-size:24px">0</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Daily log entries</div><div class="kpi-val" style="color:#1a1a1a;font-size:24px">0</div></div><div class="kpi" style="padding:12px 14px"><div class="kpi-lbl">Sign-in records</div><div class="kpi-val" style="color:#f5a623;font-size:24px">2</div></div></div>
     <div class="main-grid">
       <div class="card">
         <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>Units logged this week</div></div>
-        <div class="cb" id="field-units-summary"></div>
+        <div class="cb" id="field-units-summary"><div style="color:#777777;font-size:12px">No unit logs yet -- sync from field tracker</div></div>
       </div>
       <div class="card">
         <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>Active workers this week</div></div>
-        <div class="cb" id="field-workers-list"></div>
+        <div class="cb" id="field-workers-list"><div style="color:#777777;font-size:12px">No entries this week yet</div></div>
       </div>
     </div>
     <div class="card">
@@ -981,20 +1559,20 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path></svg>Daily whiteboard — latest entries</div>
         <select id="db-field-job-filter" onchange="renderFieldData()" style="height:28px;font-size:11px;padding:0 8px;border-radius:6px;background:#f4f8f9;border:1px solid #e2e2e2;color:#1a1a1a">
           <option value="all">All jobs</option>
-        </select>
+        <option value="24001 - BIOLA">24001 - BIOLA</option><option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option><option value="24005 - VNV">24005 - VNV</option><option value="24006 - VF">24006 - VF</option><option value="25001 - DECENA">25001 - DECENA</option><option value="25002 - BAH">25002 - BAH</option><option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option></select>
       </div>
       <div style="overflow-x:auto">
         <table class="cost-table" id="field-log-table">
           <thead><tr>
             <th>Date</th><th>Employee</th><th>Job</th><th>Phase Code</th><th>Description</th><th>Hours</th>
           </tr></thead>
-          <tbody id="field-log-tbody"></tbody>
+          <tbody id="field-log-tbody"><tr><td colspan="6" style="text-align:center;padding:20px;color:#777777">No entries -- sync from field tracker first</td></tr></tbody>
         </table>
       </div>
     </div>
     <div class="card" style="margin-top:10px">
       <div class="ch"><div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline></svg>Daily Job Reports</div></div>
-      <div class="cb" id="djr-summary"><div style="color:#777777;font-size:12px">Sync from field tracker to see reports</div></div>
+      <div class="cb" id="djr-summary"><div style="color:#777777;font-size:12px;padding:10px">No daily reports synced yet</div></div>
     </div>
 
     <div class="card" style="margin-top:10px">
@@ -1004,7 +1582,7 @@ tbody tr:hover td{background:#f7fbfc}
           <thead><tr>
             <th>Date</th><th>Job</th><th>Employee</th><th>Start</th><th>Finish</th><th>Reg Hrs</th><th>OT Hrs</th><th>Total</th>
           </tr></thead>
-          <tbody id="signin-tbody"></tbody>
+          <tbody id="signin-tbody"><tr><td class="tm">2026-06-18</td><td class="tc">26003 - CARINA MAIN PLACE MALL</td><td class="tn">Jorge Contreras</td><td style="font-size:11px;color:#777777">7:00 AM</td><td style="font-size:11px;color:#777777">3:30 PM</td><td style="color:#27ae60;font-weight:700">8.0h</td><td style="color:#C0392B;font-weight:700">0.0h</td><td style="color:#2980b9;font-weight:700">8.0h</td></tr><tr><td class="tm">2026-06-18</td><td class="tc">26003 - CARINA MAIN PLACE MALL</td><td class="tn">Mathew Gonzalez</td><td style="font-size:11px;color:#777777">7:00 AM</td><td style="font-size:11px;color:#777777">3:30 PM</td><td style="color:#27ae60;font-weight:700">8.0h</td><td style="color:#C0392B;font-weight:700">0.0h</td><td style="color:#2980b9;font-weight:700">8.0h</td></tr><tr><td class="tm">2026-06-18</td><td class="tc">26003 - CARINA MAIN PLACE MALL</td><td class="tn">Adrian Marquez</td><td style="font-size:11px;color:#777777">7:00 AM</td><td style="font-size:11px;color:#777777">3:30 PM</td><td style="color:#27ae60;font-weight:700">8.0h</td><td style="color:#C0392B;font-weight:700">0.0h</td><td style="color:#2980b9;font-weight:700">8.0h</td></tr><tr><td class="tm">2026-06-17</td><td class="tc">26003 - CARINA</td><td class="tn">Jorge Contreras</td><td style="font-size:11px;color:#777777">7:00 AM</td><td style="font-size:11px;color:#777777">3:30 PM</td><td style="color:#27ae60;font-weight:700">8.0h</td><td style="color:#C0392B;font-weight:700">0.0h</td><td style="color:#2980b9;font-weight:700">8.0h</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1133,7 +1711,9 @@ const REPORT_DATA = [
   {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 25-31, 2026",laborRate:52.81,projLG:8275.64,lastWkHrs:24,lastWkDollars:1309.62,budgetPct:21.1,manpower:0.6,hrsSpent:856,hrsRemaining:2077,hrsbudget:2933,totalBudget:642595.35,hrsPct:29.2,unitsPct:0.0,laborActual:76909.0,laborBudget:235612,costCodes:[]},
   {key:"24010 - COMMONS",name:"Commons Calabasas",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
   {key:"26002 - WILSHIRE",name:"600 Wilshire",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
-  {key:"26003 - CARINA",name:"Carina Main Place Mall",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]}
+  {key:"26003 - CARINA MAIN PLACE MALL",name:"Carina Main Place Mall",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
+  {key:"26005 - MARINA SHORES",name:"Marina Shores",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
+  {key:"SP26006 - LOS ANGELES TIMES",name:"Los Angeles Times (ONNI)",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]}
 ];
 
 const jobs = [
@@ -2656,7 +3236,7 @@ function renderDashTasks(){
   var statusFilter = document.getElementById('db-task-filter-status') ? document.getElementById('db-task-filter-status').value : 'open';
 
   var filtered = (window._dashTasks||[]).filter(function(t){
-    var knownJobs = ['24001 - BIOLA', '24002 - SEPULVEDA', '24005 - VNV', '24006 - VF', '24010 - COMMONS', '25001 - DECENA', '25002 - BAH', '26002 - WILSHIRE', 'SP25018 - CDC PLAZA', '26003 - CARINA', '26005 - MARINA SHORES'];
+    var knownJobs = ['24001 - BIOLA', '24002 - SEPULVEDA', '24005 - VNV', '24006 - VF', '24010 - COMMONS', '25001 - DECENA', '25002 - BAH', '26002 - WILSHIRE', 'SP25018 - CDC PLAZA', '26003 - CARINA', '26005 - MARINA SHORES', 'SP26006 - LOS ANGELES TIMES'];
     if(!t.job || knownJobs.indexOf(t.job) < 0) return false; // only show tasks from job trackers
     return (jobFilter==='all'    || t.job===jobFilter)
         && (typeFilter==='all'   || t.type===typeFilter)
