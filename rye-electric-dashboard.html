@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0072)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-dashboard_43.html -->
+<!-- saved from url=(0098)file:///C:/Users/Dennis%20Furst/Downloads/Main_Office_Dashboard___Rye_Electric___Simple_Build.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Main Office Dashboard | Rye Electric + Simple Build</title>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="./Main Office Dashboard _ Rye Electric + Simple Build_files/css2" rel="stylesheet">
 <style>
 :root{
   --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
@@ -358,7 +358,7 @@ tbody tr:hover td{background:#f7fbfc}
     <div class="hdr-right">
       <div class="live-dot"></div>
       <span class="live-label">Live</span>
-      <span id="sync-time" style="font-size:10px;color:#777777">Last sync: 3:39:46 PM</span>
+      <span id="sync-time" style="font-size:10px;color:#777777">Last sync: 3:44:00 PM</span>
       <span class="week-badge">Week 21 — May 2025</span>
       <button class="sync-btn" onclick="syncFromSupabase()">
         <svg viewBox="0 0 24 24"><polyline points="1,4 1,10 7,10"></polyline><path d="M3.51 15a9 9 0 102.13-9.36L1 10"></path></svg>
@@ -375,44 +375,44 @@ tbody tr:hover td{background:#f7fbfc}
 <div class="shell">
 
   <!-- KPI ROW -->
-  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:#2980b9">72.4</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:#27ae60">0.0h</div><div class="kpi-sub">0 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:#777777">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:#1a1a1a">2,898h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:#C0392B">-709k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:#f5a623">$10722k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:#D4A843">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:#27ae60">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:#2980b9">0</div><div class="kpi-sub">saved</div></div></div>
+  <div class="kpi-grid" id="kpi-row"><div class="kpi"><div class="kpi-lbl">Active Manpower</div><div class="kpi-val" style="color:#2980b9">65.1</div><div class="kpi-sub">workers on site</div></div><div class="kpi"><div class="kpi-lbl">This Week Hours</div><div class="kpi-val" style="color:#27ae60">32.0h</div><div class="kpi-sub">3 workers</div></div><div class="kpi"><div class="kpi-lbl">Overtime Hours</div><div class="kpi-val" style="color:#777777">0.0h</div><div class="kpi-sub">this week</div></div><div class="kpi"><div class="kpi-lbl">Last Week Hours</div><div class="kpi-val" style="color:#1a1a1a">2,515h</div><div class="kpi-sub">all jobs</div></div><div class="kpi"><div class="kpi-lbl">Proj L/G</div><div class="kpi-val" style="color:#C0392B">-1392k</div><div class="kpi-sub">projected</div></div><div class="kpi"><div class="kpi-lbl">Labor to Date</div><div class="kpi-val" style="color:#f5a623">$10880k</div><div class="kpi-sub">actual spend</div></div><div class="kpi"><div class="kpi-lbl">Units Rough</div><div class="kpi-val" style="color:#D4A843">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Units Final</div><div class="kpi-val" style="color:#27ae60">0</div><div class="kpi-sub">logged</div></div><div class="kpi"><div class="kpi-lbl">Daily Reports</div><div class="kpi-val" style="color:#2980b9">0</div><div class="kpi-sub">saved</div></div></div>
 
   <!-- NAV TABS -->
   <div class="nav-tabs">
-    <button class="tab on" onclick="showTab(this,'overview')">
+    <button class="tab on" onclick="showTab(this,&#39;overview&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
       <span>Overview</span>
     </button>
-    <button class="tab" onclick="showTab(this,'jobs')">
+    <button class="tab" onclick="showTab(this,&#39;jobs&#39;)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
       <span>Job Costs</span>
     </button>
-    <button class="tab" onclick="showTab(this,'labor')">
+    <button class="tab" onclick="showTab(this,&#39;labor&#39;)">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>
       <span>Labor</span>
     </button>
-    <button class="tab" onclick="showTab(this,'inventory')">
+    <button class="tab" onclick="showTab(this,&#39;inventory&#39;)">
       <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path></svg>
       <span>Inventory</span>
     </button>
-    <button class="tab" onclick="showTab(this,'production')">
+    <button class="tab" onclick="showTab(this,&#39;production&#39;)">
       <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 010 1.4L7.4 15H5v-2.4l7.3-7.3a1 1 0 011.4 0z"></path></svg>
       <span>Production</span>
     </button>
-    <button class="tab" onclick="showTab(this,'reports')">
+    <button class="tab" onclick="showTab(this,&#39;reports&#39;)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
       <span>Prod Reports</span>
     </button>
-    <button class="tab" onclick="showTab(this,'activity')">
+    <button class="tab" onclick="showTab(this,&#39;activity&#39;)">
       <svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline></svg>
       <span>Activity</span>
     </button>
-    <button class="tab" onclick="showTab(this,'field')">
+    <button class="tab" onclick="showTab(this,&#39;field&#39;)">
       <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
       <span>Field</span>
     </button>
     
-    <button class="tab" onclick="showTab(this,'tasks')">
+    <button class="tab" onclick="showTab(this,&#39;tasks&#39;)">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
       <span>Tasks</span>
     </button>
@@ -541,8 +541,8 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$2073k</div>
-          <div style="font-size:10px;color:#777777">$18k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$2090k</div>
+          <div style="font-size:10px;color:#777777">$10k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24002</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -555,8 +555,8 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$1957k</div>
-          <div style="font-size:10px;color:#777777">$19k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$1977k</div>
+          <div style="font-size:10px;color:#777777">$16k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24005</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -565,17 +565,17 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Total</span>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:#27ae60;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
+              <div style="width:100%;background:#C0392B;border-radius:3px 3px 0 0;height:0px;min-height:4px"></div>
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$2605k</div>
-          <div style="font-size:10px;color:#777777">$17k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$2627k</div>
+          <div style="font-size:10px;color:#777777">$15k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24006</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:49px;min-height:4px"></div>
+              <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:50px;min-height:4px"></div>
               <span style="font-size:8px;color:#777777">Total</span>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
@@ -583,8 +583,8 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$2470k</div>
-          <div style="font-size:10px;color:#777777">$39k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$2515k</div>
+          <div style="font-size:10px;color:#777777">$33k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">25001</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -597,13 +597,13 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$932k</div>
-          <div style="font-size:10px;color:#777777">$14k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$955k</div>
+          <div style="font-size:10px;color:#777777">$16k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">25002</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
-              <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:12px;min-height:4px"></div>
+              <div style="width:100%;background:#f5a623;border-radius:3px 3px 0 0;height:13px;min-height:4px"></div>
               <span style="font-size:8px;color:#777777">Total</span>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px">
@@ -611,8 +611,8 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$610k</div>
-          <div style="font-size:10px;color:#777777">$20k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$639k</div>
+          <div style="font-size:10px;color:#777777">$21k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SP25018</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -625,8 +625,8 @@ tbody tr:hover td{background:#f7fbfc}
               <span style="font-size:8px;color:#777777">Last wk</span>
             </div>
           </div>
-          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$75k</div>
-          <div style="font-size:10px;color:#777777">$0k last wk</div>
+          <div style="font-size:11px;font-weight:700;color:#f5a623;margin-top:4px">$77k</div>
+          <div style="font-size:10px;color:#777777">$1k last wk</div>
         </div><div>
           <div style="font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">24010</div>
           <div style="display:flex;align-items:flex-end;gap:3px;height:60px">
@@ -865,7 +865,7 @@ tbody tr:hover td{background:#f7fbfc}
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
       <div style="font-size:14px;font-weight:700;color:#1a1a1a">All Job Tasks</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <button onclick="clearDashTasks()" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:#C0392B;border-radius:5px;padding:4px 12px;font-size:11px;cursor:pointer;white-space:nowrap">&#x2715; Clear View</button>
+        <button onclick="clearDashTasks()" style="background:rgba(224,90,90,.15);border:1px solid rgba(224,90,90,.3);color:#C0392B;border-radius:5px;padding:4px 12px;font-size:11px;cursor:pointer;white-space:nowrap">✕ Clear View</button>
         <select id="db-task-filter-job" onchange="renderDashTasks()" style="background:#f4f8f9;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:5px;padding:4px 8px;font-size:11px">
           <option value="all">All Jobs</option>
           <option value="24001 - BIOLA">BIOLA</option>
@@ -905,17 +905,17 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="ch">
           <div class="ct"><svg viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline></svg>Full activity log</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button class="exp-btn" onclick="filterActivity('all')" id="af-all" style="background:#2980b9;color:#1a1a1a;border-color:#2980b9">All Jobs</button>
-            <button class="exp-btn" onclick="filterActivity('24001 - BIOLA')" id="af-biola">BIOLA</button>
-            <button class="exp-btn" onclick="filterActivity('24002 - SEPULVEDA')" id="af-sep">SEPULVEDA</button>
-            <button class="exp-btn" onclick="filterActivity('24005 - VNV')" id="af-vnv">VNV</button>
-            <button class="exp-btn" onclick="filterActivity('24006 - VF')" id="af-vf">VF</button>
-            <button class="exp-btn" onclick="filterActivity('24010 - COMMONS')" id="af-commons">COMMONS</button>
-            <button class="exp-btn" onclick="filterActivity('25001 - DECENA')" id="af-decena">DECENA</button>
-            <button class="exp-btn" onclick="filterActivity('25002 - BAH')" id="af-bah">BAH</button>
-            <button class="exp-btn" onclick="filterActivity('26002 - WILSHIRE')" id="af-wilshire">WILSHIRE</button>
-            <button class="exp-btn" onclick="filterActivity('SP25018 - CDC PLAZA')" id="af-cdc">CDC PLAZA</button>
-            <button class="exp-btn" onclick="filterActivity('26003 - CARINA', '26005 - MARINA SHORES')" id="af-carina">CARINA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;all&#39;)" id="af-all" style="background:#2980b9;color:#1a1a1a;border-color:#2980b9">All Jobs</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24001 - BIOLA&#39;)" id="af-biola">BIOLA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24002 - SEPULVEDA&#39;)" id="af-sep">SEPULVEDA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24005 - VNV&#39;)" id="af-vnv">VNV</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24006 - VF&#39;)" id="af-vf">VF</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;24010 - COMMONS&#39;)" id="af-commons">COMMONS</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;25001 - DECENA&#39;)" id="af-decena">DECENA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;25002 - BAH&#39;)" id="af-bah">BAH</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;26002 - WILSHIRE&#39;)" id="af-wilshire">WILSHIRE</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;SP25018 - CDC PLAZA&#39;)" id="af-cdc">CDC PLAZA</button>
+            <button class="exp-btn" onclick="filterActivity(&#39;26003 - CARINA&#39;, &#39;26005 - MARINA SHORES&#39;)" id="af-carina">CARINA</button>
           </div>
         </div>
         <div class="cb" id="activity-full"></div>
@@ -1124,13 +1124,13 @@ const RATE_SB = 60;
 const RATE_RYE = 70;
 
 const REPORT_DATA = [
-  {key:"24001 - BIOLA",name:"Biola Cinema & Media Arts Bldg",week:"May 18-24, 2026",laborRate:49.77,projLG:-411595.64,lastWkHrs:352,lastWkDollars:17517.93,budgetPct:112.3,manpower:8.8,hrsSpent:30591,hrsRemaining:-10003,hrsbudget:20588,totalBudget:7815570,hrsPct:148.6,unitsPct:140.0,laborActual:2073355.62,laborBudget:1647104,costCodes:[]},
-  {key:"24002 - SEPULVEDA",name:"6733 Sepulveda",week:"May 18-24, 2026",laborRate:44.45,projLG:-153586.78,lastWkHrs:436,lastWkDollars:19359.36,budgetPct:133.8,manpower:10.89,hrsSpent:27265,hrsRemaining:-1963,hrsbudget:25302,totalBudget:3336122,hrsPct:107.8,unitsPct:84.4,laborActual:1956758.72,laborBudget:1773746,costCodes:[]},
-  {key:"24005 - VNV",name:"Van Nuys & Vose",week:"May 18-24, 2026",laborRate:50.1,projLG:11625.05,lastWkHrs:482,lastWkDollars:17429.05,budgetPct:106.9,manpower:12.05,hrsSpent:36803,hrsRemaining:-399,hrsbudget:36403,totalBudget:6766729.82,hrsPct:100.8,unitsPct:62.0,laborActual:2605196.21,laborBudget:2319394.25,costCodes:[]},
-  {key:"24006 - VF",name:"Vintage Farms",week:"May 18-24, 2026",laborRate:47.5,projLG:194378.58,lastWkHrs:828,lastWkDollars:39328.37,budgetPct:102.3,manpower:20.7,hrsSpent:36681,hrsRemaining:2059,hrsbudget:38740,totalBudget:6144517,hrsPct:94.9,unitsPct:98.6,laborActual:2469947.41,laborBudget:2463044,costCodes:[]},
-  {key:"25001 - DECENA",name:"Mission Gorge-Decena Apts",week:"May 18-24, 2026",laborRate:39.61,projLG:-806458.61,lastWkHrs:360,lastWkDollars:14260.26,budgetPct:49.6,manpower:9.0,hrsSpent:9600,hrsRemaining:19162,hrsbudget:28761,totalBudget:4338062,hrsPct:33.4,unitsPct:37.0,laborActual:931775.96,laborBudget:1795495,costCodes:[]},
-  {key:"25002 - BAH",name:"Bellamy Agoura Hills",week:"May 18-24, 2026",laborRate:44.52,projLG:448260.5,lastWkHrs:440,lastWkDollars:19588.46,budgetPct:32.7,manpower:11.0,hrsSpent:6276,hrsRemaining:31399,hrsbudget:37675,totalBudget:5785587,hrsPct:16.7,unitsPct:61.9,laborActual:610196.36,laborBudget:2601129,costCodes:[]},
-  {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 18-24, 2026",laborRate:52.76,projLG:8325.93,lastWkHrs:0,lastWkDollars:0,budgetPct:20.8,manpower:0,hrsSpent:832,hrsRemaining:2101,hrsbudget:2933,totalBudget:642595.35,hrsPct:28.4,unitsPct:0.0,laborActual:75178.45,laborBudget:235612,costCodes:[]},
+  {key:"24001 - BIOLA",name:"Biola Cinema & Media Arts Bldg",week:"May 25-31, 2026",laborRate:45.73,projLG:-421269.47,lastWkHrs:216,lastWkDollars:9673.83,budgetPct:112.5,manpower:5.4,hrsSpent:30807,hrsRemaining:-10219,hrsbudget:20588,totalBudget:7815570,hrsPct:149.6,unitsPct:141.4,laborActual:2089840.44,laborBudget:1647104,costCodes:[]},
+  {key:"24002 - SEPULVEDA",name:"6733 Sepulveda",week:"May 25-31, 2026",laborRate:50.03,projLG:-153586.78,lastWkHrs:368,lastWkDollars:16080.17,budgetPct:122.7,manpower:9.2,hrsSpent:27633,hrsRemaining:-545,hrsbudget:27088,totalBudget:3654675,hrsPct:102.0,unitsPct:84.4,laborActual:1977374.92,laborBudget:1862546,costCodes:[]},
+  {key:"24005 - VNV",name:"Van Nuys & Vose",week:"May 25-31, 2026",laborRate:53.18,projLG:-759190.86,lastWkHrs:360,lastWkDollars:15312.22,budgetPct:107.2,manpower:11.22,hrsSpent:37163,hrsRemaining:-848,hrsbudget:36315,totalBudget:6766729.82,hrsPct:101.8,unitsPct:61.9,laborActual:2626964.11,laborBudget:2319394.25,costCodes:[]},
+  {key:"24006 - VF",name:"Vintage Farms",week:"May 25-31, 2026",laborRate:45.41,projLG:185395.0,lastWkHrs:680,lastWkDollars:32813.0,budgetPct:102.6,manpower:17.0,hrsSpent:39278,hrsRemaining:1823,hrsbudget:41101,totalBudget:6172829,hrsPct:95.6,unitsPct:99.7,laborActual:2514921.93,laborBudget:2486356,costCodes:[]},
+  {key:"25001 - DECENA",name:"Mission Gorge-Decena Apts",week:"May 25-31, 2026",laborRate:46.59,projLG:-678911.23,lastWkHrs:387,lastWkDollars:15654.64,budgetPct:50.1,manpower:9.66,hrsSpent:9986,hrsRemaining:18775,hrsbudget:28761,totalBudget:4338062,hrsPct:34.7,unitsPct:36.6,laborActual:954806.59,laborBudget:1795495,costCodes:[]},
+  {key:"25002 - BAH",name:"Bellamy Agoura Hills",week:"May 25-31, 2026",laborRate:46.63,projLG:426997.47,lastWkHrs:480,lastWkDollars:21263.03,budgetPct:33.3,manpower:12.0,hrsSpent:6756,hrsRemaining:30919,hrsbudget:37675,totalBudget:5785587,hrsPct:17.9,unitsPct:61.6,laborActual:639107.79,laborBudget:2601129,costCodes:[]},
+  {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 25-31, 2026",laborRate:52.81,projLG:8275.64,lastWkHrs:24,lastWkDollars:1309.62,budgetPct:21.1,manpower:0.6,hrsSpent:856,hrsRemaining:2077,hrsbudget:2933,totalBudget:642595.35,hrsPct:29.2,unitsPct:0.0,laborActual:76909.0,laborBudget:235612,costCodes:[]},
   {key:"24010 - COMMONS",name:"Commons Calabasas",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
   {key:"26002 - WILSHIRE",name:"600 Wilshire",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]},
   {key:"26003 - CARINA",name:"Carina Main Place Mall",week:"",laborRate:46.9,projLG:0,lastWkHrs:0,lastWkDollars:0,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:0,hrsbudget:0,totalBudget:0,hrsPct:0,unitsPct:0,laborActual:0,laborBudget:0,costCodes:[]}
@@ -2706,4 +2706,4 @@ renderOverview();
 syncFromFieldTracker();
 </script>
 
-</body></html>
+</div></body></html>
