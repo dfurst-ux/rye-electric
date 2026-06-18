@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0091)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-field-tracker-sp26006-latimes_2.html -->
+<!-- saved from url=(0149)file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/16c4ba1e-e190-4cdd-bc46-7187d7df1ade_files.zip.ade/rye-electric-field-tracker-sp26006-latimes.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rye Electric - Field Tracker - LA Times</title>
-<link href="./Rye Electric - Field Tracker - LA Times_files/css2" rel="stylesheet">
+<title>Rye Electric - Field Tracker - SP26006 - LOS ANGELES TIMES</title>
+<link href="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/css2" rel="stylesheet">
 <style>
 :root{
   --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
@@ -307,9 +307,9 @@ tbody tr:hover td{background:#f7fbfc}
   .tbt-remaining-note code{background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:11px;}
 
 </style>
-  <script src="./Rye Electric - Field Tracker - LA Times_files/email.min.js.download"></script>
+  <script src="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/email.min.js.download"></script>
 </head>
-<body style="">
+<body>
 
 <header class="hdr">
   <div class="hdr-in">
@@ -327,7 +327,7 @@ tbody tr:hover td{background:#f7fbfc}
 <div class="shell">
   <div class="job-banner">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="#1a1a1a"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
-  <span class="jb-num">SP26006</span>
+  <span class="jb-num">26005</span>
   <span class="jb-name">LOS ANGELES TIMES</span>
   <span class="jb-badge">Job Tracker</span>
   <a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="dash-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
@@ -353,7 +353,7 @@ tbody tr:hover td{background:#f7fbfc}
   </div>
 
   <div class="tabs">
-    <button class="tab" onclick="goTab(this,&#39;log&#39;)">
+    <button class="tab on" onclick="goTab(this,&#39;log&#39;)">
       <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       <span>Log unit</span>
     </button>
@@ -385,7 +385,7 @@ tbody tr:hover td{background:#f7fbfc}
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
           <span>Tasks</span>
         </button>
-        <button class="tab safety-tab-btn on" onclick="goTab(this,&#39;safety&#39;)" id="tab-btn-safety" style="position:relative;">
+        <button class="tab safety-tab-btn" onclick="goTab(this,&#39;safety&#39;)" id="tab-btn-safety" style="position:relative;">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           <span>Safety</span>
           <span class="safety-friday-badge" id="safetyFridayBadge" style="display:none;">Required</span>
@@ -394,7 +394,7 @@ tbody tr:hover td{background:#f7fbfc}
 
   <!-- ===== LOG UNIT TAB ===== -->
   
-<div class="pane" id="pane-log">
+<div class="pane on" id="pane-log">
     <div class="card">
       <div class="ch">
         <div class="ct">
@@ -704,7 +704,16 @@ tbody tr:hover td{background:#f7fbfc}
             <th>Time</th><th>Employee</th><th>Job</th><th>Unit</th><th>Bldg</th>
             <th>Cost Code</th><th>Phase</th><th>Qty / Trim Qty</th><th>Lights</th><th>Hours</th><th>Notes</th>
           </tr></thead>
-          <tbody id="today-log-tbody"></tbody>
+          <tbody id="today-log-tbody">
+    <tr>
+      <td class="tm">03:14 PM</td><td class="tn">Alejandro Lopez</td>
+      <td class="tc">26005 - MARINA SHORES</td><td style="font-size:11px;color:#777">7010 - Layout</td>
+      <td style="font-weight:700">NA</td><td style="font-size:11px;color:#777">NA</td>
+      <td><span class="bdg b-amber">rough</span></td><td style="font-weight:700;color:#2980b9">100</td>
+      <td style="font-weight:700;color:#2980b9">--</td>
+      <td style="font-weight:700">7.5h</td>
+      <td style="font-size:11px;color:#777">--</td>
+    </tr></tbody>
         </table>
       </div>
     </div>
@@ -846,10 +855,7 @@ tbody tr:hover td{background:#f7fbfc}
               <option value="Xavier Contreras">Xavier Contreras</option>
             </select>
           </div>
-          <div class="fgroup" style="display:none">
-            <div class="flbl">Job</div>
-            <select id="wb-job" disabled="" style="border-color:#2980b9;opacity:0.9"><option value="SP26006 - LOS ANGELES TIMES" selected="">SP26006 - LOS ANGELES TIMES</option></select>
-          </div>
+          <input type="hidden" id="wb-job" value="SP26006 - LOS ANGELES TIMES">
         </div>
         <div class="form-grid">
           <div class="fgroup">
@@ -977,20 +983,7 @@ tbody tr:hover td{background:#f7fbfc}
 
     <!-- Job + Employee filters -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <select id="dl-filter-job" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
-        <option value="all">All jobs</option>
-              <option value="24001 - BIOLA">24001 - BIOLA</option>
-              <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
-              <option value="24005 - VNV">24005 - VNV</option>
-              <option value="24006 - VF">24006 - VF</option>
-              <option value="24010 - COMMONS">24010 - COMMONS</option>
-              <option value="25001 - DECENA">25001 - DECENA</option>
-              <option value="25002 - BAH">25002 - BAH</option>
-              <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
-              <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
-              <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
-              <option value="SP26006 - LOS ANGELES TIMES">SP26006 - LOS ANGELES TIMES</option>
-      </select>
+      <input type="hidden" id="dl-filter-job" value="SP26006 - LOS ANGELES TIMES">
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
         <option value="all">All employees</option>
               <option value="Abiud Lopez">Abiud Lopez</option>
@@ -1110,7 +1103,7 @@ tbody tr:hover td{background:#f7fbfc}
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printWhiteboard()">🖨️ Print</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailWhiteboard()">✉️ Email</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportCSV()">📥 Export CSV</button>
-        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById(&#39;dl-filter-job&#39;)?document.getElementById(&#39;dl-filter-job&#39;).value:&#39;all&#39;; var dateVal=document.getElementById(&#39;dl-date&#39;)?document.getElementById(&#39;dl-date&#39;).value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal&amp;&amp;(job===&#39;all&#39;||l.job===job);}); if(!entries.length){toast(&#39;No entries for this date&#39;);return;} saveToDrive(&#39;whiteboard&#39;,job===&#39;all&#39;?&#39;All Jobs&#39;:job,{job:job,date:dateVal,entries:entries},&#39;wb-drive-status&#39;); })()">🗂️ Save to Drive</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=&#39;SP26006 - LOS ANGELES TIMES&#39;; var dateVal=document.getElementById(&#39;dl-date&#39;)?document.getElementById(&#39;dl-date&#39;).value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal;}); if(!entries.length){toast(&#39;No entries for this date&#39;);return;} saveToDrive(&#39;whiteboard&#39;,job,{job:job,date:dateVal,entries:entries},&#39;wb-drive-status&#39;); })()">🗂️ Save to Drive</button>
       </div>
       <div id="wb-drive-status" style="font-size:12px;text-align:center;margin-bottom:4px;"></div>
     </div>
@@ -1133,10 +1126,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Report date</div>
         <input type="date" id="djr-date" style="height:38px;width:100%">
       </div>
-      <div class="fgroup" style="flex:1;min-width:160px">
-        <div class="flbl">Job</div>
-        <select id="djr-job" disabled="" style="border-color:#2980b9;opacity:0.9"><option value="SP26006 - LOS ANGELES TIMES" selected="">SP26006 - LOS ANGELES TIMES</option></select>
-      </div>
+      <input type="hidden" id="djr-job" value="SP26006 - LOS ANGELES TIMES">
       <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="loadDJR()">🔄 Load</button>
       <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="printDJR()">🖨️ Print</button>
       <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="emailDJR()">✉️ Email</button>
@@ -1224,6 +1214,107 @@ tbody tr:hover td{background:#f7fbfc}
         </div>
       </div>
 
+      <!-- Yes/No Questions -->
+      <div class="card" style="margin-bottom:10px">
+        <div class="ch"><div class="ct">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Daily Questions
+        </div></div>
+        <div class="cb">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were there any incidents/injuries on the job?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-incidents" id="djr-incidents-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-incidents" id="djr-incidents-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-incidents-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-incidents-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide complete details including witnesses..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Did you attend any meetings today?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-meetings" id="djr-meetings-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-meetings" id="djr-meetings-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-meetings-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-meetings-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide meeting details..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were there any visitors to the jobsite?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-visitors" id="djr-visitors-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-visitors" id="djr-visitors-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-visitors-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-visitors-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Who visited and when?"></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Was there any shortage of tools or materials?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-shortage" id="djr-shortage-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-shortage" id="djr-shortage-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-shortage-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-shortage-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Explain shortage..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were any deliveries received today?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-deliveries" id="djr-deliveries-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-deliveries" id="djr-deliveries-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-deliveries-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-deliveries-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide delivery details..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were any inspections called for or received today?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-inspections" id="djr-inspections-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-inspections" id="djr-inspections-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-inspections-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-inspections-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide inspection details..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Did you perform any extra work?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-extrawork" id="djr-extrawork-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-extrawork" id="djr-extrawork-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-extrawork-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-extrawork-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Describe extra work, who it was for, manpower, materials, equipment..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Was any direction provided by GC or Owner?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-gcdirection" id="djr-gcdirection-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-gcdirection" id="djr-gcdirection-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-gcdirection-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-gcdirection-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="What direction was given? Was it in writing? Will it result in extra work?"></textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!-- Superintendent signature block -->
       <div class="card" style="margin-bottom:10px">
         <div class="ch"><div class="ct">
@@ -1271,10 +1362,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Date</div>
         <input type="date" id="si-date" style="height:38px;width:100%">
       </div>
-      <div class="fgroup" style="flex:2;min-width:180px">
-        <div class="flbl">Job</div>
-        <select id="si-job" disabled="" style="border-color:#2980b9;opacity:0.9"><option value="SP26006 - LOS ANGELES TIMES" selected="">SP26006 - LOS ANGELES TIMES</option></select>
-      </div>
+      <input type="hidden" id="si-job" value="SP26006 - LOS ANGELES TIMES">
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Supervisor</div>
         <input type="text" id="si-supervisor" placeholder="Supervisor name" style="height:38px">
@@ -1423,23 +1511,7 @@ tbody tr:hover td{background:#f7fbfc}
 
     <!-- Filter bar -->
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <div class="fgroup" style="flex:1;min-width:140px">
-        <div class="flbl">Filter by job</div>
-        <select id="unit-filter-job" onchange="renderUnitsTab()">
-          <option value="all">All jobs</option>
-          <option value="24001 - BIOLA">24001 - BIOLA</option>
-          <option value="24002 - SEPULVEDA">24002 - SEPULVEDA</option>
-          <option value="24005 - VNV">24005 - VNV</option>
-          <option value="24006 - VF">24006 - VF</option>
-          <option value="24010 - COMMONS">24010 - COMMONS</option>
-          <option value="25001 - DECENA">25001 - DECENA</option>
-          <option value="25002 - BAH">25002 - BAH</option>
-          <option value="26002 - WILSHIRE">26002 - WILSHIRE</option>
-          <option value="SP25018 - CDC PLAZA">SP25018 - CDC PLAZA</option>
-          <option value="26003 - CARINA MAIN PLACE MALL">26003 - CARINA MAIN PLACE MALL</option>
-              <option value="SP26006 - LOS ANGELES TIMES">SP26006 - LOS ANGELES TIMES</option>
-        </select>
-      </div>
+      <input type="hidden" id="unit-filter-job" value="SP26006 - LOS ANGELES TIMES">
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by employee</div>
         <select id="unit-filter-worker" onchange="renderUnitsTab()">
@@ -1719,114 +1791,6 @@ tbody tr:hover td{background:#f7fbfc}
       <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">ASSIGN TO</label>
       <select id="task-assignee" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px">
         <option value="">-- Select employee --</option>
-        <option value="Abiud Lopez">Abiud Lopez</option>
-        <option value="Adrian Flores">Adrian Flores</option>
-        <option value="Adrian Hernandez">Adrian Hernandez</option>
-        <option value="Adrian Marquez">Adrian Marquez</option>
-        <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option>
-        <option value="Alejandro Lopez">Alejandro Lopez</option>
-        <option value="Alex Osorio">Alex Osorio</option>
-        <option value="Angel Hernandez">Angel Hernandez</option>
-        <option value="Angel Ibanez">Angel Ibanez</option>
-        <option value="Anthony Ibanez">Anthony Ibanez</option>
-        <option value="Anthony Lyons">Anthony Lyons</option>
-        <option value="Anthony Macias">Anthony Macias</option>
-        <option value="Anthony Zetina">Anthony Zetina</option>
-        <option value="Antonio Castillo">Antonio Castillo</option>
-        <option value="Armando Lopez">Armando Lopez</option>
-        <option value="Axel Salas">Axel Salas</option>
-        <option value="Brandon Salazar">Brandon Salazar</option>
-        <option value="Brenda Quijada">Brenda Quijada</option>
-        <option value="Brian Campos">Brian Campos</option>
-        <option value="Brian Flores">Brian Flores</option>
-        <option value="Brian Kitajima">Brian Kitajima</option>
-        <option value="Brian Ramirez">Brian Ramirez</option>
-        <option value="Carla Quijada">Carla Quijada</option>
-        <option value="Carlos Agapito">Carlos Agapito</option>
-        <option value="Carlos Landaverde">Carlos Landaverde</option>
-        <option value="Christian Moran">Christian Moran</option>
-        <option value="Cristian Collin">Cristian Collin</option>
-        <option value="Daniel Burleson">Daniel Burleson</option>
-        <option value="Daniel Lopez">Daniel Lopez</option>
-        <option value="Daniel Villegas">Daniel Villegas</option>
-        <option value="David Casarez">David Casarez</option>
-        <option value="David Smith">David Smith</option>
-        <option value="Dillan Smith">Dillan Smith</option>
-        <option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option>
-        <option value="Dyana Quijada">Dyana Quijada</option>
-        <option value="Edgar Solis">Edgar Solis</option>
-        <option value="Edith Del Carmen">Edith Del Carmen</option>
-        <option value="Eduardo Echeverria">Eduardo Echeverria</option>
-        <option value="Edwin Martinez">Edwin Martinez</option>
-        <option value="Efrain Cornejo">Efrain Cornejo</option>
-        <option value="Efren Hilario">Efren Hilario</option>
-        <option value="Enrique Laguna">Enrique Laguna</option>
-        <option value="Erik Lopez">Erik Lopez</option>
-        <option value="Estevan Sandoval">Estevan Sandoval</option>
-        <option value="Filiberto Ramos">Filiberto Ramos</option>
-        <option value="Francisco Flores">Francisco Flores</option>
-        <option value="Gabriel Flores">Gabriel Flores</option>
-        <option value="Guillermo Silva">Guillermo Silva</option>
-        <option value="Henri Sibrian">Henri Sibrian</option>
-        <option value="Humberto Flores">Humberto Flores</option>
-        <option value="Irvin Rivera">Irvin Rivera</option>
-        <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option>
-        <option value="Isidro Enciso">Isidro Enciso</option>
-        <option value="Jaime Moya">Jaime Moya</option>
-        <option value="Jaime Quintero">Jaime Quintero</option>
-        <option value="James Marquez">James Marquez</option>
-        <option value="Jayson Ortega">Jayson Ortega</option>
-        <option value="Jeffrey Rivera">Jeffrey Rivera</option>
-        <option value="Jerlin Mendoza">Jerlin Mendoza</option>
-        <option value="Jerry Munoz">Jerry Munoz</option>
-        <option value="Jesus Heredia">Jesus Heredia</option>
-        <option value="Jimmy Cascio">Jimmy Cascio</option>
-        <option value="Joaquin Garcia">Joaquin Garcia</option>
-        <option value="Johnny Perez">Johnny Perez</option>
-        <option value="Jonathan Jacobo">Jonathan Jacobo</option>
-        <option value="Jorge Contreras">Jorge Contreras</option>
-        <option value="Jose Luna">Jose Luna</option>
-        <option value="Jose Preciado">Jose Preciado</option>
-        <option value="Jose Ramirez">Jose Ramirez</option>
-        <option value="Josue Villegas">Josue Villegas</option>
-        <option value="Juan Mazariegos">Juan Mazariegos</option>
-        <option value="Julio Munoz">Julio Munoz</option>
-        <option value="Kenneth William">Kenneth William</option>
-        <option value="Kevin Bautista">Kevin Bautista</option>
-        <option value="Leonardo Mazariegos">Leonardo Mazariegos</option>
-        <option value="Lizeth Marcos">Lizeth Marcos</option>
-        <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
-        <option value="Louis Aceves">Louis Aceves</option>
-        <option value="Luis Ramirez">Luis Ramirez</option>
-        <option value="Manuel Martinez">Manuel Martinez</option>
-        <option value="Manuel Palacios">Manuel Palacios</option>
-        <option value="Mario Arias">Mario Arias</option>
-        <option value="Mario Lopez">Mario Lopez</option>
-        <option value="Mathew Gonzalez">Mathew Gonzalez</option>
-        <option value="Matthew Baciu">Matthew Baciu</option>
-        <option value="Miguel Corral">Miguel Corral</option>
-        <option value="Miguel Dominguez">Miguel Dominguez</option>
-        <option value="Noah Villareal">Noah Villareal</option>
-        <option value="Oliver Galicia">Oliver Galicia</option>
-        <option value="Oscar Aguirre">Oscar Aguirre</option>
-        <option value="Pedro Barrera">Pedro Barrera</option>
-        <option value="Randdy De Paz">Randdy De Paz</option>
-        <option value="Robert Stark">Robert Stark</option>
-        <option value="Robert Welch">Robert Welch</option>
-        <option value="Rusel Santiago">Rusel Santiago</option>
-        <option value="Salvador Perez">Salvador Perez</option>
-        <option value="Samuel Munoz">Samuel Munoz</option>
-        <option value="Sergio Diaz">Sergio Diaz</option>
-        <option value="Sergio Sandoval">Sergio Sandoval</option>
-        <option value="Sotero Dominguez">Sotero Dominguez</option>
-        <option value="Steven Sulewski">Steven Sulewski</option>
-        <option value="Tony Broadnax">Tony Broadnax</option>
-        <option value="Uriel Chavez">Uriel Chavez</option>
-        <option value="Victor Armienta">Victor Armienta</option>
-        <option value="Victor Carrillo">Victor Carrillo</option>
-        <option value="Vincent Sopha">Vincent Sopha</option>
-        <option value="Vincent Stancati">Vincent Stancati</option>
-        <option value="Xavier Contreras">Xavier Contreras</option>
       </select>
 
       <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">COST CODE</label>
@@ -1879,16 +1843,16 @@ tbody tr:hover td{background:#f7fbfc}
 
 
   <!-- TBT Sign Modal -->
-  <div id="tbtSignModal" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.55); z-index: 9999; overflow-y: auto;">
+  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
     <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
       <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
-      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;">#8 Electrical Power</div>
+      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
       <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
       <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
-      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"><div class="tbt-sig-row-wrap" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; background: rgb(247, 250, 252); border: 1px solid rgb(226, 232, 240); border-radius: 8px; padding: 10px;"><div><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150); display: block; margin-bottom: 4px;">Employee 1</label><select class="tbt-emp-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgb(203, 213, 224); border-radius: 6px; font-size: 12px; background: rgb(255, 255, 255);"><option value="">-- Select employee --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option></select></div><div><div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;"><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150);">Signature</label><button style="font-size: 10px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: rgb(229, 62, 62); cursor: pointer; padding: 0px;">✕ Clear</button></div><div style="position: relative; background: rgb(255, 255, 255); border: 1.5px solid rgb(203, 213, 224); border-radius: 6px; overflow: hidden; cursor: crosshair;"><canvas id="tbt-sig-canvas-0" data-idx="0" width="400" height="80" style="width: 100%; height: 80px; display: block; touch-action: none;"></canvas><div class="tbt-sig-ph" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; color: rgb(160, 174, 192); pointer-events: none; white-space: nowrap; display: none;">Sign here</div></div></div></div><div class="tbt-sig-row-wrap" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; background: rgb(247, 250, 252); border: 1px solid rgb(226, 232, 240); border-radius: 8px; padding: 10px;"><div><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150); display: block; margin-bottom: 4px;">Employee 2</label><select class="tbt-emp-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgb(203, 213, 224); border-radius: 6px; font-size: 12px; background: rgb(255, 255, 255);"><option value="">-- Select employee --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option></select></div><div><div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;"><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150);">Signature</label><button style="font-size: 10px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: rgb(229, 62, 62); cursor: pointer; padding: 0px;">✕ Clear</button></div><div style="position: relative; background: rgb(255, 255, 255); border: 1.5px solid rgb(203, 213, 224); border-radius: 6px; overflow: hidden; cursor: crosshair;"><canvas id="tbt-sig-canvas-1" data-idx="1" width="400" height="80" style="width: 100%; height: 80px; display: block; touch-action: none;"></canvas><div class="tbt-sig-ph" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; color: rgb(160, 174, 192); pointer-events: none; white-space: nowrap;">Sign here</div></div></div></div><div class="tbt-sig-row-wrap" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; background: rgb(247, 250, 252); border: 1px solid rgb(226, 232, 240); border-radius: 8px; padding: 10px;"><div><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150); display: block; margin-bottom: 4px;">Employee 3</label><select class="tbt-emp-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgb(203, 213, 224); border-radius: 6px; font-size: 12px; background: rgb(255, 255, 255);"><option value="">-- Select employee --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option></select></div><div><div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;"><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150);">Signature</label><button style="font-size: 10px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: rgb(229, 62, 62); cursor: pointer; padding: 0px;">✕ Clear</button></div><div style="position: relative; background: rgb(255, 255, 255); border: 1.5px solid rgb(203, 213, 224); border-radius: 6px; overflow: hidden; cursor: crosshair;"><canvas id="tbt-sig-canvas-2" data-idx="2" width="400" height="80" style="width: 100%; height: 80px; display: block; touch-action: none;"></canvas><div class="tbt-sig-ph" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; color: rgb(160, 174, 192); pointer-events: none; white-space: nowrap;">Sign here</div></div></div></div><div class="tbt-sig-row-wrap" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; background: rgb(247, 250, 252); border: 1px solid rgb(226, 232, 240); border-radius: 8px; padding: 10px;"><div><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150); display: block; margin-bottom: 4px;">Employee 4</label><select class="tbt-emp-select" style="width: 100%; padding: 6px 8px; border: 1px solid rgb(203, 213, 224); border-radius: 6px; font-size: 12px; background: rgb(255, 255, 255);"><option value="">-- Select employee --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option></select></div><div><div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;"><label style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: rgb(113, 128, 150);">Signature</label><button style="font-size: 10px; background: none; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; color: rgb(229, 62, 62); cursor: pointer; padding: 0px;">✕ Clear</button></div><div style="position: relative; background: rgb(255, 255, 255); border: 1.5px solid rgb(203, 213, 224); border-radius: 6px; overflow: hidden; cursor: crosshair;"><canvas id="tbt-sig-canvas-3" data-idx="3" width="400" height="80" style="width: 100%; height: 80px; display: block; touch-action: none;"></canvas><div class="tbt-sig-ph" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 11px; color: rgb(160, 174, 192); pointer-events: none; white-space: nowrap;">Sign here</div></div></div></div></div>
+      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
       <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;">
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="submitTBTSignOff()">💾 Save Sign-Off</button>
@@ -1899,7 +1863,7 @@ tbody tr:hover td{background:#f7fbfc}
     </div>
   </div>
 <!-- ===== SAFETY TAB ===== -->
-<div class="pane on" id="pane-safety">
+<div class="pane" id="pane-safety">
   <div class="safety-header">
     <h2>Safety Documentation</h2>
     <div class="safety-meta">
@@ -2034,9 +1998,9 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="safety-form-subtitle">PTP · Complete before starting work each day</div>
       </div>
       <span class="safety-check-status" id="ptpStatus">—</span>
-      <span class="safety-chevron open" id="ptpChevron">▼</span>
+      <span class="safety-chevron" id="ptpChevron">▼</span>
     </div>
-    <div class="safety-form-body open" id="ptpBody">
+    <div class="safety-form-body" id="ptpBody">
       <div class="safety-field-row">
         <div class="safety-field"><label>Task Location</label><input type="text" id="ptpTaskLocation" placeholder="Floor, area, or unit"></div>
         <div class="safety-field">
@@ -2125,9 +2089,9 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="safety-form-subtitle">Select a talk, review with crew, collect signatures</div>
       </div>
       <span class="safety-check-status" id="tbtLibraryStatus">—</span>
-      <span class="safety-chevron open" id="tbtLibraryChevron">▼</span>
+      <span class="safety-chevron" id="tbtLibraryChevron">▼</span>
     </div>
-    <div class="safety-form-body open" id="tbtLibraryBody">
+    <div class="safety-form-body" id="tbtLibraryBody">
 
       <div class="tbt-intro">Tap a category to expand, then choose a Toolbox Talk to review with your crew. After the discussion, collect crew signatures below each talk.</div>
 
@@ -2155,9 +2119,9 @@ tbody tr:hover td{background:#f7fbfc}
           <span class="tbt-cat-icon">⚡</span>
           <span class="tbt-cat-title">Electrical &amp; Fire</span>
           <span class="tbt-cat-count">3 talks</span>
-          <span class="tbt-cat-chevron open" id="tbt-chevron-electric">▼</span>
+          <span class="tbt-cat-chevron" id="tbt-chevron-electric">▼</span>
         </div>
-        <div class="tbt-cat-body open" id="tbt-cat-electric">
+        <div class="tbt-cat-body" id="tbt-cat-electric">
           <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#8</span><span class="tbt-name">Electrical Power</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 8 Electric Power.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 8 Electric Power.pdf&#39;,&#39;#8 Electrical Power&#39;)">✍️ Sign</button></div></div>
           <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#18</span><span class="tbt-name">Fire Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 18 Fire Safety.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 18 Fire Safety.pdf&#39;,&#39;#18 Fire Safety&#39;)">✍️ Sign</button></div></div>
           <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#3</span><span class="tbt-name">Carbon Monoxide Poisoning</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 3 Carbon Monoxide Poisoning.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 3 Carbon Monoxide Poisoning.pdf&#39;,&#39;#3 Carbon Monoxide Poisoning&#39;)">✍️ Sign</button></div></div>
@@ -4012,6 +3976,10 @@ function collectDJRData(){
   DJR_YN_FIELDS.forEach(f=>{ yn[f.id] = getYNValue(f.id); });
   const detailValues = {};
   DJR_YN_FIELDS.forEach(f=>{ if(f.detail){ const el=document.getElementById(f.detail); if(el) detailValues[f.id]=el.value.trim(); }});
+  var getYN = function(q) {
+    var el = document.getElementById('djr-' + q + '-yes');
+    return el && el.checked ? (document.getElementById('djr-' + q + '-text') ? document.getElementById('djr-' + q + '-text').value || true : true) : false;
+  };
   return {
     job, date,
     tempAM:   document.getElementById('djr-temp-am').value.trim(),
@@ -4025,6 +3993,14 @@ function collectDJRData(){
     superintendent: document.getElementById('djr-super').value.trim(),
     title:    document.getElementById('djr-title').value.trim(),
     savedAt:  new Date().toISOString(),
+    incidents:   getYN('incidents'),
+    meetings:    getYN('meetings'),
+    visitors:    getYN('visitors'),
+    shortage:    getYN('shortage'),
+    deliveries:  getYN('deliveries'),
+    inspections: getYN('inspections'),
+    extraWork:   getYN('extrawork'),
+    gcDirection: getYN('gcdirection'),
   };
 }
 
@@ -5795,7 +5771,8 @@ const JOB_EMAILS = {
   '26002 - WILSHIRE':                {to:'wilshire26002@ryecompany.com',           cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26003 - CARINA MAIN PLACE MALL':  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26003 - CARINA':                  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
-  'SP26006 - LOS ANGELES TIMES':           {to:'onnitimes26006@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '26005 - MARINA SHORES':           {to:'MarinaShores26005@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  'SP26006 - LOS ANGELES TIMES':     {to:'onnitimes26006@ryecompany.com',          cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   'SP25018 - CDC PLAZA':             {to:'cdcplazasp25018@ryecompany.com',         cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
 };
 
@@ -6064,7 +6041,7 @@ function saveTask(){
           '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
           'SP25018 - CDC PLAZA': 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html',
           '26003 - CARINA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html',
-          'SP26006 - LOS ANGELES TIMES':'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-SP26006-latimes.html'
+          'SP26006 - LOS ANGELES TIMES':'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp26006-latimes.html'
         };
         var jobLink = jobTrackerLinks[job] || 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker.html';
         var smsBody = 'Rye Electric - Task Assigned to You\n\n'
@@ -6840,6 +6817,8 @@ async function saveToDrive(docType, job, data, statusElId) {
   }
 }
 /* === END GOOGLE DRIVE SAVE === */
+// DJR Yes/No question toggles
+(function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
 
 </script>
 
