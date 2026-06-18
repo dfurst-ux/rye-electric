@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0146)file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/rye-electric-field-tracker-26005-marina.html -->
+<!-- saved from url=(0088)file:///C:/Users/Dennis%20Furst/Downloads/rye-electric-field-tracker-26005-marina_1.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -716,7 +716,7 @@ tbody tr:hover td{background:#f7fbfc}
 <div class="pane" id="pane-whiteboard">
 
     <!-- Stats bar -->
-    <div class="sg" id="dl-stats" style="margin-bottom:8px"></div>
+    <div class="sg" id="dl-stats" style="margin-bottom:8px"><div class="sc"><div class="sl">Today entries</div><div class="sv" style="color:#2980b9">2</div><div class="ss">logged today</div></div><div class="sc"><div class="sl">Today hours</div><div class="sv" style="color:#1a1a1a">17.5h</div><div class="ss">field hours</div></div><div class="sc"><div class="sl">Week hours</div><div class="sv" style="color:var(--sb)">25.5h</div><div class="ss">this week</div></div><div class="sc"><div class="sl">Active workers</div><div class="sv" style="color:#27ae60">2</div><div class="ss">this week</div></div><div class="sc"><div class="sl">Total logged</div><div class="sv" style="color:#2980b9">3 entries</div><div class="ss">25.5h all time</div></div></div>
 
     <!-- Quick entry form -->
     <div class="card" style="margin-bottom:10px">
@@ -936,12 +936,10 @@ tbody tr:hover td{background:#f7fbfc}
       <div style="display:flex;align-items:center;gap:6px">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="var(--green)"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22,4 12,14.01 9,11.01"></polyline></svg>
         <span style="color:#444">Entries auto-saved to this device</span>
-        <span id="storage-week-label" style="color:#777"></span>
+        <span id="storage-week-label" style="color:#777">-- week of 2026-06-15</span>
       </div>
       <div style="display:flex;gap:6px">
-        <select id="archive-week-sel" style="height:28px;font-size:10px;padding:0 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2;color:#444" onchange="if(this.value)loadArchivedWeek(this.value)">
-          <option value="">View past week...</option>
-        </select>
+        <select id="archive-week-sel" style="height:28px;font-size:10px;padding:0 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2;color:#444" onchange="if(this.value)loadArchivedWeek(this.value)"><option value="">View past week...</option><option value="2026-06-01">2026-06-01</option><option value="2026-05-25">2026-05-25</option></select>
         <button class="btn btn-g btn-sm" onclick="syncFromSupabase()" style="font-size:10px;color:var(--green);border-color:rgba(76,175,125,.3)">
           Sync cloud
         </button>
@@ -953,9 +951,9 @@ tbody tr:hover td{background:#f7fbfc}
 
     <!-- View tabs -->
     <div style="display:flex;gap:4px;background:#f4f8f9;border:1px solid #e2e2e2;padding:3px;border-radius:8px;flex-wrap:wrap;margin-bottom:8px">
-      <button class="btn btn-g btn-sm" id="dlv-today" onclick="setDLView(&#39;today&#39;)" style="background:#2980b9;color:#fff;border-color:#2980b9">Whiteboard</button>
-      <button class="btn btn-g btn-sm" id="dlv-week" onclick="setDLView(&#39;week&#39;)">This week</button>
-      <button class="btn btn-g btn-sm" id="dlv-all" onclick="setDLView(&#39;all&#39;)">All entries</button>
+      <button class="btn btn-g btn-sm" id="dlv-today" onclick="setDLView(&#39;today&#39;)" style="background: rgb(41, 128, 185); color: rgb(255, 255, 255); border-color: rgb(41, 128, 185);">Whiteboard</button>
+      <button class="btn btn-g btn-sm" id="dlv-week" onclick="setDLView(&#39;week&#39;)" style="">This week</button>
+      <button class="btn btn-g btn-sm" id="dlv-all" onclick="setDLView(&#39;all&#39;)" style="">All entries</button>
       <button class="btn btn-g btn-sm" id="dlv-ts" onclick="setDLView(&#39;timesheet&#39;)">Timesheets</button>
     </div>
 
@@ -1100,7 +1098,19 @@ tbody tr:hover td{background:#f7fbfc}
     </div>
 
     <!-- View output -->
-    <div id="dl-view-container"></div>
+    <div id="dl-view-container"><div style="background:#141920;border:2px solid #2a3545;border-radius:10px;overflow:hidden">
+      <div style="background:#0d1117;padding:12px 18px;border-bottom:2px solid #2a3545;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:#2980b9;font-family:&#39;Arial Narrow&#39;,Arial,sans-serif">26005 -- MARINA SHORES</div>
+          <div style="font-size:12px;color:#888;margin-top:2px">Thursday, June 18, 2026</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.06em">Manpower</div>
+          <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#EF9F27;line-height:1">0</div>
+        </div>
+      </div>
+      <div style="padding:30px;text-align:center;color:#777;font-size:12px">No entries for this job today</div>
+    </div></div>
 
     <!-- Hidden print area -->
     <div id="print-area" style="display:none"></div>
@@ -1205,6 +1215,107 @@ tbody tr:hover td{background:#f7fbfc}
         </div>
       </div>
 
+      <!-- Yes/No Questions -->
+      <div class="card" style="margin-bottom:10px">
+        <div class="ch"><div class="ct">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Daily Questions
+        </div></div>
+        <div class="cb">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were there any incidents/injuries on the job?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-incidents" id="djr-incidents-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-incidents" id="djr-incidents-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-incidents-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-incidents-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide complete details including witnesses..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Did you attend any meetings today?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-meetings" id="djr-meetings-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-meetings" id="djr-meetings-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-meetings-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-meetings-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide meeting details..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were there any visitors to the jobsite?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-visitors" id="djr-visitors-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-visitors" id="djr-visitors-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-visitors-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-visitors-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Who visited and when?"></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Was there any shortage of tools or materials?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-shortage" id="djr-shortage-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-shortage" id="djr-shortage-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-shortage-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-shortage-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Explain shortage..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were any deliveries received today?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-deliveries" id="djr-deliveries-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-deliveries" id="djr-deliveries-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-deliveries-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-deliveries-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide delivery details..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Were any inspections called for or received today?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-inspections" id="djr-inspections-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-inspections" id="djr-inspections-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-inspections-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-inspections-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Provide inspection details..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Did you perform any extra work?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-extrawork" id="djr-extrawork-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-extrawork" id="djr-extrawork-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-extrawork-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-extrawork-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="Describe extra work, who it was for, manpower, materials, equipment..."></textarea>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8f9fa;border-radius:8px;border:1px solid #e2e2e2;">
+              <span style="font-size:13px;color:#1a1a1a;">Was any direction provided by GC or Owner?</span>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-gcdirection" id="djr-gcdirection-yes" value="yes" style="margin-right:4px;">Yes</label>
+                <label style="font-size:13px;cursor:pointer;"><input type="radio" name="djr-gcdirection" id="djr-gcdirection-no" value="no" checked="" style="margin-right:4px;">No</label>
+              </div>
+            </div>
+            <div id="djr-gcdirection-detail" style="display:none;padding:0 4px;">
+              <textarea id="djr-gcdirection-text" rows="2" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:8px;font-size:13px;padding:8px 12px;resize:vertical;outline:none;" placeholder="What direction was given? Was it in writing? Will it result in extra work?"></textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!-- Superintendent signature block -->
       <div class="card" style="margin-bottom:10px">
         <div class="ch"><div class="ct">
@@ -1263,7 +1374,7 @@ tbody tr:hover td{background:#f7fbfc}
       </button>
     </div>
 
-    <div id="si-empty" style="text-align:center;padding:40px;color:#777;font-size:13px">
+    <div id="si-empty" style="text-align: center; padding: 40px; color: rgb(119, 119, 119); font-size: 13px; display: block;">
       Select a job and date, then click <strong style="color:#444">Load</strong> to generate today's sign-in sheets.
     </div>
 
@@ -1528,21 +1639,339 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
     </div>
 
-    <div id="unit-job-sections"></div>
+    <div id="unit-job-sections"><div style="color:#777;padding:20px;text-align:center">No units match filters</div></div>
   </div>
 
   <!-- ===== WORKERS TAB ===== -->
 
 <div class="pane" id="pane-workers">
-    <div id="worker-cards"></div>
+    <div id="worker-cards"><div class="card" style="margin-bottom:10px">
+      <div class="ch">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="av av-rye">AR</div>
+          <div><div style="font-size:14px;font-weight:700">Alberto Lopez Ruiz</div>
+            <div style="font-size:11px;color:#777">Electrician • 1 job </div></div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="bdg b-rye">0 units</span>
+          <span class="bdg b-ok">17.5h</span>
+        </div>
+      </div>
+      <div class="cb">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px">
+          <div class="ws"><div class="ws-val">0</div><div class="ws-lbl">Units</div></div>
+          <div class="ws"><div class="ws-val" style="color:var(--amber)">0.0h</div><div class="ws-lbl">Rough</div></div>
+          <div class="ws"><div class="ws-val" style="color:var(--green)">0.0h</div><div class="ws-lbl">Final</div></div>
+          <div class="ws"><div class="ws-val" style="color:var(--sb)">17.5h</div><div class="ws-lbl">WB hrs</div></div>
+          <div class="ws"><div class="ws-val" style="color:#2980b9">17.5h</div><div class="ws-lbl">Total</div></div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Job</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Units</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Rough</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Final</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">WB</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Total</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Qty</th>
+          </tr></thead>
+          <tbody><tr><td style="padding:7px 10px;border-top:1px solid var(--border);color:#2980b9;font-size:11px;font-weight:600">SP26006 - LOS ANGELES TIMES</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700">0</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--amber)">--</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--green)">--</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--sb)">17.5h</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700;color:#2980b9">17.5h</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:#2980b9">--</td></tr></tbody>
+        </table>
+      </div>
+    </div><div class="card" style="margin-bottom:10px">
+      <div class="ch">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="av av-rye">AM</div>
+          <div><div style="font-size:14px;font-weight:700">Anthony Macias</div>
+            <div style="font-size:11px;color:#777">Electrician • 1 job </div></div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="bdg b-rye">0 units</span>
+          <span class="bdg b-ok">8.0h</span>
+        </div>
+      </div>
+      <div class="cb">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px">
+          <div class="ws"><div class="ws-val">0</div><div class="ws-lbl">Units</div></div>
+          <div class="ws"><div class="ws-val" style="color:var(--amber)">0.0h</div><div class="ws-lbl">Rough</div></div>
+          <div class="ws"><div class="ws-val" style="color:var(--green)">0.0h</div><div class="ws-lbl">Final</div></div>
+          <div class="ws"><div class="ws-val" style="color:var(--sb)">8.0h</div><div class="ws-lbl">WB hrs</div></div>
+          <div class="ws"><div class="ws-val" style="color:#2980b9">8.0h</div><div class="ws-lbl">Total</div></div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Job</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Units</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Rough</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Final</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">WB</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Total</th>
+            <th style="padding:6px 10px;text-align:left;font-size:10px;font-weight:700;color:#777;background:rgba(0,0,0,.25);text-transform:uppercase">Qty</th>
+          </tr></thead>
+          <tbody><tr><td style="padding:7px 10px;border-top:1px solid var(--border);color:#2980b9;font-size:11px;font-weight:600">26005 - MARINA SHORES</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700">0</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--amber)">--</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--green)">--</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:var(--sb)">8.0h</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);font-weight:700;color:#2980b9">8.0h</td>
+        <td style="padding:7px 10px;border-top:1px solid var(--border);color:#2980b9">--</td></tr></tbody>
+        </table>
+      </div>
+    </div></div>
   </div>
 
   <!-- ===== JOBS TAB ===== -->
 
 <div class="pane" id="pane-jobs">
     <!-- Production report banner -->
-    <div id="jobs-report-banner"></div>
-    <div id="job-summary-cards"></div>
+    <div id="jobs-report-banner"><div style="margin-bottom:14px"><div style="font-size:10px;font-weight:700;color:#777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Production reports -- Week of May 11-17, 2026</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px"><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">24001 - BIOLA</div><div style="font-size:10px;color:#777;margin-top:1px">$47.46/hr • 10.51 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#C0392B">-$394,078</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#C0392B">146.9%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#C0392B;width:100%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">421h last week • 0h to date</div></div></div><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">24002 - SEPULVEDA</div><div style="font-size:10px;color:#777;margin-top:1px">$44.4/hr • 0 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#C0392B">-$134,227</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#D4A843">106.0%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#D4A843;width:100%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">457h last week • 0h to date</div></div></div><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">24005 - VNV</div><div style="font-size:10px;color:#777;margin-top:1px">$48.69/hr • 0 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#27ae60">+$26,197</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#D4A843">100.2%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#D4A843;width:100%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">465h last week • 0h to date</div></div></div><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">24006 - VF</div><div style="font-size:10px;color:#777;margin-top:1px">$47.61/hr • 19.9 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#27ae60">+$253,134</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#2980b9">92.9%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#2980b9;width:92.9%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">796h last week • 2,887h to date</div></div></div><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">25001 - DECENA</div><div style="font-size:10px;color:#777;margin-top:1px">$40.58/hr • 7 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#27ae60">+$0</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#2980b9">32.1%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#2980b9;width:32.1%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">280h last week • 19,522h to date</div></div></div><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">25002 - BAH</div><div style="font-size:10px;color:#777;margin-top:1px">$44.99/hr • 12.13 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#27ae60">+$464,129</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#2980b9">15.6%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#2980b9;width:15.6%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">485h last week • 31,615h to date</div></div></div><div class="card" style="margin-bottom:0"><div style="padding:10px 14px;border-bottom:1px solid #e2e2e2;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">SP25018 - CDC PLAZA</div><div style="font-size:10px;color:#777;margin-top:1px">$54.54/hr • 0.3 workers</div></div><div style="text-align:right"><div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:16px;font-weight:700;color:#C0392B">-$37,839</div><div style="font-size:10px;color:#777">proj L/G</div></div></div><div style="padding:10px 14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:#444">Units % budget</span><span style="font-size:11px;font-weight:700;color:#C0392B">315.2%</span></div><div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div style="height:100%;border-radius:99px;background:#C0392B;width:100%"></div></div><div style="font-size:10px;color:#777;margin-top:5px">12h last week • 832h to date</div></div></div></div></div></div>
+    <div id="job-summary-cards">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-bottom:14px">
+      <div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">24001 - BIOLA</div>
+            <span class="bdg b-rye">3 bldgs / 60 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $47.46/hr • 10.51 workers •
+              <span style="font-weight:700;color:#C0392B"> 146.9% units</span> •
+              <span style="font-weight:700;color:#C0392B"> -$394,078</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">24002 - SEPULVEDA</div>
+            <span class="bdg b-rye">3 bldgs / 60 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $44.4/hr • 0 workers •
+              <span style="font-weight:700;color:#D4A843"> 106.0% units</span> •
+              <span style="font-weight:700;color:#C0392B"> -$134,227</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">24005 - VNV</div>
+            <span class="bdg b-rye">3 bldgs / 60 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $48.69/hr • 0 workers •
+              <span style="font-weight:700;color:#D4A843"> 100.2% units</span> •
+              <span style="font-weight:700;color:#27ae60"> +$26,197</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">24006 - VF</div>
+            <span class="bdg b-rye">2 bldgs / 48 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/48</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/48</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $47.61/hr • 19.9 workers •
+              <span style="font-weight:700;color:#2980b9"> 92.9% units</span> •
+              <span style="font-weight:700;color:#27ae60"> +$253,134</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">24010 - COMMONS</div>
+            <span class="bdg b-rye">3 bldgs / 72 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/72</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/72</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            </div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">25001 - DECENA</div>
+            <span class="bdg b-rye">2 bldgs / 36 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/36</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/36</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $40.58/hr • 7 workers •
+              <span style="font-weight:700;color:#2980b9"> 32.1% units</span> •
+              <span style="font-weight:700;color:#27ae60"> +$0</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">25002 - BAH</div>
+            <span class="bdg b-rye">11 bldgs / 220 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/220</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/220</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $44.99/hr • 12.13 workers •
+              <span style="font-weight:700;color:#2980b9"> 15.6% units</span> •
+              <span style="font-weight:700;color:#27ae60"> +$464,129</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">26002 - WILSHIRE</div>
+            <span class="bdg b-rye">3 bldgs / 60 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            </div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">SP25018 - CDC PLAZA</div>
+            <span class="bdg b-rye">2 bldgs / 60 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            <div style="font-size:11px;color:#444;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)">
+              <span style="color:#777">Prod report:</span> $54.54/hr • 0.3 workers •
+              <span style="font-weight:700;color:#C0392B"> 315.2% units</span> •
+              <span style="font-weight:700;color:#C0392B"> -$37,839</span>
+            </div></div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">26003 - CARINA MAIN PLACE MALL</div>
+            <span class="bdg b-rye">2 bldgs / 50 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/50</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/50</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            </div></div><div class="card">
+          <div class="ch">
+            <div style="font-size:15px;font-weight:700">26005 - MARINA SHORES</div>
+            <span class="bdg b-rye">3 bldgs / 60 units</span>
+          </div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div class="sc" style="padding:10px"><div class="sl">Rough done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--amber)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-warn" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Final done</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:var(--green)">0<span style="font-size:14px;color:#777">/60</span></div>
+                <div class="pb"><div class="pf pf-ok" style="width:0%"></div></div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total hours</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0.0</div></div>
+              <div class="sc" style="padding:10px"><div class="sl">Total qty</div>
+                <div style="font-family:&#39;Arial Narrow&#39;,Arial,sans-serif;font-size:26px;font-weight:700;color:#2980b9">0</div></div>
+            </div>
+            <div style="font-size:11px;color:#777">0 units fully complete</div>
+            </div></div>
+    </div></div>
     <div class="card" style="margin-top:4px">
       <div class="ch">
         <div class="ct"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path></svg>Full unit log</div>
@@ -1872,7 +2301,7 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="jha-table-wrapper">
         <table class="jha-table">
           <thead><tr><th style="width:32px;">#</th><th>Job Task Step</th><th>Potential Hazards</th><th>Safety Controls</th><th style="width:32px;"></th></tr></thead>
-          <tbody id="jhaTableBody"><tr><td class="safety-obs-num">1</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">2</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">3</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">4</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">5</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">6</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">7</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">8</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">9</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">10</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr></tbody>
+          <tbody id="jhaTableBody"><tr><td class="safety-obs-num">1</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">2</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">3</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">4</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">5</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">6</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">7</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">8</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">9</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">10</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">11</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">12</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">13</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">14</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">15</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr></tbody>
         </table>
       </div>
       <button class="safety-add-row-btn" onclick="addJhaRow()">+ Add task step</button>
@@ -1956,13 +2385,13 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="jha-table-wrapper">
         <table class="jha-table">
           <thead><tr><th style="width:32px;">#</th><th>Hazard</th><th>Hazard Control</th><th style="width:32px;"></th></tr></thead>
-          <tbody id="ptpHazardBody"><tr><td class="safety-obs-num">1</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">2</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">3</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">4</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">5</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">6</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">7</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">8</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">9</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">10</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">11</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">12</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">13</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">14</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">15</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">16</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">17</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">18</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">19</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">20</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr></tbody>
+          <tbody id="ptpHazardBody"><tr><td class="safety-obs-num">1</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">2</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">3</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">4</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">5</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">6</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">7</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">8</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">9</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">10</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">11</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">12</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">13</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">14</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">15</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">16</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">17</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">18</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">19</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">20</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">21</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">22</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">23</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">24</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">25</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">26</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">27</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">28</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">29</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">30</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr></tbody>
         </table>
       </div>
       <button class="safety-add-row-btn" onclick="addPtpHazardRow()">+ Add hazard</button>
       <div class="safety-section-label" style="margin-top:20px;">Crew Signatures</div>
       <div class="safety-obs-hint">All employees involved must sign before starting the task.</div>
-      <div class="ptp-sig-grid" id="ptpSigGrid"><div class="ptp-sig-entry"><label>Employee 1</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 2</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 3</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 4</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 5</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 6</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 7</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 8</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 9</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 10</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div></div>
+      <div class="ptp-sig-grid" id="ptpSigGrid"><div class="ptp-sig-entry"><label>Employee 1</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 2</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 3</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 4</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 5</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 6</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 7</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 8</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 9</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 10</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 11</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 12</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 13</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 14</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 15</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div></div>
       <button class="safety-add-row-btn" onclick="addPtpSigRow()">+ Add crew member</button>
       <div class="safety-section-label" style="margin-top:20px;">Supervisor Review</div>
       <div class="safety-field"><label>Supervisor Notes</label><textarea id="ptpSupervisorNotes" rows="2" placeholder="Review notes and feedback to the team..."></textarea></div>
@@ -3866,6 +4295,10 @@ function collectDJRData(){
   DJR_YN_FIELDS.forEach(f=>{ yn[f.id] = getYNValue(f.id); });
   const detailValues = {};
   DJR_YN_FIELDS.forEach(f=>{ if(f.detail){ const el=document.getElementById(f.detail); if(el) detailValues[f.id]=el.value.trim(); }});
+  var getYN = function(q) {
+    var el = document.getElementById('djr-' + q + '-yes');
+    return el && el.checked ? (document.getElementById('djr-' + q + '-text') ? document.getElementById('djr-' + q + '-text').value || true : true) : false;
+  };
   return {
     job, date,
     tempAM:   document.getElementById('djr-temp-am').value.trim(),
@@ -3879,6 +4312,14 @@ function collectDJRData(){
     superintendent: document.getElementById('djr-super').value.trim(),
     title:    document.getElementById('djr-title').value.trim(),
     savedAt:  new Date().toISOString(),
+    incidents:   getYN('incidents'),
+    meetings:    getYN('meetings'),
+    visitors:    getYN('visitors'),
+    shortage:    getYN('shortage'),
+    deliveries:  getYN('deliveries'),
+    inspections: getYN('inspections'),
+    extraWork:   getYN('extrawork'),
+    gcDirection: getYN('gcdirection'),
   };
 }
 
@@ -6694,6 +7135,8 @@ async function saveToDrive(docType, job, data, statusElId) {
   }
 }
 /* === END GOOGLE DRIVE SAVE === */
+// DJR Yes/No question toggles
+(function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
 
 </script>
 
