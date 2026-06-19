@@ -734,13 +734,9 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
       <div class="cb">
         <div class="form-grid">
-          <div class="fgroup" style="width:70px">
-            <div class="flbl">Emp #</div>
-            <input type="text" id="wb-emp-num" placeholder="--" readonly="" style="height:40px;background:#f8f9fa;text-align:center;font-weight:700;font-size:14px;color:#1a1a1a;">
-          </div>
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="wb-worker" onchange="autoFillWBEmpNum()">
+            <select id="wb-worker">
               <option value="">-- Select employee --</option>
               <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
               <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
@@ -1511,113 +1507,113 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Filter by employee</div>
         <select id="unit-filter-worker" onchange="renderUnitsTab()">
           <option value="all">All employees</option>
-              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
-              <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
-              <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
-              <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
-              <option value="76 - David Smith">76 - David Smith</option>
-              <option value="77 - Dillan Smith">77 - Dillan Smith</option>
-              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
-              <option value="86 - Efren Hilario">86 - Efren Hilario</option>
-              <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
-              <option value="106 - Johnny Perez">106 - Johnny Perez</option>
-              <option value="123 - Armando Lopez">123 - Armando Lopez</option>
-              <option value="138 - Francisco Flores">138 - Francisco Flores</option>
-              <option value="140 - Adrian Flores">140 - Adrian Flores</option>
-              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
-              <option value="152 - Brian Campos">152 - Brian Campos</option>
-              <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
-              <option value="204 - Kenneth William">204 - Kenneth William</option>
-              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
-              <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
-              <option value="235 - Louis Aceves">235 - Louis Aceves</option>
-              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
-              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
-              <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
-              <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
-              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
-              <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
-              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
-              <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
-              <option value="455 - Edgar Solis">455 - Edgar Solis</option>
-              <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
-              <option value="536 - Anthony Macias">536 - Anthony Macias</option>
-              <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
-              <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
-              <option value="628 - Humberto Flores">628 - Humberto Flores</option>
-              <option value="630 - Jaime Moya">630 - Jaime Moya</option>
-              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
-              <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
-              <option value="660 - Carla Quijada">660 - Carla Quijada</option>
-              <option value="666 - Jose Preciado">666 - Jose Preciado</option>
-              <option value="671 - Brian Flores">671 - Brian Flores</option>
-              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
-              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
-              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
-              <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
-              <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
-              <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
-              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
-              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
-              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
-              <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
-              <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
-              <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
-              <option value="825 - Josue Villegas">825 - Josue Villegas</option>
-              <option value="831 - Salvador Perez">831 - Salvador Perez</option>
-              <option value="832 - David Casarez">832 - David Casarez</option>
-              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
-              <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
-              <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
-              <option value="844 - Robert Stark">844 - Robert Stark</option>
-              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
-              <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
-              <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
-              <option value="855 - Mario Arias">855 - Mario Arias</option>
-              <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
-              <option value="858 - Mario Lopez">858 - Mario Lopez</option>
-              <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
-              <option value="861 - Cristian Collin">861 - Cristian Collin</option>
-              <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
-              <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
-              <option value="866 - Axel Salas">866 - Axel Salas</option>
-              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
-              <option value="870 - Alex Osorio">870 - Alex Osorio</option>
-              <option value="872 - Julio Munoz">872 - Julio Munoz</option>
-              <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
-              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
-              <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
-              <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
-              <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
-              <option value="880 - Noah Villareal">880 - Noah Villareal</option>
-              <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
-              <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
-              <option value="884 - Jose Luna">884 - Jose Luna</option>
-              <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
-              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
-              <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
-              <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
-              <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
-              <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
-              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
-              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
-              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
-              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
-              <option value="899 - Victor Armienta">899 - Victor Armienta</option>
-              <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
-              <option value="902 - Erik Lopez">902 - Erik Lopez</option>
-              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
-              <option value="905 - James Marquez">905 - James Marquez</option>
-              <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
-              <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
-              <option value="909 - Christian Moran">909 - Christian Moran</option>
-              <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
-              <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
-              <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
-              <option value="914 - Miguel Corral">914 - Miguel Corral</option>
-              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
-              <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
-              <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
+          <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+          <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+          <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+          <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+          <option value="76 - David Smith">76 - David Smith</option>
+          <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+          <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+          <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+          <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+          <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+          <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+          <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+          <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+          <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+          <option value="152 - Brian Campos">152 - Brian Campos</option>
+          <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+          <option value="204 - Kenneth William">204 - Kenneth William</option>
+          <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+          <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+          <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+          <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+          <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+          <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+          <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+          <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+          <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+          <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+          <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+          <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+          <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+          <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+          <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+          <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+          <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+          <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+          <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+          <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+          <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+          <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+          <option value="671 - Brian Flores">671 - Brian Flores</option>
+          <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+          <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+          <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+          <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+          <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+          <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+          <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+          <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+          <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+          <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+          <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+          <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+          <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+          <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+          <option value="832 - David Casarez">832 - David Casarez</option>
+          <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+          <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+          <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+          <option value="844 - Robert Stark">844 - Robert Stark</option>
+          <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+          <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+          <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+          <option value="855 - Mario Arias">855 - Mario Arias</option>
+          <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+          <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+          <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+          <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+          <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+          <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+          <option value="866 - Axel Salas">866 - Axel Salas</option>
+          <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+          <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+          <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+          <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+          <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+          <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+          <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+          <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+          <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+          <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+          <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+          <option value="884 - Jose Luna">884 - Jose Luna</option>
+          <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+          <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+          <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+          <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+          <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+          <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+          <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+          <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+          <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+          <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+          <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+          <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+          <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+          <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+          <option value="905 - James Marquez">905 - James Marquez</option>
+          <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+          <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+          <option value="909 - Christian Moran">909 - Christian Moran</option>
+          <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+          <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+          <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+          <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+          <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+          <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+          <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
         </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
@@ -3239,7 +3235,7 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
   // Group by worker
   const byWorker = {};
   entries.forEach(e=>{
-    if(!byWorker[e.worker]) byWorker[e.worker] = {worker:e.worker, rows:[]};
+    if(!byWorker[e.worker]) byWorker[e.worker] = {worker:e.worker, empNum:e.empNum||'', rows:[]};
     byWorker[e.worker].rows.push(e);
   });
   const workerCount = Object.keys(byWorker).length;
@@ -3266,7 +3262,7 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
       rowNum++;
       const bgColor = rowNum%2===0 ? 'rgba(255,255,255,.03)' : 'transparent';
       return `<tr style="background:${bgColor};border-bottom:1px solid rgba(255,255,255,.06)">
-        <td style="padding:10px 14px;color:#888;font-size:12px;font-family:monospace;border-right:1px solid rgba(255,255,255,.08)">${rowNum}</td>
+        <td style="padding:10px 14px;color:#EF9F27;font-size:12px;font-family:monospace;font-weight:700;border-right:1px solid rgba(255,255,255,.08)">${i===0?wd.empNum:''}</td>
         <td style="padding:10px 14px;color:#fff;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap">${i===0?e.worker.toUpperCase():''}</td>
         <td style="padding:10px 14px;color:#2980b9;font-family:monospace;font-weight:700;font-size:13px;border-right:1px solid rgba(255,255,255,.08)">${e.phaseCode}</td>
         <td style="padding:10px 14px;color:#ccc;font-size:12px;border-right:1px solid rgba(255,255,255,.08)">
@@ -5344,7 +5340,10 @@ function autoFillSIEmpNum(sel){
 
 
 function saveWBEntry(){
-  const worker = document.getElementById('wb-worker').value;
+  const workerRaw = document.getElementById('wb-worker').value;
+  const wbEmpMatch = workerRaw.match(/^(\d+)\s*-\s*/);
+  const empNum = wbEmpMatch ? wbEmpMatch[1] : '';
+  const worker = wbEmpMatch ? workerRaw.replace(/^\d+\s*-\s*/, '') : workerRaw;
   const job    = document.getElementById('wb-job').value;
   const phase  = document.getElementById('wb-phase').value;
   const hours  = document.getElementById('wb-hours').value;
@@ -5355,10 +5354,7 @@ function saveWBEntry(){
   if(!phase) { toast('Select a cost code'); return; }
   if(!hours) { toast('Select hours'); return; }
 
-  // Extract employee number from worker value (e.g. "140 - Adrian Flores" -> "140")
-  const empNumMatch = worker.match(/^(\d+)\s*-\s*/);
-  const empNum = empNumMatch ? empNumMatch[1] : '';
-  const workerName = empNumMatch ? worker.replace(/^\d+\s*-\s*/, '') : worker;
+
 
   const [code, desc] = phase.split('|');
   const dateInp = document.getElementById('dl-date');
@@ -5367,7 +5363,7 @@ function saveWBEntry(){
   dailyLogs.push({
     id: dlNextId++,
     date: entryDate,
-    worker: workerName, empNum, job,
+    worker: worker, empNum, job,
     phaseCode: code,
     phaseDesc: desc,
     hours: parseFloat(hours),
@@ -5384,7 +5380,7 @@ function saveWBEntry(){
   // Show confirmation
   const conf = document.getElementById('wb-confirm');
   conf.style.display = 'block';
-  conf.textContent = 'v Saved -- ' + (empNum ? empNum + ' - ' : '') + workerName + ' . ' + code + ' ' + desc + ' . ' + hours + 'h';
+  conf.textContent = 'v Saved -- ' + (empNum ? empNum + ' - ' : '') + worker + ' . ' + code + ' ' + desc + ' . ' + hours + 'h';
   setTimeout(()=>{ conf.style.display='none'; }, 3000);
 
   // Reset
