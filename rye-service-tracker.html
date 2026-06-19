@@ -1206,6 +1206,27 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   </div>
 </div>
 
+<!-- APPROVER MODAL -->
+<div class="modal-overlay" id="approverModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title">Who is approving this timesheet?</div>
+      <button class="modal-close" onclick="closeModal('approverModal')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:24px">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Select your name to approve and lock this timesheet.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Mychal Kirschbaum')">Mychal Kirschbaum</button>
+        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Jonathan Jacobo')">Jonathan Jacobo</button>
+        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Joey Java')">Joey Java</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="cancelApproval()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div id="toast"></div>
 
@@ -2236,7 +2257,7 @@ function renderTimesheets() {
         <td>
         <td>
           ${ts.status === 'Approved'
-            ? `<span class="badge badge-green" style="font-size:11px">🔒 Approved</span>`
+            ? `<span class="badge badge-green" style="font-size:11px">🔒 Approved by ${ts.approvedBy || 'Manager'}</span>`
             : `<select class="form-control" style="font-size:12px;padding:3px 6px;width:110px" onchange="updateTsStatus('${ts.id}',this.value)" onclick="event.stopPropagation()">
                 <option ${ts.status==='Draft'?'selected':''}>Draft</option>
                 <option ${ts.status==='Submitted'?'selected':''}>Submitted</option>
@@ -2251,6 +2272,8 @@ function renderTimesheets() {
   }).join('');
 }
 
+let pendingApprovalId = null;
+
 function updateTsStatus(id, status) {
   const ts = timesheets.find(x => x.id === id);
   if (!ts) return;
@@ -2258,7 +2281,14 @@ function updateTsStatus(id, status) {
   // Prevent changing an already-approved timesheet
   if (ts.status === 'Approved' && status !== 'Approved') {
     toast('Approved timesheets are locked and cannot be changed', true);
-    renderTimesheets(); // reset the dropdown visually
+    renderTimesheets();
+    return;
+  }
+
+  if (status === 'Approved') {
+    // Show approver selection modal
+    pendingApprovalId = id;
+    openModal('approverModal');
     return;
   }
 
@@ -2266,50 +2296,70 @@ function updateTsStatus(id, status) {
   save();
   renderTimesheets();
   toast('Timesheet ' + id + ' → ' + status);
+}
 
-  // Send approval notification email
-  if (status === 'Approved') {
-    const totalReg = parseFloat(ts.totalReg) || 0;
-    const totalOT  = parseFloat(ts.totalOT)  || 0;
-    const totalHrs = parseFloat(ts.totalHours) || 0;
+function cancelApproval() {
+  pendingApprovalId = null;
+  closeModal('approverModal');
+  renderTimesheets(); // reset dropdown back to previous status
+}
 
-    const entryList = (ts.entries || []).map(e =>
-      `• ${fmtDate(e.date)} | ${e.job || '—'} | ${(parseFloat(e.regHours)||0).toFixed(2)} reg / ${(parseFloat(e.otHours)||0).toFixed(2)} OT hrs`
-    ).join('\n');
+function confirmApproval(approverName) {
+  closeModal('approverModal');
+  const id = pendingApprovalId;
+  pendingApprovalId = null;
+  if (!id) return;
 
-    const message = `Timesheet ${ts.id} has been APPROVED.
+  const ts = timesheets.find(x => x.id === id);
+  if (!ts) return;
 
-Employee:    ${ts.employee}
-Week Ending: ${fmtDate(ts.weekEnding)}
-Regular Hrs: ${totalReg.toFixed(2)}
-Overtime Hrs:${totalOT.toFixed(2)}
-Total Hours: ${totalHrs.toFixed(2)}
+  ts.status   = 'Approved';
+  ts.approvedBy   = approverName;
+  ts.approvedAt   = new Date().toISOString();
+  save();
+  renderTimesheets();
+
+  const totalReg = parseFloat(ts.totalReg) || 0;
+  const totalOT  = parseFloat(ts.totalOT)  || 0;
+  const totalHrs = parseFloat(ts.totalHours) || 0;
+
+  const entryList = (ts.entries || []).map(e =>
+    `• ${fmtDate(e.date)} | ${e.job || '—'} | ${(parseFloat(e.regHours)||0).toFixed(2)} reg / ${(parseFloat(e.otHours)||0).toFixed(2)} OT hrs`
+  ).join('\n');
+
+  const message = `Timesheet ${ts.id} has been APPROVED.
+
+Employee:     ${ts.employee}
+Week Ending:  ${fmtDate(ts.weekEnding)}
+Approved By:  ${approverName}
+Approved At:  ${new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' })}
+
+Regular Hrs:  ${totalReg.toFixed(2)}
+Overtime Hrs: ${totalOT.toFixed(2)}
+Total Hours:  ${totalHrs.toFixed(2)}
 
 TIME ENTRIES:
 ${entryList}
 
-Approved: ${new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' })}
 — Rye Electric Service Department`;
 
-    // Notify all managers
-    const recipients = [
-      { name: 'Mychal', email: 'mkirschbaum@ryecompany.com' },
-      { name: 'Dennis', email: 'dfurst@ryecompany.com' },
-      { name: 'Joey',   email: 'jjava@ryecompany.com' },
-      { name: 'Jonathan', email: 'jjacobo@ryecompany.com' },
-    ];
+  const recipients = [
+    { name: 'Mychal',    email: 'mkirschbaum@ryecompany.com' },
+    { name: 'Dennis',    email: 'dfurst@ryecompany.com' },
+    { name: 'Joey',      email: 'jjava@ryecompany.com' },
+    { name: 'Jonathan',  email: 'jjacobo@ryecompany.com' },
+  ];
 
-    recipients.forEach(r => {
-      emailjs.send('service_jbdjjoh', 'template_4daap5r', {
-        to_email: r.email,
-        to_name:  r.name,
-        subject:  `✅ Timesheet Approved — ${ts.employee} | Week Ending ${fmtDate(ts.weekEnding)} | ${totalHrs.toFixed(2)} hrs`,
-        message,
-      }).catch(e => console.warn('Approval email failed:', e));
-    });
+  recipients.forEach(r => {
+    emailjs.send('service_jbdjjoh', 'template_4daap5r', {
+      to_email: r.email,
+      to_name:  r.name,
+      subject:  `✅ Timesheet Approved by ${approverName} — ${ts.employee} | Week Ending ${fmtDate(ts.weekEnding)} | ${totalHrs.toFixed(2)} hrs`,
+      message,
+    }).catch(e => console.warn('Approval email failed:', e));
+  });
 
-    toast('✅ Timesheet approved — notifications sent & timesheet locked');
-  }
+  toast('✅ Approved by ' + approverName + ' — timesheet locked & notifications sent');
 }
 
 // ── PRINT TIMESHEET ───────────────────────────────────────────────────────────
@@ -2380,7 +2430,7 @@ function printTimesheet(id) {
     <div class="meta-item"><label>Employee</label><span>${ts.employee}</span></div>
     <div class="meta-item"><label>Week Ending</label><span>${fmtDate(ts.weekEnding)}</span></div>
     <div class="meta-item"><label>Status</label><span>${ts.status}</span></div>
-    <div class="meta-item"><label>Generated</label><span>${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></div>
+    <div class="meta-item"><label>${ts.approvedBy ? 'Approved By' : 'Generated'}</label><span>${ts.approvedBy || new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></div>
   </div>
 
   <div class="summary">
