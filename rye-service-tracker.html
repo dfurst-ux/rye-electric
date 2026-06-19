@@ -1206,6 +1206,77 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   </div>
 </div>
 
+<!-- EDIT TIMESHEET MODAL -->
+<div class="modal-overlay" id="editTimesheetModal">
+  <div class="modal" style="max-width:900px">
+    <div class="modal-header">
+      <div>
+        <div class="ticket-num" id="edit-ts-num">TS-0000</div>
+        <div class="modal-title" id="edit-ts-title">Edit Timesheet</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('editTimesheetModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <div class="form-section-title red">Employee &amp; Period</div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label class="form-label">Employee</label>
+            <input class="form-control" id="edit-ts-employee" readonly style="background:#f4f4f4">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Week Ending</label>
+            <input class="form-control" type="date" id="edit-ts-week" readonly style="background:#f4f4f4">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <input class="form-control" id="edit-ts-status" readonly style="background:#f4f4f4">
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title red">Time Entries</div>
+        <table class="ts-table">
+          <thead>
+            <tr>
+              <th style="width:14%">Date</th>
+              <th style="width:32%">Job / Project &amp; Cost Code</th>
+              <th style="width:10%">Time In</th>
+              <th style="width:10%">Time Out</th>
+              <th style="width:10%">Reg Hrs</th>
+              <th style="width:10%">OT Hrs</th>
+              <th style="width:14%"></th>
+            </tr>
+          </thead>
+          <tbody id="edit-ts-entries-tbody"></tbody>
+        </table>
+        <button class="btn btn-ghost btn-sm add-row-btn" onclick="addEditTsRow()">+ Add Entry</button>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Totals</div>
+        <div class="metric-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div class="stat-card green">
+            <div class="stat-label">Regular Hours</div>
+            <div class="stat-value" id="edit-ts-reg-total">0.00</div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-label">Overtime Hours</div>
+            <div class="stat-value" id="edit-ts-ot-total">0.00</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label">Total Hours</div>
+            <div class="stat-value" id="edit-ts-hr-total">0.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('editTimesheetModal')">Cancel</button>
+      <button class="btn btn-red" onclick="saveEditedTimesheet()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <!-- APPROVER MODAL -->
 <div class="modal-overlay" id="approverModal">
   <div class="modal" style="max-width:400px">
@@ -2266,7 +2337,8 @@ function renderTimesheets() {
           }
         </td>
         <td><button class="link-btn" style="color:var(--muted)" onclick="event.stopPropagation();deleteTs('${ts.id}')">Del</button>
-            <button class="link-btn" style="color:var(--teal);margin-left:8px" onclick="event.stopPropagation();printTimesheet('${ts.id}')">Print</button></td>
+            <button class="link-btn" style="color:var(--teal);margin-left:8px" onclick="event.stopPropagation();printTimesheet('${ts.id}')">Print</button>
+            ${ts.status !== 'Approved' ? `<button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="event.stopPropagation();openEditTimesheet('${ts.id}')">Edit</button>` : ''}</td>
       </tr>
       <tbody style="display:none">${entryRows}</tbody>`;
   }).join('');
@@ -2362,7 +2434,112 @@ ${entryList}
   toast('✅ Approved by ' + approverName + ' — timesheet locked & notifications sent');
 }
 
-// ── PRINT TIMESHEET ───────────────────────────────────────────────────────────
+// ── EDIT TIMESHEET ────────────────────────────────────────────────────────────
+let editingTsId = null;
+
+function openEditTimesheet(id) {
+  const ts = timesheets.find(x => x.id === id);
+  if (!ts) return;
+  editingTsId = id;
+
+  document.getElementById('edit-ts-num').textContent = ts.id;
+  document.getElementById('edit-ts-title').textContent = 'Edit Timesheet — ' + ts.employee;
+  document.getElementById('edit-ts-employee').value = ts.employee;
+  document.getElementById('edit-ts-week').value = ts.weekEnding;
+  document.getElementById('edit-ts-status').value = ts.status;
+
+  // Build entry rows
+  const tbody = document.getElementById('edit-ts-entries-tbody');
+  tbody.innerHTML = '';
+  (ts.entries || []).forEach(e => addEditTsRow(e));
+  if (!tbody.children.length) addEditTsRow();
+
+  updateEditTotals();
+  openModal('editTimesheetModal');
+}
+
+function addEditTsRow(entry) {
+  const tbody = document.getElementById('edit-ts-entries-tbody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input type="date" class="form-control edit-ts-date" value="${entry?.date || today()}" oninput="updateEditTotals()"></td>
+    <td><select class="form-control edit-ts-job" oninput="updateEditTotals()" style="font-size:13px">
+      <option value="">— Billed To —</option>
+      <optgroup label="Service Call">
+        <option value="Service Call" ${entry?.job==='Service Call'?'selected':''}>Service Call (default)</option>
+      </optgroup>
+      <optgroup label="Construction Projects — Cost Code 1000-01">
+        <option value="24001 - BIOLA | 1000-01" ${entry?.job==='24001 - BIOLA | 1000-01'?'selected':''}>24001 - BIOLA | 1000-01</option>
+        <option value="24002 - SEPULVEDA | 1000-01" ${entry?.job==='24002 - SEPULVEDA | 1000-01'?'selected':''}>24002 - SEPULVEDA | 1000-01</option>
+        <option value="24005 - VNV | 1000-01" ${entry?.job==='24005 - VNV | 1000-01'?'selected':''}>24005 - VNV | 1000-01</option>
+        <option value="24006 - VF | 1000-01" ${entry?.job==='24006 - VF | 1000-01'?'selected':''}>24006 - VF | 1000-01</option>
+        <option value="25001 - DECENA | 1000-01" ${entry?.job==='25001 - DECENA | 1000-01'?'selected':''}>25001 - DECENA | 1000-01</option>
+        <option value="25002 - BAH | 1000-01" ${entry?.job==='25002 - BAH | 1000-01'?'selected':''}>25002 - BAH | 1000-01</option>
+        <option value="SP25018 - CDC PLAZA | 1000-01" ${entry?.job==='SP25018 - CDC PLAZA | 1000-01'?'selected':''}>SP25018 - CDC PLAZA | 1000-01</option>
+        <option value="26003 - CARINA | 1000-01" ${entry?.job==='26003 - CARINA | 1000-01'?'selected':''}>26003 - CARINA | 1000-01</option>
+        <option value="26005 - MARINA SHORES | 1000-01" ${entry?.job==='26005 - MARINA SHORES | 1000-01'?'selected':''}>26005 - MARINA SHORES | 1000-01</option>
+      </optgroup>
+    </select></td>
+    <td><input type="time" class="form-control edit-ts-in" value="${entry?.timeIn || ''}" oninput="calcEditTsHours(this);updateEditTotals()"></td>
+    <td><input type="time" class="form-control edit-ts-out" value="${entry?.timeOut || ''}" oninput="calcEditTsHours(this);updateEditTotals()"></td>
+    <td><input type="number" class="form-control edit-ts-reg" value="${entry?.regHours || ''}" placeholder="0" step="0.25" min="0" oninput="updateEditTotals()"></td>
+    <td><input type="number" class="form-control edit-ts-ot" value="${entry?.otHours || ''}" placeholder="0" step="0.25" min="0" oninput="updateEditTotals()"></td>
+    <td><button class="del-row" onclick="this.closest('tr').remove();updateEditTotals()">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+function calcEditTsHours(input) {
+  const tr  = input.closest('tr');
+  const inV = tr.querySelector('.edit-ts-in').value;
+  const outV = tr.querySelector('.edit-ts-out').value;
+  if (!inV || !outV) return;
+  const diff = (new Date('1970-01-01T'+outV) - new Date('1970-01-01T'+inV)) / 3600000;
+  if (diff <= 0) return;
+  tr.querySelector('.edit-ts-reg').value = Math.min(diff, 8).toFixed(2);
+  const ot = Math.max(0, diff - 8);
+  tr.querySelector('.edit-ts-ot').value = ot > 0 ? ot.toFixed(2) : '';
+}
+
+function updateEditTotals() {
+  let reg = 0, ot = 0;
+  document.querySelectorAll('#edit-ts-entries-tbody tr').forEach(tr => {
+    reg += parseFloat(tr.querySelector('.edit-ts-reg')?.value) || 0;
+    ot  += parseFloat(tr.querySelector('.edit-ts-ot')?.value)  || 0;
+  });
+  document.getElementById('edit-ts-reg-total').textContent = reg.toFixed(2);
+  document.getElementById('edit-ts-ot-total').textContent  = ot.toFixed(2);
+  document.getElementById('edit-ts-hr-total').textContent  = (reg + ot).toFixed(2);
+}
+
+function saveEditedTimesheet() {
+  const ts = timesheets.find(x => x.id === editingTsId);
+  if (!ts) return;
+
+  const entries = [];
+  document.querySelectorAll('#edit-ts-entries-tbody tr').forEach(tr => {
+    const date = tr.querySelector('.edit-ts-date')?.value || '';
+    const job  = tr.querySelector('.edit-ts-job')?.value  || '';
+    const tin  = tr.querySelector('.edit-ts-in')?.value   || '';
+    const tout = tr.querySelector('.edit-ts-out')?.value  || '';
+    const reg  = parseFloat(tr.querySelector('.edit-ts-reg')?.value) || 0;
+    const ot   = parseFloat(tr.querySelector('.edit-ts-ot')?.value)  || 0;
+    if (date || job || reg || ot) {
+      entries.push({ date, job, timeIn: tin, timeOut: tout, regHours: reg, otHours: ot });
+    }
+  });
+
+  ts.entries    = entries;
+  const totalReg = entries.reduce((s, e) => s + (parseFloat(e.regHours)||0), 0);
+  const totalOT  = entries.reduce((s, e) => s + (parseFloat(e.otHours) ||0), 0);
+  ts.totalReg    = totalReg.toFixed(2);
+  ts.totalOT     = totalOT.toFixed(2);
+  ts.totalHours  = (totalReg + totalOT).toFixed(2);
+
+  save();
+  renderTimesheets();
+  closeModal('editTimesheetModal');
+  toast('Timesheet ' + ts.id + ' updated ✓');
+}
 function printTimesheet(id) {
   const ts = timesheets.find(x => x.id === id);
   if (!ts) { toast('Timesheet not found', true); return; }
