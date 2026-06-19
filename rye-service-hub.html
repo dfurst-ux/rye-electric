@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rye Electric — Service Department</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#4E9DA8;--teal-dk:#357884;--teal-lt:#EAF5F7;
+  --dark:#141414;--dark2:#1e1e1e;--dark3:#2a2a2a;
+  --mid:#555;--muted:#888;--border:#e2e2e2;
+  --white:#fff;--bg:#F4F8F9;
+  --green:#27AE60;--green-lt:#EAF7F0;
+  --gold:#D4A843;
+  --font:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--dark);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+/* ── HEADER ── */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(20,20,20,.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+}
+.brand{display:flex;flex-direction:column;line-height:1}
+.brand .wr{font-size:24px;font-weight:900;color:var(--white);letter-spacing:-.5px}
+.brand .we{font-size:10px;font-weight:300;letter-spacing:3px;color:var(--teal);text-transform:lowercase;margin-top:2px}
+.header-right{display:flex;align-items:center;gap:24px}
+.header-link{font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;letter-spacing:.5px;text-transform:uppercase;transition:color .2s}
+.header-link:hover{color:var(--teal)}
+.header-pill{background:rgba(78,157,168,.15);border:1px solid rgba(78,157,168,.3);color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:120px 24px 80px;
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(78,157,168,.18) 0%, transparent 70%),
+    linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+  z-index:0;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(78,157,168,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(78,157,168,.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  z-index:0;
+}
+.hero-content{position:relative;z-index:1;max-width:760px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(78,157,168,.1);
+  border:1px solid rgba(78,157,168,.25);
+  border-radius:20px;
+  padding:6px 16px;
+  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:28px;
+}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1{
+  font-size:clamp(38px,6vw,72px);
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:-2px;
+  color:var(--white);
+  margin-bottom:20px;
+}
+.hero h1 em{color:var(--teal);font-style:normal}
+.hero p{
+  font-size:clamp(15px,2vw,18px);
+  font-weight:300;
+  color:rgba(255,255,255,.55);
+  line-height:1.7;
+  max-width:520px;
+  margin:0 auto 52px;
+}
+
+/* ── CARDS ── */
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  max-width:760px;
+  width:100%;
+  margin:0 auto;
+}
+.card{
+  border-radius:16px;
+  padding:36px 32px;
+  text-align:left;
+  text-decoration:none;
+  display:block;
+  transition:transform .25s, box-shadow .25s;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:16px;
+  opacity:0;
+  transition:opacity .25s;
+}
+.card:hover{transform:translateY(-4px)}
+.card:hover::before{opacity:1}
+
+.card-customer{
+  background:linear-gradient(135deg, var(--teal) 0%, var(--teal-dk) 100%);
+  box-shadow:0 8px 32px rgba(78,157,168,.3);
+}
+.card-customer:hover{box-shadow:0 16px 48px rgba(78,157,168,.45)}
+.card-customer::before{background:linear-gradient(135deg,rgba(255,255,255,.1),transparent)}
+
+.card-internal{
+  background:linear-gradient(135deg, #1e1e1e 0%, #111 100%);
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.card-internal:hover{box-shadow:0 16px 48px rgba(0,0,0,.5);border-color:rgba(255,255,255,.2)}
+
+.card-icon{
+  width:52px;height:52px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+  margin-bottom:20px;
+}
+.card-customer .card-icon{background:rgba(255,255,255,.2)}
+.card-internal .card-icon{background:rgba(78,157,168,.15)}
+
+.card-tag{
+  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:10px;display:block;
+}
+.card-customer .card-tag{color:rgba(255,255,255,.6)}
+.card-internal .card-tag{color:var(--teal)}
+
+.card h2{
+  font-size:22px;font-weight:700;
+  color:var(--white);
+  margin-bottom:10px;
+  letter-spacing:-.3px;
+  line-height:1.2;
+}
+.card p{
+  font-size:14px;font-weight:300;
+  color:rgba(255,255,255,.6);
+  line-height:1.6;
+  margin-bottom:24px;
+}
+.card-internal p{color:rgba(255,255,255,.45)}
+
+.card-arrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:700;letter-spacing:.3px;
+}
+.card-customer .card-arrow{color:rgba(255,255,255,.9)}
+.card-internal .card-arrow{color:var(--teal)}
+
+.arrow-icon{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  transition:transform .2s;
+}
+.card:hover .arrow-icon{transform:translateX(4px)}
+.card-customer .arrow-icon{background:rgba(255,255,255,.2)}
+.card-internal .arrow-icon{background:rgba(78,157,168,.2)}
+
+/* ── FEATURES STRIP ── */
+.features{
+  display:flex;justify-content:center;gap:32px;
+  flex-wrap:wrap;
+  margin-top:52px;
+  padding-top:40px;
+  border-top:1px solid rgba(255,255,255,.06);
+  position:relative;z-index:1;
+}
+.feature{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:400;color:rgba(255,255,255,.4);
+}
+.feature .f-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
+
+/* ── STATS ROW ── */
+.stats{
+  display:flex;justify-content:center;gap:0;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.02);
+  padding:32px 40px;
+  flex-wrap:wrap;
+}
+.stat{
+  flex:1;min-width:160px;
+  text-align:center;
+  padding:0 24px;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+.stat:last-child{border-right:none}
+.stat-num{font-size:32px;font-weight:900;color:var(--teal);letter-spacing:-1px;display:block}
+.stat-label{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px;margin-top:4px;display:block}
+
+/* ── HOW IT WORKS ── */
+.section{padding:80px 40px;max-width:1000px;margin:0 auto}
+.section-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.section h2{font-size:clamp(28px,4vw,42px);font-weight:900;letter-spacing:-1px;color:var(--white);margin-bottom:48px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px}
+.step{position:relative;padding-left:24px;border-left:2px solid rgba(78,157,168,.2)}
+.step-num{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:1px;margin-bottom:10px;display:block}
+.step h3{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px}
+.step p{font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6}
+
+/* ── FOOTER ── */
+.footer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:28px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-brand{display:flex;flex-direction:column;line-height:1}
+.footer-brand .wr{font-size:18px;font-weight:900;color:var(--white)}
+.footer-brand .we{font-size:9px;font-weight:300;letter-spacing:3px;color:var(--teal);text-transform:lowercase;margin-top:2px}
+.footer-info{font-size:12px;color:rgba(255,255,255,.3);line-height:1.8;text-align:right}
+.footer-info a{color:var(--teal);text-decoration:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .cards{grid-template-columns:1fr}
+  .header{padding:0 20px}
+  .hero{padding:100px 20px 60px}
+  .stats{padding:24px 20px}
+  .stat{min-width:120px;padding:0 12px}
+  .footer{flex-direction:column;text-align:center}
+  .footer-info{text-align:center}
+  .section{padding:60px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="brand">
+    <span class="wr">rye</span>
+    <span class="we">electric</span>
+  </div>
+  <div class="header-right">
+    <span class="header-pill">Service Department</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      Licensed · Bonded · Insured · CA Lic. 980345
+    </div>
+    <h1>Electrical Service<br><em>Done Right</em></h1>
+    <p>Schedule a service call or access the internal service dashboard. Fast response, licensed technicians, transparent pricing.</p>
+
+    <div class="cards">
+      <!-- Customer Card -->
+      <a class="card card-customer" href="https://dfurst-ux.github.io/rye-electric/rye-service-request.html">
+        <div class="card-icon">🔧</div>
+        <span class="card-tag">For Customers</span>
+        <h2>Request Service</h2>
+        <p>Submit a service request online. Our team will contact you to confirm your appointment.</p>
+        <div class="card-arrow">
+          Get started
+          <div class="arrow-icon">→</div>
+        </div>
+      </a>
+
+      <!-- Internal Card -->
+      <a class="card card-internal" href="https://dfurst-ux.github.io/rye-electric/rye-service-tracker.html">
+        <div class="card-icon">📊</div>
+        <span class="card-tag">Rye Electric Team</span>
+        <h2>Service Dashboard</h2>
+        <p>Manage service calls, timesheets, tasks, invoices, and crew performance.</p>
+        <div class="card-arrow">
+          Open dashboard
+          <div class="arrow-icon">→</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="features">
+      <div class="feature"><span class="f-dot"></span>Emergency calls answered same day</div>
+      <div class="feature"><span class="f-dot"></span>4-hour minimum service window</div>
+      <div class="feature"><span class="f-dot"></span>Transparent T&amp;M billing</div>
+      <div class="feature"><span class="f-dot"></span>Licensed electricians</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num">$124.97</span>
+    <span class="stat-label">Standard hourly rate</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">4 hr</span>
+    <span class="stat-label">Minimum service call</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">Same day</span>
+    <span class="stat-label">Emergency response</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">Net 30</span>
+    <span class="stat-label">Payment terms</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-label">How it works</div>
+  <h2>Service in four steps</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <h3>Submit a request</h3>
+      <p>Fill out the online form with your contact info, service type, and preferred time.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <h3>We confirm</h3>
+      <p>Our service manager will reach out to confirm your appointment and answer any questions.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <h3>Tech arrives</h3>
+      <p>A licensed electrician arrives within your agreed window, ready to work.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <h3>Rate your service</h3>
+      <p>After the job is complete, you'll receive a quick satisfaction survey by email.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">
+    <span class="wr">rye</span>
+    <span class="we">electric</span>
+  </div>
+  <div class="footer-info">
+    75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp; <a href="tel:9494410545">(949) 441-0545</a> &nbsp;·&nbsp; <a href="https://ryecompany.com">ryecompany.com</a><br>
+    California Electrical Contractor License 980345
+  </div>
+</footer>
+
+</body>
+</html>
