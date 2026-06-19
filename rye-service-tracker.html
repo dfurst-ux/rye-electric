@@ -1503,7 +1503,18 @@ function openModal(id) {
     if (!document.getElementById('ts-entries-tbody').children.length) addTsRow();
   }
 }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  // Reset ticket modal save button if we were editing
+  if (id === 'ticketModal' && editingTicketId) {
+    editingTicketId = null;
+    const saveBtn = document.querySelector('#ticketModal .btn-green');
+    if (saveBtn) {
+      saveBtn.innerHTML = '💾 Save Ticket &amp; Notify';
+      saveBtn.onclick = saveTicket;
+    }
+  }
+}
 document.querySelectorAll('.modal-overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
 });
@@ -2007,7 +2018,8 @@ function renderDashboard() {
         <td>${typeBadge(t.type)}</td>
         <td>${t.tech}</td>
         <td>${statusBadge(t.status)}</td>
-        <td><button class="link-btn" onclick="viewTicket('${t.id}')">View</button></td>
+        <td><button class="link-btn" onclick="viewTicket('${t.id}')">View</button>
+            <button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="editTicket('${t.id}')">Edit</button></td>
       </tr>`).join('');
   }
 
@@ -2073,6 +2085,7 @@ function renderTicketsTable() {
         <td>${starDisp}</td>
         <td>
           <button class="link-btn" onclick="viewTicket('${t.id}')">View</button>
+          <button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="editTicket('${t.id}')">Edit</button>
           <button class="link-btn" style="color:var(--green);margin-left:8px" onclick="currentViewTicketId='${t.id}';completeAndInvoice()">Complete + Invoice</button>
           <button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="currentViewTicketId='${t.id}';exportToFoundation()">Foundation</button>
           <button class="link-btn" style="color:var(--muted);margin-left:8px" onclick="deleteTicket('${t.id}')">Del</button>
@@ -2799,6 +2812,186 @@ function renderCrewCardsExpanded(containerId, byTech) {
 }
 
 // ── VIEW TICKET ──
+// ── EDIT TICKET ───────────────────────────────────────────────────────────────
+let editingTicketId = null;
+
+function editTicket(id) {
+  const t = tickets.find(x => x.id === id);
+  if (!t) return;
+  editingTicketId = id;
+
+  // Open the ticket modal
+  openModal('ticketModal');
+
+  // Override the header to show we're editing
+  document.getElementById('modal-ticket-num').textContent = 'EDITING: ' + t.id;
+
+  // Pre-fill all fields
+  setTimeout(() => {
+    // Basic info
+    const set = (elId, val) => { const el = document.getElementById(elId); if (el) el.value = val || ''; };
+    set('t-customer', t.customer);
+    set('t-address',  t.address);
+    set('t-po',       t.po);
+    set('t-nte',      t.nte);
+    set('t-scope',    t.scope);
+    set('t-equipment',t.equipment);
+    set('t-notes',    t.notes);
+    set('t-sig-name', t.sigName);
+    set('t-sig-date', t.sigDate);
+    set('t-customer-email', t.customerEmail || t.email || '');
+    set('t-customer-phone', t.customerPhone || t.phone || '');
+    set('t-date',     t.date);
+
+    // Dropdowns
+    const setDrop = (elId, val) => {
+      const el = document.getElementById(elId);
+      if (!el || !val) return;
+      for (let o of el.options) { if (o.value === val || o.text === val) { el.value = o.value; break; } }
+    };
+    setDrop('t-type',   t.type);
+    setDrop('t-tech',   t.tech);
+    setDrop('t-status', t.status);
+
+    // Labor rows
+    const laborTbody = document.getElementById('labor-tbody');
+    laborTbody.innerHTML = '';
+    (t.labor || []).forEach(r => {
+      addLaborRow();
+      const tr = laborTbody.lastElementChild;
+      const sel = tr.querySelector('select');
+      const inputs = tr.querySelectorAll('input');
+      if (sel) { for (let o of sel.options) { if (o.value === r.employee || o.text === r.employee) { sel.value = o.value; break; } } }
+      if (inputs[0]) inputs[0].value = r.timeIn  || '';
+      if (inputs[1]) inputs[1].value = r.timeOut || '';
+      if (inputs[2]) inputs[2].value = r.regHours || '';
+      if (inputs[3]) inputs[3].value = r.otHours  || '';
+      if (inputs[4]) inputs[4].value = r.rate      || '124.97';
+      if (inputs[5]) inputs[5].value = r.lineTotal || '';
+      // Set billed to dropdown
+      const jobSel = tr.querySelectorAll('select')[1];
+      if (jobSel && r.jobRef) {
+        for (let o of jobSel.options) { if (o.value === r.jobRef) { jobSel.value = r.jobRef; break; } }
+      }
+    });
+    if (!laborTbody.children.length) addLaborRow();
+    updateLaborTotal();
+
+    // Materials rows
+    const matTbody = document.getElementById('materials-tbody');
+    matTbody.innerHTML = '';
+    (t.materials || []).forEach(r => {
+      addMaterialRow();
+      const tr = matTbody.lastElementChild;
+      const inputs = tr.querySelectorAll('input');
+      if (inputs[0]) inputs[0].value = r.desc     || '';
+      if (inputs[1]) inputs[1].value = r.part      || '';
+      if (inputs[2]) inputs[2].value = r.qty       || '';
+      if (inputs[3]) inputs[3].value = r.unit      || '';
+      if (inputs[4]) inputs[4].value = r.unitCost  || '';
+      if (inputs[5]) inputs[5].value = r.total     || '';
+    });
+    if (!matTbody.children.length) addMaterialRow();
+
+    // Daily report
+    if (t.dailyReport) {
+      const dr = t.dailyReport;
+      set('dr-date',        dr.date);
+      set('dr-weather',     dr.weather);
+      set('dr-temp-am',     dr.tempAM);
+      set('dr-temp-pm',     dr.tempPM);
+      set('dr-delays',      dr.delays);
+      set('dr-extra-work',  dr.extraWork);
+      set('dr-other-notes', dr.otherNotes);
+      set('dr-super-name',  dr.superName);
+      set('dr-super-title', dr.superTitle);
+
+      // Workforce
+      const drTbody = document.getElementById('dr-workforce-tbody');
+      drTbody.innerHTML = '';
+      (dr.workforce || []).forEach(w => {
+        addDrRow();
+        const tr = drTbody.lastElementChild;
+        const sel = tr.querySelector('select');
+        const inp = tr.querySelectorAll('input');
+        if (sel) { for (let o of sel.options) { if (o.value === w.employee || o.text === w.employee) { sel.value = o.value; break; } } }
+        if (inp[0]) inp[0].value = w.description || '';
+        if (inp[1]) inp[1].value = w.hours       || '';
+      });
+      if (!drTbody.children.length) addDrRow();
+
+      // Yes/No conditions
+      buildDrConditions();
+      (dr.conditions || []).forEach(c => {
+        const q = DR_QUESTIONS.find(q => q.text === c.question);
+        if (q && c.answer !== '—') setYN(q.id, c.answer === 'Yes' ? 'yes' : 'no');
+      });
+    }
+
+    // Switch save button to Update mode
+    const saveBtn = document.querySelector('#ticketModal .btn-green');
+    if (saveBtn) {
+      saveBtn.textContent = '💾 Update Ticket';
+      saveBtn.onclick = updateTicket;
+    }
+  }, 150);
+}
+
+function updateTicket() {
+  if (!editingTicketId) return;
+  const idx = tickets.findIndex(x => x.id === editingTicketId);
+  if (idx === -1) return;
+
+  // Re-use the same save logic but update in place
+  const customer = document.getElementById('t-customer').value.trim();
+  const tech     = document.getElementById('t-tech').value;
+  if (!customer) { toast('Enter a customer name', true); return; }
+  if (!tech)     { toast('Select an assigned tech', true); return; }
+
+  const updated = {
+    ...tickets[idx], // keep existing fields like id, createdAt, source
+    customer,
+    address:       document.getElementById('t-address').value,
+    type:          document.getElementById('t-type').value,
+    date:          document.getElementById('t-date').value,
+    tech,
+    po:            document.getElementById('t-po').value,
+    nte:           document.getElementById('t-nte').value,
+    status:        document.getElementById('t-status').value,
+    scope:         document.getElementById('t-scope').value,
+    travelOut:     document.getElementById('t-travel-out')?.value || '',
+    travelIn:      document.getElementById('t-travel-in')?.value  || '',
+    labor:         collectLabor(),
+    materials:     collectMaterials(),
+    equipment:     document.getElementById('t-equipment').value,
+    notes:         document.getElementById('t-notes').value,
+    sigName:       document.getElementById('t-sig-name').value,
+    sigDate:       document.getElementById('t-sig-date').value,
+    customerEmail: document.getElementById('t-customer-email').value.trim(),
+    customerPhone: document.getElementById('t-customer-phone').value.trim(),
+    dailyReport:   collectDailyReport(),
+    updatedAt:     new Date().toISOString(),
+  };
+
+  tickets[idx] = updated;
+  save();
+  sbUpsert(updated);
+  pushToTimesheetSilent(updated);
+
+  // Reset save button back to normal
+  const saveBtn = document.querySelector('#ticketModal .btn-green');
+  if (saveBtn) {
+    saveBtn.innerHTML = '💾 Save Ticket &amp; Notify';
+    saveBtn.onclick = saveTicket;
+  }
+
+  editingTicketId = null;
+  closeModal('ticketModal');
+  clearTicketForm();
+  renderAll();
+  toast('Ticket ' + updated.id + ' updated ✓');
+}
+
 function viewTicket(id) {
   const t = tickets.find(x => x.id === id);
   if (!t) return;
