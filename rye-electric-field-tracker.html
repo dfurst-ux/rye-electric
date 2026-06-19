@@ -2077,6 +2077,12 @@ function pushToTimesheetSilent(t) {
     const alreadyPushed = (ts.entries || []).some(e => e.ticketId === t.id);
     if (alreadyPushed) return;
 
+    // Don't push to approved timesheets
+    if (ts.status === 'Approved') {
+      console.warn('Cannot push to approved timesheet for ' + employee);
+      return;
+    }
+
     rows.forEach(r => {
       ts.entries = ts.entries || [];
       ts.entries.push({
@@ -2215,11 +2221,9 @@ function renderTimesheets() {
     const entryRows = (ts.entries||[]).map(e => `
       <tr style="background:#f0faf8">
         <td style="padding:6px 12px;font-size:12px;color:var(--muted)">${fmtDate(e.date)}</td>
-        <td style="padding:6px 12px;font-size:12px" colspan="2">${e.job||'—'}</td>
-        <td style="padding:6px 12px;font-size:12px" colspan="2">${e.desc||'—'}</td>
-        <td style="padding:6px 12px;font-size:12px">${e.timeIn||'—'} → ${e.timeOut||'—'}</td>
-        <td style="padding:6px 12px;font-size:12px"><strong>${(parseFloat(e.regHours)||0).toFixed(1)}h reg</strong>${e.otHours>0?' / '+(parseFloat(e.otHours)||0).toFixed(1)+'h OT':''}</td>
-        <td></td>
+        <td style="padding:6px 12px;font-size:12px" colspan="3">${e.job||'—'}</td>
+        <td style="padding:6px 12px;font-size:12px"><strong>${(parseFloat(e.regHours)||0).toFixed(2)}h reg</strong>${parseFloat(e.otHours)>0?' / '+(parseFloat(e.otHours)||0).toFixed(2)+'h OT':''}</td>
+        <td colspan="3"></td>
       </tr>`).join('');
     return `
       <tr style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'table-row-group':'none'">
@@ -2230,11 +2234,15 @@ function renderTimesheets() {
         <td><strong>${ts.totalHours}h</strong> <small class="color-muted">(${ts.totalReg} reg / ${ts.totalOT} OT)</small></td>
         <td><span class="badge ${statusC[ts.status]||'badge-gray'}">${ts.status}</span></td>
         <td>
-          <select class="form-control" style="font-size:12px;padding:3px 6px;width:110px" onchange="updateTsStatus('${ts.id}',this.value)" onclick="event.stopPropagation()">
-            <option ${ts.status==='Draft'?'selected':''}>Draft</option>
-            <option ${ts.status==='Submitted'?'selected':''}>Submitted</option>
-            <option ${ts.status==='Approved'?'selected':''}>Approved</option>
-          </select>
+        <td>
+          ${ts.status === 'Approved'
+            ? `<span class="badge badge-green" style="font-size:11px">🔒 Approved</span>`
+            : `<select class="form-control" style="font-size:12px;padding:3px 6px;width:110px" onchange="updateTsStatus('${ts.id}',this.value)" onclick="event.stopPropagation()">
+                <option ${ts.status==='Draft'?'selected':''}>Draft</option>
+                <option ${ts.status==='Submitted'?'selected':''}>Submitted</option>
+                <option ${ts.status==='Approved'?'selected':''}>Approved</option>
+              </select>`
+          }
         </td>
         <td><button class="link-btn" style="color:var(--muted)" onclick="event.stopPropagation();deleteTs('${ts.id}')">Del</button>
             <button class="link-btn" style="color:var(--teal);margin-left:8px" onclick="event.stopPropagation();printTimesheet('${ts.id}')">Print</button></td>
@@ -2245,7 +2253,63 @@ function renderTimesheets() {
 
 function updateTsStatus(id, status) {
   const ts = timesheets.find(x => x.id === id);
-  if (ts) { ts.status = status; save(); renderTimesheets(); toast('Timesheet ' + id + ' → ' + status); }
+  if (!ts) return;
+
+  // Prevent changing an already-approved timesheet
+  if (ts.status === 'Approved' && status !== 'Approved') {
+    toast('Approved timesheets are locked and cannot be changed', true);
+    renderTimesheets(); // reset the dropdown visually
+    return;
+  }
+
+  ts.status = status;
+  save();
+  renderTimesheets();
+  toast('Timesheet ' + id + ' → ' + status);
+
+  // Send approval notification email
+  if (status === 'Approved') {
+    const totalReg = parseFloat(ts.totalReg) || 0;
+    const totalOT  = parseFloat(ts.totalOT)  || 0;
+    const totalHrs = parseFloat(ts.totalHours) || 0;
+
+    const entryList = (ts.entries || []).map(e =>
+      `• ${fmtDate(e.date)} | ${e.job || '—'} | ${(parseFloat(e.regHours)||0).toFixed(2)} reg / ${(parseFloat(e.otHours)||0).toFixed(2)} OT hrs`
+    ).join('\n');
+
+    const message = `Timesheet ${ts.id} has been APPROVED.
+
+Employee:    ${ts.employee}
+Week Ending: ${fmtDate(ts.weekEnding)}
+Regular Hrs: ${totalReg.toFixed(2)}
+Overtime Hrs:${totalOT.toFixed(2)}
+Total Hours: ${totalHrs.toFixed(2)}
+
+TIME ENTRIES:
+${entryList}
+
+Approved: ${new Date().toLocaleString('en-US', { dateStyle:'full', timeStyle:'short' })}
+— Rye Electric Service Department`;
+
+    // Notify all managers
+    const recipients = [
+      { name: 'Mychal', email: 'mkirschbaum@ryecompany.com' },
+      { name: 'Dennis', email: 'dfurst@ryecompany.com' },
+      { name: 'Joey',   email: 'jjava@ryecompany.com' },
+      { name: 'Jonathan', email: 'jjacobo@ryecompany.com' },
+    ];
+
+    recipients.forEach(r => {
+      emailjs.send('service_jbdjjoh', 'template_4daap5r', {
+        to_email: r.email,
+        to_name:  r.name,
+        subject:  `✅ Timesheet Approved — ${ts.employee} | Week Ending ${fmtDate(ts.weekEnding)} | ${totalHrs.toFixed(2)} hrs`,
+        message,
+      }).catch(e => console.warn('Approval email failed:', e));
+    });
+
+    toast('✅ Timesheet approved — notifications sent & timesheet locked');
+  }
 }
 
 // ── PRINT TIMESHEET ───────────────────────────────────────────────────────────
@@ -2261,9 +2325,6 @@ function printTimesheet(id) {
     <tr style="background:${i%2===0?'#fff':'#f4f8f9'}">
       <td>${fmtDate(e.date)}</td>
       <td>${e.job || '—'}</td>
-      <td>${e.desc || '—'}</td>
-      <td style="text-align:center">${e.timeIn || '—'}</td>
-      <td style="text-align:center">${e.timeOut || '—'}</td>
       <td style="text-align:center;font-weight:600">${(parseFloat(e.regHours)||0).toFixed(2)}</td>
       <td style="text-align:center;font-weight:600">${(parseFloat(e.otHours)||0).toFixed(2)}</td>
       <td style="text-align:center;font-weight:700">${((parseFloat(e.regHours)||0)+(parseFloat(e.otHours)||0)).toFixed(2)}</td>
@@ -2341,21 +2402,18 @@ function printTimesheet(id) {
     <thead>
       <tr>
         <th>Date</th>
-        <th>Job / Project</th>
-        <th>Description of Work</th>
-        <th style="text-align:center">Time In</th>
-        <th style="text-align:center">Time Out</th>
+        <th>Job / Project &amp; Cost Code</th>
         <th style="text-align:center">Reg Hrs</th>
         <th style="text-align:center">OT Hrs</th>
         <th style="text-align:center">Total</th>
       </tr>
     </thead>
     <tbody>
-      ${entryRows || '<tr><td colspan="8" style="text-align:center;color:#888;padding:20px">No entries</td></tr>'}
+      ${entryRows || '<tr><td colspan="5" style="text-align:center;color:#888;padding:20px">No entries</td></tr>'}
     </tbody>
     <tfoot>
       <tr class="totals-row">
-        <td colspan="5">TOTALS</td>
+        <td colspan="2">TOTALS</td>
         <td style="text-align:center">${totalReg.toFixed(2)}</td>
         <td style="text-align:center">${totalOT.toFixed(2)}</td>
         <td style="text-align:center">${totalHrs.toFixed(2)}</td>
