@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0149)file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/16c4ba1e-e190-4cdd-bc46-7187d7df1ade_files.zip.ade/rye-electric-field-tracker-sp26006-latimes.html -->
+<!-- saved from url=(0147)file:///C:/Users/denni/AppData/Local/Temp/ce0e86ca-7558-4b2f-b723-63cd934f9851_files%20(13).zip.851/rye-electric-field-tracker-sp26006-latimes.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -353,48 +353,51 @@ tbody tr:hover td{background:#f7fbfc}
   </div>
 
   <div class="tabs">
-    <button class="tab on" onclick="goTab(this,&#39;log&#39;)">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      <span>Log unit</span>
+    <button class="tab on" onclick="goTab(this,&#39;signin&#39;)" style="position:relative;">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
+    <span>Sign In</span>
+              <span class="safety-friday-badge" style="display:block;position:absolute;top:-6px;right:-6px;">Daily</span>
     </button>
-    <button class="tab" onclick="goTab(this,&#39;whiteboard&#39;)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-      <span>Whiteboard</span>
+    <button class="tab" onclick="goTab(this,&#39;log&#39;)">
+    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <span>Log unit</span>
     </button>
-    <button class="tab" onclick="goTab(this,&#39;djr&#39;)">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline></svg>
-      <span>Daily Report</span>
+    <button class="tab" onclick="goTab(this,&#39;whiteboard&#39;)" style="position:relative;">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    <span>Whiteboard</span>
+              <span class="safety-friday-badge" style="display:block;position:absolute;top:-6px;right:-6px;">Daily</span>
     </button>
-    <button class="tab" onclick="goTab(this,&#39;signin&#39;)">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
-      <span>Sign In</span>
+    <button class="tab" onclick="goTab(this,&#39;djr&#39;)" style="position:relative;">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline></svg>
+    <span>Daily Report</span>
+              <span class="safety-friday-badge" style="display:block;position:absolute;top:-6px;right:-6px;">Daily</span>
     </button>
-    <button class="tab" onclick="goTab(this,&#39;units&#39;)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
-      <span>Units</span>
+    <button class="tab safety-tab-btn" onclick="goTab(this,&#39;safety&#39;)" id="tab-btn-safety" style="position:relative;">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    <span>Safety</span>
+              <span class="safety-friday-badge" style="display:block;position:absolute;top:-6px;right:-6px;">Weekly</span>
+    </button>
+    <button class="tab" onclick="goTab(this,&#39;tasks&#39;)">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    <span>Tasks</span>
     </button>
     <button class="tab" onclick="goTab(this,&#39;workers&#39;)">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>
-      <span>Workers</span>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M20 21a8 8 0 10-16 0"></path></svg>
+    <span>Workers</span>
+    </button>
+    <button class="tab" onclick="goTab(this,&#39;units&#39;)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+    <span>Units</span>
     </button>
     <button class="tab" onclick="goTab(this,&#39;jobs&#39;)">
-      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-      <span>Jobs</span>
+    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+    <span>Jobs</span>
     </button>
-        <button class="tab" onclick="goTab(this,&#39;tasks&#39;)">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          <span>Tasks</span>
-        </button>
-        <button class="tab safety-tab-btn" onclick="goTab(this,&#39;safety&#39;)" id="tab-btn-safety" style="position:relative;">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          <span>Safety</span>
-          <span class="safety-friday-badge" id="safetyFridayBadge" style="display:none;">Required</span>
-        </button>
   </div>
 
   <!-- ===== LOG UNIT TAB ===== -->
   
-<div class="pane on" id="pane-log">
+<div class="pane" id="pane-log">
     <div class="card">
       <div class="ch">
         <div class="ct">
@@ -423,114 +426,113 @@ tbody tr:hover td{background:#f7fbfc}
             <div class="flbl">Employee</div>
             <select id="sel-worker">
               <option value="">-- Select employee --</option>
-              <option value="Jonathan Jacobo">Jonathan Jacobo - Dofo</option>
-              <option value="Anthony Zetina">Anthony Zetina - Electrician</option>
-              <option value="Xavier Contreras">Xavier Contreras - General</option>
-              <option value="Brian Kitajima">Brian Kitajima - Foreman</option>
-              <option value="David Smith">David Smith - Electrician</option>
-              <option value="Dillan Smith">Dillan Smith - Foreman</option>
-              <option value="Efren Hilario">Efren Hilario - Electrician</option>
-              <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz - Electrician</option>
-              <option value="Jorge Contreras">Jorge Contreras - Foreman</option>
-              <option value="Johnny Perez">Johnny Perez - Foreman</option>
-              <option value="Armando Lopez">Armando Lopez - Electrician</option>
-              <option value="Francisco Flores">Francisco Flores - Electrician</option>
-              <option value="Adrian Flores">Adrian Flores - Foreman</option>
-              <option value="Alejandro Lopez">Alejandro Lopez - Electrician</option>
-              <option value="Brian Campos">Brian Campos - Electrician</option>
-              <option value="Pedro Barrera">Pedro Barrera - Electrician</option>
-              <option value="Kenneth William">Kenneth William - Foreman</option>
-              <option value="Duvaldi Mazariegos">Duvaldi Mazariegos - Electrician</option>
-              <option value="Gabriel Flores">Gabriel Flores - Apprentice</option>
-              <option value="Louis Aceves">Louis Aceves - Electrician</option>
-              <option value="Juan Mazariegos">Juan Mazariegos - Electrician</option>
-              <option value="Leonardo Mazariegos">Leonardo Mazariegos - Foreman</option>
-              <option value="Manuel Palacios">Manuel Palacios - Electrician</option>
-              <option value="Anthony Lyons">Anthony Lyons - Electrician</option>
-              <option value="Filiberto Ramos">Filiberto Ramos - Foreman</option>
-              <option value="Jose Ramirez">Jose Ramirez - Lv</option>
-              <option value="Jeffrey Rivera">Jeffrey Rivera - Lv</option>
-              <option value="Irvin Rivera">Irvin Rivera - Apprentice</option>
-              <option value="Edgar Solis">Edgar Solis - Electrician</option>
-              <option value="Vincent Sopha">Vincent Sopha - Electrician</option>
-              <option value="Anthony Macias">Anthony Macias - Electrician</option>
-              <option value="Enrique Laguna">Enrique Laguna - Electrician</option>
-              <option value="Matthew Baciu">Matthew Baciu - Electrician</option>
-              <option value="Humberto Flores">Humberto Flores - Foreman</option>
-              <option value="Jaime Moya">Jaime Moya - Electrician</option>
-              <option value="Edith Del Carmen">Edith Del Carmen - Lv</option>
-              <option value="Daniel Villegas">Daniel Villegas - Electrician</option>
-              <option value="Carla Quijada">Carla Quijada - Electrician</option>
-              <option value="Jose Preciado">Jose Preciado - Foreman</option>
-              <option value="Brian Flores">Brian Flores - Apprentice</option>
-              <option value="Carlos Landaverde">Carlos Landaverde - Electrician</option>
-              <option value="Jimmy Cascio">Jimmy Cascio - Electrician</option>
-              <option value="Sergio Sandoval">Sergio Sandoval - Electrician</option>
-              <option value="Brenda Quijada">Brenda Quijada - Electrician</option>
-              <option value="Dyana Quijada">Dyana Quijada - Electrician</option>
-              <option value="Oliver Galicia">Oliver Galicia - Electrician</option>
-              <option value="Sotero Dominguez">Sotero Dominguez - Electrician</option>
-              <option value="Miguel Dominguez">Miguel Dominguez - Electrician</option>
-              <option value="Efrain Cornejo">Efrain Cornejo - Electrician</option>
-              <option value="Rusel Santiago">Rusel Santiago - Electrician</option>
-              <option value="Kevin Bautista">Kevin Bautista - Electrician</option>
-              <option value="Luis Ramirez">Luis Ramirez - Electrician</option>
-              <option value="Josue Villegas">Josue Villegas - Electrician</option>
-              <option value="Salvador Perez">Salvador Perez - Electrician</option>
-              <option value="David Casarez">David Casarez - Electrician</option>
-              <option value="Lizeth Marcos">Lizeth Marcos - Electrician</option>
-              <option value="Randdy De Paz">Randdy De Paz - Electrician</option>
-              <option value="Angel Ibanez">Angel Ibanez - Electrician</option>
-              <option value="Robert Stark">Robert Stark - Electrician</option>
-              <option value="Anthony Ibanez">Anthony Ibanez - Electrician</option>
-              <option value="Daniel Burleson">Daniel Burleson - Electrician</option>
-              <option value="Abiud Lopez">Abiud Lopez - Electrician</option>
-              <option value="Mario Arias">Mario Arias - Electrician</option>
-              <option value="Jaime Quintero">Jaime Quintero - Electrician</option>
-              <option value="Mario Lopez">Mario Lopez - Electrician</option>
-              <option value="Steven Sulewski">Steven Sulewski - Electrician</option>
-              <option value="Cristian Collin">Cristian Collin - Electrician</option>
-              <option value="Jesus Heredia">Jesus Heredia - Electrician</option>
-              <option value="Daniel Lopez">Daniel Lopez - Electrician</option>
-              <option value="Axel Salas">Axel Salas - Electrician</option>
-              <option value="Oscar Aguirre">Oscar Aguirre - Apprentice</option>
-              <option value="Alex Osorio">Alex Osorio - Electrician</option>
-              <option value="Julio Munoz">Julio Munoz - Apprentice</option>
-              <option value="Angel Hernandez">Angel Hernandez - Electrician</option>
-              <option value="Adrian Hernandez">Adrian Hernandez - Electrician</option>
-              <option value="Samuel Munoz">Samuel Munoz - Iw</option>
-              <option value="Antonio Castillo">Antonio Castillo - Iw</option>
-              <option value="Jerry Munoz">Jerry Munoz - Iw</option>
-              <option value="Noah Villareal">Noah Villareal - Electrician</option>
-              <option value="Jayson Ortega">Jayson Ortega - Electrician</option>
-              <option value="Carlos Agapito">Carlos Agapito - Electrician</option>
-              <option value="Jose Luna">Jose Luna - Electrician</option>
-              <option value="Manuel Martinez">Manuel Martinez - Electrician</option>
-              <option value="Mathew Gonzalez">Mathew Gonzalez - Electrician</option>
-              <option value="Sergio Diaz">Sergio Diaz - Electrician</option>
-              <option value="Tony Broadnax">Tony Broadnax - Electrician</option>
-              <option value="Isidro Enciso">Isidro Enciso - Electrician</option>
-              <option value="Brian Ramirez">Brian Ramirez - Electrician</option>
-              <option value="Jerlin Mendoza">Jerlin Mendoza - Apprentice</option>
-              <option value="Estevan Sandoval">Estevan Sandoval - Electrician</option>
-              <option value="Lorenzo Tanguma">Lorenzo Tanguma - Electrician</option>
-              <option value="Eduardo Echeverria">Eduardo Echeverria - Electrician</option>
-              <option value="Victor Armienta">Victor Armienta - Apprentice</option>
-              <option value="Guillermo Silva">Guillermo Silva - Electrician</option>
-              <option value="Erik Lopez">Erik Lopez - Electrician</option>
-              <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado - Apprentice</option>
-              <option value="James Marquez">James Marquez - Apprentice</option>
-              <option value="Henri Sibrian">Henri Sibrian - Electrician</option>
-              <option value="Vincent Stancati">Vincent Stancati - Electrician</option>
-              <option value="Christian Moran">Christian Moran - Electrician</option>
-              <option value="Edwin Martinez">Edwin Martinez - Electrician</option>
-              <option value="Adrian Marquez">Adrian Marquez - Electrician</option>
-              <option value="Victor Carrillo">Victor Carrillo - Field</option>
-              <option value="Miguel Corral">Miguel Corral - Field</option>
-              <option value="Joaquin Garcia">Joaquin Garcia - Journeyman</option>
-              <option value="Robert Welch">Robert Welch - Foreman</option>
-              <option value="Uriel Chavez">Uriel Chavez - Foreman</option>
-              <option value="Brandon Salazar">Brandon Salazar - Field</option>
+              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo - Dofo</option>
+              <option value="34 - Anthony Zetina">34 - Anthony Zetina - Electrician</option>
+              <option value="63 - Xavier Contreras">63 - Xavier Contreras - General</option>
+              <option value="69 - Brian Kitajima">69 - Brian Kitajima - Foreman</option>
+              <option value="76 - David Smith">76 - David Smith - Electrician</option>
+              <option value="77 - Dillan Smith">77 - Dillan Smith - Foreman</option>
+              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz - Electrician</option>
+              <option value="86 - Efren Hilario">86 - Efren Hilario - Electrician</option>
+              <option value="92 - Jorge Contreras">92 - Jorge Contreras - Foreman</option>
+              <option value="106 - Johnny Perez">106 - Johnny Perez - Foreman</option>
+              <option value="123 - Armando Lopez">123 - Armando Lopez - Electrician</option>
+              <option value="138 - Francisco Flores">138 - Francisco Flores - Electrician</option>
+              <option value="140 - Adrian Flores">140 - Adrian Flores - Foreman</option>
+              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez - Electrician</option>
+              <option value="152 - Brian Campos">152 - Brian Campos - Electrician</option>
+              <option value="177 - Pedro Barrera">177 - Pedro Barrera - Electrician</option>
+              <option value="204 - Kenneth William">204 - Kenneth William - Foreman</option>
+              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos - Electrician</option>
+              <option value="231 - Gabriel Flores">231 - Gabriel Flores - Apprentice</option>
+              <option value="235 - Louis Aceves">235 - Louis Aceves - Electrician</option>
+              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos - Electrician</option>
+              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos - Foreman</option>
+              <option value="263 - Manuel Palacios">263 - Manuel Palacios - Electrician</option>
+              <option value="269 - Anthony Lyons">269 - Anthony Lyons - Electrician</option>
+              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos - Foreman</option>
+              <option value="388 - Jose Ramirez">388 - Jose Ramirez - Lv</option>
+              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera - Lv</option>
+              <option value="395 - Irvin Rivera">395 - Irvin Rivera - Apprentice</option>
+              <option value="455 - Edgar Solis">455 - Edgar Solis - Electrician</option>
+              <option value="531 - Vincent Sopha">531 - Vincent Sopha - Electrician</option>
+              <option value="536 - Anthony Macias">536 - Anthony Macias - Electrician</option>
+              <option value="587 - Enrique Laguna">587 - Enrique Laguna - Electrician</option>
+              <option value="613 - Matthew Baciu">613 - Matthew Baciu - Electrician</option>
+              <option value="628 - Humberto Flores">628 - Humberto Flores - Foreman</option>
+              <option value="630 - Jaime Moya">630 - Jaime Moya - Electrician</option>
+              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen - Lv</option>
+              <option value="651 - Daniel Villegas">651 - Daniel Villegas - Electrician</option>
+              <option value="660 - Carla Quijada">660 - Carla Quijada - Electrician</option>
+              <option value="666 - Jose Preciado">666 - Jose Preciado - Foreman</option>
+              <option value="671 - Brian Flores">671 - Brian Flores - Apprentice</option>
+              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde - Electrician</option>
+              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio - Electrician</option>
+              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval - Electrician</option>
+              <option value="791 - Brenda Quijada">791 - Brenda Quijada - Electrician</option>
+              <option value="792 - Dyana Quijada">792 - Dyana Quijada - Electrician</option>
+              <option value="807 - Oliver Galicia">807 - Oliver Galicia - Electrician</option>
+              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez - Electrician</option>
+              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez - Electrician</option>
+              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo - Electrician</option>
+              <option value="820 - Rusel Santiago">820 - Rusel Santiago - Electrician</option>
+              <option value="822 - Kevin Bautista">822 - Kevin Bautista - Electrician</option>
+              <option value="823 - Luis Ramirez">823 - Luis Ramirez - Electrician</option>
+              <option value="825 - Josue Villegas">825 - Josue Villegas - Electrician</option>
+              <option value="831 - Salvador Perez">831 - Salvador Perez - Electrician</option>
+              <option value="832 - David Casarez">832 - David Casarez - Electrician</option>
+              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos - Electrician</option>
+              <option value="835 - Randdy De Paz">835 - Randdy De Paz - Electrician</option>
+              <option value="836 - Angel Ibanez">836 - Angel Ibanez - Electrician</option>
+              <option value="844 - Robert Stark">844 - Robert Stark - Electrician</option>
+              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez - Electrician</option>
+              <option value="849 - Daniel Burleson">849 - Daniel Burleson - Electrician</option>
+              <option value="850 - Abiud Lopez">850 - Abiud Lopez - Electrician</option>
+              <option value="855 - Mario Arias">855 - Mario Arias - Electrician</option>
+              <option value="856 - Jaime Quintero">856 - Jaime Quintero - Electrician</option>
+              <option value="858 - Mario Lopez">858 - Mario Lopez - Electrician</option>
+              <option value="859 - Steven Sulewski">859 - Steven Sulewski - Electrician</option>
+              <option value="861 - Cristian Collin">861 - Cristian Collin - Electrician</option>
+              <option value="862 - Jesus Heredia">862 - Jesus Heredia - Electrician</option>
+              <option value="865 - Daniel Lopez">865 - Daniel Lopez - Electrician</option>
+              <option value="866 - Axel Salas">866 - Axel Salas - Electrician</option>
+              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre - Apprentice</option>
+              <option value="870 - Alex Osorio">870 - Alex Osorio - Electrician</option>
+              <option value="872 - Julio Munoz">872 - Julio Munoz - Apprentice</option>
+              <option value="873 - Angel Hernandez">873 - Angel Hernandez - Electrician</option>
+              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez - Electrician</option>
+              <option value="877 - Samuel Munoz">877 - Samuel Munoz - Iw</option>
+              <option value="878 - Antonio Castillo">878 - Antonio Castillo - Iw</option>
+              <option value="879 - Jerry Munoz">879 - Jerry Munoz - Iw</option>
+              <option value="880 - Noah Villareal">880 - Noah Villareal - Electrician</option>
+              <option value="882 - Jayson Ortega">882 - Jayson Ortega - Electrician</option>
+              <option value="883 - Carlos Agapito">883 - Carlos Agapito - Electrician</option>
+              <option value="884 - Jose Luna">884 - Jose Luna - Electrician</option>
+              <option value="886 - Manuel Martinez">886 - Manuel Martinez - Electrician</option>
+              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez - Electrician</option>
+              <option value="888 - Sergio Diaz">888 - Sergio Diaz - Electrician</option>
+              <option value="889 - Tony Broadnax">889 - Tony Broadnax - Electrician</option>
+              <option value="892 - Isidro Enciso">892 - Isidro Enciso - Electrician</option>
+              <option value="893 - Brian Ramirez">893 - Brian Ramirez - Electrician</option>
+              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza - Apprentice</option>
+              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval - Electrician</option>
+              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma - Electrician</option>
+              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria - Electrician</option>
+              <option value="899 - Victor Armienta">899 - Victor Armienta - Apprentice</option>
+              <option value="901 - Guillermo Silva">901 - Guillermo Silva - Electrician</option>
+              <option value="902 - Erik Lopez">902 - Erik Lopez - Electrician</option>
+              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado - Apprentice</option>
+              <option value="905 - James Marquez">905 - James Marquez - Apprentice</option>
+              <option value="906 - Henri Sibrian">906 - Henri Sibrian - Electrician</option>
+              <option value="908 - Vincent Stancati">908 - Vincent Stancati - Electrician</option>
+              <option value="909 - Christian Moran">909 - Christian Moran - Electrician</option>
+              <option value="910 - Edwin Martinez">910 - Edwin Martinez - Electrician</option>
+              <option value="911 - Adrian Marquez">911 - Adrian Marquez - Electrician</option>
+              <option value="912 - Victor Carrillo">912 - Victor Carrillo - Field</option>
+              <option value="914 - Miguel Corral">914 - Miguel Corral - Field</option>
+              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia - Journeyman</option>
+              <option value="917 - Uriel Chavez">917 - Uriel Chavez - Foreman</option>
+              <option value="918 - Brandon Salazar">918 - Brandon Salazar - Field</option>
             </select>
           </div>
           <div class="fgroup" style="display:none">
@@ -704,16 +706,7 @@ tbody tr:hover td{background:#f7fbfc}
             <th>Time</th><th>Employee</th><th>Job</th><th>Unit</th><th>Bldg</th>
             <th>Cost Code</th><th>Phase</th><th>Qty / Trim Qty</th><th>Lights</th><th>Hours</th><th>Notes</th>
           </tr></thead>
-          <tbody id="today-log-tbody">
-    <tr>
-      <td class="tm">03:14 PM</td><td class="tn">Alejandro Lopez</td>
-      <td class="tc">26005 - MARINA SHORES</td><td style="font-size:11px;color:#777">7010 - Layout</td>
-      <td style="font-weight:700">NA</td><td style="font-size:11px;color:#777">NA</td>
-      <td><span class="bdg b-amber">rough</span></td><td style="font-weight:700;color:#2980b9">100</td>
-      <td style="font-weight:700;color:#2980b9">--</td>
-      <td style="font-weight:700">7.5h</td>
-      <td style="font-size:11px;color:#777">--</td>
-    </tr></tbody>
+          <tbody id="today-log-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -745,114 +738,113 @@ tbody tr:hover td{background:#f7fbfc}
             <div class="flbl">Employee</div>
             <select id="wb-worker">
               <option value="">-- Select employee --</option>
-              <option value="Abiud Lopez">Abiud Lopez</option>
-              <option value="Adrian Flores">Adrian Flores</option>
-              <option value="Adrian Hernandez">Adrian Hernandez</option>
-              <option value="Adrian Marquez">Adrian Marquez</option>
-              <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option>
-              <option value="Alejandro Lopez">Alejandro Lopez</option>
-              <option value="Alex Osorio">Alex Osorio</option>
-              <option value="Angel Hernandez">Angel Hernandez</option>
-              <option value="Angel Ibanez">Angel Ibanez</option>
-              <option value="Anthony Ibanez">Anthony Ibanez</option>
-              <option value="Anthony Lyons">Anthony Lyons</option>
-              <option value="Anthony Macias">Anthony Macias</option>
-              <option value="Anthony Zetina">Anthony Zetina</option>
-              <option value="Antonio Castillo">Antonio Castillo</option>
-              <option value="Armando Lopez">Armando Lopez</option>
-              <option value="Axel Salas">Axel Salas</option>
-              <option value="Brandon Salazar">Brandon Salazar</option>
-              <option value="Brenda Quijada">Brenda Quijada</option>
-              <option value="Brian Campos">Brian Campos</option>
-              <option value="Brian Flores">Brian Flores</option>
-              <option value="Brian Kitajima">Brian Kitajima</option>
-              <option value="Brian Ramirez">Brian Ramirez</option>
-              <option value="Carla Quijada">Carla Quijada</option>
-              <option value="Carlos Agapito">Carlos Agapito</option>
-              <option value="Carlos Landaverde">Carlos Landaverde</option>
-              <option value="Christian Moran">Christian Moran</option>
-              <option value="Cristian Collin">Cristian Collin</option>
-              <option value="Daniel Burleson">Daniel Burleson</option>
-              <option value="Daniel Lopez">Daniel Lopez</option>
-              <option value="Daniel Villegas">Daniel Villegas</option>
-              <option value="David Casarez">David Casarez</option>
-              <option value="David Smith">David Smith</option>
-              <option value="Dillan Smith">Dillan Smith</option>
-              <option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option>
-              <option value="Dyana Quijada">Dyana Quijada</option>
-              <option value="Edgar Solis">Edgar Solis</option>
-              <option value="Edith Del Carmen">Edith Del Carmen</option>
-              <option value="Eduardo Echeverria">Eduardo Echeverria</option>
-              <option value="Edwin Martinez">Edwin Martinez</option>
-              <option value="Efrain Cornejo">Efrain Cornejo</option>
-              <option value="Efren Hilario">Efren Hilario</option>
-              <option value="Enrique Laguna">Enrique Laguna</option>
-              <option value="Erik Lopez">Erik Lopez</option>
-              <option value="Estevan Sandoval">Estevan Sandoval</option>
-              <option value="Filiberto Ramos">Filiberto Ramos</option>
-              <option value="Francisco Flores">Francisco Flores</option>
-              <option value="Gabriel Flores">Gabriel Flores</option>
-              <option value="Guillermo Silva">Guillermo Silva</option>
-              <option value="Henri Sibrian">Henri Sibrian</option>
-              <option value="Humberto Flores">Humberto Flores</option>
-              <option value="Irvin Rivera">Irvin Rivera</option>
-              <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option>
-              <option value="Isidro Enciso">Isidro Enciso</option>
-              <option value="Jaime Moya">Jaime Moya</option>
-              <option value="Jaime Quintero">Jaime Quintero</option>
-              <option value="James Marquez">James Marquez</option>
-              <option value="Jayson Ortega">Jayson Ortega</option>
-              <option value="Jeffrey Rivera">Jeffrey Rivera</option>
-              <option value="Jerlin Mendoza">Jerlin Mendoza</option>
-              <option value="Jerry Munoz">Jerry Munoz</option>
-              <option value="Jesus Heredia">Jesus Heredia</option>
-              <option value="Jimmy Cascio">Jimmy Cascio</option>
-              <option value="Joaquin Garcia">Joaquin Garcia</option>
-              <option value="Johnny Perez">Johnny Perez</option>
-              <option value="Jonathan Jacobo">Jonathan Jacobo</option>
-              <option value="Jorge Contreras">Jorge Contreras</option>
-              <option value="Jose Luna">Jose Luna</option>
-              <option value="Jose Preciado">Jose Preciado</option>
-              <option value="Jose Ramirez">Jose Ramirez</option>
-              <option value="Josue Villegas">Josue Villegas</option>
-              <option value="Juan Mazariegos">Juan Mazariegos</option>
-              <option value="Julio Munoz">Julio Munoz</option>
-              <option value="Kenneth William">Kenneth William</option>
-              <option value="Kevin Bautista">Kevin Bautista</option>
-              <option value="Leonardo Mazariegos">Leonardo Mazariegos</option>
-              <option value="Lizeth Marcos">Lizeth Marcos</option>
-              <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
-              <option value="Louis Aceves">Louis Aceves</option>
-              <option value="Luis Ramirez">Luis Ramirez</option>
-              <option value="Manuel Martinez">Manuel Martinez</option>
-              <option value="Manuel Palacios">Manuel Palacios</option>
-              <option value="Mario Arias">Mario Arias</option>
-              <option value="Mario Lopez">Mario Lopez</option>
-              <option value="Mathew Gonzalez">Mathew Gonzalez</option>
-              <option value="Matthew Baciu">Matthew Baciu</option>
-              <option value="Miguel Corral">Miguel Corral</option>
-              <option value="Miguel Dominguez">Miguel Dominguez</option>
-              <option value="Noah Villareal">Noah Villareal</option>
-              <option value="Oliver Galicia">Oliver Galicia</option>
-              <option value="Oscar Aguirre">Oscar Aguirre</option>
-              <option value="Pedro Barrera">Pedro Barrera</option>
-              <option value="Randdy De Paz">Randdy De Paz</option>
-              <option value="Robert Stark">Robert Stark</option>
-              <option value="Robert Welch">Robert Welch</option>
-              <option value="Rusel Santiago">Rusel Santiago</option>
-              <option value="Salvador Perez">Salvador Perez</option>
-              <option value="Samuel Munoz">Samuel Munoz</option>
-              <option value="Sergio Diaz">Sergio Diaz</option>
-              <option value="Sergio Sandoval">Sergio Sandoval</option>
-              <option value="Sotero Dominguez">Sotero Dominguez</option>
-              <option value="Steven Sulewski">Steven Sulewski</option>
-              <option value="Tony Broadnax">Tony Broadnax</option>
-              <option value="Uriel Chavez">Uriel Chavez</option>
-              <option value="Victor Armienta">Victor Armienta</option>
-              <option value="Victor Carrillo">Victor Carrillo</option>
-              <option value="Vincent Sopha">Vincent Sopha</option>
-              <option value="Vincent Stancati">Vincent Stancati</option>
-              <option value="Xavier Contreras">Xavier Contreras</option>
+              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+              <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+              <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+              <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+              <option value="76 - David Smith">76 - David Smith</option>
+              <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+              <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+              <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+              <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+              <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+              <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+              <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+              <option value="152 - Brian Campos">152 - Brian Campos</option>
+              <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+              <option value="204 - Kenneth William">204 - Kenneth William</option>
+              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+              <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+              <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+              <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+              <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+              <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+              <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+              <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+              <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+              <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+              <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+              <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+              <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+              <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+              <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+              <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+              <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+              <option value="671 - Brian Flores">671 - Brian Flores</option>
+              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+              <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+              <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+              <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+              <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+              <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+              <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+              <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+              <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+              <option value="832 - David Casarez">832 - David Casarez</option>
+              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+              <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+              <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+              <option value="844 - Robert Stark">844 - Robert Stark</option>
+              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+              <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+              <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+              <option value="855 - Mario Arias">855 - Mario Arias</option>
+              <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+              <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+              <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+              <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+              <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+              <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+              <option value="866 - Axel Salas">866 - Axel Salas</option>
+              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+              <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+              <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+              <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+              <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+              <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+              <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+              <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+              <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+              <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+              <option value="884 - Jose Luna">884 - Jose Luna</option>
+              <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+              <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+              <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+              <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+              <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+              <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+              <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+              <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+              <option value="905 - James Marquez">905 - James Marquez</option>
+              <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+              <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+              <option value="909 - Christian Moran">909 - Christian Moran</option>
+              <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+              <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+              <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+              <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+              <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+              <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
             </select>
           </div>
           <input type="hidden" id="wb-job" value="SP26006 - LOS ANGELES TIMES">
@@ -986,114 +978,113 @@ tbody tr:hover td{background:#f7fbfc}
       <input type="hidden" id="dl-filter-job" value="SP26006 - LOS ANGELES TIMES">
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
         <option value="all">All employees</option>
-              <option value="Abiud Lopez">Abiud Lopez</option>
-              <option value="Adrian Flores">Adrian Flores</option>
-              <option value="Adrian Hernandez">Adrian Hernandez</option>
-              <option value="Adrian Marquez">Adrian Marquez</option>
-              <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option>
-              <option value="Alejandro Lopez">Alejandro Lopez</option>
-              <option value="Alex Osorio">Alex Osorio</option>
-              <option value="Angel Hernandez">Angel Hernandez</option>
-              <option value="Angel Ibanez">Angel Ibanez</option>
-              <option value="Anthony Ibanez">Anthony Ibanez</option>
-              <option value="Anthony Lyons">Anthony Lyons</option>
-              <option value="Anthony Macias">Anthony Macias</option>
-              <option value="Anthony Zetina">Anthony Zetina</option>
-              <option value="Antonio Castillo">Antonio Castillo</option>
-              <option value="Armando Lopez">Armando Lopez</option>
-              <option value="Axel Salas">Axel Salas</option>
-              <option value="Brandon Salazar">Brandon Salazar</option>
-              <option value="Brenda Quijada">Brenda Quijada</option>
-              <option value="Brian Campos">Brian Campos</option>
-              <option value="Brian Flores">Brian Flores</option>
-              <option value="Brian Kitajima">Brian Kitajima</option>
-              <option value="Brian Ramirez">Brian Ramirez</option>
-              <option value="Carla Quijada">Carla Quijada</option>
-              <option value="Carlos Agapito">Carlos Agapito</option>
-              <option value="Carlos Landaverde">Carlos Landaverde</option>
-              <option value="Christian Moran">Christian Moran</option>
-              <option value="Cristian Collin">Cristian Collin</option>
-              <option value="Daniel Burleson">Daniel Burleson</option>
-              <option value="Daniel Lopez">Daniel Lopez</option>
-              <option value="Daniel Villegas">Daniel Villegas</option>
-              <option value="David Casarez">David Casarez</option>
-              <option value="David Smith">David Smith</option>
-              <option value="Dillan Smith">Dillan Smith</option>
-              <option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option>
-              <option value="Dyana Quijada">Dyana Quijada</option>
-              <option value="Edgar Solis">Edgar Solis</option>
-              <option value="Edith Del Carmen">Edith Del Carmen</option>
-              <option value="Eduardo Echeverria">Eduardo Echeverria</option>
-              <option value="Edwin Martinez">Edwin Martinez</option>
-              <option value="Efrain Cornejo">Efrain Cornejo</option>
-              <option value="Efren Hilario">Efren Hilario</option>
-              <option value="Enrique Laguna">Enrique Laguna</option>
-              <option value="Erik Lopez">Erik Lopez</option>
-              <option value="Estevan Sandoval">Estevan Sandoval</option>
-              <option value="Filiberto Ramos">Filiberto Ramos</option>
-              <option value="Francisco Flores">Francisco Flores</option>
-              <option value="Gabriel Flores">Gabriel Flores</option>
-              <option value="Guillermo Silva">Guillermo Silva</option>
-              <option value="Henri Sibrian">Henri Sibrian</option>
-              <option value="Humberto Flores">Humberto Flores</option>
-              <option value="Irvin Rivera">Irvin Rivera</option>
-              <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option>
-              <option value="Isidro Enciso">Isidro Enciso</option>
-              <option value="Jaime Moya">Jaime Moya</option>
-              <option value="Jaime Quintero">Jaime Quintero</option>
-              <option value="James Marquez">James Marquez</option>
-              <option value="Jayson Ortega">Jayson Ortega</option>
-              <option value="Jeffrey Rivera">Jeffrey Rivera</option>
-              <option value="Jerlin Mendoza">Jerlin Mendoza</option>
-              <option value="Jerry Munoz">Jerry Munoz</option>
-              <option value="Jesus Heredia">Jesus Heredia</option>
-              <option value="Jimmy Cascio">Jimmy Cascio</option>
-              <option value="Joaquin Garcia">Joaquin Garcia</option>
-              <option value="Johnny Perez">Johnny Perez</option>
-              <option value="Jonathan Jacobo">Jonathan Jacobo</option>
-              <option value="Jorge Contreras">Jorge Contreras</option>
-              <option value="Jose Luna">Jose Luna</option>
-              <option value="Jose Preciado">Jose Preciado</option>
-              <option value="Jose Ramirez">Jose Ramirez</option>
-              <option value="Josue Villegas">Josue Villegas</option>
-              <option value="Juan Mazariegos">Juan Mazariegos</option>
-              <option value="Julio Munoz">Julio Munoz</option>
-              <option value="Kenneth William">Kenneth William</option>
-              <option value="Kevin Bautista">Kevin Bautista</option>
-              <option value="Leonardo Mazariegos">Leonardo Mazariegos</option>
-              <option value="Lizeth Marcos">Lizeth Marcos</option>
-              <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
-              <option value="Louis Aceves">Louis Aceves</option>
-              <option value="Luis Ramirez">Luis Ramirez</option>
-              <option value="Manuel Martinez">Manuel Martinez</option>
-              <option value="Manuel Palacios">Manuel Palacios</option>
-              <option value="Mario Arias">Mario Arias</option>
-              <option value="Mario Lopez">Mario Lopez</option>
-              <option value="Mathew Gonzalez">Mathew Gonzalez</option>
-              <option value="Matthew Baciu">Matthew Baciu</option>
-              <option value="Miguel Corral">Miguel Corral</option>
-              <option value="Miguel Dominguez">Miguel Dominguez</option>
-              <option value="Noah Villareal">Noah Villareal</option>
-              <option value="Oliver Galicia">Oliver Galicia</option>
-              <option value="Oscar Aguirre">Oscar Aguirre</option>
-              <option value="Pedro Barrera">Pedro Barrera</option>
-              <option value="Randdy De Paz">Randdy De Paz</option>
-              <option value="Robert Stark">Robert Stark</option>
-              <option value="Robert Welch">Robert Welch</option>
-              <option value="Rusel Santiago">Rusel Santiago</option>
-              <option value="Salvador Perez">Salvador Perez</option>
-              <option value="Samuel Munoz">Samuel Munoz</option>
-              <option value="Sergio Diaz">Sergio Diaz</option>
-              <option value="Sergio Sandoval">Sergio Sandoval</option>
-              <option value="Sotero Dominguez">Sotero Dominguez</option>
-              <option value="Steven Sulewski">Steven Sulewski</option>
-              <option value="Tony Broadnax">Tony Broadnax</option>
-              <option value="Uriel Chavez">Uriel Chavez</option>
-              <option value="Victor Armienta">Victor Armienta</option>
-              <option value="Victor Carrillo">Victor Carrillo</option>
-              <option value="Vincent Sopha">Vincent Sopha</option>
-              <option value="Vincent Stancati">Vincent Stancati</option>
-              <option value="Xavier Contreras">Xavier Contreras</option>
+              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+              <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+              <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+              <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+              <option value="76 - David Smith">76 - David Smith</option>
+              <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+              <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+              <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+              <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+              <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+              <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+              <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+              <option value="152 - Brian Campos">152 - Brian Campos</option>
+              <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+              <option value="204 - Kenneth William">204 - Kenneth William</option>
+              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+              <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+              <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+              <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+              <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+              <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+              <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+              <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+              <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+              <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+              <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+              <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+              <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+              <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+              <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+              <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+              <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+              <option value="671 - Brian Flores">671 - Brian Flores</option>
+              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+              <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+              <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+              <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+              <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+              <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+              <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+              <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+              <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+              <option value="832 - David Casarez">832 - David Casarez</option>
+              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+              <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+              <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+              <option value="844 - Robert Stark">844 - Robert Stark</option>
+              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+              <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+              <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+              <option value="855 - Mario Arias">855 - Mario Arias</option>
+              <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+              <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+              <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+              <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+              <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+              <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+              <option value="866 - Axel Salas">866 - Axel Salas</option>
+              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+              <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+              <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+              <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+              <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+              <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+              <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+              <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+              <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+              <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+              <option value="884 - Jose Luna">884 - Jose Luna</option>
+              <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+              <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+              <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+              <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+              <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+              <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+              <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+              <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+              <option value="905 - James Marquez">905 - James Marquez</option>
+              <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+              <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+              <option value="909 - Christian Moran">909 - Christian Moran</option>
+              <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+              <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+              <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+              <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+              <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+              <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
       </select>
     </div>
 
@@ -1354,7 +1345,7 @@ tbody tr:hover td{background:#f7fbfc}
 
   <!-- ===== SIGN IN TAB ===== -->
 
-<div class="pane" id="pane-signin">
+<div class="pane on" id="pane-signin">
 
     <!-- Controls -->
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:flex-end">
@@ -1516,114 +1507,113 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Filter by employee</div>
         <select id="unit-filter-worker" onchange="renderUnitsTab()">
           <option value="all">All employees</option>
-          <option value="Jonathan Jacobo">Jonathan Jacobo</option>
-          <option value="Anthony Zetina">Anthony Zetina</option>
-          <option value="Xavier Contreras">Xavier Contreras</option>
-          <option value="Brian Kitajima">Brian Kitajima</option>
-          <option value="David Smith">David Smith</option>
-          <option value="Dillan Smith">Dillan Smith</option>
-          <option value="Efren Hilario">Efren Hilario</option>
-          <option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option>
-          <option value="Jorge Contreras">Jorge Contreras</option>
-          <option value="Johnny Perez">Johnny Perez</option>
-          <option value="Armando Lopez">Armando Lopez</option>
-          <option value="Francisco Flores">Francisco Flores</option>
-          <option value="Adrian Flores">Adrian Flores</option>
-          <option value="Alejandro Lopez">Alejandro Lopez</option>
-          <option value="Brian Campos">Brian Campos</option>
-          <option value="Pedro Barrera">Pedro Barrera</option>
-          <option value="Kenneth William">Kenneth William</option>
-          <option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option>
-          <option value="Gabriel Flores">Gabriel Flores</option>
-          <option value="Louis Aceves">Louis Aceves</option>
-          <option value="Juan Mazariegos">Juan Mazariegos</option>
-          <option value="Leonardo Mazariegos">Leonardo Mazariegos</option>
-          <option value="Manuel Palacios">Manuel Palacios</option>
-          <option value="Anthony Lyons">Anthony Lyons</option>
-          <option value="Filiberto Ramos">Filiberto Ramos</option>
-          <option value="Jose Ramirez">Jose Ramirez</option>
-          <option value="Jeffrey Rivera">Jeffrey Rivera</option>
-          <option value="Irvin Rivera">Irvin Rivera</option>
-          <option value="Edgar Solis">Edgar Solis</option>
-          <option value="Vincent Sopha">Vincent Sopha</option>
-          <option value="Anthony Macias">Anthony Macias</option>
-          <option value="Enrique Laguna">Enrique Laguna</option>
-          <option value="Matthew Baciu">Matthew Baciu</option>
-          <option value="Humberto Flores">Humberto Flores</option>
-          <option value="Jaime Moya">Jaime Moya</option>
-          <option value="Edith Del Carmen">Edith Del Carmen</option>
-          <option value="Daniel Villegas">Daniel Villegas</option>
-          <option value="Carla Quijada">Carla Quijada</option>
-          <option value="Jose Preciado">Jose Preciado</option>
-          <option value="Brian Flores">Brian Flores</option>
-          <option value="Carlos Landaverde">Carlos Landaverde</option>
-          <option value="Jimmy Cascio">Jimmy Cascio</option>
-          <option value="Sergio Sandoval">Sergio Sandoval</option>
-          <option value="Brenda Quijada">Brenda Quijada</option>
-          <option value="Dyana Quijada">Dyana Quijada</option>
-          <option value="Oliver Galicia">Oliver Galicia</option>
-          <option value="Sotero Dominguez">Sotero Dominguez</option>
-          <option value="Miguel Dominguez">Miguel Dominguez</option>
-          <option value="Efrain Cornejo">Efrain Cornejo</option>
-          <option value="Rusel Santiago">Rusel Santiago</option>
-          <option value="Kevin Bautista">Kevin Bautista</option>
-          <option value="Luis Ramirez">Luis Ramirez</option>
-          <option value="Josue Villegas">Josue Villegas</option>
-          <option value="Salvador Perez">Salvador Perez</option>
-          <option value="David Casarez">David Casarez</option>
-          <option value="Lizeth Marcos">Lizeth Marcos</option>
-          <option value="Randdy De Paz">Randdy De Paz</option>
-          <option value="Angel Ibanez">Angel Ibanez</option>
-          <option value="Robert Stark">Robert Stark</option>
-          <option value="Anthony Ibanez">Anthony Ibanez</option>
-          <option value="Daniel Burleson">Daniel Burleson</option>
-          <option value="Abiud Lopez">Abiud Lopez</option>
-          <option value="Mario Arias">Mario Arias</option>
-          <option value="Jaime Quintero">Jaime Quintero</option>
-          <option value="Mario Lopez">Mario Lopez</option>
-          <option value="Steven Sulewski">Steven Sulewski</option>
-          <option value="Cristian Collin">Cristian Collin</option>
-          <option value="Jesus Heredia">Jesus Heredia</option>
-          <option value="Daniel Lopez">Daniel Lopez</option>
-          <option value="Axel Salas">Axel Salas</option>
-          <option value="Oscar Aguirre">Oscar Aguirre</option>
-          <option value="Alex Osorio">Alex Osorio</option>
-          <option value="Julio Munoz">Julio Munoz</option>
-          <option value="Angel Hernandez">Angel Hernandez</option>
-          <option value="Adrian Hernandez">Adrian Hernandez</option>
-          <option value="Samuel Munoz">Samuel Munoz</option>
-          <option value="Antonio Castillo">Antonio Castillo</option>
-          <option value="Jerry Munoz">Jerry Munoz</option>
-          <option value="Noah Villareal">Noah Villareal</option>
-          <option value="Jayson Ortega">Jayson Ortega</option>
-          <option value="Carlos Agapito">Carlos Agapito</option>
-          <option value="Jose Luna">Jose Luna</option>
-          <option value="Manuel Martinez">Manuel Martinez</option>
-          <option value="Mathew Gonzalez">Mathew Gonzalez</option>
-          <option value="Sergio Diaz">Sergio Diaz</option>
-          <option value="Tony Broadnax">Tony Broadnax</option>
-          <option value="Isidro Enciso">Isidro Enciso</option>
-          <option value="Brian Ramirez">Brian Ramirez</option>
-          <option value="Jerlin Mendoza">Jerlin Mendoza</option>
-          <option value="Estevan Sandoval">Estevan Sandoval</option>
-          <option value="Lorenzo Tanguma">Lorenzo Tanguma</option>
-          <option value="Eduardo Echeverria">Eduardo Echeverria</option>
-          <option value="Victor Armienta">Victor Armienta</option>
-          <option value="Guillermo Silva">Guillermo Silva</option>
-          <option value="Erik Lopez">Erik Lopez</option>
-          <option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option>
-          <option value="James Marquez">James Marquez</option>
-          <option value="Henri Sibrian">Henri Sibrian</option>
-          <option value="Vincent Stancati">Vincent Stancati</option>
-          <option value="Christian Moran">Christian Moran</option>
-          <option value="Edwin Martinez">Edwin Martinez</option>
-          <option value="Adrian Marquez">Adrian Marquez</option>
-          <option value="Victor Carrillo">Victor Carrillo</option>
-          <option value="Miguel Corral">Miguel Corral</option>
-          <option value="Joaquin Garcia">Joaquin Garcia</option>
-          <option value="Robert Welch">Robert Welch</option>
-          <option value="Uriel Chavez">Uriel Chavez</option>
-          <option value="Brandon Salazar">Brandon Salazar</option>
+              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+              <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+              <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+              <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+              <option value="76 - David Smith">76 - David Smith</option>
+              <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+              <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+              <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+              <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+              <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+              <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+              <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+              <option value="152 - Brian Campos">152 - Brian Campos</option>
+              <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+              <option value="204 - Kenneth William">204 - Kenneth William</option>
+              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+              <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+              <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+              <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+              <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+              <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+              <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+              <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+              <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+              <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+              <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+              <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+              <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+              <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+              <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+              <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+              <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+              <option value="671 - Brian Flores">671 - Brian Flores</option>
+              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+              <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+              <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+              <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+              <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+              <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+              <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+              <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+              <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+              <option value="832 - David Casarez">832 - David Casarez</option>
+              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+              <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+              <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+              <option value="844 - Robert Stark">844 - Robert Stark</option>
+              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+              <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+              <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+              <option value="855 - Mario Arias">855 - Mario Arias</option>
+              <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+              <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+              <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+              <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+              <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+              <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+              <option value="866 - Axel Salas">866 - Axel Salas</option>
+              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+              <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+              <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+              <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+              <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+              <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+              <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+              <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+              <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+              <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+              <option value="884 - Jose Luna">884 - Jose Luna</option>
+              <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+              <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+              <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+              <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+              <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+              <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+              <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+              <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+              <option value="905 - James Marquez">905 - James Marquez</option>
+              <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+              <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+              <option value="909 - Christian Moran">909 - Christian Moran</option>
+              <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+              <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+              <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+              <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+              <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+              <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
         </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
@@ -1722,7 +1712,7 @@ tbody tr:hover td{background:#f7fbfc}
         </div>
       </div>
       <div class="cb" style="padding:0;overflow-x:auto">
-        <div id="task-calendar" style="display:grid;grid-template-columns:repeat(7,1fr);min-width:560px"><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Mon<br><span style="font-size:13px;color:#1a1a1a">15</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Tue<br><span style="font-size:13px;color:#1a1a1a">16</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Wed<br><span style="font-size:13px;color:#1a1a1a">17</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#2980b9;margin-bottom:4px;text-align:center">Thu<br><span style="font-size:13px;color:#2980b9">18</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Fri<br><span style="font-size:13px;color:#1a1a1a">19</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Sat<br><span style="font-size:13px;color:#1a1a1a">20</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Sun<br><span style="font-size:13px;color:#1a1a1a">21</span></div></div></div>
+        <div id="task-calendar" style="display:grid;grid-template-columns:repeat(7,1fr);min-width:560px"><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Mon<br><span style="font-size:13px;color:#1a1a1a">15</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Tue<br><span style="font-size:13px;color:#1a1a1a">16</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Wed<br><span style="font-size:13px;color:#1a1a1a">17</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Thu<br><span style="font-size:13px;color:#1a1a1a">18</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#2980b9;margin-bottom:4px;text-align:center">Fri<br><span style="font-size:13px;color:#2980b9">19</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Sat<br><span style="font-size:13px;color:#1a1a1a">20</span></div></div><div style="border-right:1px solid var(--border);min-height:100px;padding:6px 4px"><div style="font-size:10px;font-weight:700;color:#777;margin-bottom:4px;text-align:center">Sun<br><span style="font-size:13px;color:#1a1a1a">21</span></div></div></div>
       </div>
     </div>
     <div class="card">
@@ -1791,6 +1781,113 @@ tbody tr:hover td{background:#f7fbfc}
       <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">ASSIGN TO</label>
       <select id="task-assignee" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:8px;margin-bottom:12px">
         <option value="">-- Select employee --</option>
+        <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+        <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+        <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+        <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+        <option value="76 - David Smith">76 - David Smith</option>
+        <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+        <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+        <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+        <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+        <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+        <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+        <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+        <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+        <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+        <option value="152 - Brian Campos">152 - Brian Campos</option>
+        <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+        <option value="204 - Kenneth William">204 - Kenneth William</option>
+        <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+        <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+        <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+        <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+        <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+        <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+        <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+        <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+        <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+        <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+        <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+        <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+        <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+        <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+        <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+        <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+        <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+        <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+        <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+        <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+        <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+        <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+        <option value="671 - Brian Flores">671 - Brian Flores</option>
+        <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+        <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+        <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+        <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+        <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+        <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+        <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+        <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+        <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+        <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+        <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+        <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+        <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+        <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+        <option value="832 - David Casarez">832 - David Casarez</option>
+        <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+        <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+        <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+        <option value="844 - Robert Stark">844 - Robert Stark</option>
+        <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+        <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+        <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+        <option value="855 - Mario Arias">855 - Mario Arias</option>
+        <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+        <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+        <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+        <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+        <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+        <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+        <option value="866 - Axel Salas">866 - Axel Salas</option>
+        <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+        <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+        <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+        <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+        <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+        <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+        <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+        <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+        <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+        <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+        <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+        <option value="884 - Jose Luna">884 - Jose Luna</option>
+        <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+        <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+        <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+        <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+        <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+        <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+        <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+        <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+        <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+        <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+        <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+        <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+        <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+        <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+        <option value="905 - James Marquez">905 - James Marquez</option>
+        <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+        <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+        <option value="909 - Christian Moran">909 - Christian Moran</option>
+        <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+        <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+        <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+        <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+        <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+        <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+        <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
       </select>
 
       <label style="font-size:11px;color:#777;display:block;margin-bottom:4px">COST CODE</label>
@@ -1867,8 +1964,8 @@ tbody tr:hover td{background:#f7fbfc}
   <div class="safety-header">
     <h2>Safety Documentation</h2>
     <div class="safety-meta">
-      <span id="safetyDateDisplay">Thursday, Jun 18, 2026</span>
-      <span id="safetyFridayNotice" class="safety-required-badge" style="display:none;">📋 Friday — All 3 forms required</span>
+      <span id="safetyDateDisplay">Friday, Jun 19, 2026</span>
+      <span id="safetyFridayNotice" class="safety-required-badge" style="display: inline-block;">📋 Friday — All 3 forms required</span>
       <span id="safetyOptionalNotice" class="safety-optional-badge" style="display: inline-block;">Optional today — required on Fridays</span>
     </div>
     <div id="safetySubmittedBanner" class="safety-submitted-banner" style="display: block;">
@@ -2310,114 +2407,113 @@ const COST_CODES = [
 ];
 
 const WORKERS = [
-  {name:"Jonathan Jacobo",initials:"JJ",role:"Dofo"},
-  {name:"Anthony Zetina",initials:"AZ",role:"Electrician"},
-  {name:"Xavier Contreras",initials:"XC",role:"General"},
-  {name:"Brian Kitajima",initials:"BK",role:"Foreman"},
-  {name:"David Smith",initials:"DS",role:"Electrician"},
-  {name:"Dillan Smith",initials:"DS",role:"Foreman"},
-  {name:"Efren Hilario",initials:"EH",role:"Electrician"},
-  {name:"Alberto Lopez Ruiz",initials:"AR",role:"Electrician"},
-  {name:"Jorge Contreras",initials:"JC",role:"Foreman"},
-  {name:"Johnny Perez",initials:"JP",role:"Foreman"},
-  {name:"Armando Lopez",initials:"AL",role:"Electrician"},
-  {name:"Francisco Flores",initials:"FF",role:"Electrician"},
-  {name:"Adrian Flores",initials:"AF",role:"Foreman"},
-  {name:"Alejandro Lopez",initials:"AL",role:"Electrician"},
-  {name:"Brian Campos",initials:"BC",role:"Electrician"},
-  {name:"Pedro Barrera",initials:"PB",role:"Electrician"},
-  {name:"Kenneth William",initials:"KW",role:"Foreman"},
-  {name:"Duvaldi Mazariegos",initials:"DM",role:"Electrician"},
-  {name:"Gabriel Flores",initials:"GF",role:"Apprentice"},
-  {name:"Louis Aceves",initials:"LA",role:"Electrician"},
-  {name:"Juan Mazariegos",initials:"JM",role:"Electrician"},
-  {name:"Leonardo Mazariegos",initials:"LM",role:"Foreman"},
-  {name:"Manuel Palacios",initials:"MP",role:"Electrician"},
-  {name:"Anthony Lyons",initials:"AL",role:"Electrician"},
-  {name:"Filiberto Ramos",initials:"FR",role:"Foreman"},
-  {name:"Jose Ramirez",initials:"JR",role:"Lv"},
-  {name:"Jeffrey Rivera",initials:"JR",role:"Lv"},
-  {name:"Irvin Rivera",initials:"IR",role:"Apprentice"},
-  {name:"Edgar Solis",initials:"ES",role:"Electrician"},
-  {name:"Vincent Sopha",initials:"VS",role:"Electrician"},
-  {name:"Anthony Macias",initials:"AM",role:"Electrician"},
-  {name:"Enrique Laguna",initials:"EL",role:"Electrician"},
-  {name:"Matthew Baciu",initials:"MB",role:"Electrician"},
-  {name:"Humberto Flores",initials:"HF",role:"Foreman"},
-  {name:"Jaime Moya",initials:"JM",role:"Electrician"},
-  {name:"Edith Del Carmen",initials:"EC",role:"Lv"},
-  {name:"Daniel Villegas",initials:"DV",role:"Electrician"},
-  {name:"Carla Quijada",initials:"CQ",role:"Electrician"},
-  {name:"Jose Preciado",initials:"JP",role:"Foreman"},
-  {name:"Brian Flores",initials:"BF",role:"Apprentice"},
-  {name:"Carlos Landaverde",initials:"CL",role:"Electrician"},
-  {name:"Jimmy Cascio",initials:"JC",role:"Electrician"},
-  {name:"Sergio Sandoval",initials:"SS",role:"Electrician"},
-  {name:"Brenda Quijada",initials:"BQ",role:"Electrician"},
-  {name:"Dyana Quijada",initials:"DQ",role:"Electrician"},
-  {name:"Oliver Galicia",initials:"OG",role:"Electrician"},
-  {name:"Sotero Dominguez",initials:"SD",role:"Electrician"},
-  {name:"Miguel Dominguez",initials:"MD",role:"Electrician"},
-  {name:"Efrain Cornejo",initials:"EC",role:"Electrician"},
-  {name:"Rusel Santiago",initials:"RS",role:"Electrician"},
-  {name:"Kevin Bautista",initials:"KB",role:"Electrician"},
-  {name:"Luis Ramirez",initials:"LR",role:"Electrician"},
-  {name:"Josue Villegas",initials:"JV",role:"Electrician"},
-  {name:"Salvador Perez",initials:"SP",role:"Electrician"},
-  {name:"David Casarez",initials:"DC",role:"Electrician"},
-  {name:"Lizeth Marcos",initials:"LM",role:"Electrician"},
-  {name:"Randdy De Paz",initials:"RP",role:"Electrician"},
-  {name:"Angel Ibanez",initials:"AI",role:"Electrician"},
-  {name:"Robert Stark",initials:"RS",role:"Electrician"},
-  {name:"Anthony Ibanez",initials:"AI",role:"Electrician"},
-  {name:"Daniel Burleson",initials:"DB",role:"Electrician"},
-  {name:"Abiud Lopez",initials:"AL",role:"Electrician"},
-  {name:"Mario Arias",initials:"MA",role:"Electrician"},
-  {name:"Jaime Quintero",initials:"JQ",role:"Electrician"},
-  {name:"Mario Lopez",initials:"ML",role:"Electrician"},
-  {name:"Steven Sulewski",initials:"SS",role:"Electrician"},
-  {name:"Cristian Collin",initials:"CC",role:"Electrician"},
-  {name:"Jesus Heredia",initials:"JH",role:"Electrician"},
-  {name:"Daniel Lopez",initials:"DL",role:"Electrician"},
-  {name:"Axel Salas",initials:"AS",role:"Electrician"},
-  {name:"Oscar Aguirre",initials:"OA",role:"Apprentice"},
-  {name:"Alex Osorio",initials:"AO",role:"Electrician"},
-  {name:"Julio Munoz",initials:"JM",role:"Apprentice"},
-  {name:"Angel Hernandez",initials:"AH",role:"Electrician"},
-  {name:"Adrian Hernandez",initials:"AH",role:"Electrician"},
-  {name:"Samuel Munoz",initials:"SM",role:"Iw"},
-  {name:"Antonio Castillo",initials:"AC",role:"Iw"},
-  {name:"Jerry Munoz",initials:"JM",role:"Iw"},
-  {name:"Noah Villareal",initials:"NV",role:"Electrician"},
-  {name:"Jayson Ortega",initials:"JO",role:"Electrician"},
-  {name:"Carlos Agapito",initials:"CA",role:"Electrician"},
-  {name:"Jose Luna",initials:"JL",role:"Electrician"},
-  {name:"Manuel Martinez",initials:"MM",role:"Electrician"},
-  {name:"Mathew Gonzalez",initials:"MG",role:"Electrician"},
-  {name:"Sergio Diaz",initials:"SD",role:"Electrician"},
-  {name:"Tony Broadnax",initials:"TB",role:"Electrician"},
-  {name:"Isidro Enciso",initials:"IE",role:"Electrician"},
-  {name:"Brian Ramirez",initials:"BR",role:"Electrician"},
-  {name:"Jerlin Mendoza",initials:"JM",role:"Apprentice"},
-  {name:"Estevan Sandoval",initials:"ES",role:"Electrician"},
-  {name:"Lorenzo Tanguma",initials:"LT",role:"Electrician"},
-  {name:"Eduardo Echeverria",initials:"EE",role:"Electrician"},
-  {name:"Victor Armienta",initials:"VA",role:"Apprentice"},
-  {name:"Guillermo Silva",initials:"GS",role:"Electrician"},
-  {name:"Erik Lopez",initials:"EL",role:"Electrician"},
-  {name:"Isaiah Ortiz Alvarado",initials:"IA",role:"Apprentice"},
-  {name:"James Marquez",initials:"JM",role:"Apprentice"},
-  {name:"Henri Sibrian",initials:"HS",role:"Electrician"},
-  {name:"Vincent Stancati",initials:"VS",role:"Electrician"},
-  {name:"Christian Moran",initials:"CM",role:"Electrician"},
-  {name:"Edwin Martinez",initials:"EM",role:"Electrician"},
-  {name:"Adrian Marquez",initials:"AM",role:"Electrician"},
-  {name:"Victor Carrillo",initials:"VC",role:"Field"},
-  {name:"Miguel Corral",initials:"MC",role:"Field"},
-  {name:"Joaquin Garcia",initials:"JG",role:"Journeyman"},
-  {name:"Robert Welch",initials:"RW",role:"Foreman"},
-  {name:"Uriel Chavez",initials:"UC",role:"Foreman"},
-  {name:"Brandon Salazar",initials:"BS",role:"Field"}
+  {name:"Jonathan Jacobo",initials:"JJ",role:"Dofo",empId:"5"},
+  {name:"Anthony Zetina",initials:"AZ",role:"Electrician",empId:"34"},
+  {name:"Xavier Contreras",initials:"XC",role:"General",empId:"63"},
+  {name:"Brian Kitajima",initials:"BK",role:"Foreman",empId:"69"},
+  {name:"David Smith",initials:"DS",role:"Electrician",empId:"76"},
+  {name:"Dillan Smith",initials:"DS2",role:"Foreman",empId:"77"},
+  {name:"Alberto Lopez Ruiz",initials:"AR",role:"Electrician",empId:"85"},
+  {name:"Efren Hilario",initials:"EH",role:"Electrician",empId:"86"},
+  {name:"Jorge Contreras",initials:"JC",role:"Foreman",empId:"92"},
+  {name:"Johnny Perez",initials:"JP",role:"Foreman",empId:"106"},
+  {name:"Armando Lopez",initials:"AL",role:"Electrician",empId:"123"},
+  {name:"Francisco Flores",initials:"FF",role:"Electrician",empId:"138"},
+  {name:"Adrian Flores",initials:"AF",role:"Foreman",empId:"140"},
+  {name:"Alejandro Lopez",initials:"AL2",role:"Electrician",empId:"145"},
+  {name:"Brian Campos",initials:"BC",role:"Electrician",empId:"152"},
+  {name:"Pedro Barrera",initials:"PB",role:"Electrician",empId:"177"},
+  {name:"Kenneth William",initials:"KW",role:"Foreman",empId:"204"},
+  {name:"Duvaldi Mazariegos",initials:"DM",role:"Electrician",empId:"222"},
+  {name:"Gabriel Flores",initials:"GF",role:"Apprentice",empId:"231"},
+  {name:"Louis Aceves",initials:"LA",role:"Electrician",empId:"235"},
+  {name:"Juan Mazariegos",initials:"JM",role:"Electrician",empId:"261"},
+  {name:"Leonardo Mazariegos",initials:"LM",role:"Foreman",empId:"262"},
+  {name:"Manuel Palacios",initials:"MP",role:"Electrician",empId:"263"},
+  {name:"Anthony Lyons",initials:"AL22",role:"Electrician",empId:"269"},
+  {name:"Filiberto Ramos",initials:"FR",role:"Foreman",empId:"287"},
+  {name:"Jose Ramirez",initials:"JR",role:"Lv",empId:"388"},
+  {name:"Jeffrey Rivera",initials:"JR2",role:"Lv",empId:"393"},
+  {name:"Irvin Rivera",initials:"IR",role:"Apprentice",empId:"395"},
+  {name:"Edgar Solis",initials:"ES",role:"Electrician",empId:"455"},
+  {name:"Vincent Sopha",initials:"VS",role:"Electrician",empId:"531"},
+  {name:"Anthony Macias",initials:"AM",role:"Electrician",empId:"536"},
+  {name:"Enrique Laguna",initials:"EL",role:"Electrician",empId:"587"},
+  {name:"Matthew Baciu",initials:"MB",role:"Electrician",empId:"613"},
+  {name:"Humberto Flores",initials:"HF",role:"Foreman",empId:"628"},
+  {name:"Jaime Moya",initials:"JM2",role:"Electrician",empId:"630"},
+  {name:"Edith Del Carmen",initials:"EC",role:"Lv",empId:"640"},
+  {name:"Daniel Villegas",initials:"DV",role:"Electrician",empId:"651"},
+  {name:"Carla Quijada",initials:"CQ",role:"Electrician",empId:"660"},
+  {name:"Jose Preciado",initials:"JP2",role:"Foreman",empId:"666"},
+  {name:"Brian Flores",initials:"BF",role:"Apprentice",empId:"671"},
+  {name:"Carlos Landaverde",initials:"CL",role:"Electrician",empId:"737"},
+  {name:"Jimmy Cascio",initials:"JC2",role:"Electrician",empId:"770"},
+  {name:"Sergio Sandoval",initials:"SS",role:"Electrician",empId:"788"},
+  {name:"Brenda Quijada",initials:"BQ",role:"Electrician",empId:"791"},
+  {name:"Dyana Quijada",initials:"DQ",role:"Electrician",empId:"792"},
+  {name:"Oliver Galicia",initials:"OG",role:"Electrician",empId:"807"},
+  {name:"Sotero Dominguez",initials:"SD",role:"Electrician",empId:"816"},
+  {name:"Miguel Dominguez",initials:"MD",role:"Electrician",empId:"817"},
+  {name:"Efrain Cornejo",initials:"EC2",role:"Electrician",empId:"819"},
+  {name:"Rusel Santiago",initials:"RS",role:"Electrician",empId:"820"},
+  {name:"Kevin Bautista",initials:"KB",role:"Electrician",empId:"822"},
+  {name:"Luis Ramirez",initials:"LR",role:"Electrician",empId:"823"},
+  {name:"Josue Villegas",initials:"JV",role:"Electrician",empId:"825"},
+  {name:"Salvador Perez",initials:"SP",role:"Electrician",empId:"831"},
+  {name:"David Casarez",initials:"DC",role:"Electrician",empId:"832"},
+  {name:"Lizeth Marcos",initials:"LM2",role:"Electrician",empId:"834"},
+  {name:"Randdy De Paz",initials:"RP",role:"Electrician",empId:"835"},
+  {name:"Angel Ibanez",initials:"AI",role:"Electrician",empId:"836"},
+  {name:"Robert Stark",initials:"RS2",role:"Electrician",empId:"844"},
+  {name:"Anthony Ibanez",initials:"AI2",role:"Electrician",empId:"848"},
+  {name:"Daniel Burleson",initials:"DB",role:"Electrician",empId:"849"},
+  {name:"Abiud Lopez",initials:"AL222",role:"Electrician",empId:"850"},
+  {name:"Mario Arias",initials:"MA",role:"Electrician",empId:"855"},
+  {name:"Jaime Quintero",initials:"JQ",role:"Electrician",empId:"856"},
+  {name:"Mario Lopez",initials:"ML",role:"Electrician",empId:"858"},
+  {name:"Steven Sulewski",initials:"SS2",role:"Electrician",empId:"859"},
+  {name:"Cristian Collin",initials:"CC",role:"Electrician",empId:"861"},
+  {name:"Jesus Heredia",initials:"JH",role:"Electrician",empId:"862"},
+  {name:"Daniel Lopez",initials:"DL",role:"Electrician",empId:"865"},
+  {name:"Axel Salas",initials:"AS",role:"Electrician",empId:"866"},
+  {name:"Oscar Aguirre",initials:"OA",role:"Apprentice",empId:"868"},
+  {name:"Alex Osorio",initials:"AO",role:"Electrician",empId:"870"},
+  {name:"Julio Munoz",initials:"JM22",role:"Apprentice",empId:"872"},
+  {name:"Angel Hernandez",initials:"AH",role:"Electrician",empId:"873"},
+  {name:"Adrian Hernandez",initials:"AH2",role:"Electrician",empId:"876"},
+  {name:"Samuel Munoz",initials:"SM",role:"Iw",empId:"877"},
+  {name:"Antonio Castillo",initials:"AC",role:"Iw",empId:"878"},
+  {name:"Jerry Munoz",initials:"JM222",role:"Iw",empId:"879"},
+  {name:"Noah Villareal",initials:"NV",role:"Electrician",empId:"880"},
+  {name:"Jayson Ortega",initials:"JO",role:"Electrician",empId:"882"},
+  {name:"Carlos Agapito",initials:"CA",role:"Electrician",empId:"883"},
+  {name:"Jose Luna",initials:"JL",role:"Electrician",empId:"884"},
+  {name:"Manuel Martinez",initials:"MM",role:"Electrician",empId:"886"},
+  {name:"Mathew Gonzalez",initials:"MG",role:"Electrician",empId:"887"},
+  {name:"Sergio Diaz",initials:"SD2",role:"Electrician",empId:"888"},
+  {name:"Tony Broadnax",initials:"TB",role:"Electrician",empId:"889"},
+  {name:"Isidro Enciso",initials:"IE",role:"Electrician",empId:"892"},
+  {name:"Brian Ramirez",initials:"BR",role:"Electrician",empId:"893"},
+  {name:"Jerlin Mendoza",initials:"JM2222",role:"Apprentice",empId:"894"},
+  {name:"Estevan Sandoval",initials:"ES2",role:"Electrician",empId:"896"},
+  {name:"Lorenzo Tanguma",initials:"LT",role:"Electrician",empId:"897"},
+  {name:"Eduardo Echeverria",initials:"EE",role:"Electrician",empId:"898"},
+  {name:"Victor Armienta",initials:"VA",role:"Apprentice",empId:"899"},
+  {name:"Guillermo Silva",initials:"GS",role:"Electrician",empId:"901"},
+  {name:"Erik Lopez",initials:"EL2",role:"Electrician",empId:"902"},
+  {name:"Isaiah Ortiz Alvarado",initials:"IA",role:"Apprentice",empId:"903"},
+  {name:"James Marquez",initials:"JM22222",role:"Apprentice",empId:"905"},
+  {name:"Henri Sibrian",initials:"HS",role:"Electrician",empId:"906"},
+  {name:"Vincent Stancati",initials:"VS2",role:"Electrician",empId:"908"},
+  {name:"Christian Moran",initials:"CM",role:"Electrician",empId:"909"},
+  {name:"Edwin Martinez",initials:"EM",role:"Electrician",empId:"910"},
+  {name:"Adrian Marquez",initials:"AM2",role:"Electrician",empId:"911"},
+  {name:"Victor Carrillo",initials:"VC",role:"Field",empId:"912"},
+  {name:"Miguel Corral",initials:"MC",role:"Field",empId:"914"},
+  {name:"Joaquin Garcia",initials:"JG",role:"Journeyman",empId:"915"},
+  {name:"Uriel Chavez",initials:"UC",role:"Foreman",empId:"917"},
+  {name:"Brandon Salazar",initials:"BS",role:"Field",empId:"918"}
 ];
 
 /* === STATE === */
