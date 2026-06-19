@@ -3232,8 +3232,12 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
   // Group by worker
   const byWorker = {};
   entries.forEach(e=>{
-    if(!byWorker[e.worker]) byWorker[e.worker] = {worker:e.worker, rows:[]};
-    byWorker[e.worker].rows.push(e);
+    const wMatch = (e.worker||'').match(/^(\d+)\s*-\s*(.*)/);
+    const wEmpNum = e.empNum || (wMatch ? wMatch[1] : '');
+    const wName   = wMatch ? wMatch[2] : (e.worker||'');
+    const wKey    = wName || e.worker;
+    if(!byWorker[wKey]) byWorker[wKey] = {worker:wKey, empNum:wEmpNum, rows:[]};
+    byWorker[wKey].rows.push({...e, worker:wName||e.worker, empNum:wEmpNum});
   });
   const workerCount = Object.keys(byWorker).length;
 
@@ -3259,7 +3263,7 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
       rowNum++;
       const bgColor = rowNum%2===0 ? 'rgba(255,255,255,.03)' : 'transparent';
       return `<tr style="background:${bgColor};border-bottom:1px solid rgba(255,255,255,.06)">
-        <td style="padding:10px 14px;color:#888;font-size:12px;font-family:monospace;border-right:1px solid rgba(255,255,255,.08)">${rowNum}</td>
+        <td style="padding:10px 14px;color:#EF9F27;font-size:12px;font-family:monospace;font-weight:700;border-right:1px solid rgba(255,255,255,.08)">${i===0?wd.empNum:''}</td>
         <td style="padding:10px 14px;color:#fff;font-weight:600;font-size:13px;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap">${i===0?e.worker.toUpperCase():''}</td>
         <td style="padding:10px 14px;color:#2980b9;font-family:monospace;font-weight:700;font-size:13px;border-right:1px solid rgba(255,255,255,.08)">${e.phaseCode}</td>
         <td style="padding:10px 14px;color:#ccc;font-size:12px;border-right:1px solid rgba(255,255,255,.08)">
@@ -5334,7 +5338,10 @@ function autoFillSIEmpNum(sel){
 
 
 function saveWBEntry(){
-  const worker = document.getElementById('wb-worker').value;
+  const workerRaw = document.getElementById('wb-worker').value;
+  const wbEmpMatch = workerRaw.match(/^(\d+)\s*-\s*/);
+  const empNum = wbEmpMatch ? wbEmpMatch[1] : '';
+  const worker = wbEmpMatch ? workerRaw.replace(/^\d+\s*-\s*/, '') : workerRaw;
   const job    = document.getElementById('wb-job').value;
   const phase  = document.getElementById('wb-phase').value;
   const hours  = document.getElementById('wb-hours').value;
@@ -5352,7 +5359,7 @@ function saveWBEntry(){
   dailyLogs.push({
     id: dlNextId++,
     date: entryDate,
-    worker, job,
+    worker, empNum, job,
     phaseCode: code,
     phaseDesc: desc,
     hours: parseFloat(hours),
