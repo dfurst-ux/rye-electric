@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0070)file:///C:/Users/Dennis%20Furst/Downloads/rye-id-badge-template_5.html -->
+<!-- saved from url=(0070)file:///C:/Users/Dennis%20Furst/Downloads/rye-id-badge-template_6.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Rye Electric — ID Badge Generator</title>
@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link href="./Rye Electric — ID Badge Generator_files/css2" rel="stylesheet">
 <script src="./Rye Electric — ID Badge Generator_files/JsBarcode.all.min.js.download"></script>
-<script src="./Rye Electric — ID Badge Generator_files/supabase-js@2"></script>
+<script src="./Rye Electric — ID Badge Generator_files/supabase.js.download"></script>
 <style>
   :root{
     --logo-black:#000000;
@@ -393,9 +393,14 @@
   const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
   let supabaseClient = null;
+  let supabaseInitError = null;
   try{
-    if(window.supabase) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  }catch(e){ console.error('Supabase init failed:', e); }
+    if(window.supabase){
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } else {
+      supabaseInitError = 'Supabase library script did not load';
+    }
+  }catch(e){ supabaseInitError = e.message; console.error('Supabase init failed:', e); }
 
   const nameInput = document.getElementById('nameInput');
   const titleInput = document.getElementById('titleInput');
@@ -492,7 +497,7 @@
     const tbody = document.getElementById('registryTbody');
     if(!tbody) return;
     if(!supabaseClient){
-      tbody.innerHTML = '<tr><td colspan="6">Badge history unavailable right now</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6">Badge history unavailable: '+(supabaseInitError||'unknown error')+'</td></tr>';
       return;
     }
     const { data, error } = await supabaseClient
