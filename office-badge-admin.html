@@ -154,4 +154,170 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 
   <div class="tabs">
     <button class="tab on" onclick="goTab(this,'jobs')">Jobs</button>
-    <button class="tab"
+    <button class="tab" onclick="goTab(this,'timecards')">Timecards</button>
+    <button class="tab" onclick="goTab(this,'staff')">Staff</button>
+    <button class="tab" onclick="goTab(this,'codes')">Cost Codes</button>
+    <button class="tab" onclick="goTab(this,'settings')">Settings</button>
+  </div>
+
+  <!-- ===== JOBS TAB ===== -->
+  <div class="pane on" id="pane-jobs">
+    <div class="card">
+      <div class="cb">
+        <div class="form-grid" style="grid-template-columns:2fr 1fr auto">
+          <div class="fgroup">
+            <div class="flbl">Job</div>
+            <select id="jobSelect" onchange="loadJobSignIns()">
+              <option value="">-- Select job --</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <div class="flbl">Date</div>
+            <input type="date" id="jobDate" onchange="loadJobSignIns()">
+          </div>
+          <button class="btn btn-g" onclick="loadJobsList()">&#8635; Refresh jobs</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch">
+        <div class="ct">Daily Sign In <span id="jobSignInCount" class="bdg b-ok" style="margin-left:8px">0</span></div>
+        <button class="btn btn-g btn-sm" onclick="printJobSignIn()">&#128424;&#65039; Print</button>
+      </div>
+      <div id="jobSupervisor" style="padding:10px 18px 0;font-size:12px;color:var(--muted)"></div>
+      <div id="jobSignInBody" style="padding:18px;overflow-x:auto">
+        <div class="muted-note">Select a job and date to see who's signed in.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TIMECARDS TAB ===== -->
+  <div class="pane" id="pane-timecards">
+    <div class="card">
+      <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
+      <div id="rosterList"></div>
+    </div>
+
+    <div class="card">
+      <div class="cb">
+        <div class="fgroup">
+          <div class="flbl">Employee</div>
+          <select id="tcEmployee" onchange="loadTimecard()">
+            <option value="">-- Select employee --</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-nav">
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">&larr; Prev week</button>
+      <div class="week-label" id="weekLabel">--</div>
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week &rarr;</button>
+    </div>
+
+    <div class="card">
+      <div class="ch">
+        <div class="ct">Weekly Timecard</div>
+        <button class="btn btn-g btn-sm" onclick="printTimecard()">&#128424;&#65039; Print</button>
+      </div>
+      <div id="timecardBody" style="padding:18px">
+        <div class="muted-note">Select an employee to view their timecard.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAFF TAB ===== -->
+  <div class="pane" id="pane-staff">
+    <div class="card">
+      <div class="ch"><div class="ct">Add office staff</div></div>
+      <div class="cb">
+        <div class="form-grid">
+          <div class="fgroup">
+            <div class="flbl">Employee ID (badge #)</div>
+            <input type="text" inputmode="numeric" id="newEmpId" placeholder="e.g. 907">
+          </div>
+          <div class="fgroup">
+            <div class="flbl">First name</div>
+            <input type="text" id="newFirstName" placeholder="First name">
+          </div>
+          <div class="fgroup">
+            <div class="flbl">Last name</div>
+            <input type="text" id="newLastName" placeholder="Last name">
+          </div>
+          <button class="btn btn-rye" onclick="addStaff()">+ Add</button>
+        </div>
+        <div class="muted-note">The Employee ID must match the number encoded in the barcode on their badge.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><div class="ct">Staff roster</div></div>
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Status</th><th></th></tr></thead>
+        <tbody id="staffTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== COST CODES TAB ===== -->
+  <div class="pane" id="pane-codes">
+    <div class="card">
+      <div class="ch"><div class="ct">Add cost code</div></div>
+      <div class="cb">
+        <div class="form-grid">
+          <div class="fgroup">
+            <div class="flbl">Code</div>
+            <input type="text" id="newCodeId" placeholder="e.g. PM">
+          </div>
+          <div class="fgroup" style="grid-column:span 2">
+            <div class="flbl">Label</div>
+            <input type="text" id="newCodeLabel" placeholder="e.g. Project Management">
+          </div>
+          <button class="btn btn-rye" onclick="addCostCode()">+ Add</button>
+        </div>
+        <div class="muted-note">This is what shows up in the dropdown when someone clocks out.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><div class="ct">Cost codes</div></div>
+      <table>
+        <thead><tr><th>Code</th><th>Label</th><th>Status</th><th></th></tr></thead>
+        <tbody id="codesTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS TAB ===== -->
+  <div class="pane" id="pane-settings">
+    <div class="card">
+      <div class="ch"><div class="ct">Change admin PIN</div></div>
+      <div class="cb">
+        <div class="form-grid" style="grid-template-columns:1fr 1fr auto">
+          <div class="fgroup">
+            <div class="flbl">New PIN</div>
+            <input type="password" id="newPin" inputmode="numeric" placeholder="New PIN">
+          </div>
+          <div class="fgroup">
+            <div class="flbl">Confirm new PIN</div>
+            <input type="password" id="confirmPin" inputmode="numeric" placeholder="Confirm new PIN">
+          </div>
+          <button class="btn btn-rye" onclick="changePin()">Save</button>
+        </div>
+        <div class="muted-note">This is the PIN anyone will need to get into this admin page. Use at least 4 digits, and share it only with the people who should have access.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /shell -->
+</div><!-- /admin-content -->
+
+<div id="toast"></div>
+
+<!-- Print frame (reliable on iOS) -->
+<div id="print-frame">
+  <button id="print-close" onclick="closePrintFrame()">&#10005; Close</button>
+  <div id="print-content"></div>
+</div>
