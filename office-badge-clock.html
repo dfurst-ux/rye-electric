@@ -1,103 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-clock_2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric -- Office Clock</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="./Rye Electric -- Office Clock_files/css2" rel="stylesheet">
 <style>
 :root{
-  --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
-  --dark:#1a1a1a;--mid:#444;--muted:#777;
-  --border:#e2e2e2;--bg:#F4F8F9;--white:#fff;
-  --green:#27ae60;--green-light:#eafaf1;
-  --red:#C0392B;--red-light:#f9eded;
-  --amber:#e67e22;--amber-light:#fef5ec;
-  --shadow:0 2px 8px rgba(0,0,0,.07);
-  --shadow-lg:0 6px 28px rgba(0,0,0,.14);
-  --radius:8px;
+  --ink:#15202B;--mid:#44505B;--muted:#7C8A94;
+  --teal:#2980b9;--teal-deep:#155a82;--teal-bright:#3FA9DC;
+  --spark:#FFC93C;--spark-deep:#E8A317;
+  --border:#E3ECF0;--white:#fff;
+  --bg-top:#EAF6FB;--bg-bottom:#F7FBFC;
+  --green:#1FA968;--green-light:#E8F9F0;
+  --red:#D64545;--red-light:#FCEAEA;
+  --amber:#E8A317;--amber-light:#FDF3DE;
+  --shadow:0 2px 10px rgba(21,32,43,.07);
+  --shadow-lg:0 12px 34px rgba(21,32,43,.16);
+  --radius:14px;
   --font:'Lato',Helvetica,Arial,sans-serif;
+  --display:'Poppins',var(--font);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{
+  font-family:var(--font);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  background:linear-gradient(180deg,var(--bg-top) 0%, var(--bg-bottom) 360px, var(--bg-bottom) 100%);
+}
 
-/* HEADER */
-.hdr{background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
-.hdr-in{max-width:560px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
-.wordmark{font-family:'Poppins',var(--font);font-weight:700;font-size:20px;line-height:1;letter-spacing:-.02em}
-.wordmark .rye{color:#000}
-.wordmark .electric{color:#79B7F1}
-.hdr-sub{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-left:10px;padding-left:10px;border-left:1px solid var(--border)}
-.hdr-clock{font-size:13px;font-weight:700;color:var(--mid);font-variant-numeric:tabular-nums}
+/* HEADER -- gradient band */
+.hdr{
+  background:linear-gradient(120deg,var(--teal) 0%, var(--teal-deep) 100%);
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 4px 18px rgba(21,90,130,.25);
+}
+.hdr-in{max-width:560px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.wordmark{font-family:var(--display);font-weight:800;font-size:20px;line-height:1;letter-spacing:-.02em;color:#fff;display:flex;align-items:center;gap:5px}
+.wordmark .bolt{color:var(--spark);font-size:17px}
+.wordmark .electric{color:#BFE3F7;font-weight:700}
+.hdr-sub{font-size:10.5px;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:.1em;text-transform:uppercase;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.3)}
+.hdr-clock{font-size:13.5px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.16);padding:6px 13px;border-radius:999px}
 
 /* SHELL */
-.shell{max-width:560px;margin:0 auto;padding:16px 20px 60px}
+.shell{max-width:560px;margin:0 auto;padding:24px 20px 60px}
 
 /* CARD */
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
-.ch{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa}
-.ct{font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
+.ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#FAFDFE}
+.ct{font-size:12px;font-weight:800;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
 
-/* SCAN ZONE */
-.scan-zone{border:2.5px dashed var(--teal);border-radius:12px;background:var(--teal-light);padding:34px 20px;text-align:center;margin-bottom:14px}
-.scan-zone-quote{font-size:14px;font-style:italic;font-weight:700;color:var(--teal-dark);max-width:380px;margin:0 auto 4px;line-height:1.4}
-.scan-zone-quote-author{font-size:11px;color:var(--mid);font-weight:700;margin-bottom:16px}
-.scan-zone-title{font-size:16px;font-weight:700;color:var(--teal-dark)}
-.scan-zone-sub{font-size:12px;color:var(--mid);margin-top:4px}
-#scanInput{
-  margin-top:16px;width:100%;max-width:320px;height:48px;text-align:center;
-  font-size:18px;font-weight:700;letter-spacing:.05em;border:1.5px solid var(--teal);
-  border-radius:var(--radius);outline:none;background:#fff;color:var(--dark);font-family:var(--font)
+/* SCAN ZONE -- signature glow panel */
+.scan-zone{
+  position:relative;text-align:center;margin-bottom:16px;
+  padding:40px 22px 32px;border-radius:22px;
+  border:2px solid transparent;
+  background:
+    linear-gradient(#fff,#fff) padding-box,
+    linear-gradient(135deg, var(--teal-bright), var(--spark)) border-box;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
 }
-#scanInput:focus{box-shadow:0 0 0 3px rgba(41,128,185,.18)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;height:42px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s}
-.btn-rye{background:var(--teal);color:#fff}
-.btn-rye:hover{background:var(--teal-dark)}
-.btn-g{background:#fff;color:var(--mid);border:1.5px solid var(--border)}
+.pulse-ring{
+  position:absolute;left:50%;top:50%;width:36px;height:36px;
+  margin:-18px 0 0 -18px;border-radius:50%;
+  border:3px solid var(--spark);
+  opacity:0;pointer-events:none;
+}
+.scan-zone.fire .pulse-ring{ animation:ring-burst .7s ease-out; }
+@keyframes ring-burst{
+  0%{opacity:.9;transform:scale(.4)}
+  100%{opacity:0;transform:scale(8)}
+}
+
+.scan-zone-quote{position:relative;font-size:13.5px;font-style:italic;font-weight:700;color:var(--teal-deep);max-width:380px;margin:0 auto 4px;line-height:1.4}
+.scan-zone-quote-author{position:relative;font-size:11px;color:var(--muted);font-weight:800;margin-bottom:18px}
+.scan-zone-logo{position:relative;margin-bottom:20px;display:flex;align-items:center;justify-content:center}
+.scan-zone-logo img{height:52px;width:auto;display:block}
+.scan-zone-title{position:relative;font-family:var(--display);font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.scan-zone-sub{position:relative;font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
+
+#scanInput{
+  position:relative;
+  margin-top:18px;width:100%;max-width:300px;height:54px;text-align:center;
+  font-size:20px;font-weight:800;letter-spacing:.06em;border:2px solid var(--teal);
+  border-radius:14px;outline:none;background:#fff;color:var(--ink);font-family:var(--font);
+  transition:box-shadow .15s, border-color .15s;
+}
+#scanInput:focus{box-shadow:0 0 0 5px rgba(41,128,185,.16);border-color:var(--teal-bright)}
+
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 20px;height:46px;border-radius:13px;font-family:var(--font);font-size:13.5px;font-weight:800;cursor:pointer;border:none;transition:all .15s}
+.btn-rye{background:var(--teal);color:#fff;box-shadow:0 4px 14px rgba(41,128,185,.3)}
+.btn-rye:hover{background:var(--teal-deep);transform:translateY(-1px)}
+.btn-g{background:#fff;color:var(--mid);border:2px solid var(--border)}
 .btn-g:hover{border-color:var(--teal);color:var(--teal)}
 
 /* RESULT PANEL */
-.result{border-radius:var(--radius);padding:16px 18px;margin-top:4px;display:none;animation:fi .2s ease;border-left:5px solid var(--green)}
+.result{border-radius:16px;padding:18px 20px;margin-top:4px;display:none;animation:pop .22s cubic-bezier(.2,.9,.3,1.3);border-left:6px solid var(--green);box-shadow:var(--shadow)}
 .result.on{display:block}
 .result.in{background:var(--green-light);border-left-color:var(--green)}
 .result.out{background:var(--amber-light);border-left-color:var(--amber)}
 .result.err{background:var(--red-light);border-left-color:var(--red)}
-@keyframes fi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-.result-name{font-size:18px;font-weight:900}
-.result-meta{font-size:12px;color:var(--mid);margin-top:3px}
-.result-badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;margin-top:8px}
+@keyframes pop{from{opacity:0;transform:scale(.96) translateY(-4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.result-name{font-family:var(--display);font-size:19px;font-weight:800}
+.result-meta{font-size:12.5px;color:var(--mid);margin-top:3px;font-weight:600}
+.result-badge{display:inline-block;font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;margin-top:9px}
 .result.in .result-badge{background:var(--green);color:#fff}
 .result.out .result-badge{background:var(--amber);color:#fff}
 
 /* ROSTER */
-.roster-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid #f0f0f0}
+.roster-row{display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid #F0F4F6}
 .roster-row:first-child{border-top:none}
-.roster-name{font-size:13px;font-weight:700}
-.roster-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.led-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(31,169,104,.18);flex-shrink:0;animation:led-pulse 2s ease-in-out infinite}
+@keyframes led-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.roster-name{font-size:13.5px;font-weight:800;flex:1}
+.roster-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:700}
 
 /* BADGE */
-.bdg{display:inline-block;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
-.b-ok{background:var(--green-light);color:#1a6b3e}
+.bdg{display:inline-block;font-size:9.5px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
+.b-ok{background:var(--green-light);color:#137A4A}
 
 /* TOAST */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg)}
+#toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;border-radius:12px;padding:13px 19px;font-size:13px;font-weight:700;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg)}
 #toast.on{opacity:1;transform:translateY(0)}
 
 /* CAMERA MODAL */
-#cam-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9998;align-items:center;justify-content:center;padding:20px}
+#cam-modal{display:none;position:fixed;inset:0;background:rgba(21,32,43,.78);z-index:9998;align-items:center;justify-content:center;padding:20px}
 #cam-modal.on{display:flex}
-.cam-box{background:#fff;border-radius:14px;padding:20px;max-width:420px;width:100%}
-.cam-video-wrap{position:relative;border-radius:10px;overflow:hidden;background:#000;margin-bottom:14px}
+.cam-box{background:#fff;border-radius:18px;padding:22px;max-width:420px;width:100%;box-shadow:var(--shadow-lg)}
+.cam-video-wrap{position:relative;border-radius:13px;overflow:hidden;background:#000;margin-bottom:14px}
 #cam-video{width:100%;display:block}
-.cam-frame{position:absolute;inset:15%;border:3px solid var(--teal);border-radius:8px;pointer-events:none}
+.cam-frame{position:absolute;inset:15%;border:3px solid var(--spark);border-radius:10px;pointer-events:none}
 
 /* COST CODE MODAL */
-#code-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9998;align-items:center;justify-content:center;padding:20px}
+#code-modal{display:none;position:fixed;inset:0;background:rgba(21,32,43,.78);z-index:9998;align-items:center;justify-content:center;padding:20px}
 #code-modal.on{display:flex}
 .fgroup{display:flex;flex-direction:column;gap:5px}
 select{
-  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
-  color:var(--dark);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;height:40px;width:100%
+  background:#fff;border:1.5px solid var(--border);border-radius:11px;
+  color:var(--ink);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;height:42px;width:100%
 }
 select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
 
@@ -109,26 +148,26 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
 <header class="hdr">
   <div class="hdr-in">
     <div style="display:flex;align-items:center">
-      <div class="wordmark"><span class="rye">rye</span> <span class="electric">electric</span></div>
+      <div class="wordmark"><span class="bolt">⚡</span>rye <span class="electric">electric</span></div>
       <div class="hdr-sub">Office Clock</div>
     </div>
-    <div class="hdr-clock" id="hdrClock">--:--:--</div>
+    <div class="hdr-clock" id="hdrClock">8:46:42 AM</div>
   </div>
 </header>
 
 <div class="shell">
 
-  <div class="scan-zone">
-    <div class="scan-zone-quote">&ldquo;Welcome! Let's stay positive and keep the negative charges outside.&rdquo;</div>
-    <div class="scan-zone-quote-author">&mdash; Chris Golden</div>
+  <div class="scan-zone" id="scanZone">
+    <div class="pulse-ring"></div>
+    <div class="scan-zone-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAAA/CAYAAADT2ffxAAAR3klEQVR4nO1deVAU15//vO45GW65BEQRRERELpFATKLsYsXfSkCiBtdNbWJ24252q0yq3Mppqkw0ZSqppBJTyW9T7pKYA0korRiN55qYQ9gEEkUEPAKI3MN9DMNM93f/aEGhe5hhHPBYPlWt5ev3Pd77vOP7jh5Zb28vCYKAadzd4HkejIjodjsyDdeAu90OTMN1mCbzHsI0mfcQpsm8h6ACAFEUMTYOYoyB45S5NplMaGhogEqlwuzZswEAgiCAMeawDkeh5NsweJ6fkC4iQldXF4xGIwYGBiCKIjQaDTw8PODv7w+9Xn9Lvt5uqPr6+rBt2zZUV1dDpVIBAKxWK+bPn4/t27fD3d19JHN9fT2Kiopw+PBhVFRUICMjA/n5+ejt7cXWrVvR2Ng4UsFEBK1Wi5dffhmLFy922sFdu3bh9OnT0Gg0I3pFUcSmTZuQk5PjkI5r167h5MmTOHXqFCorK9Ha2oq+vr4RMr28vBAcHIz4+HhkZGQgPT0d3t7eTvt822A0GikhIYEAjHoSEhLIaDQSEZEgCPTFF19QTEzMqDxZWVlksViIiOjxxx+X6QBAzz//PDmLy5cv04wZM2Q6vby86JdffrEr39bWRjt27KCoqCjiOE7Rv7GPVqultLQ0+vTTT8lkMjnt++0A2tvbKSkpSVaopKQk6ujoIFEU6dVXXyWdTifLs3r1ahoaGiIioiNHjpBWq5XlWbBgATU1NTnl3Pbt2xUrPDs7m6xW67iyp0+fpiVLljhEoNLD8zzl5ORQTU2NU77fDtgkMzk5mbq6umjHjh02C7xq1Soym81ERNTV1UX333+/Yr69e/dO2LHOzk6KjY1V1Ldv375xZQsLC8nPz89pIm9+Fi1aRKWlpU5V7lTDJpn33Xcfvf/++4o9cvhZuXLlqKHo7bfftpnPXk8ai8LCQsWhMTY2lrq6umzKffnll+Tp6WnTZ51OR5GRkZSWlkYPPfQQpaSkUGhoKPE8b1Nm8eLFVFlZ6XQlTxVgNBopMTFRVoDg4GAKDg6Wpfv5+VF6ejplZ2fTm2++OTLMEhFVVlbSrFmzFCvw559/dtgpq9VKubm5ihX72muv2ZQrKSmh0NBQRTkvLy966qmn6NChQ1RTU0Pd3d00MDBAHR0dVFVVRZ988gllZGTYJDU3N/eOn0Nt9syxT1hYGO3cuZPOnz9PXV1dI4HPWDzxxBOK8k8//bTDTpWWlpK/v79iQ7py5YqiTF9fH61evVrRdmpqKp0+fZoEQRjXbm9vL+3cuZP0er1MB8dx9NVXXzlchtsBh8hMTk6mc+fOOaTwyJEjpFarZTpCQ0OptrbWIR2vvPKKoh9PPvmkTZkDBw4o2l2xYgU1Nzc7ZHcYr7/+uqL9zMzMCU8XUwm7ZIaHh1N5ebnDCgcGBig1NVVR13vvvWdXvqWlheLj42WyGo2Gjh07pigjCAKtX79eJjNz5kz6/fffHfZ9GB0dHbR06VKZPoPBQNXV1RPWN1Wwuz3z0ksvITY21l62Eej1emzYsEHx3ddff43e3t5x5U+dOoWzZ8/K0lNTU5GamqooU19fjx9//FGWvmbNGsTHx9t3egx8fHyQnZ0tS+/v78fx48cnrG+qMC6ZS5cuxWOPPTZhpbm5uQgLC5Oll5aW4syZMzblBEHAvn37FLfvcnNz4eHhoShXW1sLo9EoS1++fPkEvB6N+fPnK25FNjQ0OK1zsqEa7+UjjzwCg8EwYaXBwcHIysrC7t27R6X39/ejqKgImZmZinLl5eU4ceKELH3OnDlYtWqVTXslJSUYGhoalcYYQ0tLC+rq6mA2myfkv1qtBhFBr9ejv79/1LuBgYEJ6ZpK2CRTo9EgPT3dacXr1q3Dnj17YDKZRqUfPXoUly9fRmRkpEymoKBAcRjOzMxUzD8MpV5JRNiyZQuee+45J7yX5Mc2EAB2p4nbCZvDrK+v78iJiDNITExEWlqaLL2urg6HDx+Wpbe0tKCgoECW7ubmhnXr1o1ry9YdJovFArPZ7NSjROR4tu4E2CTTx8cHOp3OacUGgwFr1qxRfFdYWCgbrg4ePIi6ujpZ3iVLltzSCOFqjD3mu5Ngk0ydTjdyJOYsVq5ciblz58rSS0pK8NNPP43822w2K/ZKAMjLy7PbqCZ6rnkrsFqtU2ZrorDJFsdxt9wKIyIisHLlSnz44Yej0q1WK/bu3TsSCJ05cwbFxcUy+bCwMIfOLENDQ2VpjDFs3rwZycnJsFgsTpZgNKxWK2JiYlyiazJwa13PAeTk5CA/P18WCB08eBDV1dWYP38+ioqKZFEjAGzYsAEBAQF2bSxduhRarXZU1EpEWLFiBR599NFbL8Rdgkm/A5Seno7ExERZend3N4qKitDQ0ICjR4/K3nt6etoNfIYRGhqKkJAQWfqBAwcgiuLEnb5LMelkurm5Ye3atYrv9u/fjz179uDKlSuydxkZGYiLi3PIRkhICDIyMmTphw4dcnrHRhRFGI3Gu6sxjHfToL293SV7hrW1tRQYGCizoVaryd3dXfGEwt4B9FicOHGCDAaDTFd0dDSVlJRM2Odvv/2WEhMT6fjx4xOWvV1AR0cHJScnTyqZRESbN2+2e8w2/MTHx1NLS8uE9FssFtq4caOivsDAQProo49oYGDArp6enh7atWsXeXt7EwCKiIi4+28auJrM77//XvGISunZtm2bUzaqqqpo3rx5NvWmpKTQu+++S8XFxVRbW0utra3U2NhIVVVVdPLkSdq+fTstWrRIJpeQkEAVFRUuq4vJwpSR2d/fTw888IBdIgMCAqisrMxpO9999x0FBASMa8NgMNDs2bMpKiqKIiIiKCgoyG5De+ONN1xWF5OFKSOTiOidd96xS+a6devs3giwh+PHj1NkZKTDw/p4j1arpS1btri8LiYDU0rmhQsXKCQkxGbFcRxHRUVFLrFVXl5Oq1evJsaY00RGR0fT559/bvOKzJ0Ghy5BuwqCIFBeXp7NyouLi6Pe3l6X2RscHKS9e/dSUlKSw5egOY6j6OhoeuONN6itrc1lvkwFVMOnEikpKSN7nIIgIDw8/JY22pXAcRyysrJQWFioePqwYcOGUZ9D3Cq0Wi02btyInJwcFBcX49ixY6ioqEBjYyP6+vogCMLI5wkzZ85ETEwMli1bhtTU1Lvy84Qp/3L6t99+w8MPPyw7gwwKCsKZM2cwZ86cSbVvtVrR09MDs9kMURShUqmg1+thMBimdMN+MjDpe7Nj0dTUhJ6eHll6VlbWpBMJACqVCr6+vpNu53ZgSr/PtFgsKCgokB38arVa5OXlTaUr9yRcTubHH3+M3bt3ywgTRREffPABCgsLZTLp6elYsmSJq135fweXDrO1tbV46623cPHiRRw8eBBr1qxBaGgoOjs7cejQIezfv1/xcHft2rVOXRy720EATFZAxwOcKy4wuDI0fvHFF2WhvlqtHnetl5SU5PQnfzdDJKLjdQL9tdxKf7Td2qbDRDAkEJmtRII4cdkfrgn08i8WOlwjkBPiMrhsmC0rK0N+fr4s3WKx2PyMXa/XY+vWrQgKCrpl+0RAaauIb2tEXOmamgDdIgKfVgp4q8yK8+0TOyoTCfi1RcQfbYQzTSLMLrgn5rJhtrCwEI2NjROSeeGFF7B+/XpXuQCeAWpO+nsqIBJQ3Umo7SGkzZxYA+IYsGIWD5EEpM3koHPBqshlZG7atAmXLl3CN998Y/fSk6enJ7Zt24Znn312QjZEAhgAW1eTHJl3iKTx3dE5iq7LKOVnAFSc9DjTgBL8GRL87VMgklRmeyZcRua8efPw2Wef4cCBA8jPz0dZWRk6OjpGTup5noe/vz+WLVuGZ555Bg8++KDDuv/sJpw1imgekAoUbAAW+3MI82CjCiiO0zlaBwi/txHqeglWEfDTATEzGKJ9OKgUJpv2QcJZI6G2m2ASAHc1EOXNsNifwU3F0DFIOFkvostM4BlQ3Exo6BOg4oBV4TzcVEBzP+F0gwgVB6yey6Oul1DaIuL+YA4h7gxnjYRzbSLm+zKkBI52om+IUN5OuNRF6LMAOhUQ7sEQ78/go1Om1aXRrF6vR15eHrKzs1FVVYXq6moYjUYQEQICArBw4UJERUWN/HKIPRCAI7UCDv4pot0MuKmkXmISgGNXRWTN5ZAZxo/Kr4TSVhEF1QLqewENL/Wkfgtw5CqwPISQO0+q/GH80Sai8JKImm6CcL1XigQc54FFfhz+OZZHzxBwuoHQOyS9r2gnnG8nuKmB5bM4uKkYWk2Eb2pE6FWAh4Zh/xURnYOEhTM4hLgDle0ivros4i9zOKQE3rD/Zzeh4KKACx2EIeGGfZ4BEd4MT8bwmOslJ3RSdoD0ej0SEhKQkJBwS3p+uCbg82oRHmpgYzSPBb4MIOBcu4jDNSK+qBLhp2NIDLAdx13qIuypENE7BKwK55ASyEHLA3W9hANXBByqFWHQAGsi+JH8/1UhosVEWOjLsCyYg7cWqO8j/E+9iP4hAscIoe4M/76Yx1/PC2juJ2RHcEgO4EAAvDRSRTMGaHnAKgJfXxLgp2f4m1kcgg3Se54BmuvD9DBaTYT/viCgupMw25NheSjDTANDmwn44ZqIfgspjiTAbdjOcxQmK3C4VhrC/jGGx9KgGyWI9ObBASi4KOJEvYiEAE5xHiUAx+pEGE2E3EgO66Nu9OJwLwYfHfB2mYAfrolYHsrBR8tw4qqIpgFCSiDDv8bxMKglxQkBwH1Bkp1hsuZ4Mmh5yU6QQdKpBLMAzPdheCaOh4dm/JnvxwYRFzsJkd4MW+J5BLjdyL80iKHbDIR5TMEw60pc6yN0DBK8tYBOxXCpi0bmRBUHaHgGDQdc7SUMWgG9QklMVkLzAEHHA/56hivd0nwJSEOX6bpcnwUYEoBuM6GiQ4RBBfxd+A0ih+HvZpsIW/M1QYqwH57D2SXSLAAXOwkcAzLDuFFEAlIj8hpnhrpjyewclCq+2wy897tVNh+KAKw0uhLHVlW/BRgUpAr9olqQVThBWitqr3dYgSRSeQ4wqF1TDiKpwcy20Ztuhlkg9AxJ83qAfuLh8R1LpqeWgeekil4xi4eGI9y898AxgCANc2pOOfjRq6Q5CQDSgjn464Gbr8Eydv33/ZgUoAxapfloyAL0KX8EJoMjq0sGQOXApx5qTgryhgSg2USIsbsYGY07lsxQd8Bbw9BhJoR7AkkBo1fVg9YbAQYg9dCxFWtQMfjrgUtdgJcaWB0+WodAUs8cXrBrOIYILw4lzSKO1gmY66WC7qYa6hgkdA8B4Z43AhzV9fp2xamwXsUQ7sVwvl0Kthb7Mcy4aRkyYAUa+wgR3kyR5juWTHc1Q0YYw95KwqeVInqGgIUzOKgY0NQv4nCtCDcVwz/F8tDY2D1hDFgxi8M5o4Bva0UQgPtmcjCoGDqHgO+vCbjaQ/iXOCnQUHHSsuJCh4iSFsLQH1asnM3DRws09RMO1ojoGSL8R5IKszwY1BwQ4cVQ1Un4tYUwz4fQbiIADHF+zm1DLQvm8GuLtL58p0zAX8Kl6LfTDByrE3Cpm/BMnArx/lO0NHEVMsN4dJulNeV/lgvw0AhgDBiwSL0wOYDBIhI017dfRJKWATfPjXF+HP4+WloafHVJxHd1ItScFGyYrNK6beCmDatEf4bHonjsvyKgrI1wzmiFlpdGAo6T3mtvqrWHQjmcbSOUtRKqO60wWaXINc5PBUaAIAJWpjwci5D8FW56OduT4R+iOXx5UcDlbsJ7ZwXoeclfkYBoXwYPG0HQHU2migPWzuOxwJdDaauIpn6p1P56qeUn+DPoVDeGvFg/DloVIcxzdKvNmMUh3JOhuFnE1V6CRQS8NFLFLAngZDsqfxvGYY4nw/82i6jvI1gJ8NdJNhMDuJGhHZCWJ/8Wz+PUNQHN/cAMHUN6sDRRe+kY7g+WdpjUCmvDOZ4My2dxiPIebT85kMNMd4biJhF/dhMGBcBHy7DAl2FJIIOnjaj4rvnfE4hutGCeKe/PjpTExj4mQdJB13dT7O3PDucH2bY51j/uJr008ocNf+28x3X7ooP+3jVkTsM+pn+j/R7CNJn3EKbJvIcwTeY9hGky7yFMk3kP4f8Apb12HixVi5IAAAAASUVORK5CYII=" alt="Rye Electric"></div>
     <div class="scan-zone-title">Scan your badge to clock in or out</div>
     <div class="scan-zone-sub">Use a barcode scanner, or tap below to scan with a camera</div>
     <form id="scanForm" onsubmit="return handleScanSubmit(event)">
-      <input type="text" id="scanInput" autocomplete="off" autofocus placeholder="Waiting for scan...">
+      <input type="text" id="scanInput" autocomplete="off" autofocus="" placeholder="Waiting for scan...">
     </form>
     <div style="margin-top:14px">
       <button class="btn btn-g" type="button" onclick="openCamera()">
-        &#128247; Scan with camera
+        📷 Scan with camera
       </button>
     </div>
     <div class="muted-note">No scanner handy? Type your employee ID above and press Enter.</div>
@@ -137,8 +176,8 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
   <div id="scanResult" class="result"></div>
 
   <div class="card">
-    <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
-    <div id="rosterList"></div>
+    <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">1</span></div>
+    <div id="rosterList"><div class="roster-row"><span class="led-dot"></span><span class="roster-name">Dennis Furst</span><span class="roster-time">since 8:41 AM</span></div></div>
   </div>
 
 </div><!-- /shell -->
@@ -150,7 +189,7 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
   <div class="cam-box">
     <div style="font-size:14px;font-weight:700;margin-bottom:10px">Scan badge with camera</div>
     <div class="cam-video-wrap">
-      <video id="cam-video" muted playsinline></video>
+      <video id="cam-video" muted="" playsinline=""></video>
       <div class="cam-frame"></div>
     </div>
     <button class="btn btn-g" style="width:100%" onclick="closeCamera()">Cancel</button>
@@ -172,8 +211,8 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3"></script>
+<script src="./Rye Electric -- Office Clock_files/supabase-js@2"></script>
+<script src="./Rye Electric -- Office Clock_files/library@0.21.3"></script>
 <script>
 /* ============================================================
    CONFIG -- same Supabase project/tables as the admin page
@@ -299,6 +338,13 @@ function showResult(kind, name, meta){
     '<div class="result-name">'+name+'</div>'
     +'<div class="result-meta">'+meta+'</div>'
     +(kind==='in'||kind==='out' ? '<div class="result-badge">'+(kind==='in'?'Clocked In':'Clocked Out')+'</div>' : '');
+
+  if(kind==='in' || kind==='out'){
+    const zone = document.getElementById('scanZone');
+    zone.classList.remove('fire');
+    void zone.offsetWidth; // restart animation if scanning back-to-back
+    zone.classList.add('fire');
+  }
 }
 
 /* ---------- clock-out cost code prompt ---------- */
@@ -373,7 +419,7 @@ async function loadRoster(){
     .map(p=>{
       const emp = staffList.find(e=>e.employee_id===p.employee_id);
       const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+p.employee_id;
-      return '<div class="roster-row"><span class="roster-name">'+name+'</span>'
+      return '<div class="roster-row"><span class="led-dot"></span><span class="roster-name">'+name+'</span>'
         +'<span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
     }).join('');
 }
@@ -440,5 +486,6 @@ async function loadCodesList(){
   document.getElementById('scanInput').focus();
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
