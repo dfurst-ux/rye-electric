@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0070)file:///C:/Users/Dennis%20Furst/Downloads/rye-id-badge-template_4.html -->
+<!-- saved from url=(0070)file:///C:/Users/Dennis%20Furst/Downloads/rye-id-badge-template_5.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Rye Electric — ID Badge Generator</title>
@@ -392,7 +392,10 @@
 <script>
   const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  let supabaseClient = null;
+  try{
+    if(window.supabase) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }catch(e){ console.error('Supabase init failed:', e); }
 
   const nameInput = document.getElementById('nameInput');
   const titleInput = document.getElementById('titleInput');
@@ -466,6 +469,7 @@
   });
 
   async function saveToRegistry(){
+    if(!supabaseClient) return;
     const empId = parseInt(idInput.value.trim(), 10);
     const name = nameInput.value.trim();
     const division = divisionSelect.value;
@@ -487,6 +491,10 @@
   async function loadRegistry(){
     const tbody = document.getElementById('registryTbody');
     if(!tbody) return;
+    if(!supabaseClient){
+      tbody.innerHTML = '<tr><td colspan="6">Badge history unavailable right now</td></tr>';
+      return;
+    }
     const { data, error } = await supabaseClient
       .from('rye_badge_registry')
       .select('*')
