@@ -86,6 +86,12 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 .week-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .week-label{flex:1;text-align:center;font-size:13px;font-weight:700}
 
+/* ROSTER */
+.roster-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid #f0f0f0}
+.roster-row:first-child{border-top:none}
+.roster-name{font-size:13px;font-weight:700}
+.roster-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+
 /* TOAST */
 #toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg)}
 #toast.on{opacity:1;transform:translateY(0)}
@@ -155,6 +161,11 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 
   <!-- ===== TIMECARDS TAB ===== -->
   <div class="pane on" id="pane-timecards">
+    <div class="card">
+      <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
+      <div id="rosterList"></div>
+    </div>
+
     <div class="card">
       <div class="cb">
         <div class="fgroup">
@@ -314,6 +325,9 @@ function fmtTime(d){
 function dateKeyLocal(d){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
+function startOfToday(){
+  const d=new Date(); d.setHours(0,0,0,0); return d;
+}
 
 /* ---------- header clock ---------- */
 function tickClock(){
@@ -397,9 +411,48 @@ function goTab(btn,name){
   ['timecards','staff','codes','settings'].forEach(n=>{
     document.getElementById('pane-'+n).className='pane'+(n===name?' on':'');
   });
-  if(name==='timecards') renderWeekLabel();
+  if(name==='timecards'){ renderWeekLabel(); loadRoster(); }
   if(name==='staff') loadStaff();
   if(name==='codes') loadCostCodes();
+}
+
+/* ============================================================
+   CURRENTLY CLOCKED IN (today's live roster)
+============================================================ */
+async function loadRoster(){
+  const { data, error } = await supabaseClient
+    .from('office_portal_punches')
+    .select('employee_id,event_type,punched_at')
+    .gte('punched_at', startOfToday().toISOString())
+    .order('punched_at',{ascending:true});
+
+  const list = document.getElementById('rosterList');
+  const countEl = document.getElementById('rosterCount');
+  if(!list || !countEl) return;
+  if(error || !data){
+    list.innerHTML = '<div class="roster-row"><span class="muted-note">Could not load roster</span></div>';
+    return;
+  }
+
+  const lastByEmp = {};
+  data.forEach(p => { lastByEmp[p.employee_id] = p; });
+
+  const currentlyIn = Object.values(lastByEmp).filter(p=>p.event_type==='in');
+  countEl.textContent = currentlyIn.length;
+
+  if(currentlyIn.length===0){
+    list.innerHTML = '<div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div>';
+    return;
+  }
+
+  list.innerHTML = currentlyIn
+    .sort((a,b)=> new Date(a.punched_at) - new Date(b.punched_at))
+    .map(p=>{
+      const emp = staffList.find(e=>e.employee_id===p.employee_id);
+      const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+p.employee_id;
+      return '<div class="roster-row"><span class="roster-name">'+name+'</span>'
+        +'<span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
+    }).join('');
 }
 
 /* ============================================================
@@ -706,7 +759,9 @@ async function deleteCostCode(code){
 async function initAdmin(){
   await loadStaff();
   await loadCostCodes();
+  loadRoster();
   renderWeekLabel();
+  setInterval(loadRoster, 30000);
 }
 
 (function initGate(){
