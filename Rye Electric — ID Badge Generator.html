@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0070)file:///C:/Users/Dennis%20Furst/Downloads/rye-id-badge-template_7.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Rye Electric — ID Badge Generator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./Rye Electric — ID Badge Generator_files/css2" rel="stylesheet">
-<script src="./Rye Electric — ID Badge Generator_files/JsBarcode.all.min.js.download"></script>
-<script src="./Rye Electric — ID Badge Generator_files/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Barlow+Condensed:wght@700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --logo-black:#000000;
@@ -270,11 +269,11 @@
   }
   .barcode-area{
     margin-top:auto;
-    padding:0.05in 0.16in 0.01in;
+    padding:0.04in 0.16in 0.01in;
     display:flex;
     justify-content:center;
   }
-  .barcode-area svg{width:100%; height:auto;}
+  .barcode-area canvas{width:0.85in; height:0.85in; image-rendering:pixelated;}
   .card-footer{
     text-align:center;
     font-size:6.4px;
@@ -367,7 +366,7 @@
           <div class="emp-id"><span class="id-label">EMP ID</span><span id="previewId">0907</span></div>
         </div>
         <div class="barcode-area">
-          <svg id="barcode" width="75px" height="42px" x="0px" y="0px" viewBox="0 0 75 42" xmlns="http://www.w3.org/2000/svg" version="1.1" style="transform: translate(0,0)"><rect x="0" y="0" width="75" height="42" style="fill:#ffffff;"></rect><g transform="translate(0, 0)" style="fill:#16242B;"><rect x="0" y="0" width="2.6" height="30"></rect><rect x="3.9000000000000004" y="0" width="1.3" height="30"></rect><rect x="7.800000000000001" y="0" width="3.9000000000000004" height="30"></rect><rect x="14.300000000000002" y="0" width="2.6" height="30"></rect><rect x="18.2" y="0" width="2.6" height="30"></rect><rect x="23.4" y="0" width="2.6" height="30"></rect><rect x="28.6" y="0" width="2.6" height="30"></rect><rect x="32.5" y="0" width="2.6" height="30"></rect><rect x="37.7" y="0" width="2.6" height="30"></rect><rect x="42.9" y="0" width="2.6" height="30"></rect><rect x="48.1" y="0" width="2.6" height="30"></rect><rect x="53.3" y="0" width="2.6" height="30"></rect><rect x="57.2" y="0" width="2.6" height="30"></rect><rect x="63.70000000000001" y="0" width="3.9000000000000004" height="30"></rect><rect x="68.9" y="0" width="1.3" height="30"></rect><rect x="71.5" y="0" width="2.6" height="30"></rect><text style="font: 10px Lato" text-anchor="middle" x="37.5" y="42">0000</text></g></svg>
+          <canvas id="barcode" width="100" height="100"></canvas>
         </div>
         <div class="card-footer">CA Lic #980345 &nbsp;·&nbsp; ryecompany.com</div>
       </div>
@@ -416,16 +415,14 @@
 
   function renderBarcode(){
     const value = idInput.value.trim() || '0000';
+    const canvas = document.getElementById('barcode');
     try{
-      JsBarcode("#barcode", value, {
-        format: "CODE128",
-        lineColor: "#16242B",
-        width: 1.3,
-        height: 30,
-        fontSize: 10,
-        margin: 0,
-        font: "Lato"
-      });
+      QRCode.toCanvas(canvas, value, {
+        width: 100,
+        margin: 1,
+        errorCorrectionLevel: 'H',
+        color: { dark: '#16242B', light: '#FFFFFF' }
+      }, function(err){ if(err) console.error('QR render failed:', err); });
     }catch(e){ /* ignore invalid mid-type */ }
   }
 
