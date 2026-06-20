@@ -319,7 +319,10 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 <!-- Print frame (reliable on iOS) -->
 <div id="print-frame">
   <button id="print-close" onclick="closePrintFrame()">&#10005; Close</button>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <div id="print-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ============================================================
    CONFIG -- same Supabase project/tables as office-badge-clock.html
@@ -920,5 +923,3 @@ async function initAdmin(){
 </script>
 </body>
 </html>
-  <div id="print-content"></div>
-</div>
