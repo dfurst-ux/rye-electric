@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)file:///C:/Users/Dennis%20Furst/Downloads/rye-id-badge-template_3.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Rye Electric — ID Badge Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Rye Electric — ID Badge Generator_files/css2" rel="stylesheet">
+<script src="./Rye Electric — ID Badge Generator_files/JsBarcode.all.min.js.download"></script>
+<script src="./Rye Electric — ID Badge Generator_files/supabase-js@2"></script>
+<style>
+  :root{
+    --logo-black:#000000;
+    --logo-blue:#79B7F1;
+    --brand-deep:#3D7FCB;
+    --service:#4E9DA8;
+    --office:#475569;
+    --bg:#F4F8F9;
+    --panel:#FFFFFF;
+    --ink:#16242B;
+    --ink-soft:#5C7480;
+    --line:#DCE6E9;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Lato',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+  }
+  .page{
+    display:flex;
+    flex-wrap:wrap;
+    gap:40px;
+    max-width:980px;
+    margin:0 auto;
+    padding:32px 24px 64px;
+  }
+  .panel{flex:1 1 320px;}
+
+  /* ---------- FORM ---------- */
+  .form-panel h1{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:800;
+    font-size:26px;
+    letter-spacing:.02em;
+    margin:0 0 4px;
+  }
+  .form-panel .hint{
+    color:var(--ink-soft);
+    font-size:13.5px;
+    line-height:1.5;
+    margin:0 0 24px;
+  }
+  label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .field{margin-bottom:18px;}
+  input[type=text], select{
+    width:100%;
+    font-family:'Lato',sans-serif;
+    font-size:15px;
+    padding:10px 12px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    background:var(--panel);
+    color:var(--ink);
+  }
+  input[type=text]:focus, select:focus{
+    outline:none;
+    border-color:var(--brand-deep);
+  }
+  .photo-input-wrap{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .photo-input-wrap input[type=file]{
+    font-size:13px;
+    flex:1;
+  }
+  .actions{
+    display:flex;
+    gap:10px;
+    margin-top:28px;
+  }
+  button{
+    font-family:'Barlow Condensed', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:.03em;
+    padding:12px 22px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+  }
+  #printBtn{
+    background:var(--brand-deep);
+    color:#fff;
+    flex:1;
+  }
+  #printBtn:hover{background:#2E68AC;}
+  #clearBtn{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1.5px solid var(--line);
+  }
+  #clearBtn:hover{border-color:var(--ink-soft); color:var(--ink);}
+
+  /* ---------- ISSUED BADGES REGISTRY ---------- */
+  .registry-wrap{max-width:980px;margin:0 auto;padding:0 24px 64px;}
+  .registry-card{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;overflow:hidden;}
+  .registry-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-bottom:1.5px solid var(--line);
+    font-family:'Barlow Condensed', sans-serif;font-weight:700;font-size:14px;
+    text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);
+  }
+  .ghost-btn{
+    background:transparent;border:1.5px solid var(--line);color:var(--ink-soft);
+    font-family:'Lato',sans-serif;font-size:12px;font-weight:700;
+    padding:6px 12px;border-radius:6px;cursor:pointer;
+  }
+  .ghost-btn:hover{border-color:var(--brand-deep);color:var(--brand-deep);}
+  #registryTable{width:100%;border-collapse:collapse;font-size:12.5px;}
+  #registryTable thead th{
+    text-align:left;padding:8px 14px;font-size:10px;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--ink-soft);background:#FAFCFC;border-bottom:1.5px solid var(--line);
+  }
+  #registryTable tbody td{padding:8px 14px;border-top:1px solid var(--line);color:var(--ink);}
+  @media print{ .registry-wrap{display:none;} }
+
+  /* ---------- PREVIEW STAGE ---------- */
+  .preview-panel{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .preview-label{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+  .stage{
+    width:404px;
+    height:641px;
+    position:relative;
+  }
+
+  /* ---------- THE CARD (true CR80 size: 2.125in x 3.375in) ---------- */
+  .card{
+    width:2.125in;
+    height:3.375in;
+    transform:scale(1.9);
+    transform-origin:top left;
+    background:var(--panel);
+    border-radius:0.1in;
+    box-shadow:0 18px 40px rgba(22,36,43,0.18);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .accent-stripe{
+    height:0.055in;
+    background:var(--logo-blue);
+    width:100%;
+    flex-shrink:0;
+  }
+  .card-header{
+    background:#fff;
+    padding:0.10in 0.14in 0.02in;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+  }
+  .wordmark{
+    font-family:'Poppins', sans-serif;
+    line-height:1;
+  }
+  .wordmark .rye{
+    display:block;
+    font-weight:800;
+    font-size:30px;
+    color:var(--logo-black);
+    letter-spacing:-.01em;
+  }
+  .wordmark .electric{
+    display:block;
+    font-weight:700;
+    font-size:16px;
+    color:var(--logo-blue);
+    letter-spacing:.01em;
+    margin-top:1px;
+  }
+  .division-tag{
+    font-family:'Barlow Condensed', sans-serif;
+    font-size:7.5px;
+    font-weight:700;
+    letter-spacing:.09em;
+    color:#fff;
+    padding:3px 7px;
+    border-radius:20px;
+    margin-top:3px;
+  }
+  .photo-frame{
+    width:1.5in;
+    height:1.5in;
+    border-radius:50%;
+    background:#E7EEF0 center/cover no-repeat;
+    border:3px solid #fff;
+    box-shadow:0 0 0 2.5px var(--brand-deep);
+    margin:0.02in auto 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--ink-soft);
+    font-size:11px;
+    font-weight:700;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+  .card-body{
+    text-align:center;
+    padding:0.04in 0.12in 0;
+  }
+  .emp-name{
+    font-family:'Lato',sans-serif;
+    font-weight:900;
+    font-size:14px;
+    color:var(--ink);
+    line-height:1.15;
+  }
+  .emp-title{
+    font-size:9.5px;
+    color:var(--ink-soft);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-top:2px;
+  }
+  .divider{
+    width:0.5in;
+    height:1px;
+    background:rgba(121,183,241,0.45);
+    margin:0.05in auto;
+  }
+  .emp-id{
+    font-size:10px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .emp-id .id-label{
+    color:var(--ink-soft);
+    font-weight:700;
+    letter-spacing:.08em;
+    margin-right:5px;
+    font-size:8px;
+  }
+  .barcode-area{
+    margin-top:auto;
+    padding:0.05in 0.16in 0.01in;
+    display:flex;
+    justify-content:center;
+  }
+  .barcode-area svg{width:100%; height:auto;}
+  .card-footer{
+    text-align:center;
+    font-size:6.4px;
+    color:var(--ink-soft);
+    letter-spacing:.03em;
+    padding-bottom:0.05in;
+  }
+
+  @media print{
+    body *{visibility:hidden;}
+    .card, .card *{visibility:visible;}
+    .card{
+      position:fixed;
+      top:0; left:0;
+      transform:none;
+      box-shadow:none;
+      border-radius:0;
+    }
+    .card, .card *{
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+      color-adjust:exact;
+    }
+    @page{ size:2.125in 3.375in; margin:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="panel form-panel no-print">
+    <h1>Rye Electric ID Badge</h1>
+    <p class="hint">Fill in one employee, click Print, select your PVC card printer in the print dialog at 100% scale — then Clear and do the next.</p>
+
+    <div class="field">
+      <label for="division">Division</label>
+      <select id="division">
+        <option value="FIELD" data-color="#3D7FCB">Field</option>
+        <option value="SERVICE" data-color="#4E9DA8">Service</option>
+        <option value="OFFICE" data-color="#475569">Office</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="photoInput">Photo</label>
+      <div class="photo-input-wrap">
+        <input type="file" id="photoInput" accept="image/*">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="nameInput">Full Name</label>
+      <input type="text" id="nameInput" placeholder="Jane Doe">
+    </div>
+
+    <div class="field">
+      <label for="titleInput">Title / Position</label>
+      <input type="text" id="titleInput" placeholder="Apprentice Electrician">
+    </div>
+
+    <div class="field">
+      <label for="idInput">Employee ID</label>
+      <input type="text" id="idInput" placeholder="0907">
+    </div>
+
+    <div class="actions">
+      <button id="printBtn">Print Card</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+  </div>
+
+  <div class="panel preview-panel">
+    <div class="preview-label">Live Preview — true size 2.125" × 3.375"</div>
+    <div class="stage">
+      <div class="card" id="card">
+        <div class="accent-stripe"></div>
+        <div class="card-header">
+          <div class="wordmark">
+            <span class="rye">rye</span>
+            <span class="electric">electric</span>
+          </div>
+          <div class="division-tag" id="divisionTag" style="background: rgb(61, 127, 203);">FIELD</div>
+        </div>
+        <div class="photo-frame" id="photoFrame">+ Photo</div>
+        <div class="card-body">
+          <div class="emp-name" id="previewName">Jane Doe</div>
+          <div class="emp-title" id="previewTitle">Apprentice Electrician</div>
+          <div class="divider"></div>
+          <div class="emp-id"><span class="id-label">EMP ID</span><span id="previewId">0907</span></div>
+        </div>
+        <div class="barcode-area">
+          <svg id="barcode" width="75px" height="42px" x="0px" y="0px" viewBox="0 0 75 42" xmlns="http://www.w3.org/2000/svg" version="1.1" style="transform: translate(0,0)"><rect x="0" y="0" width="75" height="42" style="fill:#ffffff;"></rect><g transform="translate(0, 0)" style="fill:#16242B;"><rect x="0" y="0" width="2.6" height="30"></rect><rect x="3.9000000000000004" y="0" width="1.3" height="30"></rect><rect x="7.800000000000001" y="0" width="3.9000000000000004" height="30"></rect><rect x="14.300000000000002" y="0" width="2.6" height="30"></rect><rect x="18.2" y="0" width="2.6" height="30"></rect><rect x="23.4" y="0" width="2.6" height="30"></rect><rect x="28.6" y="0" width="2.6" height="30"></rect><rect x="32.5" y="0" width="2.6" height="30"></rect><rect x="37.7" y="0" width="2.6" height="30"></rect><rect x="42.9" y="0" width="2.6" height="30"></rect><rect x="48.1" y="0" width="2.6" height="30"></rect><rect x="53.3" y="0" width="2.6" height="30"></rect><rect x="57.2" y="0" width="2.6" height="30"></rect><rect x="63.70000000000001" y="0" width="3.9000000000000004" height="30"></rect><rect x="68.9" y="0" width="1.3" height="30"></rect><rect x="71.5" y="0" width="2.6" height="30"></rect><text style="font: 10px Lato" text-anchor="middle" x="37.5" y="42">0000</text></g></svg>
+        </div>
+        <div class="card-footer">CA Lic #980345 &nbsp;·&nbsp; ryecompany.com</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="registry-wrap no-print">
+  <div class="registry-card">
+    <div class="registry-head">
+      <span>Issued Badges</span>
+      <button id="refreshRegistryBtn" class="ghost-btn" type="button">Refresh</button>
+    </div>
+    <table id="registryTable">
+      <thead><tr><th>ID</th><th>Name</th><th>Division</th><th>Title</th><th>First Printed</th><th>Last Printed</th></tr></thead>
+      <tbody id="registryTbody"><tr><td colspan="6">No badges printed yet</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const nameInput = document.getElementById('nameInput');
+  const titleInput = document.getElementById('titleInput');
+  const idInput = document.getElementById('idInput');
+  const divisionSelect = document.getElementById('division');
+  const photoInput = document.getElementById('photoInput');
+
+  const previewName = document.getElementById('previewName');
+  const previewTitle = document.getElementById('previewTitle');
+  const previewId = document.getElementById('previewId');
+  const divisionTag = document.getElementById('divisionTag');
+  const photoFrame = document.getElementById('photoFrame');
+
+  function renderBarcode(){
+    const value = idInput.value.trim() || '0000';
+    try{
+      JsBarcode("#barcode", value, {
+        format: "CODE128",
+        lineColor: "#16242B",
+        width: 1.3,
+        height: 30,
+        fontSize: 10,
+        margin: 0,
+        font: "Lato"
+      });
+    }catch(e){ /* ignore invalid mid-type */ }
+  }
+
+  function syncPreview(){
+    previewName.textContent = nameInput.value.trim() || 'Jane Doe';
+    previewTitle.textContent = titleInput.value.trim() || 'Apprentice Electrician';
+    previewId.textContent = idInput.value.trim() || '0907';
+
+    const opt = divisionSelect.options[divisionSelect.selectedIndex];
+    divisionTag.textContent = opt.value;
+    divisionTag.style.background = opt.dataset.color;
+
+    renderBarcode();
+  }
+
+  [nameInput, titleInput, idInput].forEach(el => el.addEventListener('input', syncPreview));
+  divisionSelect.addEventListener('change', syncPreview);
+
+  photoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      photoFrame.style.backgroundImage = `url(${ev.target.result})`;
+      photoFrame.textContent = '';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => {
+    saveToRegistry();
+    window.print();
+  });
+
+  document.getElementById('refreshRegistryBtn').addEventListener('click', loadRegistry);
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    nameInput.value = '';
+    titleInput.value = '';
+    idInput.value = '';
+    photoInput.value = '';
+    photoFrame.style.backgroundImage = 'none';
+    photoFrame.textContent = '+ Photo';
+    divisionSelect.selectedIndex = 0;
+    syncPreview();
+  });
+
+  async function saveToRegistry(){
+    const empId = parseInt(idInput.value.trim(), 10);
+    const name = nameInput.value.trim();
+    const division = divisionSelect.value;
+    const title = titleInput.value.trim();
+
+    if(!empId || !name) return; // nothing meaningful to log yet
+
+    const { error } = await supabaseClient.from('rye_badge_registry').upsert({
+      employee_id: empId,
+      full_name: name,
+      title: title || null,
+      division: division,
+      last_printed_at: new Date().toISOString()
+    }, { onConflict: 'employee_id' });
+
+    if(!error) loadRegistry();
+  }
+
+  async function loadRegistry(){
+    const tbody = document.getElementById('registryTbody');
+    if(!tbody) return;
+    const { data, error } = await supabaseClient
+      .from('rye_badge_registry')
+      .select('*')
+      .order('last_printed_at', { ascending: false });
+
+    if(error){
+      tbody.innerHTML = '<tr><td colspan="6">Could not load registry</td></tr>';
+      return;
+    }
+    if(!data || data.length === 0){
+      tbody.innerHTML = '<tr><td colspan="6">No badges printed yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(r => {
+      const fp = new Date(r.first_printed_at).toLocaleDateString();
+      const lp = new Date(r.last_printed_at).toLocaleDateString();
+      return '<tr><td>'+r.employee_id+'</td><td>'+r.full_name+'</td><td>'+r.division+'</td><td>'+(r.title||'--')+'</td><td>'+fp+'</td><td>'+lp+'</td></tr>';
+    }).join('');
+  }
+
+  syncPreview();
+  loadRegistry();
+</script>
+
+
+
+</body></html>
