@@ -416,14 +416,20 @@
   function renderBarcode(){
     const value = idInput.value.trim() || '0000';
     const canvas = document.getElementById('barcode');
-    try{
-      QRCode.toCanvas(canvas, value, {
-        width: 100,
-        margin: 1,
-        errorCorrectionLevel: 'H',
-        color: { dark: '#16242B', light: '#FFFFFF' }
-      }, function(err){ if(err) console.error('QR render failed:', err); });
-    }catch(e){ /* ignore invalid mid-type */ }
+    if(typeof QRCode === 'undefined'){
+      console.error('QRCode library did not load -- check Network tab for a failed/blocked request to cdn.jsdelivr.net');
+      return;
+    }
+    if(!canvas){
+      console.error('Could not find the #barcode canvas element');
+      return;
+    }
+    QRCode.toCanvas(canvas, value, {
+      width: 100,
+      margin: 1,
+      errorCorrectionLevel: 'H',
+      color: { dark: '#16242B', light: '#FFFFFF' }
+    }, function(err){ if(err) console.error('QR render failed:', err); });
   }
 
   function syncPreview(){
