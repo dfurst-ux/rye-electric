@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rye Electric -- Office Clock</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
+  --dark:#1a1a1a;--mid:#444;--muted:#777;
+  --border:#e2e2e2;--bg:#F4F8F9;--white:#fff;
+  --green:#27ae60;--green-light:#eafaf1;
+  --red:#C0392B;--red-light:#f9eded;
+  --amber:#e67e22;--amber-light:#fef5ec;
+  --shadow:0 2px 8px rgba(0,0,0,.07);
+  --shadow-lg:0 6px 28px rgba(0,0,0,.14);
+  --radius:8px;
+  --font:'Lato',Helvetica,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+.hdr{background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.hdr-in{max-width:560px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.wordmark{font-family:'Poppins',var(--font);font-weight:700;font-size:20px;line-height:1;letter-spacing:-.02em}
+.wordmark .rye{color:#000}
+.wordmark .electric{color:#79B7F1}
+.hdr-sub{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-left:10px;padding-left:10px;border-left:1px solid var(--border)}
+.hdr-clock{font-size:13px;font-weight:700;color:var(--mid);font-variant-numeric:tabular-nums}
+
+/* SHELL */
+.shell{max-width:560px;margin:0 auto;padding:16px 20px 60px}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
+.ch{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa}
+.ct{font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
+
+/* SCAN ZONE */
+.scan-zone{border:2.5px dashed var(--teal);border-radius:12px;background:var(--teal-light);padding:34px 20px;text-align:center;margin-bottom:14px}
+.scan-zone-quote{font-size:14px;font-style:italic;font-weight:700;color:var(--teal-dark);max-width:380px;margin:0 auto 4px;line-height:1.4}
+.scan-zone-quote-author{font-size:11px;color:var(--mid);font-weight:700;margin-bottom:16px}
+.scan-zone-title{font-size:16px;font-weight:700;color:var(--teal-dark)}
+.scan-zone-sub{font-size:12px;color:var(--mid);margin-top:4px}
+#scanInput{
+  margin-top:16px;width:100%;max-width:320px;height:48px;text-align:center;
+  font-size:18px;font-weight:700;letter-spacing:.05em;border:1.5px solid var(--teal);
+  border-radius:var(--radius);outline:none;background:#fff;color:var(--dark);font-family:var(--font)
+}
+#scanInput:focus{box-shadow:0 0 0 3px rgba(41,128,185,.18)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;height:42px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s}
+.btn-rye{background:var(--teal);color:#fff}
+.btn-rye:hover{background:var(--teal-dark)}
+.btn-g{background:#fff;color:var(--mid);border:1.5px solid var(--border)}
+.btn-g:hover{border-color:var(--teal);color:var(--teal)}
+
+/* RESULT PANEL */
+.result{border-radius:var(--radius);padding:16px 18px;margin-top:4px;display:none;animation:fi .2s ease;border-left:5px solid var(--green)}
+.result.on{display:block}
+.result.in{background:var(--green-light);border-left-color:var(--green)}
+.result.out{background:var(--amber-light);border-left-color:var(--amber)}
+.result.err{background:var(--red-light);border-left-color:var(--red)}
+@keyframes fi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.result-name{font-size:18px;font-weight:900}
+.result-meta{font-size:12px;color:var(--mid);margin-top:3px}
+.result-badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;margin-top:8px}
+.result.in .result-badge{background:var(--green);color:#fff}
+.result.out .result-badge{background:var(--amber);color:#fff}
+
+/* ROSTER */
+.roster-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid #f0f0f0}
+.roster-row:first-child{border-top:none}
+.roster-name{font-size:13px;font-weight:700}
+.roster-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* BADGE */
+.bdg{display:inline-block;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
+.b-ok{background:var(--green-light);color:#1a6b3e}
+
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg)}
+#toast.on{opacity:1;transform:translateY(0)}
+
+/* CAMERA MODAL */
+#cam-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9998;align-items:center;justify-content:center;padding:20px}
+#cam-modal.on{display:flex}
+.cam-box{background:#fff;border-radius:14px;padding:20px;max-width:420px;width:100%}
+.cam-video-wrap{position:relative;border-radius:10px;overflow:hidden;background:#000;margin-bottom:14px}
+#cam-video{width:100%;display:block}
+.cam-frame{position:absolute;inset:15%;border:3px solid var(--teal);border-radius:8px;pointer-events:none}
+
+/* COST CODE MODAL */
+#code-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9998;align-items:center;justify-content:center;padding:20px}
+#code-modal.on{display:flex}
+.fgroup{display:flex;flex-direction:column;gap:5px}
+select{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
+  color:var(--dark);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;height:40px;width:100%
+}
+select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
+
+.muted-note{font-size:11px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div style="display:flex;align-items:center">
+      <div class="wordmark"><span class="rye">rye</span> <span class="electric">electric</span></div>
+      <div class="hdr-sub">Office Clock</div>
+    </div>
+    <div class="hdr-clock" id="hdrClock">--:--:--</div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <div class="scan-zone">
+    <div class="scan-zone-quote">&ldquo;Welcome! Let's stay positive and keep the negative charges outside.&rdquo;</div>
+    <div class="scan-zone-quote-author">&mdash; Chris Golden</div>
+    <div class="scan-zone-title">Scan your badge to clock in or out</div>
+    <div class="scan-zone-sub">Use a barcode scanner, or tap below to scan with a camera</div>
+    <form id="scanForm" onsubmit="return handleScanSubmit(event)">
+      <input type="text" id="scanInput" autocomplete="off" autofocus placeholder="Waiting for scan...">
+    </form>
+    <div style="margin-top:14px">
+      <button class="btn btn-g" type="button" onclick="openCamera()">
+        &#128247; Scan with camera
+      </button>
+    </div>
+    <div class="muted-note">No scanner handy? Type your employee ID above and press Enter.</div>
+  </div>
+
+  <div id="scanResult" class="result"></div>
+
+  <div class="card">
+    <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
+    <div id="rosterList"></div>
+  </div>
+
+</div><!-- /shell -->
+
+<div id="toast"></div>
+
+<!-- Camera scan modal -->
+<div id="cam-modal">
+  <div class="cam-box">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px">Scan badge with camera</div>
+    <div class="cam-video-wrap">
+      <video id="cam-video" muted playsinline></video>
+      <div class="cam-frame"></div>
+    </div>
+    <button class="btn btn-g" style="width:100%" onclick="closeCamera()">Cancel</button>
+  </div>
+</div>
+
+<!-- Clock-out cost code modal -->
+<div id="code-modal">
+  <div class="cam-box">
+    <div style="font-size:14px;font-weight:700;margin-bottom:2px">What did you work on today?</div>
+    <div class="muted-note" id="codeModalName" style="margin-bottom:14px">--</div>
+    <div class="fgroup" style="margin-bottom:14px">
+      <select id="codeModalSelect">
+        <option value="">-- Select a cost code --</option>
+      </select>
+    </div>
+    <button class="btn btn-rye" style="width:100%;margin-bottom:8px" onclick="saveDayCode()">Save &amp; finish clocking out</button>
+    <button class="btn btn-g" style="width:100%" onclick="skipDayCode()">Skip for now</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3"></script>
+<script>
+/* ============================================================
+   CONFIG -- same Supabase project/tables as the admin page
+   (office-badge-admin.html). This page only ever reads the
+   staff/cost-code lists and writes punches + day codes --
+   it never inserts/edits/deletes staff or cost codes.
+============================================================ */
+const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let staffList = [];          // all office_portal_employees rows
+let codesList = [];          // all office_portal_cost_codes rows
+let pendingClockOut = null;  // {employee_id, name} while the cost-code modal is open
+
+/* ---------- helpers ---------- */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('on'),3000);
+}
+function fmtDate(d){
+  return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
+function fmtTime(d){
+  return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+function startOfToday(){
+  const d=new Date(); d.setHours(0,0,0,0); return d;
+}
+function dateKeyLocal(d){
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+/* ---------- header clock ---------- */
+function tickClock(){
+  document.getElementById('hdrClock').textContent =
+    new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit'});
+}
+setInterval(tickClock,1000); tickClock();
+
+/* ============================================================
+   CLOCK
+============================================================ */
+function handleScanSubmit(e){
+  e.preventDefault();
+  const input=document.getElementById('scanInput');
+  const val=input.value.trim();
+  input.value='';
+  if(val) processScan(val,'scanner');
+  return false;
+}
+
+async function processScan(rawValue, source){
+  const empId = parseInt(rawValue.replace(/\D/g,''),10);
+  if(!empId || isNaN(empId)){
+    showResult('err','Invalid badge','That barcode did not contain a valid employee ID.');
+    refocusScan();
+    return;
+  }
+
+  const emp = staffList.find(e=>e.employee_id===empId);
+  if(!emp){
+    showResult('err','Unknown badge', 'Employee ID '+empId+' is not in the staff roster yet.');
+    refocusScan();
+    return;
+  }
+  if(!emp.active){
+    showResult('err',emp.first_name+' '+emp.last_name,'This staff member is marked inactive.');
+    refocusScan();
+    return;
+  }
+
+  // Find their most recent punch today to decide in vs out
+  const { data: lastPunch, error: lastErr } = await supabaseClient
+    .from('office_portal_punches')
+    .select('*')
+    .eq('employee_id', empId)
+    .gte('punched_at', startOfToday().toISOString())
+    .order('punched_at',{ascending:false})
+    .limit(1);
+
+  if(lastErr){
+    showResult('err','Connection error','Could not reach the database. Check your internet connection and try again.');
+    refocusScan();
+    return;
+  }
+
+  const newType = (!lastPunch || lastPunch.length===0 || lastPunch[0].event_type==='out') ? 'in' : 'out';
+
+  const { error: insErr } = await supabaseClient.from('office_portal_punches').insert({
+    employee_id: empId,
+    event_type: newType,
+    source: source
+  });
+
+  if(insErr){
+    showResult('err','Could not save scan',insErr.message);
+    refocusScan();
+    return;
+  }
+
+  showResult(newType, emp.first_name+' '+emp.last_name, fmtTime(new Date())+' -- clocked '+newType.toUpperCase());
+  loadRoster();
+
+  if(newType==='out'){
+    openCostCodeModal(empId, emp.first_name+' '+emp.last_name);
+  } else {
+    refocusScan();
+  }
+}
+
+function refocusScan(){
+  const input=document.getElementById('scanInput');
+  if(input) setTimeout(()=>input.focus(),50);
+}
+
+function showResult(kind, name, meta){
+  const el=document.getElementById('scanResult');
+  el.className='result on '+(kind==='in'?'in':kind==='out'?'out':'err');
+  el.innerHTML =
+    '<div class="result-name">'+name+'</div>'
+    +'<div class="result-meta">'+meta+'</div>'
+    +(kind==='in'||kind==='out' ? '<div class="result-badge">'+(kind==='in'?'Clocked In':'Clocked Out')+'</div>' : '');
+}
+
+/* ---------- clock-out cost code prompt ---------- */
+function openCostCodeModal(employeeId, name){
+  pendingClockOut = { employee_id: employeeId, name: name };
+  document.getElementById('codeModalName').textContent = name + ' -- today, ' + fmtDate(new Date());
+
+  const sel = document.getElementById('codeModalSelect');
+  sel.innerHTML = '<option value="">-- Select a cost code --</option>'
+    + codesList.filter(c=>c.active).map(c=>'<option value="'+c.code+'">'+c.code+' -- '+c.label+'</option>').join('');
+
+  document.getElementById('code-modal').classList.add('on');
+}
+
+async function saveDayCode(){
+  const code = document.getElementById('codeModalSelect').value;
+  if(!code){ toast('Pick a cost code, or tap Skip for now'); return; }
+  if(!pendingClockOut) { closeCostCodeModal(); return; }
+
+  const today = new Date();
+  const workDate = dateKeyLocal(today);
+
+  const { error } = await supabaseClient.from('office_portal_day_codes').upsert({
+    employee_id: pendingClockOut.employee_id,
+    work_date: workDate,
+    cost_code: code
+  }, { onConflict: 'employee_id,work_date' });
+
+  if(error){ toast('Could not save cost code: '+error.message); return; }
+  toast('Saved -- have a good one, '+pendingClockOut.name.split(' ')[0]+'!');
+  closeCostCodeModal();
+}
+
+function skipDayCode(){
+  closeCostCodeModal();
+}
+
+function closeCostCodeModal(){
+  document.getElementById('code-modal').classList.remove('on');
+  pendingClockOut = null;
+  refocusScan();
+}
+
+async function loadRoster(){
+  // Latest punch per employee today, keep the ones currently "in"
+  const { data, error } = await supabaseClient
+    .from('office_portal_punches')
+    .select('employee_id,event_type,punched_at')
+    .gte('punched_at', startOfToday().toISOString())
+    .order('punched_at',{ascending:true});
+
+  const list = document.getElementById('rosterList');
+  const countEl = document.getElementById('rosterCount');
+  if(error || !data){
+    list.innerHTML = '<div class="roster-row"><span class="muted-note">Could not load roster</span></div>';
+    return;
+  }
+
+  const lastByEmp = {};
+  data.forEach(p => { lastByEmp[p.employee_id] = p; });
+
+  const currentlyIn = Object.values(lastByEmp).filter(p=>p.event_type==='in');
+  countEl.textContent = currentlyIn.length;
+
+  if(currentlyIn.length===0){
+    list.innerHTML = '<div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div>';
+    return;
+  }
+
+  list.innerHTML = currentlyIn
+    .sort((a,b)=> new Date(a.punched_at) - new Date(b.punched_at))
+    .map(p=>{
+      const emp = staffList.find(e=>e.employee_id===p.employee_id);
+      const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+p.employee_id;
+      return '<div class="roster-row"><span class="roster-name">'+name+'</span>'
+        +'<span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
+    }).join('');
+}
+
+/* ---------- camera scanning (ZXing) ---------- */
+let zxingReader = null;
+let zxingControls = null;
+
+async function openCamera(){
+  document.getElementById('cam-modal').classList.add('on');
+  try{
+    zxingReader = new ZXing.BrowserMultiFormatReader();
+    const videoEl = document.getElementById('cam-video');
+    zxingControls = await zxingReader.decodeFromVideoDevice(undefined, videoEl, (result, err)=>{
+      if(result){
+        const text = result.getText();
+        closeCamera();
+        processScan(text,'camera');
+      }
+    });
+  }catch(e){
+    toast('Camera unavailable: '+e.message);
+    closeCamera();
+  }
+}
+
+function closeCamera(){
+  document.getElementById('cam-modal').classList.remove('on');
+  try{
+    if(zxingControls && zxingControls.stop) zxingControls.stop();
+    if(zxingReader && zxingReader.reset) zxingReader.reset();
+  }catch(e){}
+  zxingControls = null;
+  zxingReader = null;
+}
+
+/* ============================================================
+   DATA LOADING (read-only on this page)
+============================================================ */
+async function loadStaffList(){
+  const { data, error } = await supabaseClient
+    .from('office_portal_employees')
+    .select('*');
+  if(error){ toast('Could not load staff list: '+error.message); return; }
+  staffList = data || [];
+}
+
+async function loadCodesList(){
+  const { data, error } = await supabaseClient
+    .from('office_portal_cost_codes')
+    .select('*')
+    .order('sort_order',{ascending:true});
+  if(error){ toast('Could not load cost codes: '+error.message); return; }
+  codesList = data || [];
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+(async function init(){
+  await loadStaffList();
+  await loadCodesList();
+  loadRoster();
+  document.getElementById('scanInput').focus();
+})();
+</script>
+</body>
+</html>
