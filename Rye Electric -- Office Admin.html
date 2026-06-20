@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-admin_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rye Electric -- Office Admin</title>
+<link href="./Rye Electric -- Office Admin_files/css2" rel="stylesheet">
+<style>
+:root{
+  --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
+  --dark:#1a1a1a;--mid:#444;--muted:#777;
+  --border:#e2e2e2;--bg:#F4F8F9;--white:#fff;
+  --green:#27ae60;--green-light:#eafaf1;
+  --red:#C0392B;--red-light:#f9eded;
+  --amber:#e67e22;--amber-light:#fef5ec;
+  --shadow:0 2px 8px rgba(0,0,0,.07);
+  --shadow-lg:0 6px 28px rgba(0,0,0,.14);
+  --radius:8px;
+  --font:'Lato',Helvetica,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+.hdr{background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.hdr-in{max-width:880px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.wordmark{font-family:'Poppins',var(--font);font-weight:700;font-size:20px;line-height:1;letter-spacing:-.02em}
+.wordmark .rye{color:#000}
+.wordmark .electric{color:#79B7F1}
+.hdr-sub{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-left:10px;padding-left:10px;border-left:1px solid var(--border)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-clock{font-size:13px;font-weight:700;color:var(--mid);font-variant-numeric:tabular-nums}
+.lock-btn{background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.lock-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* SHELL */
+.shell{max-width:880px;margin:0 auto;padding:0 20px 60px}
+
+/* TABS */
+.tabs{display:flex;gap:3px;background:var(--white);border:1px solid var(--border);padding:5px;border-radius:10px;margin:16px 0;box-shadow:var(--shadow)}
+.tab{flex:1;padding:10px 6px;font-size:13px;font-weight:700;border:none;cursor:pointer;border-radius:7px;background:transparent;color:var(--muted);font-family:var(--font);transition:all .14s}
+.tab.on{background:var(--teal);color:#fff}
+.tab:not(.on):hover{background:var(--teal-light);color:var(--teal)}
+.pane{display:none}
+.pane.on{display:block}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
+.ch{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa}
+.ct{font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
+.cb{padding:18px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;height:42px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s}
+.btn-rye{background:var(--teal);color:#fff}
+.btn-rye:hover{background:var(--teal-dark)}
+.btn-g{background:#fff;color:var(--mid);border:1.5px solid var(--border)}
+.btn-g:hover{border-color:var(--teal);color:var(--teal)}
+.btn-danger{background:var(--red-light);color:var(--red);border:1px solid rgba(192,57,43,.3)}
+.btn-danger:hover{background:#f6d9d6}
+.btn-sm{height:32px;padding:5px 12px;font-size:11px}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr 1fr}}
+.fgroup{display:flex;flex-direction:column;gap:5px}
+.flbl{font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.04em}
+input[type=text],input[type=number],input[type=password],select{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
+  color:var(--dark);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;height:40px;width:100%
+}
+input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);background:#fafafa;border-bottom:2px solid var(--border);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+tbody td{padding:9px 12px;border-top:1px solid #f0f0f0;color:var(--mid)}
+tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;color:var(--dark)}
+
+/* BADGE */
+.bdg{display:inline-block;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
+.b-ok{background:var(--green-light);color:#1a6b3e}
+.b-warn{background:var(--amber-light);color:#8a4a10}
+.b-off{background:#f0f0f0;color:var(--muted)}
+
+/* WEEK NAV */
+.week-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.week-label{flex:1;text-align:center;font-size:13px;font-weight:700}
+
+/* ROSTER */
+.roster-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid #f0f0f0}
+.roster-row:first-child{border-top:none}
+.roster-name{font-size:13px;font-weight:700}
+.roster-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg)}
+#toast.on{opacity:1;transform:translateY(0)}
+
+/* PRINT FRAME */
+#print-frame{display:none;position:fixed;inset:0;background:#fff;z-index:99999;overflow:auto;padding:24px}
+#print-close{position:fixed;top:10px;right:14px;z-index:100000;background:#c00;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer}
+@media print{
+  body>*:not(#print-frame){display:none!important}
+  #print-frame{display:block!important}
+}
+
+/* PIN GATE */
+#pin-gate{position:fixed;inset:0;background:var(--bg);z-index:99998;display:flex;align-items:center;justify-content:center;padding:20px}
+.pin-box{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:32px 28px;max-width:340px;width:100%;text-align:center}
+.pin-box .wordmark{justify-content:center;display:flex;margin-bottom:4px}
+.pin-title{font-size:15px;font-weight:700;color:var(--dark);margin:14px 0 4px}
+.pin-sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#pinInput{text-align:center;letter-spacing:.3em;font-size:20px;font-weight:700;margin-bottom:12px}
+.pin-error{font-size:12px;color:var(--red);font-weight:700;margin-bottom:10px;display:none}
+.pin-error.on{display:block}
+#admin-content{display:none}
+#admin-content.on{display:block}
+
+.muted-note{font-size:11px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- PIN GATE -->
+<div id="pin-gate" style="display: none;">
+  <div class="pin-box">
+    <div class="wordmark"><span class="rye">rye</span>&nbsp;<span class="electric">electric</span></div>
+    <div class="pin-title">Admin Access</div>
+    <div class="pin-sub">Enter the office admin PIN to continue</div>
+    <form id="pinForm" onsubmit="return handlePinSubmit(event)">
+      <input type="password" id="pinInput" inputmode="numeric" autocomplete="off" placeholder="----" autofocus="">
+      <div class="pin-error" id="pinError">Incorrect PIN. Try again.</div>
+      <button class="btn btn-rye" style="width:100%" type="submit">Unlock</button>
+    </form>
+  </div>
+</div>
+
+<div id="admin-content" class="on">
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div style="display:flex;align-items:center">
+      <div class="wordmark"><span class="rye">rye</span> <span class="electric">electric</span></div>
+      <div class="hdr-sub">Office Admin</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-clock" id="hdrClock">10:58:50 PM</div>
+      <button class="lock-btn" onclick="lockAdmin()">Lock</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+  <div class="tabs">
+    <button class="tab on" onclick="goTab(this,&#39;timecards&#39;)">Timecards</button>
+    <button class="tab" onclick="goTab(this,&#39;staff&#39;)">Staff</button>
+    <button class="tab" onclick="goTab(this,&#39;codes&#39;)">Cost Codes</button>
+    <button class="tab" onclick="goTab(this,&#39;settings&#39;)">Settings</button>
+  </div>
+
+  <!-- ===== TIMECARDS TAB ===== -->
+  <div class="pane on" id="pane-timecards">
+    <div class="card">
+      <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
+      <div id="rosterList"><div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div></div>
+    </div>
+
+    <div class="card">
+      <div class="cb">
+        <div class="fgroup">
+          <div class="flbl">Employee</div>
+          <select id="tcEmployee" onchange="loadTimecard()"><option value="">-- Select employee --</option><option value="907">Dennis Furst</option></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-nav">
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">← Prev week</button>
+      <div class="week-label" id="weekLabel">Mon, Jun 15  --  Sun, Jun 21</div>
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week →</button>
+    </div>
+
+    <div class="card">
+      <div class="ch">
+        <div class="ct">Weekly Timecard</div>
+        <button class="btn btn-g btn-sm" onclick="printTimecard()">🖨️ Print</button>
+      </div>
+      <div id="timecardBody" style="padding:18px">
+        <div class="muted-note">Select an employee to view their timecard.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAFF TAB ===== -->
+  <div class="pane" id="pane-staff">
+    <div class="card">
+      <div class="ch"><div class="ct">Add office staff</div></div>
+      <div class="cb">
+        <div class="form-grid">
+          <div class="fgroup">
+            <div class="flbl">Employee ID (badge #)</div>
+            <input type="number" id="newEmpId" placeholder="e.g. 907">
+          </div>
+          <div class="fgroup">
+            <div class="flbl">First name</div>
+            <input type="text" id="newFirstName" placeholder="First name">
+          </div>
+          <div class="fgroup">
+            <div class="flbl">Last name</div>
+            <input type="text" id="newLastName" placeholder="Last name">
+          </div>
+          <button class="btn btn-rye" onclick="addStaff()">+ Add</button>
+        </div>
+        <div class="muted-note">The Employee ID must match the number encoded in the barcode on their badge.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><div class="ct">Staff roster</div></div>
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Status</th><th></th></tr></thead>
+        <tbody id="staffTbody"><tr><td>907</td><td>Dennis Furst</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleActive(907,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteStaff(907)">Delete</button></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== COST CODES TAB ===== -->
+  <div class="pane" id="pane-codes">
+    <div class="card">
+      <div class="ch"><div class="ct">Add cost code</div></div>
+      <div class="cb">
+        <div class="form-grid">
+          <div class="fgroup">
+            <div class="flbl">Code</div>
+            <input type="text" id="newCodeId" placeholder="e.g. PM">
+          </div>
+          <div class="fgroup" style="grid-column:span 2">
+            <div class="flbl">Label</div>
+            <input type="text" id="newCodeLabel" placeholder="e.g. Project Management">
+          </div>
+          <button class="btn btn-rye" onclick="addCostCode()">+ Add</button>
+        </div>
+        <div class="muted-note">This is what shows up in the dropdown when someone clocks out.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch"><div class="ct">Cost codes</div></div>
+      <table>
+        <thead><tr><th>Code</th><th>Label</th><th>Status</th><th></th></tr></thead>
+        <tbody id="codesTbody"><tr><td>9200</td><td>Field/Office Operations</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9200&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9200&#39;)">Delete</button></td></tr><tr><td>PM</td><td>Project Management</td><td><span class="bdg b-off">inactive</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;PM&#39;,true)">Activate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;PM&#39;)">Delete</button></td></tr><tr><td>9210</td><td>Project Engineer</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9210&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9210&#39;)">Delete</button></td></tr><tr><td>EST</td><td>Estimating</td><td><span class="bdg b-off">inactive</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;EST&#39;,true)">Activate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;EST&#39;)">Delete</button></td></tr><tr><td>9220</td><td>Project/Management</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9220&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9220&#39;)">Delete</button></td></tr><tr><td>ACCT</td><td>Accounting / AP</td><td><span class="bdg b-off">inactive</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;ACCT&#39;,true)">Activate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;ACCT&#39;)">Delete</button></td></tr><tr><td>ADMIN</td><td>Administrative</td><td><span class="bdg b-off">inactive</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;ADMIN&#39;,true)">Activate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;ADMIN&#39;)">Delete</button></td></tr><tr><td>9230</td><td>Electrical Detailing</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9230&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9230&#39;)">Delete</button></td></tr><tr><td>IT</td><td>IT Support</td><td><span class="bdg b-off">inactive</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;IT&#39;,true)">Activate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;IT&#39;)">Delete</button></td></tr><tr><td>9240</td><td>Electrical Engineer</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9240&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9240&#39;)">Delete</button></td></tr><tr><td>9260</td><td>Preconstruction / Constructability</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9260&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9260&#39;)">Delete</button></td></tr><tr><td>9270</td><td>Purchasing / Procurement</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9270&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9270&#39;)">Delete</button></td></tr><tr><td>9280</td><td>Administrative</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9280&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9280&#39;)">Delete</button></td></tr><tr><td>9290</td><td>Professional Services</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9290&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9290&#39;)">Delete</button></td></tr><tr><td>9300</td><td>Safety</td><td><span class="bdg b-ok">active</span></td><td style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(&#39;9300&#39;,false)">Deactivate</button><button class="btn btn-danger btn-sm" onclick="deleteCostCode(&#39;9300&#39;)">Delete</button></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS TAB ===== -->
+  <div class="pane" id="pane-settings">
+    <div class="card">
+      <div class="ch"><div class="ct">Change admin PIN</div></div>
+      <div class="cb">
+        <div class="form-grid" style="grid-template-columns:1fr 1fr auto">
+          <div class="fgroup">
+            <div class="flbl">New PIN</div>
+            <input type="password" id="newPin" inputmode="numeric" placeholder="New PIN">
+          </div>
+          <div class="fgroup">
+            <div class="flbl">Confirm new PIN</div>
+            <input type="password" id="confirmPin" inputmode="numeric" placeholder="Confirm new PIN">
+          </div>
+          <button class="btn btn-rye" onclick="changePin()">Save</button>
+        </div>
+        <div class="muted-note">This is the PIN anyone will need to get into this admin page. Use at least 4 digits, and share it only with the people who should have access.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /shell -->
+</div><!-- /admin-content -->
+
+<div id="toast"></div>
+
+<!-- Print frame (reliable on iOS) -->
+<div id="print-frame">
+  <button id="print-close" onclick="closePrintFrame()">✕ Close</button>
+  <div id="print-content"></div>
+</div>
+
+<script src="./Rye Electric -- Office Admin_files/supabase-js@2"></script>
+<script>
+/* ============================================================
+   CONFIG -- same Supabase project/tables as office-badge-clock.html
+============================================================ */
+const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let staffList = [];
+let codesList = [];
+let tcWeekStart = getMonday(new Date());
+
+/* ---------- helpers ---------- */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('on'),3000);
+}
+function getMonday(d){
+  const x=new Date(d);
+  const day=x.getDay();
+  const diff=day===0?-6:1-day;
+  x.setDate(x.getDate()+diff);
+  x.setHours(0,0,0,0);
+  return x;
+}
+function fmtDate(d){
+  return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
+function fmtTime(d){
+  return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+}
+function dateKeyLocal(d){
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function startOfToday(){
+  const d=new Date(); d.setHours(0,0,0,0); return d;
+}
+
+/* ---------- header clock ---------- */
+function tickClock(){
+  const el = document.getElementById('hdrClock');
+  if(el) el.textContent = new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit'});
+}
+setInterval(tickClock,1000); tickClock();
+
+/* ============================================================
+   PIN GATE
+============================================================ */
+function handlePinSubmit(e){
+  e.preventDefault();
+  verifyPin();
+  return false;
+}
+
+async function verifyPin(){
+  const entered = document.getElementById('pinInput').value.trim();
+  const errEl = document.getElementById('pinError');
+  if(!entered){ return; }
+
+  const { data, error } = await supabaseClient
+    .from('office_portal_settings')
+    .select('value')
+    .eq('key','admin_pin')
+    .limit(1);
+
+  if(error || !data || data.length===0){
+    errEl.textContent = 'Could not check the PIN -- check your connection and try again.';
+    errEl.classList.add('on');
+    return;
+  }
+
+  if(entered === data[0].value){
+    sessionStorage.setItem('office_admin_unlocked','true');
+    unlockAdmin();
+  } else {
+    errEl.textContent = 'Incorrect PIN. Try again.';
+    errEl.classList.add('on');
+    document.getElementById('pinInput').value='';
+    document.getElementById('pinInput').focus();
+  }
+}
+
+function unlockAdmin(){
+  document.getElementById('pin-gate').style.display='none';
+  document.getElementById('admin-content').classList.add('on');
+  initAdmin();
+}
+
+function lockAdmin(){
+  sessionStorage.removeItem('office_admin_unlocked');
+  document.getElementById('admin-content').classList.remove('on');
+  document.getElementById('pin-gate').style.display='flex';
+  document.getElementById('pinInput').value='';
+  document.getElementById('pinInput').focus();
+}
+
+async function changePin(){
+  const p1 = document.getElementById('newPin').value.trim();
+  const p2 = document.getElementById('confirmPin').value.trim();
+  if(p1.length<4){ toast('PIN should be at least 4 digits'); return; }
+  if(p1!==p2){ toast('PINs do not match'); return; }
+
+  const { error } = await supabaseClient
+    .from('office_portal_settings')
+    .update({ value: p1 })
+    .eq('key','admin_pin');
+
+  if(error){ toast('Error: '+error.message); return; }
+  document.getElementById('newPin').value='';
+  document.getElementById('confirmPin').value='';
+  toast('Admin PIN updated');
+}
+
+/* ---------- tabs ---------- */
+function goTab(btn,name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  ['timecards','staff','codes','settings'].forEach(n=>{
+    document.getElementById('pane-'+n).className='pane'+(n===name?' on':'');
+  });
+  if(name==='timecards'){ renderWeekLabel(); loadRoster(); }
+  if(name==='staff') loadStaff();
+  if(name==='codes') loadCostCodes();
+}
+
+/* ============================================================
+   CURRENTLY CLOCKED IN (today's live roster)
+============================================================ */
+async function loadRoster(){
+  const { data, error } = await supabaseClient
+    .from('office_portal_punches')
+    .select('employee_id,event_type,punched_at')
+    .gte('punched_at', startOfToday().toISOString())
+    .order('punched_at',{ascending:true});
+
+  const list = document.getElementById('rosterList');
+  const countEl = document.getElementById('rosterCount');
+  if(!list || !countEl) return;
+  if(error || !data){
+    list.innerHTML = '<div class="roster-row"><span class="muted-note">Could not load roster</span></div>';
+    return;
+  }
+
+  const lastByEmp = {};
+  data.forEach(p => { lastByEmp[p.employee_id] = p; });
+
+  const currentlyIn = Object.values(lastByEmp).filter(p=>p.event_type==='in');
+  countEl.textContent = currentlyIn.length;
+
+  if(currentlyIn.length===0){
+    list.innerHTML = '<div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div>';
+    return;
+  }
+
+  list.innerHTML = currentlyIn
+    .sort((a,b)=> new Date(a.punched_at) - new Date(b.punched_at))
+    .map(p=>{
+      const emp = staffList.find(e=>e.employee_id===p.employee_id);
+      const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+p.employee_id;
+      return '<div class="roster-row"><span class="roster-name">'+name+'</span>'
+        +'<span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
+    }).join('');
+}
+
+/* ============================================================
+   TIMECARDS TAB
+============================================================ */
+function populateEmployeeDropdown(){
+  const sel = document.getElementById('tcEmployee');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">-- Select employee --</option>'
+    + staffList
+        .slice()
+        .sort((a,b)=> a.last_name.localeCompare(b.last_name))
+        .map(e=>'<option value="'+e.employee_id+'">'+e.first_name+' '+e.last_name+'</option>')
+        .join('');
+  if(current) sel.value = current;
+}
+
+function renderWeekLabel(){
+  const end = new Date(tcWeekStart); end.setDate(end.getDate()+6);
+  document.getElementById('weekLabel').textContent =
+    fmtDate(tcWeekStart) + '  --  ' + fmtDate(end);
+}
+
+function shiftWeek(dir){
+  tcWeekStart.setDate(tcWeekStart.getDate() + dir*7);
+  renderWeekLabel();
+  loadTimecard();
+}
+
+async function loadTimecard(){
+  renderWeekLabel();
+  const empId = parseInt(document.getElementById('tcEmployee').value,10);
+  const body = document.getElementById('timecardBody');
+  if(!empId){
+    body.innerHTML = '<div class="muted-note">Select an employee to view their timecard.</div>';
+    return;
+  }
+
+  const weekEnd = new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+7);
+  const weekEndDateOnly = new Date(tcWeekStart); weekEndDateOnly.setDate(weekEndDateOnly.getDate()+6);
+
+  const [{ data, error }, { data: dayCodeRows }] = await Promise.all([
+    supabaseClient
+      .from('office_portal_punches')
+      .select('*')
+      .eq('employee_id', empId)
+      .gte('punched_at', tcWeekStart.toISOString())
+      .lt('punched_at', weekEnd.toISOString())
+      .order('punched_at',{ascending:true}),
+    supabaseClient
+      .from('office_portal_day_codes')
+      .select('*')
+      .eq('employee_id', empId)
+      .gte('work_date', dateKeyLocal(tcWeekStart))
+      .lte('work_date', dateKeyLocal(weekEndDateOnly))
+  ]);
+
+  if(error){
+    body.innerHTML = '<div class="muted-note">Could not load timecard.</div>';
+    return;
+  }
+
+  const codeByDate = {};
+  (dayCodeRows||[]).forEach(r=>{ codeByDate[r.work_date] = r.cost_code; });
+
+  const byDay = {};
+  (data||[]).forEach(p=>{
+    const d = new Date(p.punched_at);
+    const key = d.toDateString();
+    if(!byDay[key]) byDay[key]=[];
+    byDay[key].push(p);
+  });
+
+  let weekReg=0, weekOT=0, weekTotal=0;
+  const dayRows=[];
+
+  for(let i=0;i<7;i++){
+    const d = new Date(tcWeekStart); d.setDate(d.getDate()+i);
+    const key = d.toDateString();
+    const punches = (byDay[key]||[]).sort((a,b)=> new Date(a.punched_at)-new Date(b.punched_at));
+    const dayCode = codeByDate[dateKeyLocal(d)] || null;
+
+    if(punches.length===0){
+      dayRows.push({date:d, segments:[], hours:0, reg:0, ot:0, incomplete:false, code:dayCode});
+      continue;
+    }
+
+    const segments=[];
+    let hours=0;
+    for(let j=0;j<punches.length;j+=2){
+      const inP = punches[j];
+      const outP = punches[j+1];
+      if(outP){
+        const h = (new Date(outP.punched_at) - new Date(inP.punched_at)) / 3600000;
+        hours += h;
+        segments.push({in:new Date(inP.punched_at), out:new Date(outP.punched_at)});
+      } else {
+        segments.push({in:new Date(inP.punched_at), out:null});
+      }
+    }
+    const incomplete = punches.length % 2 !== 0;
+    const reg = Math.min(hours,8);
+    const ot  = Math.max(0,hours-8);
+    weekReg += reg; weekOT += ot; weekTotal += hours;
+    dayRows.push({date:d, segments, hours, reg, ot, incomplete, code:dayCode});
+  }
+
+  body.innerHTML = buildTimecardHTML(empId, dayRows, weekReg, weekOT, weekTotal);
+}
+
+function buildTimecardHTML(empId, dayRows, weekReg, weekOT, weekTotal){
+  const emp = staffList.find(e=>e.employee_id===empId);
+  const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+empId;
+  const weekEnd = new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+6);
+
+  const rows = dayRows.map(r=>{
+    const segText = r.segments.length===0
+      ? '<span class="muted-note">--</span>'
+      : r.segments.map(s=> fmtTime(s.in) + ' &ndash; ' + (s.out?fmtTime(s.out):'<span style="color:var(--red)">missing punch</span>')).join('<br>');
+    const codeInfo = r.code ? codesList.find(c=>c.code===r.code) : null;
+    const codeText = r.code ? '<span class="bdg b-ok">'+r.code+'</span> '+(codeInfo?codeInfo.label:'') : '<span class="muted-note">--</span>';
+    return '<tr>'
+      +'<td>'+fmtDate(r.date)+'</td>'
+      +'<td>'+segText+'</td>'
+      +'<td>'+codeText+'</td>'
+      +'<td>'+(r.hours?r.reg.toFixed(2):'--')+'</td>'
+      +'<td>'+(r.ot>0?r.ot.toFixed(2):'--')+'</td>'
+      +'<td>'+(r.hours?r.hours.toFixed(2):'--')+'</td>'
+      +'<td>'+(r.incomplete?'<span class="bdg b-warn">missing punch</span>':(r.hours?'<span class="bdg b-ok">complete</span>':'<span class="bdg b-off">no entry</span>'))+'</td>'
+    +'</tr>';
+  }).join('');
+
+  return '<div id="tc-printable">'
+    +'<div style="margin-bottom:14px"><strong style="font-size:15px">'+name+'</strong>'
+      +'<div class="muted-note">Week of '+fmtDate(tcWeekStart)+' &ndash; '+fmtDate(weekEnd)+'</div></div>'
+    +'<table><thead><tr><th>Date</th><th>Time In / Out</th><th>Cost Code</th><th>Reg Hrs</th><th>OT Hrs</th><th>Total</th><th>Status</th></tr></thead>'
+    +'<tbody>'+rows+'</tbody>'
+    +'<tfoot><tr><td colspan="3">Weekly Total</td><td>'+weekReg.toFixed(2)+'</td><td>'+weekOT.toFixed(2)+'</td><td>'+weekTotal.toFixed(2)+'</td><td></td></tr></tfoot>'
+    +'</table></div>';
+}
+
+function printTimecard(){
+  const empId = document.getElementById('tcEmployee').value;
+  if(!empId){ toast('Select an employee first'); return; }
+  const content = document.getElementById('timecardBody').innerHTML;
+  const frame = document.getElementById('print-frame');
+  const inner = document.getElementById('print-content');
+  inner.innerHTML = '<style>body{font-family:Arial,sans-serif;color:#111}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:6px 10px;font-size:12px}</style>'
+    + '<h2 style="font-family:Arial;margin-bottom:6px">Rye Electric -- Weekly Timecard</h2>' + content;
+  frame.style.display='block';
+  document.body.style.overflow='hidden';
+  setTimeout(()=>window.print(),300);
+}
+function closePrintFrame(){
+  document.getElementById('print-frame').style.display='none';
+  document.body.style.overflow='';
+}
+
+/* ============================================================
+   STAFF TAB
+============================================================ */
+async function loadStaff(){
+  const { data, error } = await supabaseClient
+    .from('office_portal_employees')
+    .select('*')
+    .order('last_name',{ascending:true});
+
+  if(error){ toast('Could not load staff: '+error.message); return; }
+  staffList = data || [];
+  populateEmployeeDropdown();
+  renderStaffTable();
+}
+
+function renderStaffTable(){
+  const tbody = document.getElementById('staffTbody');
+  if(staffList.length===0){
+    tbody.innerHTML = '<tr><td colspan="4" class="muted-note">No staff added yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = staffList.map(e=>
+    '<tr>'
+    +'<td>'+e.employee_id+'</td>'
+    +'<td>'+e.first_name+' '+e.last_name+'</td>'
+    +'<td>'+(e.active?'<span class="bdg b-ok">active</span>':'<span class="bdg b-off">inactive</span>')+'</td>'
+    +'<td style="display:flex;gap:6px">'
+      +'<button class="btn btn-g btn-sm" onclick="toggleActive('+e.employee_id+','+(!e.active)+')">'+(e.active?'Deactivate':'Activate')+'</button>'
+      +'<button class="btn btn-danger btn-sm" onclick="deleteStaff('+e.employee_id+')">Delete</button>'
+    +'</td>'
+    +'</tr>'
+  ).join('');
+}
+
+async function addStaff(){
+  const id = parseInt(document.getElementById('newEmpId').value,10);
+  const first = document.getElementById('newFirstName').value.trim();
+  const last = document.getElementById('newLastName').value.trim();
+  if(!id){ toast('Enter the employee ID from their badge'); return; }
+  if(!first || !last){ toast('Enter a first and last name'); return; }
+
+  const { error } = await supabaseClient.from('office_portal_employees').insert({
+    employee_id:id, first_name:first, last_name:last
+  });
+  if(error){
+    toast(error.code==='23505' ? 'That employee ID already exists' : 'Error: '+error.message);
+    return;
+  }
+  document.getElementById('newEmpId').value='';
+  document.getElementById('newFirstName').value='';
+  document.getElementById('newLastName').value='';
+  toast('Added '+first+' '+last);
+  loadStaff();
+}
+
+async function toggleActive(id, newVal){
+  const { error } = await supabaseClient.from('office_portal_employees').update({active:newVal}).eq('employee_id',id);
+  if(error){ toast('Error: '+error.message); return; }
+  loadStaff();
+}
+
+async function deleteStaff(id){
+  if(!confirm('Delete this staff member? This only works if they have no punch history yet.')) return;
+  const { error } = await supabaseClient.from('office_portal_employees').delete().eq('employee_id',id);
+  if(error){
+    toast('Could not delete -- this person has punch history. Use Deactivate instead.');
+    return;
+  }
+  toast('Staff member deleted');
+  loadStaff();
+}
+
+/* ============================================================
+   COST CODES TAB
+============================================================ */
+async function loadCostCodes(){
+  const { data, error } = await supabaseClient
+    .from('office_portal_cost_codes')
+    .select('*')
+    .order('sort_order',{ascending:true});
+
+  if(error){ toast('Could not load cost codes: '+error.message); return; }
+  codesList = data || [];
+  renderCostCodesTable();
+}
+
+function renderCostCodesTable(){
+  const tbody = document.getElementById('codesTbody');
+  if(!tbody) return;
+  if(codesList.length===0){
+    tbody.innerHTML = '<tr><td colspan="4" class="muted-note">No cost codes yet -- add one above.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = codesList.map(c=>
+    '<tr>'
+    +'<td>'+c.code+'</td>'
+    +'<td>'+c.label+'</td>'
+    +'<td>'+(c.active?'<span class="bdg b-ok">active</span>':'<span class="bdg b-off">inactive</span>')+'</td>'
+    +'<td style="display:flex;gap:6px">'
+      +'<button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(\''+c.code+'\','+(!c.active)+')">'+(c.active?'Deactivate':'Activate')+'</button>'
+      +'<button class="btn btn-danger btn-sm" onclick="deleteCostCode(\''+c.code+'\')">Delete</button>'
+    +'</td>'
+    +'</tr>'
+  ).join('');
+}
+
+async function addCostCode(){
+  const code = document.getElementById('newCodeId').value.trim().toUpperCase();
+  const label = document.getElementById('newCodeLabel').value.trim();
+  if(!code){ toast('Enter a short code, like PM or EST'); return; }
+  if(!label){ toast('Enter a label for this code'); return; }
+
+  const { error } = await supabaseClient.from('office_portal_cost_codes').insert({
+    code: code, label: label, sort_order: codesList.length+1
+  });
+  if(error){
+    toast(error.code==='23505' ? 'That code already exists' : 'Error: '+error.message);
+    return;
+  }
+  document.getElementById('newCodeId').value='';
+  document.getElementById('newCodeLabel').value='';
+  toast('Added '+code);
+  loadCostCodes();
+}
+
+async function toggleCostCodeActive(code, newVal){
+  const { error } = await supabaseClient.from('office_portal_cost_codes').update({active:newVal}).eq('code',code);
+  if(error){ toast('Error: '+error.message); return; }
+  loadCostCodes();
+}
+
+async function deleteCostCode(code){
+  if(!confirm('Delete this cost code? This only works if no one has used it yet.')) return;
+  const { error } = await supabaseClient.from('office_portal_cost_codes').delete().eq('code',code);
+  if(error){
+    toast('Could not delete -- this code is already in use on a timecard. Use Deactivate instead.');
+    return;
+  }
+  toast('Cost code deleted');
+  loadCostCodes();
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+async function initAdmin(){
+  await loadStaff();
+  await loadCostCodes();
+  loadRoster();
+  renderWeekLabel();
+  setInterval(loadRoster, 30000);
+}
+
+(function initGate(){
+  if(sessionStorage.getItem('office_admin_unlocked')==='true'){
+    unlockAdmin();
+  } else {
+    document.getElementById('pinInput').focus();
+  }
+})();
+</script>
+
+
+</body></html>
