@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-admin_3.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric -- Office Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="./Rye Electric -- Office Admin_files/css2" rel="stylesheet">
 <style>
 :root{
   --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
@@ -128,7 +128,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
     <div class="pin-title">Admin Access</div>
     <div class="pin-sub">Enter the office admin PIN to continue</div>
     <form id="pinForm" onsubmit="return handlePinSubmit(event)">
-      <input type="password" id="pinInput" inputmode="numeric" autocomplete="off" placeholder="----" autofocus>
+      <input type="password" id="pinInput" inputmode="numeric" autocomplete="off" placeholder="----" autofocus="">
       <div class="pin-error" id="pinError">Incorrect PIN. Try again.</div>
       <button class="btn btn-rye" style="width:100%" type="submit">Unlock</button>
     </form>
@@ -144,7 +144,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
       <div class="hdr-sub">Office Admin</div>
     </div>
     <div class="hdr-right">
-      <div class="hdr-clock" id="hdrClock">--:--:--</div>
+      <div class="hdr-clock" id="hdrClock">10:13:50 AM</div>
       <button class="lock-btn" onclick="lockAdmin()">Lock</button>
     </div>
   </div>
@@ -153,14 +153,48 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 <div class="shell">
 
   <div class="tabs">
-    <button class="tab on" onclick="goTab(this,'timecards')">Timecards</button>
-    <button class="tab" onclick="goTab(this,'staff')">Staff</button>
-    <button class="tab" onclick="goTab(this,'codes')">Cost Codes</button>
-    <button class="tab" onclick="goTab(this,'settings')">Settings</button>
+    <button class="tab on" onclick="goTab(this,&#39;jobs&#39;)">Jobs</button>
+    <button class="tab" onclick="goTab(this,&#39;timecards&#39;)">Timecards</button>
+    <button class="tab" onclick="goTab(this,&#39;staff&#39;)">Staff</button>
+    <button class="tab" onclick="goTab(this,&#39;codes&#39;)">Cost Codes</button>
+    <button class="tab" onclick="goTab(this,&#39;settings&#39;)">Settings</button>
   </div>
 
+  <!-- ===== JOBS TAB ===== -->
+  <div class="pane on" id="pane-jobs">
+    <div class="card">
+      <div class="cb">
+        <div class="form-grid" style="grid-template-columns:2fr 1fr auto">
+          <div class="fgroup">
+            <div class="flbl">Job</div>
+            <select id="jobSelect" onchange="loadJobSignIns()">
+              <option value="">-- Select job --</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <div class="flbl">Date</div>
+            <input type="date" id="jobDate" onchange="loadJobSignIns()">
+          </div>
+          <button class="btn btn-g" onclick="loadJobsList()">↻ Refresh jobs</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ch">
+        <div class="ct">Daily Sign In <span id="jobSignInCount" class="bdg b-ok" style="margin-left:8px">0</span></div>
+        <button class="btn btn-g btn-sm" onclick="printJobSignIn()">🖨️ Print</button>
+      </div>
+      <div id="jobSupervisor" style="padding:10px 18px 0;font-size:12px;color:var(--muted)"></div>
+      <div id="jobSignInBody" style="padding:18px;overflow-x:auto">
+        <div class="muted-note">Select a job and date to see who's signed in.</div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ===== TIMECARDS TAB ===== -->
-  <div class="pane on" id="pane-timecards">
+  <div class="pane" id="pane-timecards">
     <div class="card">
       <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
       <div id="rosterList"></div>
@@ -178,15 +212,15 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
     </div>
 
     <div class="week-nav">
-      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">&larr; Prev week</button>
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">← Prev week</button>
       <div class="week-label" id="weekLabel">--</div>
-      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week &rarr;</button>
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week →</button>
     </div>
 
     <div class="card">
       <div class="ch">
         <div class="ct">Weekly Timecard</div>
-        <button class="btn btn-g btn-sm" onclick="printTimecard()">&#128424;&#65039; Print</button>
+        <button class="btn btn-g btn-sm" onclick="printTimecard()">🖨️ Print</button>
       </div>
       <div id="timecardBody" style="padding:18px">
         <div class="muted-note">Select an employee to view their timecard.</div>
@@ -284,11 +318,11 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 
 <!-- Print frame (reliable on iOS) -->
 <div id="print-frame">
-  <button id="print-close" onclick="closePrintFrame()">&#10005; Close</button>
+  <button id="print-close" onclick="closePrintFrame()">✕ Close</button>
   <div id="print-content"></div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./Rye Electric -- Office Admin_files/supabase-js@2"></script>
 <script>
 /* ============================================================
    CONFIG -- same Supabase project/tables as office-badge-clock.html
@@ -408,9 +442,10 @@ async function changePin(){
 function goTab(btn,name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  ['timecards','staff','codes','settings'].forEach(n=>{
+  ['jobs','timecards','staff','codes','settings'].forEach(n=>{
     document.getElementById('pane-'+n).className='pane'+(n===name?' on':'');
   });
+  if(name==='jobs'){ loadJobsList(); loadJobSignIns(); }
   if(name==='timecards'){ renderWeekLabel(); loadRoster(); }
   if(name==='staff') loadStaff();
   if(name==='codes') loadCostCodes();
@@ -754,9 +789,117 @@ async function deleteCostCode(code){
 }
 
 /* ============================================================
+   JOBS TAB -- reads signin_data, written by the field trackers'
+   badge-scan sign-in (one row per job+date, rows = each employee)
+============================================================ */
+async function loadJobsList(){
+  const { data, error } = await supabaseClient
+    .from('signin_data')
+    .select('job');
+  if(error){ toast('Could not load jobs: '+error.message); return; }
+  const jobs = Array.from(new Set((data||[]).map(r=>r.job))).sort();
+  const sel = document.getElementById('jobSelect');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">-- Select job --</option>'
+    + jobs.map(j=>'<option value="'+j.replace(/"/g,'&quot;')+'">'+j+'</option>').join('');
+  if(jobs.includes(current)) sel.value = current;
+}
+
+function jobSignInStatus(r){
+  if(r.finish)   return {label:'Signed out', cls:'b-off'};
+  if(r.lunchOut) return {label:'Working',    cls:'b-ok'};
+  if(r.lunchIn)  return {label:'At lunch',   cls:'b-warn'};
+  if(r.start)    return {label:'Signed in',  cls:'b-ok'};
+  return {label:'--', cls:'b-off'};
+}
+
+async function loadJobSignIns(){
+  const job = document.getElementById('jobSelect').value;
+  const date = document.getElementById('jobDate').value;
+  if(!job || !date){
+    document.getElementById('jobSignInBody').innerHTML = '<div class="muted-note">Select a job and date to see who\'s signed in.</div>';
+    document.getElementById('jobSignInCount').textContent = '0';
+    document.getElementById('jobSupervisor').textContent = '';
+    return;
+  }
+  const { data, error } = await supabaseClient
+    .from('signin_data')
+    .select('*')
+    .eq('job', job)
+    .eq('entry_date', date)
+    .limit(1);
+  if(error){ toast('Could not load sign-in data: '+error.message); return; }
+  renderJobSignInTable((data && data[0]) || null);
+}
+
+function renderJobSignInTable(record){
+  const wrap = document.getElementById('jobSignInBody');
+  const countEl = document.getElementById('jobSignInCount');
+  const supEl = document.getElementById('jobSupervisor');
+
+  if(!record || !record.rows || record.rows.length===0){
+    wrap.innerHTML = '<div class="muted-note">No sign-in data for this job and date yet.</div>';
+    countEl.textContent = '0';
+    supEl.textContent = '';
+    return;
+  }
+
+  const rows = record.rows.filter(r=>r.name);
+  countEl.textContent = String(rows.length);
+  supEl.textContent = record.supervisor ? ('Supervisor: '+record.supervisor) : '';
+
+  if(rows.length===0){
+    wrap.innerHTML = '<div class="muted-note">No employees signed in yet.</div>';
+    return;
+  }
+
+  wrap.innerHTML = '<table><thead><tr>'
+    +'<th>Emp #</th><th>Name</th><th>Status</th><th>Start</th><th>Lunch In</th><th>Lunch Out</th><th>Finish</th><th>Reg</th><th>OT</th><th>Total</th>'
+    +'</tr></thead><tbody>'
+    + rows.map(r=>{
+        const st = jobSignInStatus(r);
+        return '<tr>'
+          +'<td>'+(r.empNum||'')+'</td>'
+          +'<td>'+(r.name||'')+'</td>'
+          +'<td><span class="bdg '+st.cls+'">'+st.label+'</span></td>'
+          +'<td>'+(r.start||'--')+'</td>'
+          +'<td>'+(r.lunchIn||'--')+'</td>'
+          +'<td>'+(r.lunchOut||'--')+'</td>'
+          +'<td>'+(r.finish||'--')+'</td>'
+          +'<td>'+(r.regHrs||'0')+'</td>'
+          +'<td>'+(r.otHrs||'0')+'</td>'
+          +'<td>'+(r.total||'0')+'</td>'
+        +'</tr>';
+      }).join('')
+    +'</tbody></table>';
+}
+
+function printJobSignIn(){
+  const job = document.getElementById('jobSelect').value;
+  const date = document.getElementById('jobDate').value;
+  if(!job || !date){ toast('Select a job and date first'); return; }
+  const tableHtml = document.getElementById('jobSignInBody').innerHTML;
+  if(tableHtml.indexOf('<table')===-1){ toast('No sign-in data to print'); return; }
+
+  const dateFmt = new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const inner = document.getElementById('print-content');
+  inner.innerHTML = '<style>body{font-family:Arial,sans-serif;color:#111}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:6px 10px;font-size:12px}</style>'
+    + '<h2 style="font-family:Arial;margin-bottom:2px">Rye Electric -- Daily Sign In Sheet</h2>'
+    + '<div style="font-size:13px;color:#444;margin-bottom:10px">'+job+' &middot; '+dateFmt+'</div>'
+    + tableHtml;
+  document.getElementById('print-frame').style.display='block';
+  document.body.style.overflow='hidden';
+  setTimeout(()=>window.print(),300);
+}
+
+/* ============================================================
    INIT
 ============================================================ */
 async function initAdmin(){
+  const jobDateEl = document.getElementById('jobDate');
+  if(jobDateEl && !jobDateEl.value) jobDateEl.value = new Date().toISOString().slice(0,10);
+  await loadJobsList();
+  loadJobSignIns();
   await loadStaff();
   await loadCostCodes();
   loadRoster();
@@ -772,5 +915,6 @@ async function initAdmin(){
   }
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
