@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-admin_4.html -->
+<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-admin_5.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -144,7 +144,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
       <div class="hdr-sub">Office Admin</div>
     </div>
     <div class="hdr-right">
-      <div class="hdr-clock" id="hdrClock">10:18:28 AM</div>
+      <div class="hdr-clock" id="hdrClock">10:50:13 AM</div>
       <button class="lock-btn" onclick="lockAdmin()">Lock</button>
     </div>
   </div>
@@ -153,15 +153,15 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 <div class="shell">
 
   <div class="tabs">
-    <button class="tab on" onclick="goTab(this,&#39;jobs&#39;)">Jobs</button>
-    <button class="tab" onclick="goTab(this,&#39;timecards&#39;)">Timecards</button>
+    <button class="tab" onclick="goTab(this,&#39;jobs&#39;)">Jobs</button>
+    <button class="tab on" onclick="goTab(this,&#39;timecards&#39;)">Timecards</button>
     <button class="tab" onclick="goTab(this,&#39;staff&#39;)">Staff</button>
     <button class="tab" onclick="goTab(this,&#39;codes&#39;)">Cost Codes</button>
     <button class="tab" onclick="goTab(this,&#39;settings&#39;)">Settings</button>
   </div>
 
   <!-- ===== JOBS TAB ===== -->
-  <div class="pane on" id="pane-jobs">
+  <div class="pane" id="pane-jobs">
     <div class="card">
       <div class="cb">
         <div class="form-grid" style="grid-template-columns:2fr 1fr auto">
@@ -190,10 +190,10 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 
 
   <!-- ===== TIMECARDS TAB ===== -->
-  <div class="pane" id="pane-timecards">
+  <div class="pane on" id="pane-timecards">
     <div class="card">
-      <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">1</span></div>
-      <div id="rosterList"><div class="roster-row"><span class="roster-name">Joey Java</span><span class="roster-time">since 9:06 AM</span></div></div>
+      <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
+      <div id="rosterList"><div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div></div>
     </div>
 
     <div class="card">
@@ -892,10 +892,16 @@ function printJobSignIn(){
 async function initAdmin(){
   const jobDateEl = document.getElementById('jobDate');
   if(jobDateEl && !jobDateEl.value) jobDateEl.value = new Date().toISOString().slice(0,10);
-  await loadJobsList();
-  loadJobSignIns();
-  await loadStaff();
-  await loadCostCodes();
+
+  try{ await loadJobsList(); loadJobSignIns(); }
+  catch(e){ console.warn('Jobs tab failed to load:', e); }
+
+  try{ await loadStaff(); }
+  catch(e){ console.warn('Staff failed to load:', e); }
+
+  try{ await loadCostCodes(); }
+  catch(e){ console.warn('Cost codes failed to load:', e); }
+
   loadRoster();
   renderWeekLabel();
   setInterval(loadRoster, 30000);
