@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-clock_3.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric -- Office Clock</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="./Rye Electric -- Office Clock_files/css2" rel="stylesheet">
 <style>
 :root{
   --ink:#15202B;--mid:#44505B;--muted:#7C8A94;
@@ -148,36 +148,30 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
 <header class="hdr">
   <div class="hdr-in">
     <div style="display:flex;align-items:center">
-      <div class="wordmark"><span class="bolt">&#9889;</span>rye <span class="electric">electric</span></div>
+      <div class="wordmark"><span class="bolt">⚡</span>rye <span class="electric">electric</span></div>
       <div class="hdr-sub">Office Clock</div>
     </div>
-    <div class="hdr-clock" id="hdrClock">--:--:--</div>
+    <div class="hdr-clock" id="hdrClock">10:03:11 AM</div>
   </div>
 </header>
 
 <div class="shell">
 
-  <div class="scan-zone" id="scanZone">
+  <div class="scan-zone fire" id="scanZone">
     <div class="pulse-ring"></div>
     <div class="scan-zone-logo"><img src="data:image/png;base64,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" alt="Rye Electric"></div>
     <div class="scan-zone-title">Scan your badge to clock in or out</div>
-    <div class="scan-zone-sub">Use a barcode scanner, or tap below to scan with a camera</div>
+    <div class="scan-zone-sub">Use a barcode scanner, or type your employee ID and press Enter</div>
     <form id="scanForm" onsubmit="return handleScanSubmit(event)">
-      <input type="text" id="scanInput" autocomplete="off" autofocus placeholder="Waiting for scan...">
+      <input type="text" id="scanInput" autocomplete="off" autofocus="" placeholder="Waiting for scan..." oninput="handleScanInputChange()">
     </form>
-    <div style="margin-top:14px">
-      <button class="btn btn-g" type="button" onclick="openCamera()">
-        &#128247; Scan with camera
-      </button>
-    </div>
-    <div class="muted-note">No scanner handy? Type your employee ID above and press Enter.</div>
   </div>
 
-  <div id="scanResult" class="result"></div>
+  <div id="scanResult" class="result on out"><div class="result-name">Dennis Furst</div><div class="result-meta">10:02 AM -- clocked OUT</div><div class="result-badge">Clocked Out</div></div>
 
   <div class="card">
     <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
-    <div id="rosterList"></div>
+    <div id="rosterList"><div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div></div>
   </div>
 
 </div><!-- /shell -->
@@ -189,7 +183,7 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
   <div class="cam-box">
     <div style="font-size:14px;font-weight:700;margin-bottom:10px">Scan badge with camera</div>
     <div class="cam-video-wrap">
-      <video id="cam-video" muted playsinline></video>
+      <video id="cam-video" muted="" playsinline=""></video>
       <div class="cam-frame"></div>
     </div>
     <button class="btn btn-g" style="width:100%" onclick="closeCamera()">Cancel</button>
@@ -197,22 +191,20 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
 </div>
 
 <!-- Clock-out cost code modal -->
-<div id="code-modal">
+<div id="code-modal" class="">
   <div class="cam-box">
     <div style="font-size:14px;font-weight:700;margin-bottom:2px">What did you work on today?</div>
-    <div class="muted-note" id="codeModalName" style="margin-bottom:14px">--</div>
+    <div class="muted-note" id="codeModalName" style="margin-bottom:14px">Dennis Furst -- today, Sun, Jun 21</div>
     <div class="fgroup" style="margin-bottom:14px">
-      <select id="codeModalSelect">
-        <option value="">-- Select a cost code --</option>
-      </select>
+      <select id="codeModalSelect"><option value="">-- Select a cost code --</option><option value="9200">9200 -- Field/Office Operations</option><option value="9210">9210 -- Project Engineer</option><option value="9220">9220 -- Project/Management</option><option value="9230">9230 -- Electrical Detailing</option><option value="9240">9240 -- Electrical Engineer</option><option value="9260">9260 -- Preconstruction / Constructability</option><option value="9270">9270 -- Purchasing / Procurement</option><option value="9280">9280 -- Administrative</option><option value="9290">9290 -- Professional Services</option><option value="9300">9300 -- Safety</option></select>
     </div>
     <button class="btn btn-rye" style="width:100%;margin-bottom:8px" onclick="saveDayCode()">Save &amp; finish clocking out</button>
     <button class="btn btn-g" style="width:100%" onclick="skipDayCode()">Skip for now</button>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://unpkg.com/@zxing/library@0.21.3"></script>
+<script src="./Rye Electric -- Office Clock_files/supabase-js@2"></script>
+<script src="./Rye Electric -- Office Clock_files/library@0.21.3"></script>
 <script>
 /* ============================================================
    CONFIG -- same Supabase project/tables as the admin page
@@ -263,8 +255,25 @@ function handleScanSubmit(e){
   const input=document.getElementById('scanInput');
   const val=input.value.trim();
   input.value='';
+  clearTimeout(scanAutoSubmitTimer);
   if(val) processScan(val,'scanner');
   return false;
+}
+
+// Some scanners don't send a trailing Enter after the decoded value, so it
+// would otherwise just sit in the box unprocessed. If no new character
+// arrives for 400ms after typing/scanning stops, submit automatically.
+var scanAutoSubmitTimer = null;
+function handleScanInputChange(){
+  clearTimeout(scanAutoSubmitTimer);
+  scanAutoSubmitTimer = setTimeout(function(){
+    const input = document.getElementById('scanInput');
+    if(input && input.value.trim()){
+      document.getElementById('scanForm').requestSubmit
+        ? document.getElementById('scanForm').requestSubmit()
+        : handleScanSubmit({preventDefault:function(){}});
+    }
+  }, 400);
 }
 
 async function processScan(rawValue, source){
@@ -486,5 +495,6 @@ async function loadCodesList(){
   document.getElementById('scanInput').focus();
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
