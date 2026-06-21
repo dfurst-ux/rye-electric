@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-clock_3.html -->
+<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-clock_4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -151,7 +151,7 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
       <div class="wordmark"><span class="bolt">⚡</span>rye <span class="electric">electric</span></div>
       <div class="hdr-sub">Office Clock</div>
     </div>
-    <div class="hdr-clock" id="hdrClock">10:03:11 AM</div>
+    <div class="hdr-clock" id="hdrClock">10:19:57 AM</div>
   </div>
 </header>
 
@@ -167,11 +167,11 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
     </form>
   </div>
 
-  <div id="scanResult" class="result on out"><div class="result-name">Dennis Furst</div><div class="result-meta">10:02 AM -- clocked OUT</div><div class="result-badge">Clocked Out</div></div>
+  <div id="scanResult" class="result on in"><div class="result-name">Jonathan Jacobo</div><div class="result-meta">10:19 AM -- clocked IN</div><div class="result-badge">Clocked In</div></div>
 
   <div class="card">
-    <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
-    <div id="rosterList"><div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div></div>
+    <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">1</span></div>
+    <div id="rosterList"><div class="roster-row"><span class="led-dot"></span><span class="roster-name">Jonathan Jacobo</span><span class="roster-time">since 10:19 AM</span></div></div>
   </div>
 
 </div><!-- /shell -->
@@ -191,12 +191,14 @@ select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
 </div>
 
 <!-- Clock-out cost code modal -->
-<div id="code-modal" class="">
+<div id="code-modal">
   <div class="cam-box">
     <div style="font-size:14px;font-weight:700;margin-bottom:2px">What did you work on today?</div>
-    <div class="muted-note" id="codeModalName" style="margin-bottom:14px">Dennis Furst -- today, Sun, Jun 21</div>
+    <div class="muted-note" id="codeModalName" style="margin-bottom:14px">--</div>
     <div class="fgroup" style="margin-bottom:14px">
-      <select id="codeModalSelect"><option value="">-- Select a cost code --</option><option value="9200">9200 -- Field/Office Operations</option><option value="9210">9210 -- Project Engineer</option><option value="9220">9220 -- Project/Management</option><option value="9230">9230 -- Electrical Detailing</option><option value="9240">9240 -- Electrical Engineer</option><option value="9260">9260 -- Preconstruction / Constructability</option><option value="9270">9270 -- Purchasing / Procurement</option><option value="9280">9280 -- Administrative</option><option value="9290">9290 -- Professional Services</option><option value="9300">9300 -- Safety</option></select>
+      <select id="codeModalSelect">
+        <option value="">-- Select a cost code --</option>
+      </select>
     </div>
     <button class="btn btn-rye" style="width:100%;margin-bottom:8px" onclick="saveDayCode()">Save &amp; finish clocking out</button>
     <button class="btn btn-g" style="width:100%" onclick="skipDayCode()">Skip for now</button>
