@@ -171,7 +171,7 @@
     <div class="scan-zone-title">Scan your badge to clock in or out</div>
     <div class="scan-zone-sub">Use a barcode scanner, or type your employee ID and press Enter</div>
     <form id="scanForm" onsubmit="return handleScanSubmit(event)">
-      <input type="text" id="scanInput" autocomplete="off" autofocus placeholder="Waiting for scan..." oninput="handleScanInputChange()" onfocus="resetScanInputTiming()">
+      <input type="text" id="scanInput" autocomplete="off" autofocus placeholder="Waiting for scan...">
     </form>
   </div>
 
@@ -195,4 +195,178 @@
 
   try{
     if(window.supabase){
-      supabaseClient = window.supabase.createClient(SUPABASE_UR
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+  }catch(e){console.error('Supabase init failed:',e);}
+
+  let staffList = [];
+  let scanAutoSubmitTimer = null;
+
+  function startOfToday(){
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function fmtTime(date){
+    let h = date.getHours();
+    const m = String(date.getMinutes()).padStart(2,'0');
+    const ap = h>=12 ? 'PM' : 'AM';
+    h = h%12 || 12;
+    return h+':'+m+' '+ap;
+  }
+
+  function showResult(type, title, msg){
+    const tc = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = 'toast '+type;
+    t.innerHTML = '<div class="toast-title">'+title+'</div><div class="toast-msg">'+msg+'</div>';
+    tc.appendChild(t);
+    setTimeout(()=>t.remove(), 4000);
+  }
+
+  function refocusScan(){
+    setTimeout(()=>document.getElementById('scanInput').focus(), 50);
+  }
+
+  function handleScanSubmit(e){
+    e.preventDefault();
+    const input = document.getElementById('scanInput');
+    const val = input.value.trim();
+    input.value = '';
+    clearTimeout(scanAutoSubmitTimer);
+    if(val) processScan(val, 'scanner');
+    return false;
+  }
+
+  function handleScanInputChange(){
+    clearTimeout(scanAutoSubmitTimer);
+    scanAutoSubmitTimer = setTimeout(function(){
+      const input = document.getElementById('scanInput');
+      if(input && input.value.trim()){
+        document.getElementById('scanForm').requestSubmit
+          ? document.getElementById('scanForm').requestSubmit()
+          : handleScanSubmit({preventDefault:function(){}});
+      }
+    }, 400);
+  }
+
+  async function processScan(rawValue, source){
+    const empId = parseInt(rawValue.replace(/\D/g,''),10);
+    if(!empId || isNaN(empId)){
+      showResult('err','Invalid badge','That barcode did not contain a valid employee ID.');
+      refocusScan();
+      return;
+    }
+
+    const emp = staffList.find(e=>e.employee_id===empId);
+    if(!emp){
+      showResult('err','Unknown badge','Employee ID '+empId+' is not in the staff roster yet.');
+      refocusScan();
+      return;
+    }
+    if(!emp.active){
+      showResult('err',emp.first_name+' '+emp.last_name,'This staff member is marked inactive.');
+      refocusScan();
+      return;
+    }
+
+    const { data: lastPunch, error: lastErr } = await supabaseClient
+      .from('office_portal_punches')
+      .select('*')
+      .eq('employee_id', empId)
+      .gte('punched_at', startOfToday().toISOString())
+      .order('punched_at',{ascending:false})
+      .limit(1);
+
+    if(lastErr){
+      showResult('err','Connection error','Could not reach the database. Check your internet connection and try again.');
+      refocusScan();
+      return;
+    }
+
+    const newType = (!lastPunch || lastPunch.length===0 || lastPunch[0].event_type==='out') ? 'in' : 'out';
+
+    const { error: insErr } = await supabaseClient.from('office_portal_punches').insert({
+      employee_id: empId,
+      event_type: newType,
+      source: source
+    });
+
+    if(insErr){
+      showResult('err','Clock error','Failed to record your punch. Please try again.');
+      refocusScan();
+      return;
+    }
+
+    const action = newType==='in' ? 'Clocked in' : 'Clocked out';
+    showResult('success',emp.first_name+' '+emp.last_name,action+' at '+fmtTime(new Date()));
+    refocusScan();
+    loadRoster();
+  }
+
+  function tickClock(){
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('hdrClock').textContent = h+':'+m+':'+s;
+  }
+
+  async function loadStaffList(){
+    if(!supabaseClient) return;
+    const { data } = await supabaseClient.from('office_portal_employees').select('*');
+    staffList = data || [];
+  }
+
+  async function loadRoster(){
+    const { data, error } = await supabaseClient
+      .from('office_portal_punches')
+      .select('employee_id,event_type,punched_at')
+      .gte('punched_at', startOfToday().toISOString())
+      .order('punched_at',{ascending:true});
+
+    const list = document.getElementById('rosterList');
+    const countEl = document.getElementById('rosterCount');
+    if(error || !data){
+      list.innerHTML = '<div class="roster-row"><span class="muted-note">Could not load roster</span></div>';
+      return;
+    }
+
+    const lastByEmp = {};
+    data.forEach(p => { lastByEmp[p.employee_id] = p; });
+
+    const currentlyIn = Object.values(lastByEmp).filter(p=>p.event_type==='in');
+    countEl.textContent = currentlyIn.length;
+
+    if(currentlyIn.length===0){
+      list.innerHTML = '<div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div>';
+      return;
+    }
+
+    list.innerHTML = currentlyIn
+      .sort((a,b)=> new Date(a.punched_at) - new Date(b.punched_at))
+      .map(p=>{
+        const emp = staffList.find(e=>e.employee_id===p.employee_id);
+        const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+p.employee_id;
+        return '<div class="roster-row"><span class="led-dot"></span><span class="roster-name">'+name+'</span>'
+          +'<span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
+      }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', async function(){
+    await loadStaffList();
+    loadRoster();
+    setInterval(loadRoster, 30000);
+    
+    const scanInput = document.getElementById('scanInput');
+    if(scanInput){
+      scanInput.addEventListener('input', handleScanInputChange);
+    }
+  });
+
+  setInterval(tickClock, 1000);
+  tickClock();
+</script>
+</body>
+</html>
