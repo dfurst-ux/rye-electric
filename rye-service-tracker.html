@@ -1501,11 +1501,30 @@ function save() {
 
 // Load tickets from Supabase on startup, fall back to localStorage
 async function loadTickets() {
+  // Always load localStorage first as immediate display
+  const local = JSON.parse(localStorage.getItem('svc_tickets') || '[]');
+  if (local.length > 0) {
+    tickets = local;
+    renderAll();
+  }
+
+  // Then try Supabase — merge if remote has more
   const remote = await sbGet();
   if (remote.length > 0) {
-    tickets = remote;
+    // Merge: remote is source of truth, but keep any local-only tickets
+    const remoteIds = new Set(remote.map(t => t.id));
+    const localOnly = local.filter(t => !remoteIds.has(t.id));
+    tickets = [...remote, ...localOnly];
+    // Push local-only tickets up to Supabase
+    localOnly.forEach(t => sbUpsert(t));
     localStorage.setItem('svc_tickets', JSON.stringify(tickets));
+  } else if (local.length > 0) {
+    // Supabase empty but localStorage has data — push it all up
+    tickets = local;
+    local.forEach(t => sbUpsert(t));
+    toast('Syncing ' + local.length + ' local tickets to Supabase…');
   }
+
   ticketCounter = tickets.length + 1;
   renderAll();
 }
@@ -1756,14 +1775,14 @@ function addAttachItem(id, name, size, url, status) {
   const div = document.createElement('div');
   div.className = 'attach-item';
   div.id = id;
-  div.innerHTML = \`
-    <span class="attach-icon">\${getFileIcon(name)}</span>
-    <span class="attach-name">\${name}</span>
-    <span class="attach-size">\${fmtSize(size)}</span>
-    <span class="attach-status \${status}">\${status === 'uploading' ? '⏳ Uploading...' : status === 'done' ? '✓ Uploaded' : '✗ Failed'}</span>
-    \${url ? \`<a href="\${url}" target="_blank">View</a>\` : ''}
-    <button class="attach-del" onclick="removeAttachment('\${id}')" title="Remove">✕</button>
-  \`;
+  div.innerHTML = `
+    <span class="attach-icon">${getFileIcon(name)}</span>
+    <span class="attach-name">${name}</span>
+    <span class="attach-size">${fmtSize(size)}</span>
+    <span class="attach-status ${status}">${status === 'uploading' ? '⏳ Uploading...' : status === 'done' ? '✓ Uploaded' : '✗ Failed'}</span>
+    ${url ? '<a href="' + url + '" target="_blank">View</a>' : ''}
+    <button class="attach-del" onclick="removeAttachment(\'${id}\')" title="Remove">✕</button>
+  `;
   list.appendChild(div);
 }
 
