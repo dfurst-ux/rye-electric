@@ -495,6 +495,49 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 .search-input { border: 1.5px solid var(--border); border-radius: 20px; padding: 4px 16px; font-family: var(--font); font-size: 13px; color: var(--dark); margin-left: auto; width: 220px; }
 .search-input:focus { outline: none; border-color: var(--teal); }
 
+
+/* ── ATTACHMENTS ── */
+.attach-drop {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--trans, .18s);
+  background: var(--bg, #f4f8f9);
+  position: relative;
+}
+.attach-drop:hover, .attach-drop.dragover {
+  border-color: var(--teal);
+  background: var(--teal-light, #EAF5F7);
+}
+.attach-drop input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.attach-drop .drop-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+.attach-drop .drop-label { font-size: 14px; font-weight: 600; color: var(--mid); }
+.attach-drop .drop-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.attach-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.attach-item {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 8px 12px;
+  font-size: 13px;
+}
+.attach-item .attach-icon { font-size: 20px; flex-shrink: 0; }
+.attach-item .attach-name { flex: 1; font-weight: 600; color: var(--dark); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.attach-item .attach-size { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+.attach-item .attach-status { font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.attach-item .attach-status.uploading { color: var(--teal); }
+.attach-item .attach-status.done { color: var(--green); }
+.attach-item .attach-status.error { color: var(--red); }
+.attach-item a { color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; }
+.attach-item a:hover { text-decoration: underline; }
+.attach-del { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 0; flex-shrink: 0; }
+.attach-del:hover { color: var(--red); }
+.attach-progress { width: 100%; height: 3px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+.attach-progress-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width .2s; }
+
 /* ── RESPONSIVE HELPERS ── */
 .full-col { grid-column: 1 / -1; }
 .text-right { text-align: right; }
@@ -1002,6 +1045,19 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         </div>
       </div>
 
+
+      <!-- SECTION: Attachments -->
+      <div class="form-section">
+        <div class="form-section-title red">Attachments — POs, Work Orders, Documents</div>
+        <div class="attach-drop" id="attach-drop" onclick="document.getElementById('attach-input').click()">
+          <input type="file" id="attach-input" multiple accept="*/*" onchange="handleAttachFiles(this.files)">
+          <span class="drop-icon">📎</span>
+          <div class="drop-label">Click to upload or drag &amp; drop files here</div>
+          <div class="drop-sub">PDF, images, Word, Excel — any format accepted</div>
+        </div>
+        <div class="attach-list" id="attach-list"></div>
+      </div>
+
       <!-- SECTION: Customer Contact + Signature -->
       <div class="form-section">
         <div class="form-section-title red">Customer Contact &amp; Signature</div>
@@ -1401,6 +1457,7 @@ async function sbUpsert(ticket) {
     alt_date:     ticket.altDate,
     time_window:  ticket.timeWindow,
     extra_notes:  ticket.extraNotes,
+    attachments:  JSON.stringify(ticket.attachments || []),
   };
   try {
     const res = await fetch(SB_URL + '/rest/v1/service_tickets', {
@@ -1632,6 +1689,141 @@ function calcMatTotal(input) {
   tr.querySelector('.mat-total').value = (qty * cost).toFixed(2);
 }
 
+
+// ── ATTACHMENTS ────────────────────────────────────────────────────────────
+let currentAttachments = []; // [{name, size, type, url, path}]
+
+const SB_STORAGE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co/storage/v1/object/service-attachments/';
+const SB_STORAGE_LIST = 'https://okesnavkxmqucgvvhncx.supabase.co/storage/v1/object/public/service-attachments/';
+
+function getFileIcon(name) {
+  const ext = (name.split('.').pop() || '').toLowerCase();
+  if (['pdf'].includes(ext))                    return '📄';
+  if (['jpg','jpeg','png','gif','webp'].includes(ext)) return '🖼️';
+  if (['doc','docx'].includes(ext))             return '📝';
+  if (['xls','xlsx','csv'].includes(ext))       return '📊';
+  if (['zip','rar','7z'].includes(ext))         return '🗜️';
+  return '📎';
+}
+
+function fmtSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+async function handleAttachFiles(files) {
+  for (const file of files) {
+    await uploadAttachment(file);
+  }
+}
+
+async function uploadAttachment(file) {
+  const ticketId = document.getElementById('modal-ticket-num').textContent.replace('TICKET #', '').replace('EDITING: ', '').trim() || 'TEMP';
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = ticketId + '/' + Date.now() + '_' + safeName;
+
+  // Add pending item to UI
+  const itemId = 'att-' + Date.now();
+  addAttachItem(itemId, file.name, file.size, null, 'uploading');
+
+  try {
+    const res = await fetch(SB_STORAGE_URL + path, {
+      method: 'POST',
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'true',
+      },
+      body: file,
+    });
+
+    if (!res.ok) throw new Error(await res.text());
+
+    const url = SB_STORAGE_LIST + path;
+    currentAttachments.push({ id: itemId, name: file.name, size: file.size, type: file.type, url, path });
+    updateAttachItem(itemId, 'done', url);
+  } catch(e) {
+    console.warn('Upload failed:', e);
+    updateAttachItem(itemId, 'error', null);
+  }
+}
+
+function addAttachItem(id, name, size, url, status) {
+  const list = document.getElementById('attach-list');
+  if (!list) return;
+  const div = document.createElement('div');
+  div.className = 'attach-item';
+  div.id = id;
+  div.innerHTML = \`
+    <span class="attach-icon">\${getFileIcon(name)}</span>
+    <span class="attach-name">\${name}</span>
+    <span class="attach-size">\${fmtSize(size)}</span>
+    <span class="attach-status \${status}">\${status === 'uploading' ? '⏳ Uploading...' : status === 'done' ? '✓ Uploaded' : '✗ Failed'}</span>
+    \${url ? \`<a href="\${url}" target="_blank">View</a>\` : ''}
+    <button class="attach-del" onclick="removeAttachment('\${id}')" title="Remove">✕</button>
+  \`;
+  list.appendChild(div);
+}
+
+function updateAttachItem(id, status, url) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const statusEl = el.querySelector('.attach-status');
+  if (statusEl) {
+    statusEl.className = 'attach-status ' + status;
+    statusEl.textContent = status === 'done' ? '✓ Uploaded' : '✗ Failed';
+  }
+  if (url) {
+    const existing = el.querySelector('a');
+    if (!existing) {
+      const a = document.createElement('a');
+      a.href = url; a.target = '_blank'; a.textContent = 'View';
+      el.querySelector('.attach-del').before(a);
+    }
+  }
+}
+
+function removeAttachment(id) {
+  const att = currentAttachments.find(a => a.id === id);
+  if (att) {
+    // Delete from Supabase storage
+    fetch(SB_STORAGE_URL + att.path, {
+      method: 'DELETE',
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
+    }).catch(e => console.warn('Delete failed:', e));
+    currentAttachments = currentAttachments.filter(a => a.id !== id);
+  }
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function renderAttachList(attachments) {
+  const list = document.getElementById('attach-list');
+  if (!list) return;
+  list.innerHTML = '';
+  currentAttachments = [];
+  (attachments || []).forEach(att => {
+    const itemId = 'att-' + Date.now() + Math.random();
+    currentAttachments.push({ ...att, id: itemId });
+    addAttachItem(itemId, att.name, att.size || 0, att.url, 'done');
+  });
+}
+
+// Drag and drop
+document.addEventListener('DOMContentLoaded', () => {
+  const drop = document.getElementById('attach-drop');
+  if (!drop) return;
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault();
+    drop.classList.remove('dragover');
+    handleAttachFiles(e.dataTransfer.files);
+  });
+});
+
 // ── DAILY REPORT ROWS ─────────────────────────────────────────────────────────
 const DR_QUESTIONS = [
   { id: 'dr-q1', text: 'Did you perform any extra work?' },
@@ -1860,6 +2052,7 @@ function saveTicket() {
     rating: 0,
     ratingNotes: '',
     dailyReport: collectDailyReport(),
+    attachments: currentAttachments.map(a => ({name:a.name,size:a.size,type:a.type,url:a.url,path:a.path})),
     createdAt: new Date().toISOString()
   };
 
@@ -1897,6 +2090,8 @@ function clearTicketForm() {
   if (drTbody) drTbody.innerHTML = '';
   // Reset condition buttons
   document.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('yes-active','no-active'));
+  currentAttachments = [];
+  const aList = document.getElementById('attach-list'); if (aList) aList.innerHTML = '';
 }
 
 // ── SAVE TASK ──
@@ -2928,6 +3123,9 @@ function editTicket(id) {
       });
     }
 
+    // Load existing attachments
+    renderAttachList(t.attachments || []);
+
     // Switch save button to Update mode
     const saveBtn = document.querySelector('#ticketModal .btn-green');
     if (saveBtn) {
@@ -2970,6 +3168,7 @@ function updateTicket() {
     customerEmail: document.getElementById('t-customer-email').value.trim(),
     customerPhone: document.getElementById('t-customer-phone').value.trim(),
     dailyReport:   collectDailyReport(),
+    attachments:   currentAttachments.map(a => ({name:a.name,size:a.size,type:a.type,url:a.url,path:a.path})),
     updatedAt:     new Date().toISOString(),
   };
 
@@ -3074,6 +3273,19 @@ function viewTicket(id) {
 
       ${t.equipment ? `<div style="margin-bottom:12px"><div class="form-label">Equipment / Tools</div><div style="font-size:14px">${t.equipment}</div></div>` : ''}
       ${t.notes ? `<div style="margin-bottom:12px"><div class="form-label">Field Notes</div><div style="font-size:14px">${t.notes}</div></div>` : ''}
+      ${(t.attachments && t.attachments.length) ? `
+      <div style="margin-bottom:16px">
+        <div class="form-label" style="margin-bottom:8px">Attachments (${t.attachments.length})</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          ${t.attachments.map(a => `
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f4f8f9;border-radius:6px;border:1.5px solid var(--border)">
+              <span style="font-size:18px">${getFileIcon(a.name)}</span>
+              <span style="font-weight:600;font-size:13px;flex:1">${a.name}</span>
+              <span style="font-size:11px;color:var(--muted)">${fmtSize(a.size||0)}</span>
+              <a href="${a.url}" target="_blank" style="color:var(--teal);font-size:12px;font-weight:700;text-decoration:none">⬇ Download</a>
+            </div>`).join('')}
+        </div>
+      </div>` : ''}
       ${t.sigName ? `<div style="margin-bottom:12px"><div class="form-label">Customer Signature</div><div style="font-size:14px;font-weight:600">${t.sigName}${t.sigDate ? ' &nbsp;·&nbsp; ' + fmtDate(t.sigDate) : ''}</div></div>` : ''}
 
       ${(t.ratings && Object.values(t.ratings).some(v=>v>0)) ? `
