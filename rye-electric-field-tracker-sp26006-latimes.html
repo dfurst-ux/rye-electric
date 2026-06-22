@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0107)file:///C:/Users/Dennis%20Furst/Downloads/Rye_Electric_-_Field_Tracker_-_SP26006_-_LOS_ANGELES_TIMES_9.html -->
+<!-- saved from url=(0108)file:///C:/Users/Dennis%20Furst/Downloads/Rye_Electric_-_Field_Tracker_-_SP26006_-_LOS_ANGELES_TIMES_11.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -431,6 +431,10 @@ tbody tr:hover td{background:#f7fbfc}
     <button class="tab" onclick="goTab(this,&#39;jobs&#39;)">
     <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
     <span>Jobs</span>
+    </button>
+    <button class="tab" onclick="goTab(this,&#39;settings&#39;)">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m3.08 3.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m3.08-3.08l4.24-4.24"></path></svg>
+    <span>Settings</span>
     </button>
   </div>
 
@@ -1444,7 +1448,7 @@ tbody tr:hover td{background:#f7fbfc}
           </form>
           <button type="button" class="scan-cam-btn" onclick="openFieldCamera(&#39;signin&#39;)">📷 Scan with camera</button>
           <div style="margin-top:10px">
-            <a href="file:///C:/Users/Dennis%20Furst/Downloads/Rye_Electric_-_Field_Tracker_-_SP26006_-_LOS_ANGELES_TIMES_9.html#" onclick="toggleManualEntry();return false;" style="font-size:11px;color:#b5650a;font-weight:700;text-decoration:underline">No badge? Tap to enter your employee # instead</a>
+            <a href="file:///C:/Users/Dennis%20Furst/Downloads/Rye_Electric_-_Field_Tracker_-_SP26006_-_LOS_ANGELES_TIMES_11.html#" onclick="toggleManualEntry();return false;" style="font-size:11px;color:#b5650a;font-weight:700;text-decoration:underline">No badge? Tap to enter your employee # instead</a>
           </div>
           <div id="manualEntryBox" style="display:none;margin-top:10px;padding:12px;background:#fff8ee;border:1.5px solid #f0c98a;border-radius:10px">
             <div style="font-size:11px;color:#8a4a10;font-weight:700;margin-bottom:6px">This will be marked "No Badge -- Manual Entry" on the sign in sheet</div>
@@ -4432,6 +4436,83 @@ function printDJR(){
     });
     </script>
 
+
+    <script>
+    // Workers list management
+    function loadWorkersList() {
+      const workersList = document.getElementById('workersList');
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {
+        '907': {id: '907', first: 'Dennis', last: 'Furst'},
+        '023': {id: '023', first: 'Joey', last: 'Java'}
+      };
+      
+      if (Object.keys(workersData).length === 0) {
+        workersList.innerHTML = '<p style="color: #999;">No workers added yet.</p>';
+        return;
+      }
+      
+      let html = '<table style="width: 100%; border-collapse: collapse;">';
+      html += '<tr style="background: #EEF5FC; border-bottom: 2px solid #3D7FCB;"><th style="padding: 10px; text-align: left; color: #2980B9;">ID</th><th style="padding: 10px; text-align: left; color: #2980B9;">Name</th><th style="padding: 10px; text-align: center; color: #2980B9;">Action</th></tr>';
+      
+      for (const [id, worker] of Object.entries(workersData)) {
+        html += '<tr style="border-bottom: 1px solid #ddd;">';
+        html += '<td style="padding: 10px;"><strong>' + worker.id + '</strong></td>';
+        html += '<td style="padding: 10px;">' + worker.first + ' ' + worker.last + '</td>';
+        html += '<td style="padding: 10px; text-align: center;"><button onclick="removeWorkerFromList('' + id + '')" style="background: #e74c3c; color: white; padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Remove</button></td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+      
+      workersList.innerHTML = html;
+    }
+    
+    function addWorkerToList() {
+      const id = document.getElementById('newWorkerID').value.trim();
+      const first = document.getElementById('newWorkerFirst').value.trim();
+      const last = document.getElementById('newWorkerLast').value.trim();
+      
+      if (!id || !first || !last) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      
+      if (workersData[id]) {
+        alert('Worker ID ' + id + ' already exists');
+        return;
+      }
+      
+      workersData[id] = {id: id, first: first, last: last};
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      document.getElementById('newWorkerID').value = '';
+      document.getElementById('newWorkerFirst').value = '';
+      document.getElementById('newWorkerLast').value = '';
+      
+      loadWorkersList();
+      alert('Worker added successfully!');
+    }
+    
+    function removeWorkerFromList(id) {
+      if (!confirm('Remove worker ID ' + id + '?')) {
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      delete workersData[id];
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      loadWorkersList();
+    }
+    
+    // Load workers list when Settings tab is viewed
+    document.addEventListener('DOMContentLoaded', function() {
+      if (document.getElementById('workersList')) {
+        loadWorkersList();
+      }
+    });
+    </script>
 `;
 
   // Show in-page print frame (iOS compatible)
@@ -6737,7 +6818,84 @@ renderCCRef();
       +'<div class="sig-row"><div class="sig-name"><span style="font-size:10px;color:#777;display:block;">Supervisor Signature</span>'+(document.getElementById('ptpSupervisorName')?document.getElementById('ptpSupervisorName').value:'')+'</div></div>'
       +'</div></div>'
       +'<div class="footer"><span>Rye Electric, Inc. — Safety Documentation</span><span>'+jobName+' · '+dateStr+'</span></div>'
-      +'';
+      +'
+    <script>
+    // Workers list management
+    function loadWorkersList() {
+      const workersList = document.getElementById('workersList');
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {
+        '907': {id: '907', first: 'Dennis', last: 'Furst'},
+        '023': {id: '023', first: 'Joey', last: 'Java'}
+      };
+      
+      if (Object.keys(workersData).length === 0) {
+        workersList.innerHTML = '<p style="color: #999;">No workers added yet.</p>';
+        return;
+      }
+      
+      let html = '<table style="width: 100%; border-collapse: collapse;">';
+      html += '<tr style="background: #EEF5FC; border-bottom: 2px solid #3D7FCB;"><th style="padding: 10px; text-align: left; color: #2980B9;">ID</th><th style="padding: 10px; text-align: left; color: #2980B9;">Name</th><th style="padding: 10px; text-align: center; color: #2980B9;">Action</th></tr>';
+      
+      for (const [id, worker] of Object.entries(workersData)) {
+        html += '<tr style="border-bottom: 1px solid #ddd;">';
+        html += '<td style="padding: 10px;"><strong>' + worker.id + '</strong></td>';
+        html += '<td style="padding: 10px;">' + worker.first + ' ' + worker.last + '</td>';
+        html += '<td style="padding: 10px; text-align: center;"><button onclick="removeWorkerFromList('' + id + '')" style="background: #e74c3c; color: white; padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Remove</button></td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+      
+      workersList.innerHTML = html;
+    }
+    
+    function addWorkerToList() {
+      const id = document.getElementById('newWorkerID').value.trim();
+      const first = document.getElementById('newWorkerFirst').value.trim();
+      const last = document.getElementById('newWorkerLast').value.trim();
+      
+      if (!id || !first || !last) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      
+      if (workersData[id]) {
+        alert('Worker ID ' + id + ' already exists');
+        return;
+      }
+      
+      workersData[id] = {id: id, first: first, last: last};
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      document.getElementById('newWorkerID').value = '';
+      document.getElementById('newWorkerFirst').value = '';
+      document.getElementById('newWorkerLast').value = '';
+      
+      loadWorkersList();
+      alert('Worker added successfully!');
+    }
+    
+    function removeWorkerFromList(id) {
+      if (!confirm('Remove worker ID ' + id + '?')) {
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      delete workersData[id];
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      loadWorkersList();
+    }
+    
+    // Load workers list when Settings tab is viewed
+    document.addEventListener('DOMContentLoaded', function() {
+      if (document.getElementById('workersList')) {
+        loadWorkersList();
+      }
+    });
+    </script>
+';
     var w=window.open('','_blank','width=850,height=1100');
     w.document.open();w.document.write(html);w.document.close();
     setTimeout(function(){w.focus();w.print();},600);
@@ -7145,5 +7303,159 @@ async function saveToDrive(docType, job, data, statusElId) {
 (function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
 
 
+
+
+    <script>
+    // Workers list management
+    function loadWorkersList() {
+      const workersList = document.getElementById('workersList');
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {
+        '907': {id: '907', first: 'Dennis', last: 'Furst'},
+        '023': {id: '023', first: 'Joey', last: 'Java'}
+      };
+      
+      if (Object.keys(workersData).length === 0) {
+        workersList.innerHTML = '<p style="color: #999;">No workers added yet.</p>';
+        return;
+      }
+      
+      let html = '<table style="width: 100%; border-collapse: collapse;">';
+      html += '<tr style="background: #EEF5FC; border-bottom: 2px solid #3D7FCB;"><th style="padding: 10px; text-align: left; color: #2980B9;">ID</th><th style="padding: 10px; text-align: left; color: #2980B9;">Name</th><th style="padding: 10px; text-align: center; color: #2980B9;">Action</th></tr>';
+      
+      for (const [id, worker] of Object.entries(workersData)) {
+        html += '<tr style="border-bottom: 1px solid #ddd;">';
+        html += '<td style="padding: 10px;"><strong>' + worker.id + '</strong></td>';
+        html += '<td style="padding: 10px;">' + worker.first + ' ' + worker.last + '</td>';
+        html += '<td style="padding: 10px; text-align: center;"><button onclick="removeWorkerFromList('' + id + '')" style="background: #e74c3c; color: white; padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Remove</button></td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+      
+      workersList.innerHTML = html;
+    }
+    
+    function addWorkerToList() {
+      const id = document.getElementById('newWorkerID').value.trim();
+      const first = document.getElementById('newWorkerFirst').value.trim();
+      const last = document.getElementById('newWorkerLast').value.trim();
+      
+      if (!id || !first || !last) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      
+      if (workersData[id]) {
+        alert('Worker ID ' + id + ' already exists');
+        return;
+      }
+      
+      workersData[id] = {id: id, first: first, last: last};
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      document.getElementById('newWorkerID').value = '';
+      document.getElementById('newWorkerFirst').value = '';
+      document.getElementById('newWorkerLast').value = '';
+      
+      loadWorkersList();
+      alert('Worker added successfully!');
+    }
+    
+    function removeWorkerFromList(id) {
+      if (!confirm('Remove worker ID ' + id + '?')) {
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      delete workersData[id];
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      loadWorkersList();
+    }
+    
+    // Load workers list when Settings tab is viewed
+    document.addEventListener('DOMContentLoaded', function() {
+      if (document.getElementById('workersList')) {
+        loadWorkersList();
+      }
+    });
+    </script>
+
+    <script>
+    // Initialize workers on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (document.getElementById('workersList')) {
+        loadJobWorkersList();
+      }
+    });
+    
+    function loadJobWorkersList() {
+      const workersList = document.getElementById('workersList');
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {
+        '907': {id: '907', first: 'Dennis', last: 'Furst'},
+        '023': {id: '023', first: 'Joey', last: 'Java'}
+      };
+      
+      if (Object.keys(workersData).length === 0) {
+        workersList.innerHTML = '<p style="color: #999; font-size: 14px;">No workers added yet.</p>';
+        return;
+      }
+      
+      let html = '<table style="width: 100%; border-collapse: collapse; font-size: 14px;">';
+      html += '<tr style="background: #EEF5FC; border-bottom: 2px solid #3D7FCB;"><th style="padding: 10px; text-align: left; color: #2980B9;">ID</th><th style="padding: 10px; text-align: left; color: #2980B9;">Name</th><th style="padding: 10px; text-align: center; color: #2980B9;">Action</th></tr>';
+      
+      for (const [id, worker] of Object.entries(workersData)) {
+        html += '<tr style="border-bottom: 1px solid #ddd;">';
+        html += '<td style="padding: 10px;"><strong>' + worker.id + '</strong></td>';
+        html += '<td style="padding: 10px;">' + worker.first + ' ' + worker.last + '</td>';
+        html += '<td style="padding: 10px; text-align: center;"><button onclick="removeWorkerFromJobList('' + id + '')" style="background: #e74c3c; color: white; padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">Remove</button></td>';
+        html += '</tr>';
+      }
+      html += '</table>';
+      
+      workersList.innerHTML = html;
+    }
+    
+    function addWorkerToJobList() {
+      const id = document.getElementById('newWorkerID').value.trim();
+      const first = document.getElementById('newWorkerFirst').value.trim();
+      const last = document.getElementById('newWorkerLast').value.trim();
+      
+      if (!id || !first || !last) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      
+      if (workersData[id]) {
+        alert('Worker ID ' + id + ' already exists');
+        return;
+      }
+      
+      workersData[id] = {id: id, first: first, last: last};
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      document.getElementById('newWorkerID').value = '';
+      document.getElementById('newWorkerFirst').value = '';
+      document.getElementById('newWorkerLast').value = '';
+      
+      loadJobWorkersList();
+      alert('Worker added successfully!');
+    }
+    
+    function removeWorkerFromJobList(id) {
+      if (!confirm('Remove worker ID ' + id + '?')) {
+        return;
+      }
+      
+      const workersData = JSON.parse(localStorage.getItem('JOB_WORKERS_SP26006')) || {};
+      delete workersData[id];
+      localStorage.setItem('JOB_WORKERS_SP26006', JSON.stringify(workersData));
+      
+      loadJobWorkersList();
+    }
+    </script>
 
 </taskdata.length;i++){></rows.length;i++){></rows.length;i++){></wkstart)></body></html>
