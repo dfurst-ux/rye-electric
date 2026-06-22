@@ -585,6 +585,24 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <h1>Service Operations Dashboard</h1>
     <p id="dash-date"></p>
   </div>
+  <!-- FINANCIAL STATS ROW -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+    <div class="stat-card" style="border-left-color:var(--green)">
+      <div class="stat-label">Revenue Produced (YTD)</div>
+      <div class="stat-value" id="stat-revenue" style="color:var(--green);font-size:26px">$0</div>
+      <div class="stat-sub">Total paid invoices</div>
+    </div>
+    <div class="stat-card" style="border-left-color:var(--gold)">
+      <div class="stat-label">Open Invoices</div>
+      <div class="stat-value" id="stat-open-invoices" style="color:var(--gold);font-size:26px">$0</div>
+      <div class="stat-sub">Invoiced — awaiting payment</div>
+    </div>
+    <div class="stat-card" style="border-left-color:var(--teal)">
+      <div class="stat-label">Weekly Pace (last 7 days)</div>
+      <div class="stat-value" id="stat-weekly-pace" style="font-size:26px">$0</div>
+      <div class="stat-sub" id="stat-pace-sub">vs $28,000 target</div>
+    </div>
+  </div>
 
   <div class="stats-row">
     <div class="stat-card red">
@@ -1254,6 +1272,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div id="view-ticket-content"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('viewTicketModal')">Close</button>
+      <button class="btn btn-sm" id="btn-mark-paid" style="background:var(--green);color:#fff;display:none" onclick="markPaidFromModal()">✓ Mark Invoice Paid</button>
       <button class="btn btn-gold btn-sm" onclick="printTicket()">🖨 Print / PDF</button>
       <button class="btn btn-green btn-sm" id="btn-gen-invoice" onclick="completeAndInvoice()">✅ Complete &amp; Email Invoice</button>
       <button class="btn btn-blue btn-sm" id="btn-foundation" onclick="exportToFoundation()">📊 Upload to Foundation</button>
@@ -2220,6 +2239,34 @@ function renderDashboard() {
   document.getElementById('stat-done').textContent = done;
   document.getElementById('stat-tasks').textContent = openTasks;
 
+  // ── FINANCIAL STATS ──────────────────────────────────────────────────────
+  // Revenue produced = sum of all Paid tickets
+  const revProduced = tickets
+    .filter(t => t.status === 'Paid')
+    .reduce((s, t) => s + (parseFloat(t.paidAmount) || calcTicketTotal(t)), 0);
+
+  // Open invoices = sum of all Invoiced (not yet paid) tickets
+  const openInvoiceTotal = tickets
+    .filter(t => t.status === 'Invoiced')
+    .reduce((s, t) => s + calcTicketTotal(t), 0);
+
+  // Weekly pace — revenue from Paid tickets in the last 7 days
+  const oneWeekAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString();
+  const weeklyPace = tickets
+    .filter(t => t.status === 'Paid' && t.paidAt && t.paidAt > oneWeekAgo)
+    .reduce((s, t) => s + (parseFloat(t.paidAmount) || calcTicketTotal(t)), 0);
+
+  const fmtDollar = n => '$' + Math.round(n).toLocaleString('en-US');
+  document.getElementById('stat-revenue').textContent = fmtDollar(revProduced);
+  document.getElementById('stat-open-invoices').textContent = fmtDollar(openInvoiceTotal);
+  document.getElementById('stat-weekly-pace').textContent = fmtDollar(weeklyPace);
+
+  const paceEl = document.getElementById('stat-weekly-pace');
+  const paceSub = document.getElementById('stat-pace-sub');
+  const paceGap = weeklyPace - 28000;
+  if (paceEl) paceEl.style.color = weeklyPace >= 28000 ? 'var(--green)' : weeklyPace >= 20000 ? 'var(--gold)' : 'var(--red)';
+  if (paceSub) paceSub.textContent = paceGap >= 0 ? '+$' + Math.round(paceGap).toLocaleString() + ' ahead' : '-$' + Math.round(Math.abs(paceGap)).toLocaleString() + ' behind target';
+
   const tbody = document.getElementById('dash-ticket-tbody');
   const recent = tickets.slice(0, 6);
   if (!recent.length) {
@@ -2300,6 +2347,8 @@ function renderTicketsTable() {
         <td>
           <button class="link-btn" onclick="viewTicket('${t.id}')">View</button>
           <button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="editTicket('${t.id}')">Edit</button>
+          ${t.status === 'Invoiced' ? `<button class="link-btn" style="color:var(--green);margin-left:8px;font-weight:700" onclick="markPaid('${t.id}')">✓ Mark Paid</button>` : ''}
+          ${t.status === 'Paid' ? `<span style="color:var(--green);font-size:12px;font-weight:700;margin-left:8px">✓ PAID</span>` : ''}
           <button class="link-btn" style="color:var(--green);margin-left:8px" onclick="currentViewTicketId='${t.id}';completeAndInvoice()">Complete + Invoice</button>
           <button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="currentViewTicketId='${t.id}';exportToFoundation()">Foundation</button>
           <button class="link-btn" style="color:var(--muted);margin-left:8px" onclick="deleteTicket('${t.id}')">Del</button>
@@ -3327,11 +3376,60 @@ function viewTicket(id) {
 
   document.getElementById('view-ticket-content').innerHTML = html;
   currentViewTicketId = id;
+  // Show/hide Mark Paid button based on status
+  const paidBtn = document.getElementById('btn-mark-paid');
+  if (paidBtn) paidBtn.style.display = (t.status === 'Invoiced') ? 'inline-flex' : 'none';
   openModal('viewTicketModal');
 }
 
 function printTicket() {
   window.print();
+}
+
+
+// ── TICKET TOTAL CALCULATOR ────────────────────────────────────────────────
+function calcTicketTotal(t) {
+  const laborTotal = (t.labor || []).reduce((s, r) => {
+    const rate = parseFloat(r.rate) || 124.97;
+    const reg  = parseFloat(r.regHours) || 0;
+    const ot   = parseFloat(r.otHours)  || 0;
+    return s + (r.lineTotal ? parseFloat(r.lineTotal) : (reg * rate) + (ot * rate * 1.5));
+  }, 0);
+  const matTotal = (t.materials || []).reduce((s, r) => {
+    const qty = parseFloat(r.qty) || 1;
+    const uc  = parseFloat(r.unitCost) || 0;
+    return s + (parseFloat(r.total) || qty * uc);
+  }, 0);
+  const subtotal = laborTotal + matTotal;
+  return subtotal * 1.20; // includes 20% O&P
+}
+
+// ── MARK PAID ──────────────────────────────────────────────────────────────
+function markPaid(id) {
+  const t = tickets.find(x => x.id === id);
+  if (!t) return;
+  const total = calcTicketTotal(t);
+  if (!confirm('Mark ' + t.id + ' as PAID?\n\nInvoice total: $' + total.toFixed(2) + '\n\nThis will move $' + total.toFixed(2) + ' from Open Invoices to Revenue Produced.')) return;
+  t.status    = 'Paid';
+  t.paidAt    = new Date().toISOString();
+  t.paidAmount = total;
+  save();
+  sbUpdateStatus(t.id, 'Paid');
+  // Also patch paid amount to Supabase
+  fetch(SB_URL + '/rest/v1/service_tickets?id=eq.' + encodeURIComponent(t.id), {
+    method: 'PATCH',
+    headers: { ...SB_HDRS, 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ status: 'Paid', paid_at: t.paidAt, paid_amount: total }),
+  }).catch(e => console.warn('Supabase paid update failed:', e));
+  renderAll();
+  toast('✓ ' + t.id + ' marked PAID — $' + total.toFixed(2) + ' added to Revenue Produced');
+}
+
+function markPaidFromModal() {
+  if (currentViewTicketId) {
+    markPaid(currentViewTicketId);
+    closeModal('viewTicketModal');
+  }
 }
 
 // ── EXPORT TO FOUNDATION (EXCEL) ─────────────────────────────────────────────
@@ -4071,7 +4169,16 @@ Notes: ${t.notes || t.scope || '—'}
       total_due:  '$' + total.toFixed(2),
       message:    invoiceBody,
     });
-    toast('Invoice ' + invNum + ' generated & emailed to accounting ✓');
+    // Mark ticket as Invoiced after PDF is generated
+  const invTicket = tickets.find(x => x.id === (currentViewTicketId || ''));
+  if (invTicket && invTicket.status === 'Completed') {
+    invTicket.status = 'Invoiced';
+    invTicket.invoiceNum = invNum;
+    save();
+    sbUpdateStatus(invTicket.id, 'Invoiced');
+    renderAll();
+  }
+  toast('Invoice ' + invNum + ' generated & emailed to accounting ✓');
   } catch(e) {
     console.warn('Email failed:', e);
     toast('Invoice PDF downloaded — email delivery pending', true);
@@ -4166,7 +4273,7 @@ function fmtDate(d) {
 
 function statusBadge(s) {
   const map = {
-    'Open':'badge-red','In Progress':'badge-gold','Completed':'badge-green','Invoiced':'badge-blue'
+    'Open':'badge-red','In Progress':'badge-gold','Completed':'badge-green','Invoiced':'badge-blue','Paid':'badge-green'
   };
   return `<span class="badge ${map[s]||'badge-gray'}"><span class="dot dot-${s==='Open'?'red':s==='In Progress'?'gold':s==='Completed'?'green':'blue'}"></span>${s}</span>`;
 }
