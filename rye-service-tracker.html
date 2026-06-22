@@ -590,7 +590,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div class="stat-card" style="border-left-color:var(--green)">
       <div class="stat-label">Revenue Produced (YTD)</div>
       <div class="stat-value" id="stat-revenue" style="color:var(--green);font-size:26px">$0</div>
-      <div class="stat-sub">Total paid invoices</div>
+      <div class="stat-sub">Total invoiced to date</div>
     </div>
     <div class="stat-card" style="border-left-color:var(--gold)">
       <div class="stat-label">Open Invoices</div>
@@ -2240,10 +2240,10 @@ function renderDashboard() {
   document.getElementById('stat-tasks').textContent = openTasks;
 
   // ── FINANCIAL STATS ──────────────────────────────────────────────────────
-  // Revenue produced = sum of all Paid tickets
+  // Revenue produced = sum of all Invoiced OR Paid tickets
   const revProduced = tickets
-    .filter(t => t.status === 'Paid')
-    .reduce((s, t) => s + (parseFloat(t.paidAmount) || calcTicketTotal(t)), 0);
+    .filter(t => t.status === 'Invoiced' || t.status === 'Paid')
+    .reduce((s, t) => s + calcTicketTotal(t), 0);
 
   // Open invoices = sum of all Invoiced (not yet paid) tickets
   const openInvoiceTotal = tickets
