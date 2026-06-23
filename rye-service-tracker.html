@@ -570,6 +570,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <button class="nav-tab" onclick="showView('tasks')">Tasks</button>
     <button class="nav-tab" onclick="showView('timesheets')">Timesheets</button>
     <button class="nav-tab" onclick="showView('crew')">Crew Ratings</button>
+    <button class="nav-tab" onclick="openScorecard()" style="background:var(--teal);color:#fff">📋 Weekly Scorecard</button>
   </div>
   <div class="topnav-actions">
     <button class="btn btn-outline btn-sm" onclick="openModal('taskModal')">+ New Task</button>
@@ -1369,6 +1370,123 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="cancelApproval()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCORECARD PASSCODE MODAL -->
+<div class="modal-overlay" id="scorecardPassModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title">Weekly Scorecard</div>
+      <button class="modal-close" onclick="closeModal('scorecardPassModal')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:28px;text-align:center">
+      <div style="font-size:40px;margin-bottom:16px">🔒</div>
+      <div style="font-size:15px;color:var(--mid);margin-bottom:20px">Enter your passcode to access the weekly scorecard.</div>
+      <input type="password" id="scorecard-passcode" class="form-control" placeholder="Enter passcode" style="text-align:center;font-size:20px;letter-spacing:6px;max-width:200px;margin:0 auto"
+        onkeydown="if(event.key==='Enter') verifyPasscode()">
+      <div id="passcode-error" style="color:var(--red);font-size:13px;margin-top:8px;display:none">Incorrect passcode. Try again.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('scorecardPassModal')">Cancel</button>
+      <button class="btn btn-red" onclick="verifyPasscode()">Unlock →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCORECARD FORM MODAL -->
+<div class="modal-overlay" id="scorecardModal">
+  <div class="modal" style="max-width:760px">
+    <div class="modal-header" style="background:var(--dark);border-bottom:3px solid var(--teal)">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:4px">Rye Electric — Service Department</div>
+        <div class="modal-title" style="color:#fff">Weekly Scorecard</div>
+      </div>
+      <button class="modal-close" style="color:#aaa" onclick="closeModal('scorecardModal')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:24px">
+
+      <!-- Week ending -->
+      <div class="form-grid" style="margin-bottom:20px">
+        <div class="form-group">
+          <label class="form-label">Week Ending (Saturday) <span style="color:var(--red)">*</span></label>
+          <input type="date" class="form-control" id="sc-week-ending">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Submitted By</label>
+          <input class="form-control" id="sc-submitted-by" value="Mychal Kirschbaum" readonly style="background:#f4f4f4">
+        </div>
+      </div>
+
+      <!-- KPI Section -->
+      <div style="background:var(--dark);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:var(--teal);text-transform:uppercase;margin-bottom:12px">5 Weekly KPIs</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group">
+            <label class="form-label" style="color:#aaa">Revenue Billed This Week ($)</label>
+            <input type="number" class="form-control" id="sc-revenue" placeholder="0.00" oninput="updateScorecardStatus()">
+            <div style="font-size:11px;margin-top:3px" id="sc-revenue-status"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:#aaa">Gross Margin on Closed Jobs (%)</label>
+            <input type="number" class="form-control" id="sc-margin" placeholder="0" min="0" max="100" oninput="updateScorecardStatus()">
+            <div style="font-size:11px;margin-top:3px" id="sc-margin-status"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:#aaa">Tech Utilization Rate (%)</label>
+            <input type="number" class="form-control" id="sc-utilization" placeholder="0" min="0" max="100" oninput="updateScorecardStatus()">
+            <div style="font-size:11px;margin-top:3px" id="sc-util-status"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:#aaa">Open Jobs Aging &gt; 5 Days</label>
+            <input type="number" class="form-control" id="sc-aging" placeholder="0" min="0" oninput="updateScorecardStatus()">
+            <div style="font-size:11px;margin-top:3px" id="sc-aging-status"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:#aaa">Customer Rating Avg (This Week)</label>
+            <input type="number" class="form-control" id="sc-rating" placeholder="0.0" min="0" max="5" step="0.1" oninput="updateScorecardStatus()">
+            <div style="font-size:11px;margin-top:3px" id="sc-rating-status"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:#aaa">Total Invoices Sent This Week ($)</label>
+            <input type="number" class="form-control" id="sc-invoices" placeholder="0.00">
+          </div>
+        </div>
+      </div>
+
+      <!-- Overall status indicator -->
+      <div id="sc-overall-status" style="border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;display:none">
+      </div>
+
+      <!-- Open calls -->
+      <div class="form-section" style="margin-bottom:16px">
+        <div class="form-section-title red">Open Service Calls — Status Update</div>
+        <textarea class="form-control" id="sc-open-calls" rows="3" placeholder="List open calls, their age, NTE, and expected close date..."></textarea>
+      </div>
+
+      <!-- Issues / blockers -->
+      <div class="form-section" style="margin-bottom:16px">
+        <div class="form-section-title red">Issues, Blockers or Escalations</div>
+        <textarea class="form-control" id="sc-issues" rows="3" placeholder="Any problems, customer complaints, tech issues, or anything needing management attention..."></textarea>
+      </div>
+
+      <!-- Wins -->
+      <div class="form-section" style="margin-bottom:16px">
+        <div class="form-section-title">Wins / Highlights This Week</div>
+        <textarea class="form-control" id="sc-wins" rows="2" placeholder="Customer compliments, jobs completed ahead of schedule, upsells, etc..."></textarea>
+      </div>
+
+      <!-- Next week plan -->
+      <div class="form-section">
+        <div class="form-section-title">Next Week Plan</div>
+        <textarea class="form-control" id="sc-next-week" rows="2" placeholder="Scheduled calls, crew assignments, priorities for next week..."></textarea>
+      </div>
+
+    </div>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button class="btn btn-ghost" onclick="closeModal('scorecardModal')">Cancel</button>
+      <button class="btn btn-red" id="sc-submit-btn" onclick="submitScorecard()">📤 Submit to Management</button>
     </div>
   </div>
 </div>
@@ -2405,7 +2523,195 @@ function nextStatus(s) {
 }
 
 // ── RENDER TIMESHEETS ──
-// ── PUSH TO TIMESHEET (SILENT — auto on save) ────────────────────────────────
+// ── WEEKLY SCORECARD ──────────────────────────────────────────────────────────
+const SCORECARD_PASS = '1234';
+
+function openScorecard() {
+  // Check if already unlocked this session
+  if (sessionStorage.getItem('sc_unlocked') === 'true') {
+    openScorecardForm();
+  } else {
+    document.getElementById('scorecard-passcode').value = '';
+    document.getElementById('passcode-error').style.display = 'none';
+    openModal('scorecardPassModal');
+    setTimeout(() => document.getElementById('scorecard-passcode').focus(), 200);
+  }
+}
+
+function verifyPasscode() {
+  const input = document.getElementById('scorecard-passcode').value;
+  if (input === SCORECARD_PASS) {
+    sessionStorage.setItem('sc_unlocked', 'true');
+    closeModal('scorecardPassModal');
+    openScorecardForm();
+  } else {
+    document.getElementById('passcode-error').style.display = 'block';
+    document.getElementById('scorecard-passcode').value = '';
+    document.getElementById('scorecard-passcode').focus();
+  }
+}
+
+function openScorecardForm() {
+  // Set week ending to next Saturday
+  const d = new Date();
+  const day = d.getDay();
+  const diff = day === 6 ? 0 : 6 - day;
+  d.setDate(d.getDate() + diff);
+  document.getElementById('sc-week-ending').value = d.toISOString().split('T')[0];
+  updateScorecardStatus();
+  openModal('scorecardModal');
+}
+
+function updateScorecardStatus() {
+  const revenue     = parseFloat(document.getElementById('sc-revenue').value)     || 0;
+  const margin      = parseFloat(document.getElementById('sc-margin').value)       || 0;
+  const utilization = parseFloat(document.getElementById('sc-utilization').value)  || 0;
+  const aging       = parseFloat(document.getElementById('sc-aging').value)        || 999;
+  const rating      = parseFloat(document.getElementById('sc-rating').value)       || 0;
+
+  // Individual KPI status
+  const setStatus = (id, val, target, good, warn, fmt='$') => {
+    const el = document.getElementById(id);
+    if (!el || val === 0) { if(el) el.textContent=''; return; }
+    const color = val >= good ? '#27AE60' : val >= warn ? '#D4A843' : '#C0392B';
+    const symbol = val >= good ? '✓' : val >= warn ? '⚠' : '✗';
+    el.style.color = color;
+    el.textContent = symbol + ' Target: ' + target;
+  };
+
+  setStatus('sc-revenue-status',     revenue,     '$28,000',   28000, 20000, '$');
+  setStatus('sc-margin-status',      margin,      '≥ 35%',     35,    25,    '%');
+  setStatus('sc-util-status',        utilization, '≥ 75%',     75,    60,    '%');
+  setStatus('sc-rating-status',      rating,      '≥ 4.0',     4.0,   3.0,   '');
+
+  // Aging is inverse — lower is better
+  const agingEl = document.getElementById('sc-aging-status');
+  if (agingEl && aging !== 999) {
+    agingEl.style.color = aging === 0 ? '#27AE60' : aging <= 2 ? '#D4A843' : '#C0392B';
+    agingEl.textContent = aging === 0 ? '✓ Target: 0' : aging <= 2 ? '⚠ Target: 0' : '✗ Target: 0';
+  }
+
+  // Overall status
+  const overall = document.getElementById('sc-overall-status');
+  if (!overall || revenue === 0) { if(overall) overall.style.display='none'; return; }
+
+  const greenCount = (revenue>=28000?1:0)+(margin>=35?1:0)+(utilization>=75?1:0)+(aging===0?1:0)+(rating>=4?1:0);
+  let statusColor, statusBg, statusLabel, statusMsg;
+
+  if (greenCount >= 4) {
+    statusColor='#27AE60'; statusBg='#EAF7F0'; statusLabel='🟢 GREEN — On Track';
+    statusMsg = 'Department is hitting targets. Keep it going.';
+  } else if (greenCount >= 3 || revenue >= 20000) {
+    statusColor='#D4A843'; statusBg='#FDF6E3'; statusLabel='🟡 AMBER — At Risk';
+    statusMsg = 'One or more KPIs are below target. Review with Joey this week.';
+  } else {
+    statusColor='#C0392B'; statusBg='#F9EDED'; statusLabel='🔴 RED — Escalate';
+    statusMsg = 'Multiple KPIs below target. Immediate review with Joey and Dennis required.';
+  }
+
+  overall.style.display = 'block';
+  overall.style.background = statusBg;
+  overall.style.border = '1.5px solid ' + statusColor;
+  overall.innerHTML = `<strong style="color:${statusColor}">${statusLabel}</strong> &nbsp;—&nbsp; <span style="color:${statusColor}">${statusMsg}</span>`;
+}
+
+async function submitScorecard() {
+  const weekEnding = document.getElementById('sc-week-ending').value;
+  if (!weekEnding) { toast('Please select a week ending date', true); return; }
+
+  const revenue     = document.getElementById('sc-revenue').value     || '—';
+  const margin      = document.getElementById('sc-margin').value       || '—';
+  const utilization = document.getElementById('sc-utilization').value  || '—';
+  const aging       = document.getElementById('sc-aging').value        || '—';
+  const rating      = document.getElementById('sc-rating').value       || '—';
+  const invoices    = document.getElementById('sc-invoices').value     || '—';
+  const openCalls   = document.getElementById('sc-open-calls').value   || 'None noted';
+  const issues      = document.getElementById('sc-issues').value       || 'None';
+  const wins        = document.getElementById('sc-wins').value         || 'None noted';
+  const nextWeek    = document.getElementById('sc-next-week').value    || 'Not provided';
+
+  const fmtDate = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  // Determine overall status
+  const rev = parseFloat(revenue) || 0;
+  const greenCount = (rev>=28000?1:0)+((parseFloat(margin)||0)>=35?1:0)+((parseFloat(utilization)||0)>=75?1:0)+((parseFloat(aging)||999)===0?1:0)+((parseFloat(rating)||0)>=4?1:0);
+  const overallStatus = greenCount >= 4 ? '🟢 GREEN — On Track' : greenCount >= 3 || rev >= 20000 ? '🟡 AMBER — At Risk' : '🔴 RED — Escalate';
+
+  const message = `WEEKLY SCORECARD — Rye Electric Service Department
+Week Ending: ${fmtDate(weekEnding)}
+Submitted By: Mychal Kirschbaum
+Submitted: ${new Date().toLocaleString('en-US',{dateStyle:'full',timeStyle:'short'})}
+Overall Status: ${overallStatus}
+
+═══════════════════════════════════════
+5 WEEKLY KPIs
+═══════════════════════════════════════
+Revenue Billed:        $${revenue}    (Target: $28,000)
+Gross Margin:          ${margin}%     (Target: ≥ 35%)
+Tech Utilization:      ${utilization}%    (Target: ≥ 75%)
+Jobs Aging > 5 Days:   ${aging}       (Target: 0)
+Customer Rating Avg:   ${rating}/5    (Target: ≥ 4.0)
+Total Invoices Sent:   $${invoices}
+
+═══════════════════════════════════════
+OPEN SERVICE CALLS
+═══════════════════════════════════════
+${openCalls}
+
+═══════════════════════════════════════
+ISSUES / BLOCKERS / ESCALATIONS
+═══════════════════════════════════════
+${issues}
+
+═══════════════════════════════════════
+WINS / HIGHLIGHTS
+═══════════════════════════════════════
+${wins}
+
+═══════════════════════════════════════
+NEXT WEEK PLAN
+═══════════════════════════════════════
+${nextWeek}
+
+— Mychal Kirschbaum, Service Manager
+  Rye Electric  ·  (949) 441-0545`;
+
+  const btn = document.getElementById('sc-submit-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Submitting...';
+
+  const recipients = [
+    { name: 'Dennis', email: 'dfurst@ryecompany.com' },
+    { name: 'Joey',   email: 'jjava@ryecompany.com'  },
+  ];
+
+  try {
+    for (const r of recipients) {
+      await emailjs.send('service_jbdjjoh', 'template_4daap5r', {
+        to_email: r.email,
+        to_name:  r.name,
+        subject:  `[${overallStatus.split(' ')[0]}] Weekly Scorecard — Week Ending ${fmtDate(weekEnding)}`,
+        message,
+      });
+    }
+
+    // Save to localStorage for records
+    const scorecards = JSON.parse(localStorage.getItem('svc_scorecards') || '[]');
+    scorecards.unshift({ weekEnding, revenue, margin, utilization, aging, rating, invoices, openCalls, issues, wins, nextWeek, overallStatus, submittedAt: new Date().toISOString() });
+    localStorage.setItem('svc_scorecards', JSON.stringify(scorecards));
+
+    closeModal('scorecardModal');
+    toast('✓ Scorecard submitted to Dennis & Joey (' + overallStatus.split(' ')[0] + ')');
+  } catch(e) {
+    console.error('Scorecard email failed:', e);
+    toast('Email failed — check connection and try again', true);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '📤 Submit to Management';
+}
+
+
 function pushToTimesheetSilent(t) {
   if (!t) return;
   const labor = (t.labor || []).filter(r => r.employee && (r.regHours || r.otHours));
