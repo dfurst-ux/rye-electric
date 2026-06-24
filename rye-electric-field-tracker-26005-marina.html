@@ -1095,7 +1095,6 @@ tbody tr:hover td{background:#f7fbfc}
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailWhiteboard()">✉️ Email</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportCSV()">📥 Export CSV</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=&#39;26005 - MARINA SHORES&#39;; var dateVal=document.getElementById(&#39;dl-date&#39;)?document.getElementById(&#39;dl-date&#39;).value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal;}); if(!entries.length){toast(&#39;No entries for this date&#39;);return;} saveToDrive(&#39;whiteboard&#39;,job,{job:job,date:dateVal,entries:entries},&#39;wb-drive-status&#39;); })()">🗂️ Save to Drive</button>
-        <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printTBTSignOff()">🖨️ Print PDF</button>
       </div>
       <div id="wb-drive-status" style="font-size:12px;text-align:center;margin-bottom:4px;"></div>
     </div>
@@ -1383,7 +1382,7 @@ tbody tr:hover td{background:#f7fbfc}
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailSignIn()">✉️ Email</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportSignInCSV()">📥 Export CSV</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById(&#39;si-job&#39;).value; var date=document.getElementById(&#39;si-date&#39;).value; if(!job||!date){toast(&#39;Load sign-in sheet first&#39;);return;} calcAllRows(); var rows=collectSIRows(); saveToDrive(&#39;sign_in&#39;,job,{job:job,date:date,supervisor:document.getElementById(&#39;si-supervisor&#39;)?document.getElementById(&#39;si-supervisor&#39;).value:&#39;&#39;,rows:rows},&#39;si-drive-status&#39;); })()">🗂️ Save to Drive</button>
-        <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printTBTSignOff()">🖨️ Print PDF</button>
+        <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printDeclaration()">🖨️ Print Declaration</button>
       </div>
       <div id="si-drive-status" style="font-size:12px;text-align:center;margin-bottom:8px;"></div>
 
@@ -5014,14 +5013,129 @@ function printSignIn(){
     +'Rye Electric, Inc. | 30398 Esperanza, Rancho Santa Margarita, Ca. 92688 | 949.445.0545</div>'
     +'</div>';
 
-  var frame = document.getElementById('ios-print-frame');
-  var inner = document.getElementById('ios-print-content');
-  if(frame && inner){
-    inner.innerHTML = '<style>body{font-family:Arial,sans-serif;font-size:11px;color:#111;margin:20px}table{border-collapse:collapse;width:100%}img{max-height:40px}@media print{@page{margin:0.4in}}</style>' + content;
-    frame.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    setTimeout(function(){ window.print(); }, 600);
+  var styles = '<style>'
+    +'body{font-family:Arial,sans-serif;font-size:11px;color:#111;margin:20px}'
+    +'table{border-collapse:collapse;width:100%}'
+    +'tr{page-break-inside:avoid}'
+    +'img{max-height:40px}'
+    +'@media print{@page{margin:0.4in}.no-print{display:none}}'
+    +'</style>';
+  var w = window.open('','_blank');
+  if(!w){alert('Pop-up blocked — please allow pop-ups for this page and try again.');return;}
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Sign In Sheet</title>'+styles+'</head><body>'+content+'</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 500);
+}
+
+function printDeclaration(){
+  var job  = document.getElementById('si-job').value;
+  var date = document.getElementById('si-date').value;
+  if(!job||!date){ toast('Select job and date first'); return; }
+  if(document.getElementById('si-forms').style.display==='none'){ toast('Click Load first'); return; }
+
+  calcAllRows();
+  document.querySelectorAll('#si-incident-tbody canvas[id^="sig-canvas-INC_"]').forEach(function(canvas){
+    var wid = canvas.id.replace('sig-canvas-','');
+    if(!sigData[wid]){
+      var ctx = canvas.getContext('2d');
+      var data = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+      if(data.some(function(v,i){ return i%4===3 && v>0; })){
+        sigData[wid] = canvas.toDataURL('image/png');
+        saveSigData();
+      }
+    }
+  });
+  var supCanvas = document.getElementById('sig-canvas-SUPERVISOR');
+  if(supCanvas && !sigData['SUPERVISOR']){
+    var ctx = supCanvas.getContext('2d');
+    var data = ctx.getImageData(0,0,supCanvas.width,supCanvas.height).data;
+    if(data.some(function(v,i){ return i%4===3 && v>0; })){
+      sigData['SUPERVISOR'] = supCanvas.toDataURL('image/png');
+      saveSigData();
+    }
   }
+
+  var rows = collectSIRows();
+  var jobNum  = job.split(' - ')[0];
+  var jobName = job.split(' - ').slice(1).join(' - ');
+  var dateObj = new Date(date+'T12:00:00');
+  var dispDate= dateObj.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'});
+  var supervisor = document.getElementById('si-supervisor').value || '___________________';
+  var supComments= document.getElementById('si-sup-comments').value || 'No injuries were reported or observed.';
+  var supSig = sigData['SUPERVISOR']||'';
+  var supSigHtml = supSig
+    ? '<img src="'+supSig+'" style="height:60px;max-width:240px">'
+    : '<div style="border-bottom:1px solid #111;width:240px;height:40px"></div>';
+
+  var incRows = '';
+  var incTrows = [].slice.call(document.querySelectorAll('#si-incident-tbody tr[id^="inc-row-"]'));
+  incTrows.forEach(function(tr,i){
+    var sel  = tr.querySelector('.inc-emp-name');
+    var name = sel ? sel.value : (tr.querySelector('td') ? tr.querySelector('td').textContent.trim() : '');
+    if(!name) return;
+    var incWid = 'INC_'+i;
+    var incTs  = sigData[incWid+'_ts'] || '';
+    var sigImg = sigData[incWid]
+      ? '<img src="'+sigData[incWid]+'" style="height:50px;max-width:200px;display:block">'
+        +(incTs ? '<div style="font-size:9px;color:#2e7d32;margin-top:3px">Signed: '+incTs+'</div>' : '')
+      : '&nbsp;';
+    incRows += '<tr>'
+      +'<td style="padding:7px 10px;border:1px solid #aaa;font-size:12px;font-weight:700">'+name+'</td>'
+      +'<td style="padding:7px 10px;border:1px solid #aaa">'+sigImg+'</td>'
+      +'</tr>';
+  });
+  if(!incRows){
+    incRows = rows.map(function(r,i){
+      var sigImg = sigData['INC_'+i] ? '<img src="'+sigData['INC_'+i]+'" style="height:50px;max-width:200px">' : '&nbsp;';
+      return '<tr>'
+        +'<td style="padding:7px 10px;border:1px solid #aaa;font-size:12px;font-weight:700">'+(r.empNum?r.empNum+') ':'')+r.name+'</td>'
+        +'<td style="padding:7px 10px;border:1px solid #aaa">'+sigImg+'</td>'
+        +'</tr>';
+    }).join('');
+  }
+
+  var content = ''
+    +'<div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">'
+    +'<div style="font-size:22px;font-weight:700;color:#1a3a6b">rye<br><span style="font-size:14px;font-weight:400">electric</span></div>'
+    +'<div style="font-size:18px;font-weight:700;border-bottom:2px solid #111;flex:1;padding-bottom:4px">Daily Employee Incident/Injury Declaration</div>'
+    +'</div>'
+    +'<table style="margin-bottom:10px"><tr>'
+    +'<td style="border:1px solid #aaa;padding:6px 10px"><strong>Date:</strong> '+dispDate+'</td>'
+    +'<td style="border:1px solid #aaa;padding:6px 10px"><strong>Jobsite Name:</strong> '+jobName+'</td>'
+    +'</tr><tr>'
+    +'<td style="border:1px solid #aaa;padding:6px 10px"><strong>Supervisor:</strong> '+supervisor+'</td>'
+    +'<td style="border:1px solid #aaa;padding:6px 10px"><strong>Jobsite Number:</strong> '+jobNum+'</td>'
+    +'</tr></table>'
+    +'<div style="font-size:10px;border:1px solid #aaa;padding:8px 10px;margin-bottom:10px;line-height:1.6;background:#fafafa">'
+    +'<div style="text-align:center;font-weight:700;margin-bottom:4px">Employee Declaration</div>'
+    +'By signing below, I certify that I have not suffered any injury or aggravated a pre-existing injury during my workday. '
+    +'Furthermore, I understand that I can report any injury to my supervisor, or Safety Director (Cory Stricker 714-715-4204) without fear of reprisal. '
+    +'I further understand that any injury is serious and must be reported to my supervisor when it occurs. I also understand that failure to report an injury is a violation of company policy subject to disciplinary action up to and including termination.</div>'
+    +'<table><thead><tr style="background:#eee">'
+    +'<th style="padding:7px 10px;border:1px solid #aaa;font-size:11px;text-align:left;width:220px">Employee Name (Print)</th>'
+    +'<th style="padding:7px 10px;border:1px solid #aaa;font-size:11px;text-align:left">I certify that I fully understand the terms of this form and I am not signing under pressure or duress in any form.</th>'
+    +'</tr></thead><tbody>'+incRows+'</tbody></table>'
+    +'<div style="margin-top:16px">'
+    +'<strong>Supervisor Comments:</strong> '+supComments+'<br><br>'
+    +'<strong>Supervisor Signature:</strong><br>'+supSigHtml
+    +'</div>'
+    +'<div style="text-align:center;font-size:10px;color:#666;margin-top:20px;padding-top:8px;border-top:1px solid #ddd">'
+    +'Rye Electric, Inc. | 75 Doppler, Irvine CA 92618 | 949.445.0545</div>';
+
+  var styles = '<style>'
+    +'body{font-family:Arial,sans-serif;font-size:11px;color:#111;margin:20px}'
+    +'table{border-collapse:collapse;width:100%}'
+    +'tr{page-break-inside:avoid}'
+    +'img{max-height:50px}'
+    +'@media print{@page{margin:0.4in}}'
+    +'</style>';
+  var w = window.open('','_blank');
+  if(!w){alert('Pop-up blocked — please allow pop-ups for this page and try again.');return;}
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Incident Declaration</title>'+styles+'</head><body>'+content+'</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 500);
 }
 
 function emailSignIn(){
@@ -5316,14 +5430,19 @@ function exportWeeklyReport(){
     +'Rye Electric, Inc. | 30398 Esperanza, Rancho Santa Margarita, Ca. 92688 | 949.445.0545'
     +'</div>';
 
-  var frame = document.getElementById('ios-print-frame');
-  var inner = document.getElementById('ios-print-content');
-  if(frame && inner){
-    inner.innerHTML = '<style>body{font-family:Arial,sans-serif;font-size:11px;color:#111;margin:20px}table{border-collapse:collapse;width:100%}img{max-height:40px}@media print{@page{margin:0.4in}}</style>' + content;
-    frame.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    setTimeout(function(){ window.print(); }, 600);
-  }
+  var styles = '<style>'
+    +'body{font-family:Arial,sans-serif;font-size:11px;color:#111;margin:20px}'
+    +'table{border-collapse:collapse;width:100%}'
+    +'tr{page-break-inside:avoid}'
+    +'img{max-height:40px}'
+    +'@media print{@page{margin:0.4in}.no-print{display:none}}'
+    +'</style>';
+  var w = window.open('','_blank');
+  if(!w){alert('Pop-up blocked — please allow pop-ups for this page and try again.');return;}
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Sign In Sheet</title>'+styles+'</head><body>'+content+'</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 500);
 }
 
 
