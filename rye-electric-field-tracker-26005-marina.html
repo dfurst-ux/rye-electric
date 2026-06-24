@@ -1095,6 +1095,7 @@ tbody tr:hover td{background:#f7fbfc}
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailWhiteboard()">✉️ Email</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportCSV()">📥 Export CSV</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=&#39;26005 - MARINA SHORES&#39;; var dateVal=document.getElementById(&#39;dl-date&#39;)?document.getElementById(&#39;dl-date&#39;).value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal;}); if(!entries.length){toast(&#39;No entries for this date&#39;);return;} saveToDrive(&#39;whiteboard&#39;,job,{job:job,date:dateVal,entries:entries},&#39;wb-drive-status&#39;); })()">🗂️ Save to Drive</button>
+        <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printTBTSignOff()">🖨️ Print PDF</button>
       </div>
       <div id="wb-drive-status" style="font-size:12px;text-align:center;margin-bottom:4px;"></div>
     </div>
@@ -1382,6 +1383,7 @@ tbody tr:hover td{background:#f7fbfc}
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailSignIn()">✉️ Email</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportSignInCSV()">📥 Export CSV</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById(&#39;si-job&#39;).value; var date=document.getElementById(&#39;si-date&#39;).value; if(!job||!date){toast(&#39;Load sign-in sheet first&#39;);return;} calcAllRows(); var rows=collectSIRows(); saveToDrive(&#39;sign_in&#39;,job,{job:job,date:date,supervisor:document.getElementById(&#39;si-supervisor&#39;)?document.getElementById(&#39;si-supervisor&#39;).value:&#39;&#39;,rows:rows},&#39;si-drive-status&#39;); })()">🗂️ Save to Drive</button>
+        <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printTBTSignOff()">🖨️ Print PDF</button>
       </div>
       <div id="si-drive-status" style="font-size:12px;text-align:center;margin-bottom:8px;"></div>
 
@@ -1951,9 +1953,10 @@ tbody tr:hover td{background:#f7fbfc}
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
       <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
       <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;">
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="submitTBTSignOff()">💾 Save Sign-Off</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var presenter=document.getElementById(&#39;tbtPresenter&#39;)?document.getElementById(&#39;tbtPresenter&#39;).value.trim():&#39;&#39;; if(!presenter){toast(&#39;Enter presenter name first&#39;);return;} var entries=[]; document.querySelectorAll(&#39;#tbtSignRows .tbt-sig-row-wrap&#39;).forEach(function(row,idx){var sel=row.querySelector(&#39;.tbt-emp-select&#39;);var name=sel?sel.value:&#39;&#39;;if(name)entries.push(name);}); if(!entries.length){toast(&#39;Add at least one employee&#39;);return;} var jobId=typeof getSafetyJobId!==&#39;undefined&#39;?getSafetyJobId():&#39;&#39;; saveToDrive(&#39;tbt&#39;,jobId,{job_id:jobId,talk_file:currentTBTFile,talk_title:currentTBTTitle,presenter:presenter,signatures:entries,signed_at:new Date().toISOString(),week_ending:(function(){var n=new Date(),day=n.getDay(),diff=day===0?0:7-day,f=new Date(n);f.setDate(n.getDate()+diff);return f.toISOString().slice(0,10);})()},&#39;tbt-drive-status&#39;); })()">🗂️ Save to Drive</button>
+        <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printTBTSignOff()">🖨️ Print PDF</button>
       </div>
       <div id="tbt-drive-status" style="margin-bottom:6px;font-size:12px;text-align:center;"></div>
       <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
@@ -6781,7 +6784,96 @@ renderCCRef();
     rows.appendChild(div);
   };
 
-  window.submitTBTSignOff = async function() {
+  window.printTBTSignOff = function() {
+    var presenter = (document.getElementById('tbtPresenter') || {}).value || '';
+    if (!presenter) { if(typeof toast==='function') toast('Enter presenter name first'); return; }
+
+    var entries = [];
+    document.querySelectorAll('#tbtSignRows .tbt-sig-row-wrap').forEach(function(row, idx) {
+      var sel  = row.querySelector('.tbt-emp-select');
+      var name = sel ? sel.value : '';
+      if (!name) return;
+      var sigImg = tbtSigData[idx] || '';
+      if (!sigImg) {
+        var canvas = row.querySelector('canvas');
+        if (canvas) {
+          var blank = document.createElement('canvas');
+          blank.width = canvas.width; blank.height = canvas.height;
+          if (canvas.toDataURL() !== blank.toDataURL()) sigImg = canvas.toDataURL('image/png');
+        }
+      }
+      entries.push({ name: name, sig: sigImg });
+    });
+    if (!entries.length) { if(typeof toast==='function') toast('Add at least one employee'); return; }
+
+    var jobLabel = (function(){
+      var el = document.getElementById('sel-job');
+      if (el && el.value) return el.value;
+      var jn = document.querySelector('.jb-num'), jb = document.querySelector('.jb-name');
+      if (jn && jb) return jn.textContent.trim() + ' - ' + jb.textContent.trim();
+      return '';
+    })();
+    var dateStr = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+    var rows = entries.map(function(e, i) {
+      var sigCell = e.sig
+        ? '<img src="' + e.sig + '" style="height:40px;max-width:220px;object-fit:contain;">'
+        : '<div style="border-bottom:1px solid #bbb;height:40px;"></div>';
+      var bg = i % 2 === 0 ? '#f9f9f9' : '#fff';
+      return '<tr style="background:' + bg + '">'
+        + '<td style="padding:8px 12px;border:1px solid #ddd;font-size:12px;color:#666;width:36px;text-align:center">' + (i+1) + '</td>'
+        + '<td style="padding:8px 14px;border:1px solid #ddd;font-size:13px;font-weight:600">' + e.name + '</td>'
+        + '<td style="padding:6px 14px;border:1px solid #ddd;text-align:center;width:250px">' + sigCell + '</td>'
+        + '</tr>';
+    }).join('');
+
+    var html = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+      + '<title>TBT Sign-Off - ' + (currentTBTTitle||'') + '</title>'
+      + '<style>'
+      + 'body{font-family:Arial,sans-serif;margin:0;padding:28px 36px;color:#1a202c}'
+      + '.header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #2980b9;padding-bottom:12px;margin-bottom:18px}'
+      + '.logo{font-size:24px;font-weight:900;letter-spacing:.02em}'
+      + '.logo span{color:#2980b9}'
+      + '.doc-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#888;margin-bottom:4px}'
+      + '.talk-title{font-size:19px;font-weight:800;margin-bottom:14px}'
+      + '.meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:20px;border:1px solid #ddd;border-radius:6px;overflow:hidden}'
+      + '.meta-cell{padding:10px 14px;background:#f7fafc;border-right:1px solid #ddd}'
+      + '.meta-cell:last-child{border-right:none}'
+      + '.meta-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#888;margin-bottom:3px}'
+      + '.meta-val{font-size:13px;font-weight:700}'
+      + 'table{width:100%;border-collapse:collapse;margin-bottom:24px}'
+      + 'th{background:#1a202c;color:#fff;padding:9px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;text-align:left;border:1px solid #1a202c}'
+      + '.footer{font-size:10px;color:#aaa;text-align:center;border-top:1px solid #e2e8f0;padding-top:10px}'
+      + '@media print{@page{margin:.5in}}'
+      + '</style></head><body>'
+      + '<div class="header">'
+      + '<div class="logo">rye <span>electric</span></div>'
+      + '<div style="text-align:right;font-size:11px;color:#718096">' + dateStr + '</div>'
+      + '</div>'
+      + '<div class="doc-label">Toolbox Talk Sign-Off Sheet</div>'
+      + '<div class="talk-title">' + (currentTBTTitle||'') + '</div>'
+      + '<div class="meta">'
+      + '<div class="meta-cell"><div class="meta-label">Job</div><div class="meta-val">' + (jobLabel||'—') + '</div></div>'
+      + '<div class="meta-cell"><div class="meta-label">Presented By</div><div class="meta-val">' + presenter + '</div></div>'
+      + '<div class="meta-cell"><div class="meta-label">Crew Count</div><div class="meta-val">' + entries.length + ' employee' + (entries.length!==1?'s':'') + '</div></div>'
+      + '</div>'
+      + '<table><thead><tr>'
+      + '<th style="width:36px;text-align:center">#</th>'
+      + '<th>Employee Name</th>'
+      + '<th style="width:250px;text-align:center">Signature</th>'
+      + '</tr></thead><tbody>' + rows + '</tbody></table>'
+      + '<div class="footer">Rye Electric, Inc. &nbsp;|&nbsp; 75 Doppler, Irvine CA 92618 &nbsp;|&nbsp; CA Lic. 980345 &nbsp;|&nbsp; Printed ' + new Date().toLocaleString() + '</div>'
+      + '</body></html>';
+
+    var w = window.open('', '_blank');
+    if (!w) { alert('Pop-up blocked — please allow pop-ups for this page and try again.'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(function(){ w.print(); }, 500);
+  };
+
+    window.submitTBTSignOff = async function() {
     var SUPABASE_URL_TBT = 'https://okesnavkxmqucgvvhncx.supabase.co';
     var SUPABASE_KEY_TBT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
     var statusEl = document.getElementById('tbtSignStatus');
