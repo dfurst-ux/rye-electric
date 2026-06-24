@@ -780,29 +780,52 @@ textarea.form-control { resize: vertical; min-height: 80px; }
      TIMESHEETS VIEW
 ══════════════════════════════════════════════ -->
 <div class="view" id="view-timesheets">
-  <div class="dash-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+  <div class="dash-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
     <div>
       <h1>Timesheets</h1>
-      <p>Field time records — multiple jobs per sheet</p>
+      <p>Field time records — one sheet per employee per week</p>
     </div>
-    <button class="btn btn-red" onclick="openModal('timesheetModal')">+ New Timesheet</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-red" onclick="openModal('timesheetModal')">+ New Timesheet</button>
+      <button class="btn btn-ghost" onclick="consolidateTimesheets()" title="Merge duplicate timesheets for same employee + week">🔗 Consolidate</button>
+    </div>
   </div>
-  <div class="panel">
+
+  <!-- WEEK + EMPLOYEE FILTERS -->
+  <div class="filter-bar" style="gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:0">
+    <div style="display:flex;align-items:center;gap:8px">
+      <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap">Week Ending</label>
+      <select class="form-control" id="ts-week-filter" style="min-width:200px" onchange="renderTimesheets()">
+        <option value="all">— All Weeks —</option>
+      </select>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap">Employee</label>
+      <select class="form-control" id="ts-emp-filter" style="min-width:180px" onchange="renderTimesheets()">
+        <option value="all">— All Employees —</option>
+      </select>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap">Status</label>
+      <select class="form-control" id="ts-status-filter" style="min-width:140px" onchange="renderTimesheets()">
+        <option value="all">— All —</option>
+        <option value="Draft">Draft</option>
+        <option value="Submitted">Submitted</option>
+        <option value="Approved">Approved</option>
+      </select>
+    </div>
+    <div id="ts-summary" style="margin-left:auto;font-size:13px;color:var(--muted)"></div>
+  </div>
+
+  <div class="panel" style="margin-top:0;border-top:none;border-radius:0 0 var(--radius) var(--radius)">
     <table class="ticket-table">
       <thead>
         <tr>
-          <th>TS # / Entries</th>
-          <th>Employee</th>
-          <th>Week Ending</th>
-          <th>Jobs Covered</th>
-          <th>Total Hours</th>
-          <th>Status</th>
-          <th>Update</th>
-          <th></th>
+          <th colspan="8" style="padding:0;border:none"></th>
         </tr>
       </thead>
       <tbody id="ts-tbody">
-        <tr><td colspan="8"><div class="empty-state"><div class="icon">📅</div><p>No timesheets yet. Use Push to Timesheet on a ticket to populate.</p></div></td></tr>
+        <tr><td colspan="8"><div class="empty-state"><div class="icon">📅</div><p>No timesheets yet.</p></div></td></tr>
       </tbody>
     </table>
   </div>
@@ -1410,7 +1433,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
       <!-- Week ending -->
       <div class="form-grid" style="margin-bottom:20px">
         <div class="form-group">
-          <label class="form-label">Week Ending (Saturday) <span style="color:var(--red)">*</span></label>
+          <label class="form-label">Week Ending (Sunday) <span style="color:var(--red)">*</span></label>
           <input type="date" class="form-control" id="sc-week-ending">
         </div>
         <div class="form-group">
@@ -1727,6 +1750,13 @@ async function loadTickets() {
     timesheets = localTs;
     localTs.forEach(ts => sbUpsertTimesheet(ts));
     toast('Syncing ' + localTs.length + ' local timesheets to Supabase…');
+  }
+
+  // Consolidate any duplicate timesheets (same employee + week)
+  const beforeCount = timesheets.length;
+  consolidateTimesheets();
+  if (timesheets.length < beforeCount) {
+    toast('✓ Merged ' + (beforeCount - timesheets.length) + ' duplicate timesheets');
   }
 
   ticketCounter = tickets.length + 1;
@@ -2619,10 +2649,10 @@ function verifyPasscode() {
 }
 
 function openScorecardForm() {
-  // Set week ending to next Saturday
+  // Set week ending to next Sunday
   const d = new Date();
   const day = d.getDay();
-  const diff = day === 6 ? 0 : 6 - day;
+  const diff = day === 0 ? 0 : 7 - day;
   d.setDate(d.getDate() + diff);
   document.getElementById('sc-week-ending').value = d.toISOString().split('T')[0];
   updateScorecardStatus();
@@ -2856,12 +2886,63 @@ function pushToTimesheetSilent(t) {
   });
 }
 
-// ── PUSH TO TIMESHEET ────────────────────────────────────────────────────────
+// ── CONSOLIDATE TIMESHEETS ────────────────────────────────────────────────────
+// Merges duplicate timesheets for same employee + week into one
+function consolidateTimesheets() {
+  const grouped = {};
+
+  timesheets.forEach(ts => {
+    const key = (ts.employee || '') + '|' + (ts.weekEnding || '');
+    if (!grouped[key]) {
+      grouped[key] = { ...ts, entries: [...(ts.entries || [])] };
+    } else {
+      // Merge entries — avoid duplicates by ticketId
+      const existing = grouped[key];
+      (ts.entries || []).forEach(e => {
+        const isDupe = existing.entries.some(ex =>
+          ex.ticketId === e.ticketId && ex.date === e.date && ex.regHours === e.regHours
+        );
+        if (!isDupe) existing.entries.push(e);
+      });
+      // Keep the approved one if any
+      if (ts.status === 'Approved') {
+        grouped[key].status     = 'Approved';
+        grouped[key].approvedBy = ts.approvedBy;
+        grouped[key].approvedAt = ts.approvedAt;
+      }
+      // Mark old duplicate for deletion
+      ts._delete = true;
+    }
+  });
+
+  // Recalculate totals for merged timesheets
+  Object.values(grouped).forEach(ts => {
+    const totalReg = ts.entries.reduce((s,e) => s + (parseFloat(e.regHours)||0), 0);
+    const totalOT  = ts.entries.reduce((s,e) => s + (parseFloat(e.otHours) ||0), 0);
+    ts.totalReg    = totalReg.toFixed(2);
+    ts.totalOT     = totalOT.toFixed(2);
+    ts.totalHours  = (totalReg + totalOT).toFixed(2);
+  });
+
+  // Delete duplicates from Supabase
+  timesheets.filter(ts => ts._delete).forEach(ts => sbDeleteTimesheet(ts.id));
+
+  // Replace timesheets with consolidated list
+  timesheets = Object.values(grouped);
+  save();
+
+  // Push consolidated timesheets to Supabase
+  timesheets.forEach(ts => sbUpsertTimesheet(ts));
+
+  renderTimesheets();
+  const saved = timesheets.length;
+  console.log('Timesheets consolidated:', saved, 'unique employee/week combinations');
+}
 function getWeekEnding(dateStr) {
-  // Week ending = Saturday of that week
+  // Week ending = Sunday of that week
   const d = dateStr ? new Date(dateStr + 'T12:00:00') : new Date();
   const day = d.getDay(); // 0=Sun, 6=Sat
-  const diff = day === 6 ? 0 : 6 - day;
+  const diff = day === 0 ? 0 : 7 - day; // 0 if already Sunday, else days until next Sunday
   d.setDate(d.getDate() + diff);
   return d.toISOString().split('T')[0];
 }
@@ -2961,11 +3042,53 @@ function renderTimesheets() {
     return;
   }
 
-  const sorted = [...timesheets].sort((a,b) =>
+  // ── POPULATE FILTER DROPDOWNS ──────────────────────────────────────────────
+  const weekSel = document.getElementById('ts-week-filter');
+  const empSel  = document.getElementById('ts-emp-filter');
+  const selectedWeek = weekSel?.value || 'all';
+  const selectedEmp  = empSel?.value  || 'all';
+  const selectedStatus = document.getElementById('ts-status-filter')?.value || 'all';
+
+  // Get all unique weeks and employees
+  const allWeeks = [...new Set(timesheets.map(ts => ts.weekEnding).filter(Boolean))]
+    .sort((a,b) => b.localeCompare(a)); // newest first
+  const allEmps = [...new Set(timesheets.map(ts => ts.employee).filter(Boolean))].sort();
+
+  if (weekSel) {
+    const curWeek = weekSel.value;
+    weekSel.innerHTML = '<option value="all">— All Weeks —</option>' +
+      allWeeks.map(w => `<option value="${w}" ${curWeek===w?'selected':''}>${fmtDate(w)}</option>`).join('');
+  }
+  if (empSel) {
+    const curEmp = empSel.value;
+    empSel.innerHTML = '<option value="all">— All Employees —</option>' +
+      allEmps.map(e => `<option value="${e}" ${curEmp===e?'selected':''}>${e}</option>`).join('');
+  }
+
+  // ── FILTER ─────────────────────────────────────────────────────────────────
+  let filtered = [...timesheets];
+  if (selectedWeek !== 'all') filtered = filtered.filter(ts => ts.weekEnding === selectedWeek);
+  if (selectedEmp  !== 'all') filtered = filtered.filter(ts => ts.employee   === selectedEmp);
+  if (selectedStatus !== 'all') filtered = filtered.filter(ts => ts.status   === selectedStatus);
+
+  // Sort newest week first, then by employee
+  filtered.sort((a,b) =>
     (b.weekEnding||'').localeCompare(a.weekEnding||'') || (a.employee||'').localeCompare(b.employee||'')
   );
 
-  tbody.innerHTML = sorted.map(ts => {
+  // Summary
+  const summaryEl = document.getElementById('ts-summary');
+  if (summaryEl) {
+    const totalHrs = filtered.reduce((s,ts) => s + (parseFloat(ts.totalHours)||0), 0);
+    summaryEl.textContent = filtered.length + ' timesheet' + (filtered.length!==1?'s':'') + ' · ' + totalHrs.toFixed(2) + ' total hrs';
+  }
+
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><p>No timesheets match the selected filters.</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(ts => {
     const isApproved = ts.status === 'Approved';
     const totalReg = parseFloat(ts.totalReg) || 0;
     const totalOT  = parseFloat(ts.totalOT)  || 0;
