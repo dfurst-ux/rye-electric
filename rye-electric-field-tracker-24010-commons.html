@@ -306,6 +306,26 @@ tbody tr:hover td{background:#f7fbfc}
   .tbt-remaining-note{margin-top:12px;font-size:11px;color:#a0aec0;text-align:center;}
   .tbt-remaining-note code{background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:11px;}
 
+  /* ── Gantt tab styles ── */
+  .gantt-zoom-btn{border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer}
+  .gantt-row{display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;border-bottom:1px solid #f0f0f0;align-items:stretch;min-height:36px}
+  .gantt-row:hover{background:#f7fafc}
+  .gantt-row.summary-row{background:#edf2f7}
+  .gantt-row.critical-row{background:#fff5f5}
+  .gantt-cell{padding:5px 8px;font-size:11px;display:flex;align-items:center;overflow:hidden}
+  .gantt-bar-wrap{padding:4px 0;position:relative;display:flex;align-items:center}
+  .gantt-bar{height:18px;border-radius:3px;position:relative;min-width:3px;cursor:pointer;transition:opacity .15s}
+  .gantt-bar:hover{opacity:.85}
+  .gantt-progress{height:100%;border-radius:3px;background:rgba(255,255,255,.35)}
+  .gantt-float-bar{height:10px;border-radius:2px;margin-top:4px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px)}
+  .gantt-today-line{position:absolute;top:0;bottom:0;width:2px;background:#e53e3e;opacity:.7;pointer-events:none;z-index:2}
+  .gantt-stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px}
+  .gantt-stat-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:2px}
+  .gantt-stat-val{font-size:18px;font-weight:800;color:#1a202c}
+  .gantt-header-date{font-size:9px;color:#555;text-align:center;border-left:1px solid #e2e8f0;padding:6px 2px;white-space:nowrap;overflow:hidden}
+  .gantt-header-date.weekend{background:#f7f7f7;color:#bbb}
+  .gantt-header-date.today{background:#fff5f5;color:#e53e3e;font-weight:700}
+
 </style>
   <script src="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/email.min.js.download"></script>
 </head>
@@ -388,6 +408,10 @@ tbody tr:hover td{background:#f7fbfc}
     <button class="tab" onclick="goTab(this,&#39;units&#39;)">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
     <span>Units</span>
+    </button>
+    <button class="tab" onclick="goTab(this,&#39;gantt&#39;)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="3" rx="1"/><rect x="3" y="9" width="12" height="3" rx="1"/><rect x="3" y="14" width="15" height="3" rx="1"/><rect x="3" y="19" width="9" height="3" rx="1"/></svg>
+    <span>Schedule</span>
     </button>
     <button class="tab" onclick="goTab(this,&#39;jobs&#39;)">
     <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
@@ -1671,6 +1695,121 @@ tbody tr:hover td{background:#f7fbfc}
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:4px" id="cc-ref-grid"><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">1100</span><span style="font-size:12px;color:#1a1a1a;flex:1">Branch Conduit UG</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">1200</span><span style="font-size:12px;color:#1a1a1a;flex:1">Feeder Conduit UG</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">1300</span><span style="font-size:12px;color:#1a1a1a;flex:1">Branch Conduit OH</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">1400</span><span style="font-size:12px;color:#1a1a1a;flex:1">Feeder Conduit OH</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">2200</span><span style="font-size:12px;color:#1a1a1a;flex:1">Switchboards</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">2300</span><span style="font-size:12px;color:#1a1a1a;flex:1">Transformers</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">2400</span><span style="font-size:12px;color:#1a1a1a;flex:1">Panels / Distribution</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">3100</span><span style="font-size:12px;color:#1a1a1a;flex:1">Branch Wire</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">3200</span><span style="font-size:12px;color:#1a1a1a;flex:1">Feeder Wire</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">3300</span><span style="font-size:12px;color:#1a1a1a;flex:1">Branch Cable</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">3400</span><span style="font-size:12px;color:#1a1a1a;flex:1">Feeder Cable</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LF</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">3500</span><span style="font-size:12px;color:#1a1a1a;flex:1">Branch Terminations</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">3600</span><span style="font-size:12px;color:#1a1a1a;flex:1">Feeder Terminations</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">4000</span><span style="font-size:12px;color:#1a1a1a;flex:1">Light Fixtures</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">4100</span><span style="font-size:12px;color:#1a1a1a;flex:1">Lighting Controls</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">5000</span><span style="font-size:12px;color:#1a1a1a;flex:1">Finish Devices and Trim</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">6000</span><span style="font-size:12px;color:#1a1a1a;flex:1">Equipment and Connections</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7010</span><span style="font-size:12px;color:#1a1a1a;flex:1">Layout</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7100</span><span style="font-size:12px;color:#1a1a1a;flex:1">Residential Boxing</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7200</span><span style="font-size:12px;color:#1a1a1a;flex:1">Unit Drops</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7300</span><span style="font-size:12px;color:#1a1a1a;flex:1">Roping</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7310</span><span style="font-size:12px;color:#1a1a1a;flex:1">Shear Walls</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7320</span><span style="font-size:12px;color:#1a1a1a;flex:1">Drilling</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7330</span><span style="font-size:12px;color:#1a1a1a;flex:1">Pulling</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7340</span><span style="font-size:12px;color:#1a1a1a;flex:1">Stab and Makeup</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7350</span><span style="font-size:12px;color:#1a1a1a;flex:1">Unit Load Center</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7370</span><span style="font-size:12px;color:#1a1a1a;flex:1">Strap and Plate</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7400</span><span style="font-size:12px;color:#1a1a1a;flex:1">Common Area Rough</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LS</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7500</span><span style="font-size:12px;color:#1a1a1a;flex:1">HR to AC</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7550</span><span style="font-size:12px;color:#1a1a1a;flex:1">AC Hookup</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">EA</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7600</span><span style="font-size:12px;color:#1a1a1a;flex:1">Unit Fixtures</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7700</span><span style="font-size:12px;color:#1a1a1a;flex:1">Finish Devices Trim</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7800</span><span style="font-size:12px;color:#1a1a1a;flex:1">Common Area Devices</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LS</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">7900</span><span style="font-size:12px;color:#1a1a1a;flex:1">Test and Check</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">UNIT</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">8200</span><span style="font-size:12px;color:#1a1a1a;flex:1">Grounding Grid and Lightning Protection</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LS</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">8800</span><span style="font-size:12px;color:#1a1a1a;flex:1">Temporary Power</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">LS</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">9210</span><span style="font-size:12px;color:#1a1a1a;flex:1">Project Engineer</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">HRS</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">9220</span><span style="font-size:12px;color:#1a1a1a;flex:1">Project Management</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">HRS</span></div><div style="display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;background:#fff;border:1px solid #e2e2e2"><span style="font-family:monospace;font-size:11px;font-weight:700;color:#2980b9;min-width:36px">9280</span><span style="font-size:12px;color:#1a1a1a;flex:1">Administrative</span><span style="font-size:10px;font-weight:700;color:#777;background:#fff;padding:1px 6px;border-radius:4px">HRS</span></div></div>
     </div>
   </div>
+
+
+  <!-- ===== GANTT / SCHEDULE TAB ===== -->
+  <div class="pane" id="pane-gantt">
+
+    <!-- ── Top toolbar ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
+      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
+      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+        📂 Import Schedule
+        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
+      </label>
+      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
+      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrint()">🖨️ Print PDF</button>
+    </div>
+
+    <!-- ── View controls ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
+      <span style="flex:1"></span>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
+      </label>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
+      </label>
+    </div>
+
+    <!-- ── Critical Path Summary Panel ── -->
+    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
+      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
+    </div>
+
+    <!-- ── Import instructions ── -->
+    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
+      <div style="font-size:32px;margin-bottom:10px">📋</div>
+      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
+      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
+      <div style="font-size:11px;color:#999;line-height:1.6">
+        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
+        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
+      </div>
+    </div>
+
+    <!-- ── Main Gantt layout ── -->
+    <div id="gantt-main" style="display:none">
+
+      <!-- Stats bar -->
+      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
+
+      <!-- Gantt chart container -->
+      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
+        <!-- Header row -->
+        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
+          <div style="padding:8px 12px">Task Name</div>
+          <div style="padding:8px 6px;text-align:center">%</div>
+          <div style="padding:8px 6px;text-align:center">Start</div>
+          <div style="padding:8px 6px;text-align:center">Finish</div>
+          <div style="padding:8px 6px;text-align:center">Float</div>
+          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
+        </div>
+        <!-- Task rows -->
+        <div id="gantt-rows"></div>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
+        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
+      </div>
+    </div>
+
+    <!-- ── Edit task modal ── -->
+    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
+      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
+        <div style="display:grid;gap:10px">
+          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
+              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
+            </div>
+          </div>
+          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
+            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:18px">
+          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
+          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
+          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane-gantt -->
 
   <!-- ===== WHITEBOARD TAB ===== -->
 </div><!-- /shell -->
@@ -3837,7 +3976,7 @@ function renderCCRef(){
 function goTab(btn,name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety'].forEach(n=>{
+  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety','gantt'].forEach(n=>{
     const el=document.getElementById('pane-'+n);
     if(el) el.className='pane'+(n===name?' on':'');
   });
@@ -7136,6 +7275,229 @@ async function saveToDrive(docType, job, data, statusElId) {
 /* === END GOOGLE DRIVE SAVE === */
 // DJR Yes/No question toggles
 (function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
+
+
+  /* ══ GANTT ENGINE ══════════════════════════════════════════════════════════ */
+  var ganttTasks=[];var ganttZoom='week';var ganttEditIdx=-1;
+  var GANTT_KEY='gantt_'+(typeof JOB_ID!=='undefined'?JOB_ID:'default');
+  function gDate(s){var d=new Date(s+'T12:00:00');return isNaN(d)?null:d;}
+  function gFmt(d){return d?d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'}):''}
+  function gISO(d){return d?d.toISOString().slice(0,10):''}
+  function gDiff(a,b){return Math.round((b-a)/86400000);}
+  function gAddDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
+
+  function ganttCPM(){
+    var byId={};ganttTasks.forEach(function(t){byId[t.id]=t;});
+    ganttTasks.forEach(function(t){t.es=gDate(t.start);t.ef=gDate(t.finish);});
+    ganttTasks.slice().sort(function(a,b){return(a.preds||[]).length-(b.preds||[]).length;}).forEach(function(t){
+      (t.preds||[]).forEach(function(pid){var p=byId[pid];if(p&&p.ef&&t.es&&p.ef>t.es)t.es=new Date(p.ef);});
+      if(t.es&&gDate(t.finish)&&t.es>gDate(t.start)){var dur=gDiff(gDate(t.start),gDate(t.finish));t.ef=gAddDays(t.es,dur);}
+    });
+    var projEnd=null;ganttTasks.forEach(function(t){if(t.ef&&(!projEnd||t.ef>projEnd))projEnd=t.ef;});
+    if(!projEnd)projEnd=new Date();
+    ganttTasks.forEach(function(t){t.lf=new Date(projEnd);var dur=Math.max(1,gDiff(gDate(t.start)||new Date(),gDate(t.finish)||new Date()));t.ls=gAddDays(t.lf,-dur);});
+    ganttTasks.slice().reverse().forEach(function(t){
+      ganttTasks.forEach(function(s){if((s.preds||[]).indexOf(t.id)!==-1&&s.ls&&s.ls<t.lf)t.lf=new Date(s.ls);});
+      t.ls=gAddDays(t.lf,-Math.max(1,gDiff(gDate(t.start)||new Date(),gDate(t.finish)||new Date())));
+    });
+    ganttTasks.forEach(function(t){t.totalFloat=t.es&&t.ls?gDiff(t.es,t.ls):0;t.critical=(t.totalFloat<=0&&!t.summary);});
+  }
+
+  function ganttDateRange(){
+    var mn=null,mx=null;
+    ganttTasks.forEach(function(t){var s=gDate(t.start),f=gDate(t.finish);if(s&&(!mn||s<mn))mn=new Date(s);if(f&&(!mx||f>mx))mx=new Date(f);});
+    if(!mn){mn=new Date();mx=gAddDays(mn,60);}
+    mn=gAddDays(mn,-7);mx=gAddDays(mx,14);
+    while(mn.getDay()!==1)mn=gAddDays(mn,-1);
+    return{start:mn,end:mx};
+  }
+
+  function ganttRender(){
+    var empty=document.getElementById('gantt-empty'),main=document.getElementById('gantt-main');
+    if(!ganttTasks.length){if(empty)empty.style.display='block';if(main)main.style.display='none';return;}
+    if(empty)empty.style.display='none';if(main)main.style.display='block';
+    ganttCPM();
+    var showCrit=document.getElementById('gantt-show-critical').checked;
+    var showFloat=document.getElementById('gantt-show-float').checked;
+    var dr=ganttDateRange();var totalDays=Math.max(1,gDiff(dr.start,dr.end));
+    var today=new Date();today.setHours(12,0,0,0);
+    var done=ganttTasks.filter(function(t){return t.pct>=100;}).length;
+    var crit=ganttTasks.filter(function(t){return t.critical;}).length;
+    var overdue=ganttTasks.filter(function(t){var f=gDate(t.finish);return f&&f<today&&t.pct<100;}).length;
+    var statsEl=document.getElementById('gantt-stats');
+    if(statsEl)statsEl.innerHTML='<div class="gantt-stat-card"><div class="gantt-stat-label">Total Tasks</div><div class="gantt-stat-val">'+ganttTasks.length+'</div></div>'+'<div class="gantt-stat-card"><div class="gantt-stat-label">Complete</div><div class="gantt-stat-val" style="color:#276749">'+done+'</div></div>'+'<div class="gantt-stat-card"><div class="gantt-stat-label">Critical</div><div class="gantt-stat-val" style="color:#e53e3e">'+crit+'</div></div>'+'<div class="gantt-stat-card"><div class="gantt-stat-label">Overdue</div><div class="gantt-stat-val" style="color:#e53e3e">'+overdue+'</div></div>';
+    var cpPanel=document.getElementById('gantt-cp-panel');
+    if(cpPanel){
+      var critTasks=ganttTasks.filter(function(t){return t.critical;});
+      if(critTasks.length&&showCrit){
+        var projEnd=null;ganttTasks.forEach(function(t){var f=t.ef||gDate(t.finish);if(f&&(!projEnd||f>projEnd))projEnd=f;});
+        var cpEl=document.getElementById('gantt-cp-content');
+        if(cpEl)cpEl.innerHTML='<strong>Project End:</strong> '+(projEnd?gFmt(projEnd):'—')+'&nbsp;&nbsp;<strong>Critical tasks ('+critTasks.length+'):</strong> '+critTasks.map(function(t){return'<span style="background:#e53e3e;color:#fff;border-radius:4px;padding:1px 7px;font-size:11px;margin:2px;display:inline-block">'+t.name+'</span>';}).join(' ');
+        cpPanel.style.display='block';
+      } else cpPanel.style.display='none';
+    }
+    var step=ganttZoom==='week'?1:ganttZoom==='month'?7:14;
+    var tlHead='',cur=new Date(dr.start),dayN=0;
+    while(cur<=dr.end){
+      var isToday=gISO(cur)===gISO(today),isWk=cur.getDay()===0||cur.getDay()===6;
+      if(ganttZoom==='week'||(ganttZoom==='month'&&dayN%7===0)||(ganttZoom==='quarter'&&dayN%14===0)){
+        tlHead+='<div class="gantt-header-date'+(isWk?' weekend':'')+(isToday?' today':'')+'" style="flex:'+step+'">'+cur.toLocaleDateString('en-US',{month:'short',day:'numeric'})+'</div>';
+      }
+      cur=gAddDays(cur,1);dayN++;
+    }
+    var tlH=document.getElementById('gantt-timeline-header');
+    if(tlH){tlH.innerHTML='<div style="display:flex;width:100%;overflow:hidden">'+tlHead+'</div>';tlH.style.padding='0';}
+    var todayPct=(Math.max(0,gDiff(dr.start,today))/totalDays*100).toFixed(2)+'%';
+    var rowsHtml='';
+    ganttTasks.forEach(function(t,idx){
+      var s=t.es||gDate(t.start),f=t.ef||gDate(t.finish);
+      var isCrit=t.critical&&showCrit,pct=parseInt(t.pct)||0;
+      var barColor=t.summary?'#718096':pct>=100?'#276749':isCrit?'#e53e3e':'#2980b9';
+      var fDays=Math.max(0,t.totalFloat||0),indent=(t.indent||0)*12;
+      var bL='0%',bW='0%',fL='0%',fW='0%';
+      if(s&&f){var sl=gDiff(dr.start,s),dur=Math.max(1,gDiff(s,f));bL=(sl/totalDays*100).toFixed(3)+'%';bW=(dur/totalDays*100).toFixed(3)+'%';if(fDays>0&&showFloat){fL=((sl+dur)/totalDays*100).toFixed(3)+'%';fW=(fDays/totalDays*100).toFixed(3)+'%';}}
+      rowsHtml+='<div class="gantt-row'+(t.summary?' summary-row':'')+(isCrit&&!t.summary?' critical-row':'')+'">'
+        +'<div class="gantt-cell" style="padding-left:'+(12+indent)+'px;cursor:pointer" onclick="ganttEditTask('+idx+')">'
+          +'<div><span style="font-size:11px;font-weight:'+(t.summary?700:600)+';color:#1a202c">'+(isCrit?'<span style="color:#e53e3e;font-size:9px">\u25cf </span>':'')+t.name+'</span>'
+          +(t.assigned?'<span style="font-size:9px;color:#666;display:block">'+t.assigned+'</span>':'')+'</div></div>'
+        +'<div class="gantt-cell" style="justify-content:center;flex-direction:column;gap:2px">'
+          +'<span style="font-size:11px;font-weight:700;color:'+(pct>=100?'#276749':isCrit?'#e53e3e':'#2980b9')+'">'+pct+'%</span>'
+          +'<div style="width:36px;height:4px;background:#e2e8f0;border-radius:2px"><div style="width:'+pct+'%;height:100%;background:'+barColor+';border-radius:2px"></div></div>'
+        +'</div>'
+        +'<div class="gantt-cell" style="font-size:10px;justify-content:center">'+gFmt(s)+'</div>'
+        +'<div class="gantt-cell" style="font-size:10px;justify-content:center;color:'+(f&&f<today&&pct<100?'#e53e3e':'inherit')+'">'+gFmt(f)+'</div>'
+        +'<div class="gantt-cell" style="font-size:11px;font-weight:700;justify-content:center;color:'+(fDays===0?'#e53e3e':fDays<5?'#d97706':'#276749')+'">'+fDays+'d</div>'
+        +'<div class="gantt-bar-wrap" style="position:relative;overflow:hidden">'
+          +'<div class="gantt-today-line" style="left:'+todayPct+'"></div>'
+          +'<div style="position:absolute;left:'+bL+';width:'+bW+';top:9px"><div class="gantt-bar" style="background:'+barColor+';width:100%" onclick="ganttEditTask('+idx+')"><div class="gantt-progress" style="width:'+pct+'%"></div></div></div>'
+          +(fW!=='0%'?'<div style="position:absolute;left:'+fL+';width:'+fW+';top:22px"><div class="gantt-float-bar" style="width:100%"></div></div>':'')
+        +'</div>'
+      +'</div>';
+    });
+    var rowsEl=document.getElementById('gantt-rows');if(rowsEl)rowsEl.innerHTML=rowsHtml;
+  }
+
+  function ganttSetZoom(z){
+    ganttZoom=z;
+    document.querySelectorAll('.gantt-zoom-btn').forEach(function(b){var m=b.textContent.trim().toLowerCase()===z;b.style.background=m?'#2980b9':'#eee';b.style.color=m?'#fff':'#333';});
+    ganttRender();
+  }
+  function ganttSave(){try{localStorage.setItem(GANTT_KEY,JSON.stringify(ganttTasks));if(typeof toast==='function')toast('Schedule saved');}catch(e){}}
+  function ganttLoad(){try{var s=localStorage.getItem(GANTT_KEY);if(s){ganttTasks=JSON.parse(s);ganttRender();}}catch(e){}}
+
+  function ganttAddTask(){
+    ganttEditIdx=-1;
+    ['gm-name','gm-wbs','gm-assigned','gm-preds'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    var sd=document.getElementById('gm-start'),fd=document.getElementById('gm-finish');
+    if(sd)sd.value=gISO(new Date());if(fd)fd.value=gISO(gAddDays(new Date(),5));
+    var pr=document.getElementById('gm-pct'),pv=document.getElementById('gm-pct-val'),sm=document.getElementById('gm-summary');
+    if(pr)pr.value=0;if(pv)pv.textContent='0%';if(sm)sm.checked=false;
+    var m=document.getElementById('gantt-modal');if(m)m.style.display='block';
+  }
+  function ganttEditTask(idx){
+    ganttEditIdx=idx;var t=ganttTasks[idx];
+    document.getElementById('gm-name').value=t.name||'';
+    document.getElementById('gm-wbs').value=t.wbs||'';
+    document.getElementById('gm-start').value=t.start||'';
+    document.getElementById('gm-finish').value=t.finish||'';
+    document.getElementById('gm-pct').value=t.pct||0;
+    document.getElementById('gm-pct-val').textContent=(t.pct||0)+'%';
+    document.getElementById('gm-assigned').value=t.assigned||'';
+    document.getElementById('gm-preds').value=(t.preds||[]).join(',');
+    document.getElementById('gm-summary').checked=!!t.summary;
+    var m=document.getElementById('gantt-modal');if(m)m.style.display='block';
+  }
+  function ganttModalSave(){
+    var name=document.getElementById('gm-name').value.trim();if(!name){alert('Task name required');return;}
+    var predsRaw=document.getElementById('gm-preds').value.trim();
+    var task={
+      id:ganttEditIdx>=0?ganttTasks[ganttEditIdx].id:('T'+(Date.now()%100000)),
+      name:name,wbs:document.getElementById('gm-wbs').value.trim(),
+      start:document.getElementById('gm-start').value,
+      finish:document.getElementById('gm-finish').value,
+      pct:parseInt(document.getElementById('gm-pct').value)||0,
+      assigned:document.getElementById('gm-assigned').value.trim(),
+      preds:predsRaw?predsRaw.split(',').map(function(x){return x.trim();}).filter(Boolean):[],
+      summary:document.getElementById('gm-summary').checked,
+      indent:ganttEditIdx>=0?(ganttTasks[ganttEditIdx].indent||0):0
+    };
+    if(ganttEditIdx>=0)ganttTasks[ganttEditIdx]=task;else ganttTasks.push(task);
+    document.getElementById('gantt-modal').style.display='none';
+    ganttRender();ganttSave();
+  }
+  function ganttModalDelete(){
+    if(ganttEditIdx>=0&&confirm('Delete this task?')){
+      ganttTasks.splice(ganttEditIdx,1);
+      document.getElementById('gantt-modal').style.display='none';
+      ganttRender();ganttSave();
+    }
+  }
+
+  function ganttImport(input){
+    var file=input.files[0];if(!file)return;
+    var ext=file.name.split('.').pop().toLowerCase();
+    var reader=new FileReader();
+    if(ext==='xml'){reader.onload=function(e){ganttParseXML(e.target.result);};reader.readAsText(file);}
+    else{reader.onload=function(e){ganttParseCSV(e.target.result);};reader.readAsText(file);}
+    input.value='';
+  }
+  function ganttParseXML(xml){
+    try{
+      var doc=(new DOMParser()).parseFromString(xml,'application/xml');
+      var tasks=[];
+      doc.querySelectorAll('Task').forEach(function(el){
+        var uid=el.querySelector('UID');if(!uid||uid.textContent==='0')return;
+        var name=el.querySelector('Name');if(!name||!name.textContent.trim())return;
+        var start=el.querySelector('Start'),finish=el.querySelector('Finish'),pct=el.querySelector('PercentComplete'),wbs=el.querySelector('WBS'),outline=el.querySelector('OutlineLevel'),summary=el.querySelector('Summary');
+        var preds=[].slice.call(el.querySelectorAll('PredecessorLink PredecessorUID')).map(function(p){return'X'+p.textContent;});
+        tasks.push({id:'X'+uid.textContent,name:name.textContent.trim(),wbs:wbs?wbs.textContent:'',start:start?start.textContent.slice(0,10):'',finish:finish?finish.textContent.slice(0,10):'',pct:pct?parseInt(pct.textContent):0,assigned:'',preds:preds,summary:summary?summary.textContent==='1':false,indent:outline?Math.max(0,parseInt(outline.textContent)-1):0});
+      });
+      if(tasks.length){ganttTasks=tasks;ganttRender();ganttSave();if(typeof toast==='function')toast('Imported '+tasks.length+' tasks from MS Project XML');}
+      else alert('No tasks found. Use File \u2192 Save As \u2192 XML in MS Project.');
+    }catch(e){alert('XML parse error: '+e.message);}
+  }
+  function ganttNormalizeDate(s){
+    s=s.trim();if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);
+    var m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if(m){var y=m[3].length===2?'20'+m[3]:m[3];return y+'-'+('0'+m[1]).slice(-2)+'-'+('0'+m[2]).slice(-2);}
+    return s;
+  }
+  function ganttParseCSV(text){
+    var lines=text.split(/\r?\n/).filter(function(l){return l.trim();});if(lines.length<2){alert('CSV appears empty');return;}
+    var headers=lines[0].split(',').map(function(h){return h.trim().toLowerCase().replace(/[\s%]+/g,'_').replace(/[^a-z0-9_]/g,'');});
+    var col=function(h){return headers.indexOf(h);};
+    var tasks=[];
+    for(var i=1;i<lines.length;i++){
+      var cols=lines[i].split(',').map(function(c){return c.replace(/^"|"$/g,'').trim();});
+      var get=function(h){var ci=col(h);return ci>=0?(cols[ci]||''):'';};
+      var name=get('name')||get('task_name')||get('task');if(!name)continue;
+      tasks.push({id:get('id')||('C'+i),name:name,wbs:get('wbs')||'',start:ganttNormalizeDate(get('start')||get('start_date')),finish:ganttNormalizeDate(get('finish')||get('end')||get('end_date')),pct:parseInt(get('_complete')||get('percent_complete')||get('pct'))||0,assigned:get('assigned_to')||get('resource')||get('assigned')||'',preds:(get('predecessors')||get('preds')||'').split(/[;,]/).map(function(p){return p.trim();}).filter(Boolean),summary:false,indent:0});
+    }
+    if(tasks.length){ganttTasks=tasks;ganttRender();ganttSave();if(typeof toast==='function')toast('Imported '+tasks.length+' tasks');}
+    else alert('Could not parse CSV. Columns needed: ID, Name, Start, Finish, %Complete, Predecessors, Assigned To');
+  }
+
+  function ganttPrint(){
+    if(!ganttTasks.length){if(typeof toast==='function')toast('No schedule to print');return;}
+    ganttCPM();var dr=ganttDateRange();var totalDays=Math.max(1,gDiff(dr.start,dr.end));
+    var today=new Date();today.setHours(12,0,0,0);
+    var todayPct=(Math.max(0,gDiff(dr.start,today))/totalDays*100).toFixed(2)+'%';
+    var rows=ganttTasks.map(function(t,idx){
+      var s=t.es||gDate(t.start),f=t.ef||gDate(t.finish),pct=parseInt(t.pct)||0;
+      var isCrit=t.critical&&document.getElementById('gantt-show-critical').checked;
+      var barColor=t.summary?'#718096':pct>=100?'#276749':isCrit?'#e53e3e':'#2980b9';
+      var bL='0%',bW='0%';
+      if(s&&f){var sl=gDiff(dr.start,s),dur=Math.max(1,gDiff(s,f));bL=(sl/totalDays*100).toFixed(3)+'%';bW=(dur/totalDays*100).toFixed(3)+'%';}
+      var bg=idx%2===0?'#fff':'#f9f9f9';if(isCrit&&!t.summary)bg='#fff5f5';if(t.summary)bg='#edf2f7';
+      var fDays=Math.max(0,t.totalFloat||0);
+      return'<tr style="background:'+bg+';page-break-inside:avoid"><td style="padding:5px 8px;border:1px solid #e2e8f0;font-size:10px;font-weight:'+(t.summary?700:500)+'">'+(isCrit?'\u25cf ':'')+t.name+(t.assigned?'<br><span style="color:#999;font-size:9px">'+t.assigned+'</span>':'')+'</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center">'+pct+'%</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center">'+gFmt(s)+'</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center">'+gFmt(f)+'</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center;color:'+(fDays===0?'#e53e3e':fDays<5?'#d97706':'#276749')+'">'+fDays+'d</td><td style="padding:3px 0;border:1px solid #e2e8f0;position:relative;min-width:200px"><div style="position:absolute;left:'+todayPct+';top:0;bottom:0;width:1px;background:#e53e3e;opacity:.6"></div><div style="position:absolute;left:'+bL+';width:'+bW+';top:3px;bottom:3px;background:'+barColor+';border-radius:2px;min-width:3px"><div style="width:'+pct+'%;height:100%;background:rgba(255,255,255,.3);border-radius:2px"></div></div></td></tr>';
+    }).join('');
+    var w=window.open('','_blank');if(!w){alert('Pop-up blocked.');return;}
+    w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Project Schedule</title><style>body{font-family:Arial,sans-serif;padding:20px;color:#1a202c}table{border-collapse:collapse;width:100%}th{background:#1a202c;color:#fff;padding:7px 8px;font-size:10px;text-align:left;border:1px solid #1a202c}td{vertical-align:middle}@media print{@page{size:landscape;margin:.4in}}</style></head><body><div style="display:flex;justify-content:space-between;border-bottom:3px solid #2980b9;padding-bottom:10px;margin-bottom:14px"><div style="font-size:20px;font-weight:900">rye <span style="color:#2980b9">electric</span></div><div style="text-align:right;font-size:11px;color:#718096">Project Schedule<br>'+new Date().toLocaleDateString()+'</div></div><table><thead><tr><th style="width:200px">Task</th><th style="width:40px">%</th><th style="width:75px">Start</th><th style="width:75px">Finish</th><th style="width:45px">Float</th><th>Timeline \u2192</th></tr></thead><tbody>'+rows+'</tbody></table><div style="font-size:10px;color:#aaa;text-align:center;margin-top:14px;border-top:1px solid #eee;padding-top:8px">Rye Electric, Inc. | 75 Doppler, Irvine CA 92618 | CA Lic. 980345 | \u25cf = Critical Path | Red line = Today</div></body></html>');
+    w.document.close();w.focus();setTimeout(function(){w.print();},500);
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){ganttLoad();});
 
 </script>
 
