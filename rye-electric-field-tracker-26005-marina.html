@@ -2724,7 +2724,7 @@ function logUnit(){
   if(currentPhase==='final'&&!lights){toast('Select lights installed');return;}
 
   const now=new Date();
-  const existing=unitLogs.find(l=>l.job===job_val&&l.bldg===bldgCombined&&l.unit===unit&&l.phase===currentPhase);
+  const existing=unitLogs.find(l=>l.worker===worker&&l.job===job_val&&l.bldg===bldgCombined&&l.unit===unit&&l.phase===currentPhase);
   if(existing){
     toast('Warning: '+currentPhase+' already logged for Unit '+unit+' - updating');
     existing.worker=worker; existing.costcode=costcode; existing.boxes=parseInt(boxes);
@@ -6818,8 +6818,8 @@ renderCCRef();
       talk_file: currentTBTFile,
       talk_title: currentTBTTitle,
       presenter: presenter,
-      signatures: entries.map(function(e) { return e.name; }),
-      signature_images: entries.map(function(e) { return e.signature; }),
+      signer_names: entries.map(function(e) { return e.name; }),
+      signatures: entries.map(function(e) { return e.signature; }),
       signed_at: new Date().toISOString(),
       week_ending: (function() {
         var n = new Date(), day = n.getDay(), diff = day <= 5 ? 5 - day : 5 - day + 7, f = new Date(n);
