@@ -1363,9 +1363,9 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div class="modal-body" style="padding:24px">
       <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Select your name to approve and lock this timesheet.</p>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Mychal Kirschbaum')">Mychal Kirschbaum</button>
-        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Jonathan Jacobo')">Jonathan Jacobo</button>
         <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Joey Java')">Joey Java</button>
+        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Dennis Furst')">Dennis Furst</button>
+        <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Mychal Kirschbaum')">Mychal Kirschbaum</button>
       </div>
     </div>
     <div class="modal-footer">
@@ -1636,30 +1636,97 @@ function save() {
   localStorage.setItem('svc_timesheets', JSON.stringify(timesheets));
 }
 
-// Load tickets from Supabase on startup, fall back to localStorage
-async function loadTickets() {
-  // Always load localStorage first as immediate display
-  const local = JSON.parse(localStorage.getItem('svc_tickets') || '[]');
-  if (local.length > 0) {
-    tickets = local;
-    renderAll();
-  }
+// ── SUPABASE TIMESHEET SYNC ──────────────────────────────────────────────────
+async function sbUpsertTimesheet(ts) {
+  try {
+    await fetch(SB_URL + '/rest/v1/service_timesheets', {
+      method:  'POST',
+      headers: { ...SB_HDRS, 'Prefer': 'resolution=merge-duplicates' },
+      body:    JSON.stringify({
+        id:          ts.id,
+        employee:    ts.employee,
+        week_ending: ts.weekEnding,
+        status:      ts.status,
+        entries:     ts.entries || [],
+        total_reg:   ts.totalReg,
+        total_ot:    ts.totalOT,
+        total_hours: ts.totalHours,
+        notes:       ts.notes || '',
+        approved_by: ts.approvedBy || null,
+        approved_at: ts.approvedAt || null,
+      }),
+    });
+  } catch(e) { console.warn('Timesheet upsert failed:', e); }
+}
 
-  // Then try Supabase — merge if remote has more
+async function sbGetTimesheets() {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/service_timesheets?order=created_at.desc', { headers: SB_HDRS });
+    if (!res.ok) throw new Error(await res.text());
+    const rows = await res.json();
+    return rows.map(r => ({
+      id:         r.id,
+      employee:   r.employee,
+      weekEnding: r.week_ending,
+      status:     r.status,
+      entries:    r.entries || [],
+      totalReg:   r.total_reg,
+      totalOT:    r.total_ot,
+      totalHours: r.total_hours,
+      notes:      r.notes,
+      approvedBy: r.approved_by,
+      approvedAt: r.approved_at,
+      createdAt:  r.created_at,
+    }));
+  } catch(e) {
+    console.warn('Timesheet fetch failed:', e);
+    return [];
+  }
+}
+
+async function sbDeleteTimesheet(id) {
+  try {
+    await fetch(SB_URL + '/rest/v1/service_timesheets?id=eq.' + encodeURIComponent(id), {
+      method: 'DELETE', headers: SB_HDRS,
+    });
+  } catch(e) { console.warn('Timesheet delete failed:', e); }
+}
+
+// Load tickets and timesheets from Supabase on startup
+async function loadTickets() {
+  // Load localStorage immediately for fast display
+  const local   = JSON.parse(localStorage.getItem('svc_tickets')    || '[]');
+  const localTs = JSON.parse(localStorage.getItem('svc_timesheets') || '[]');
+  if (local.length > 0)   { tickets    = local;   }
+  if (localTs.length > 0) { timesheets = localTs; }
+  if (local.length > 0 || localTs.length > 0) renderAll();
+
+  // Sync tickets from Supabase
   const remote = await sbGet();
   if (remote.length > 0) {
-    // Merge: remote is source of truth, but keep any local-only tickets
     const remoteIds = new Set(remote.map(t => t.id));
     const localOnly = local.filter(t => !remoteIds.has(t.id));
     tickets = [...remote, ...localOnly];
-    // Push local-only tickets up to Supabase
     localOnly.forEach(t => sbUpsert(t));
     localStorage.setItem('svc_tickets', JSON.stringify(tickets));
   } else if (local.length > 0) {
-    // Supabase empty but localStorage has data — push it all up
     tickets = local;
     local.forEach(t => sbUpsert(t));
-    toast('Syncing ' + local.length + ' local tickets to Supabase…');
+  }
+
+  // Sync timesheets from Supabase
+  const remoteTs = await sbGetTimesheets();
+  if (remoteTs.length > 0) {
+    const remoteTsIds = new Set(remoteTs.map(t => t.id));
+    const localOnlyTs = localTs.filter(t => !remoteTsIds.has(t.id));
+    timesheets = [...remoteTs, ...localOnlyTs];
+    localOnlyTs.forEach(ts => sbUpsertTimesheet(ts));
+    localStorage.setItem('svc_timesheets', JSON.stringify(timesheets));
+    toast('✓ Timesheets synced from Supabase');
+  } else if (localTs.length > 0) {
+    timesheets = localTs;
+    localTs.forEach(ts => sbUpsertTimesheet(ts));
+    toast('Syncing ' + localTs.length + ' local timesheets to Supabase…');
   }
 
   ticketCounter = tickets.length + 1;
@@ -2779,6 +2846,14 @@ function pushToTimesheetSilent(t) {
   });
 
   save();
+  // Sync all modified timesheets to Supabase
+  Object.values(byEmployee).forEach(rows => {
+    const emp = rows[0]?.employee;
+    if (emp) {
+      const ts2 = timesheets.find(x => x.employee === emp && x.weekEnding === weekEnding);
+      if (ts2) sbUpsertTimesheet(ts2);
+    }
+  });
 }
 
 // ── PUSH TO TIMESHEET ────────────────────────────────────────────────────────
@@ -2882,49 +2957,99 @@ function pushToTimesheet() {
 function renderTimesheets() {
   const tbody = document.getElementById('ts-tbody');
   if (!timesheets.length) {
-    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><p>No timesheets yet.</p></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><p>No timesheets yet. Created automatically when a ticket with labor is saved.</p></div></td></tr>';
     return;
   }
-  const statusC = {Draft:'badge-gray',Submitted:'badge-blue',Approved:'badge-green'};
 
-  // Sort by weekEnding desc then employee
-  const sorted = [...timesheets].sort((a,b) => (b.weekEnding||'').localeCompare(a.weekEnding||'') || (a.employee||'').localeCompare(b.employee||''));
+  const sorted = [...timesheets].sort((a,b) =>
+    (b.weekEnding||'').localeCompare(a.weekEnding||'') || (a.employee||'').localeCompare(b.employee||'')
+  );
 
   tbody.innerHTML = sorted.map(ts => {
-    const jobs = [...new Set((ts.entries||[]).map(e=>e.job).filter(Boolean))].join(', ') || '—';
-    const entryRows = (ts.entries||[]).map(e => `
-      <tr style="background:#f0faf8">
-        <td style="padding:6px 12px;font-size:12px;color:var(--muted)">${fmtDate(e.date)}</td>
-        <td style="padding:6px 12px;font-size:12px" colspan="3">${e.job||'—'}</td>
-        <td style="padding:6px 12px;font-size:12px"><strong>${(parseFloat(e.regHours)||0).toFixed(2)}h reg</strong>${parseFloat(e.otHours)>0?' / '+(parseFloat(e.otHours)||0).toFixed(2)+'h OT':''}</td>
-        <td colspan="3"></td>
-      </tr>`).join('');
-    return `
-      <tr style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'table-row-group':'none'">
-        <td><strong>${ts.id}</strong> <span style="font-size:11px;color:var(--teal)">▶ ${(ts.entries||[]).length} entries</span></td>
-        <td>${ts.employee}</td>
-        <td>${fmtDate(ts.weekEnding)}</td>
-        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;font-size:12px">${jobs}</td>
-        <td><strong>${ts.totalHours}h</strong> <small class="color-muted">(${ts.totalReg} reg / ${ts.totalOT} OT)</small></td>
-        <td><span class="badge ${statusC[ts.status]||'badge-gray'}">${ts.status}</span></td>
-        <td>
-        <td>
-          ${ts.status === 'Approved'
-            ? `<span class="badge badge-green" style="font-size:11px">🔒 Approved by ${ts.approvedBy || 'Manager'}</span>`
-            : `<select class="form-control" style="font-size:12px;padding:3px 6px;width:110px" onchange="updateTsStatus('${ts.id}',this.value)" onclick="event.stopPropagation()">
-                <option ${ts.status==='Draft'?'selected':''}>Draft</option>
-                <option ${ts.status==='Submitted'?'selected':''}>Submitted</option>
-                <option ${ts.status==='Approved'?'selected':''}>Approved</option>
-              </select>`
-          }
-        </td>
-        <td><button class="link-btn" style="color:var(--muted)" onclick="event.stopPropagation();deleteTs('${ts.id}')">Del</button>
-            <button class="link-btn" style="color:var(--teal);margin-left:8px" onclick="event.stopPropagation();printTimesheet('${ts.id}')">Print</button>
-            ${ts.status !== 'Approved' ? `<button class="link-btn" style="color:var(--blue);margin-left:8px" onclick="event.stopPropagation();openEditTimesheet('${ts.id}')">Edit</button>` : ''}</td>
-      </tr>
-      <tbody style="display:none">${entryRows}</tbody>`;
+    const isApproved = ts.status === 'Approved';
+    const totalReg = parseFloat(ts.totalReg) || 0;
+    const totalOT  = parseFloat(ts.totalOT)  || 0;
+    const totalHrs = parseFloat(ts.totalHours) || 0;
+
+    const subHeader = `<tr style="background:#e8f4f6">
+      <th style="padding:6px 12px;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Date</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Ticket</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Job / Cost Code</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;text-align:center">Time In</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;text-align:center">Time Out</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--teal);font-weight:700;text-transform:uppercase;text-align:center">Reg Hrs</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--gold);font-weight:700;text-transform:uppercase;text-align:center">OT Hrs</th>
+      <th style="padding:6px 12px;font-size:10px;color:var(--dark);font-weight:700;text-transform:uppercase;text-align:center">Total</th>
+    </tr>`;
+
+    const entryRows = (ts.entries||[]).length
+      ? (ts.entries||[]).map((e,i) => `<tr style="background:${i%2===0?'#fff':'#f4f8f9'}">
+          <td style="padding:7px 12px;font-size:12px">${fmtDate(e.date)}</td>
+          <td style="padding:7px 12px;font-size:12px;font-weight:600;color:var(--teal)">${e.ticketId||'—'}</td>
+          <td style="padding:7px 12px;font-size:12px">${e.job||'—'}</td>
+          <td style="padding:7px 12px;font-size:12px;text-align:center">${e.timeIn||'—'}</td>
+          <td style="padding:7px 12px;font-size:12px;text-align:center">${e.timeOut||'—'}</td>
+          <td style="padding:7px 12px;font-size:13px;font-weight:700;color:var(--teal);text-align:center">${(parseFloat(e.regHours)||0).toFixed(2)}</td>
+          <td style="padding:7px 12px;font-size:13px;font-weight:700;color:var(--gold);text-align:center">${(parseFloat(e.otHours)||0)>0?(parseFloat(e.otHours)||0).toFixed(2):'—'}</td>
+          <td style="padding:7px 12px;font-size:13px;font-weight:700;text-align:center">${((parseFloat(e.regHours)||0)+(parseFloat(e.otHours)||0)).toFixed(2)}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="8" style="padding:12px;text-align:center;color:var(--muted);font-size:13px">No entries yet</td></tr>';
+
+    const totalsRow = `<tr style="background:var(--dark)">
+      <td colspan="5" style="padding:8px 12px;font-size:12px;font-weight:700;color:#aaa">WEEK TOTALS</td>
+      <td style="padding:8px 12px;font-size:14px;font-weight:700;color:var(--teal);text-align:center">${totalReg.toFixed(2)}</td>
+      <td style="padding:8px 12px;font-size:14px;font-weight:700;color:var(--gold);text-align:center">${totalOT>0?totalOT.toFixed(2):'—'}</td>
+      <td style="padding:8px 12px;font-size:14px;font-weight:700;color:#fff;text-align:center">${totalHrs.toFixed(2)}</td>
+    </tr>`;
+
+    return `<tr><td colspan="8" style="padding:4px 0;border-bottom:2px solid var(--border)">
+      <div style="border:2px solid ${isApproved?'var(--green)':'var(--border)'};border-radius:8px;overflow:hidden;margin:4px 0">
+        <div style="background:var(--dark);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--teal);text-transform:uppercase">${ts.id}</div>
+              <div style="font-size:17px;font-weight:700;color:#fff">${ts.employee}</div>
+              <div style="font-size:12px;color:#888">Week ending ${fmtDate(ts.weekEnding)}</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <div style="background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center">
+                <div style="font-size:9px;color:var(--teal);font-weight:700;text-transform:uppercase">Reg</div>
+                <div style="font-size:20px;font-weight:700;color:var(--teal)">${totalReg.toFixed(2)}</div>
+              </div>
+              <div style="background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center">
+                <div style="font-size:9px;color:var(--gold);font-weight:700;text-transform:uppercase">OT</div>
+                <div style="font-size:20px;font-weight:700;color:var(--gold)">${totalOT.toFixed(2)}</div>
+              </div>
+              <div style="background:var(--teal);border-radius:6px;padding:6px 14px;text-align:center">
+                <div style="font-size:9px;color:rgba(255,255,255,.7);font-weight:700;text-transform:uppercase">Total</div>
+                <div style="font-size:20px;font-weight:700;color:#fff">${totalHrs.toFixed(2)}</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            ${isApproved
+              ? `<div style="background:#0f3d20;border:1.5px solid var(--green);border-radius:6px;padding:7px 16px;font-size:12px;font-weight:700;color:var(--green)">🔒 Approved by ${ts.approvedBy||'Manager'}</div>`
+              : `<button class="btn btn-sm" style="background:var(--green);color:#fff;font-size:13px;padding:7px 16px;font-weight:700" onclick="updateTsStatus('${ts.id}','Approved')">✓ Approve</button>
+                 <select class="form-control" style="font-size:12px;padding:5px 8px;width:130px;background:#1a1a1a;color:#fff;border-color:#444" onchange="updateTsStatus('${ts.id}',this.value)">
+                   <option ${ts.status==='Draft'?'selected':''}>Draft</option>
+                   <option ${ts.status==='Submitted'?'selected':''}>Submitted</option>
+                 </select>`
+            }
+            <button class="btn btn-sm" style="background:var(--teal);color:#fff;font-size:12px;padding:6px 12px" onclick="printTimesheet('${ts.id}')">🖨 Print</button>
+            ${!isApproved ? `<button class="btn btn-sm" style="background:#2a2a2a;color:#aaa;font-size:12px;padding:6px 12px" onclick="openEditTimesheet('${ts.id}')">Edit</button>` : ''}
+            <button class="btn btn-sm" style="background:#2a2a2a;color:#666;font-size:12px;padding:6px 12px" onclick="deleteTs('${ts.id}')">Del</button>
+          </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead>${subHeader}</thead>
+          <tbody>${entryRows}</tbody>
+          <tfoot>${totalsRow}</tfoot>
+        </table>
+      </div>
+    </td></tr>`;
   }).join('');
 }
+
 
 let pendingApprovalId = null;
 
@@ -2971,6 +3096,7 @@ function confirmApproval(approverName) {
   ts.approvedBy   = approverName;
   ts.approvedAt   = new Date().toISOString();
   save();
+  sbUpsertTimesheet(ts);
   renderTimesheets();
 
   const totalReg = parseFloat(ts.totalReg) || 0;
@@ -3118,6 +3244,7 @@ function saveEditedTimesheet() {
   ts.totalHours  = (totalReg + totalOT).toFixed(2);
 
   save();
+  sbUpsertTimesheet(ts);
   renderTimesheets();
   closeModal('editTimesheetModal');
   toast('Timesheet ' + ts.id + ' updated ✓');
