@@ -312,10 +312,10 @@
     const {empId,emp}=pendingClockOut;
 
     const {error}=await supabaseClient.from('office_portal_punches').insert({
-      employee_id:empId, event_type:'out', source:'break'
+      employee_id:empId, event_type:'out', source:'scanner'
     });
     if(error){
-      showResult('err','Clock error','Failed to record break. Please try again.');
+      showResult('err','Clock error','Failed to record break: '+error.message);
       return;
     }
 
