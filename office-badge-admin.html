@@ -13,6 +13,7 @@
   --green:#27ae60;--green-light:#eafaf1;
   --red:#C0392B;--red-light:#f9eded;
   --amber:#e67e22;--amber-light:#fef5ec;
+  --gold:#D4A843;--gold-light:#FDF6E3;
   --shadow:0 2px 8px rgba(0,0,0,.07);
   --shadow-lg:0 6px 28px rgba(0,0,0,.14);
   --radius:8px;
@@ -21,45 +22,35 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:100vh;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
-/* HEADER */
 .hdr{background:var(--white);border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
-.hdr-in{max-width:880px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.hdr-in{max-width:960px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
 .wordmark{font-family:'Poppins',var(--font);font-weight:700;font-size:20px;line-height:1;letter-spacing:-.02em}
-.wordmark .rye{color:#000}
-.wordmark .electric{color:#79B7F1}
+.wordmark .rye{color:#000}.wordmark .electric{color:#79B7F1}
 .hdr-sub{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-left:10px;padding-left:10px;border-left:1px solid var(--border)}
 .hdr-right{display:flex;align-items:center;gap:14px}
 .hdr-clock{font-size:13px;font-weight:700;color:var(--mid);font-variant-numeric:tabular-nums}
 .lock-btn{background:none;border:1.5px solid var(--border);color:var(--muted);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)}
 .lock-btn:hover{border-color:var(--red);color:var(--red)}
 
-/* SHELL */
-.shell{max-width:880px;margin:0 auto;padding:0 20px 60px}
-
-/* TABS */
+.shell{max-width:960px;margin:0 auto;padding:0 20px 60px}
 .tabs{display:flex;gap:3px;background:var(--white);border:1px solid var(--border);padding:5px;border-radius:10px;margin:16px 0;box-shadow:var(--shadow)}
 .tab{flex:1;padding:10px 6px;font-size:13px;font-weight:700;border:none;cursor:pointer;border-radius:7px;background:transparent;color:var(--muted);font-family:var(--font);transition:all .14s}
 .tab.on{background:var(--teal);color:#fff}
 .tab:not(.on):hover{background:var(--teal-light);color:var(--teal)}
-.pane{display:none}
-.pane.on{display:block}
+.pane{display:none}.pane.on{display:block}
 
-/* CARD */
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)}
 .ch{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fafafa}
 .ct{font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
 .cb{padding:18px}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 18px;height:42px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s}
-.btn-rye{background:var(--teal);color:#fff}
-.btn-rye:hover{background:var(--teal-dark)}
-.btn-g{background:#fff;color:var(--mid);border:1.5px solid var(--border)}
-.btn-g:hover{border-color:var(--teal);color:var(--teal)}
-.btn-danger{background:var(--red-light);color:var(--red);border:1px solid rgba(192,57,43,.3)}
-.btn-danger:hover{background:#f6d9d6}
+.btn-rye{background:var(--teal);color:#fff}.btn-rye:hover{background:var(--teal-dark)}
+.btn-g{background:#fff;color:var(--mid);border:1.5px solid var(--border)}.btn-g:hover{border-color:var(--teal);color:var(--teal)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#1e8a4e}
+.btn-danger{background:var(--red-light);color:var(--red);border:1px solid rgba(192,57,43,.3)}.btn-danger:hover{background:#f6d9d6}
 .btn-sm{height:32px;padding:5px 12px;font-size:11px}
 
-/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}
 @media(max-width:640px){.form-grid{grid-template-columns:1fr 1fr}}
 .fgroup{display:flex;flex-direction:column;gap:5px}
@@ -70,41 +61,33 @@ input[type=text],input[type=number],input[type=password],select{
 }
 input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(41,128,185,.12)}
 
-/* TABLE */
 table{width:100%;border-collapse:collapse;font-size:12px}
 thead th{padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);background:#fafafa;border-bottom:2px solid var(--border);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
 tbody td{padding:9px 12px;border-top:1px solid #f0f0f0;color:var(--mid)}
 tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;color:var(--dark)}
 
-/* BADGE */
 .bdg{display:inline-block;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em}
 .b-ok{background:var(--green-light);color:#1a6b3e}
 .b-warn{background:var(--amber-light);color:#8a4a10}
 .b-off{background:#f0f0f0;color:var(--muted)}
+.b-blue{background:#e8f4fd;color:#1a6fa3}
 
-/* WEEK NAV */
 .week-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .week-label{flex:1;text-align:center;font-size:13px;font-weight:700}
-
-/* ROSTER */
 .roster-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-top:1px solid #f0f0f0}
 .roster-row:first-child{border-top:none}
 .roster-name{font-size:13px;font-weight:700}
 .roster-time{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
 
-/* TOAST */
+
+
 #toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999;max-width:300px;box-shadow:var(--shadow-lg)}
 #toast.on{opacity:1;transform:translateY(0)}
 
-/* PRINT FRAME */
 #print-frame{display:none;position:fixed;inset:0;background:#fff;z-index:99999;overflow:auto;padding:24px}
 #print-close{position:fixed;top:10px;right:14px;z-index:100000;background:#c00;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer}
-@media print{
-  body>*:not(#print-frame){display:none!important}
-  #print-frame{display:block!important}
-}
+@media print{body>*:not(#print-frame){display:none!important}#print-frame{display:block!important}}
 
-/* PIN GATE */
 #pin-gate{position:fixed;inset:0;background:var(--bg);z-index:99998;display:flex;align-items:center;justify-content:center;padding:20px}
 .pin-box{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);padding:32px 28px;max-width:340px;width:100%;text-align:center}
 .pin-box .wordmark{justify-content:center;display:flex;margin-bottom:4px}
@@ -115,8 +98,22 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 .pin-error.on{display:block}
 #admin-content{display:none}
 #admin-content.on{display:block}
-
 .muted-note{font-size:11px;color:var(--muted);margin-top:8px}
+
+/* ── TIMESHEET CARDS (service tracker style) ── */
+.ts-card{border:2px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)}
+.ts-card-hdr{background:var(--dark);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ts-name{font-size:17px;font-weight:700;color:#fff}
+.ts-week{font-size:12px;color:#888;margin-top:2px}
+.ts-stat{background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center;min-width:68px}
+.ts-stat.tl{background:var(--teal)}
+.ts-stat-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ts-stat-val{font-size:20px;font-weight:700;line-height:1.2}
+.ts-tbl{width:100%;border-collapse:collapse}
+.ts-tbl th{padding:7px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#e8f4f6;border-bottom:1px solid var(--border);text-align:left}
+.ts-tbl td{padding:8px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;color:var(--mid)}
+.ts-tbl tbody tr:nth-child(even) td{background:#f9f9f9}
+.ts-totals td{background:var(--dark)!important;color:#fff!important;font-weight:700;font-size:13px;padding:9px 12px;border:none!important}
 </style>
 </head>
 <body>
@@ -136,7 +133,6 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 </div>
 
 <div id="admin-content">
-
 <header class="hdr">
   <div class="hdr-in">
     <div style="display:flex;align-items:center">
@@ -151,7 +147,6 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 </header>
 
 <div class="shell">
-
   <div class="tabs">
     <button class="tab on" onclick="goTab(this,'jobs')">Jobs</button>
     <button class="tab" onclick="goTab(this,'timecards')">Timecards</button>
@@ -167,9 +162,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
         <div class="form-grid" style="grid-template-columns:2fr 1fr auto">
           <div class="fgroup">
             <div class="flbl">Job</div>
-            <select id="jobSelect" onchange="loadJobSignIns()">
-              <option value="">-- Select job --</option>
-            </select>
+            <select id="jobSelect" onchange="loadJobSignIns()"><option value="">-- Select job --</option></select>
           </div>
           <div class="fgroup">
             <div class="flbl">Date</div>
@@ -179,53 +172,46 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
         </div>
       </div>
     </div>
-
     <div class="card">
       <div class="ch">
         <div class="ct">Daily Sign In <span id="jobSignInCount" class="bdg b-ok" style="margin-left:8px">0</span></div>
         <button class="btn btn-g btn-sm" onclick="printJobSignIn()">&#128424;&#65039; Print</button>
       </div>
       <div id="jobSupervisor" style="padding:10px 18px 0;font-size:12px;color:var(--muted)"></div>
-      <div id="jobSignInBody" style="padding:18px;overflow-x:auto">
-        <div class="muted-note">Select a job and date to see who's signed in.</div>
-      </div>
+      <div id="jobSignInBody" style="padding:18px;overflow-x:auto"><div class="muted-note">Select a job and date to see who's signed in.</div></div>
     </div>
   </div>
 
-
   <!-- ===== TIMECARDS TAB ===== -->
   <div class="pane" id="pane-timecards">
+
+    <!-- Currently clocked in -->
     <div class="card">
       <div class="ch"><div class="ct">Currently clocked in</div><span id="rosterCount" class="bdg b-ok">0</span></div>
       <div id="rosterList"></div>
     </div>
 
-    <div class="card">
-      <div class="cb">
-        <div class="fgroup">
-          <div class="flbl">Employee</div>
-          <select id="tcEmployee" onchange="loadTimecard()">
-            <option value="">-- Select employee --</option>
-          </select>
-        </div>
+    <!-- Week nav + filters -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:0 0 14px">
+      <div class="week-nav" style="margin:0;flex:1;min-width:260px">
+        <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">&larr; Prev</button>
+        <div class="week-label" id="weekLabel">--</div>
+        <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next &rarr;</button>
       </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap">Employee</span>
+        <select id="tcEmployee" onchange="loadTimecard()" style="min-width:200px">
+          <option value="">-- employees with entries --</option>
+        </select>
+      </div>
+      <div id="tc-week-summary" style="font-size:12px;color:var(--muted);white-space:nowrap"></div>
     </div>
 
-    <div class="week-nav">
-      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">&larr; Prev week</button>
-      <div class="week-label" id="weekLabel">--</div>
-      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week &rarr;</button>
+    <!-- Timecard cards rendered here -->
+    <div id="timecardBody">
+      <div class="muted-note" style="padding:20px 0">Select a week to load timecards.</div>
     </div>
 
-    <div class="card">
-      <div class="ch">
-        <div class="ct">Weekly Timecard</div>
-        <button class="btn btn-g btn-sm" onclick="printTimecard()">&#128424;&#65039; Print</button>
-      </div>
-      <div id="timecardBody" style="padding:18px">
-        <div class="muted-note">Select an employee to view their timecard.</div>
-      </div>
-    </div>
   </div>
 
   <!-- ===== STAFF TAB ===== -->
@@ -234,30 +220,17 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
       <div class="ch"><div class="ct">Add office staff</div></div>
       <div class="cb">
         <div class="form-grid">
-          <div class="fgroup">
-            <div class="flbl">Employee ID (badge #)</div>
-            <input type="text" inputmode="numeric" id="newEmpId" placeholder="e.g. 907">
-          </div>
-          <div class="fgroup">
-            <div class="flbl">First name</div>
-            <input type="text" id="newFirstName" placeholder="First name">
-          </div>
-          <div class="fgroup">
-            <div class="flbl">Last name</div>
-            <input type="text" id="newLastName" placeholder="Last name">
-          </div>
+          <div class="fgroup"><div class="flbl">Employee ID (badge #)</div><input type="text" inputmode="numeric" id="newEmpId" placeholder="e.g. 907"></div>
+          <div class="fgroup"><div class="flbl">First name</div><input type="text" id="newFirstName" placeholder="First name"></div>
+          <div class="fgroup"><div class="flbl">Last name</div><input type="text" id="newLastName" placeholder="Last name"></div>
           <button class="btn btn-rye" onclick="addStaff()">+ Add</button>
         </div>
         <div class="muted-note">The Employee ID must match the number encoded in the barcode on their badge.</div>
       </div>
     </div>
-
     <div class="card">
       <div class="ch"><div class="ct">Staff roster</div></div>
-      <table>
-        <thead><tr><th>ID</th><th>Name</th><th>Status</th><th></th></tr></thead>
-        <tbody id="staffTbody"></tbody>
-      </table>
+      <table><thead><tr><th>ID</th><th>Name</th><th>Status</th><th></th></tr></thead><tbody id="staffTbody"></tbody></table>
     </div>
   </div>
 
@@ -267,26 +240,16 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
       <div class="ch"><div class="ct">Add cost code</div></div>
       <div class="cb">
         <div class="form-grid">
-          <div class="fgroup">
-            <div class="flbl">Code</div>
-            <input type="text" id="newCodeId" placeholder="e.g. PM">
-          </div>
-          <div class="fgroup" style="grid-column:span 2">
-            <div class="flbl">Label</div>
-            <input type="text" id="newCodeLabel" placeholder="e.g. Project Management">
-          </div>
+          <div class="fgroup"><div class="flbl">Code</div><input type="text" id="newCodeId" placeholder="e.g. PM"></div>
+          <div class="fgroup" style="grid-column:span 2"><div class="flbl">Label</div><input type="text" id="newCodeLabel" placeholder="e.g. Project Management"></div>
           <button class="btn btn-rye" onclick="addCostCode()">+ Add</button>
         </div>
         <div class="muted-note">This is what shows up in the dropdown when someone clocks out.</div>
       </div>
     </div>
-
     <div class="card">
       <div class="ch"><div class="ct">Cost codes</div></div>
-      <table>
-        <thead><tr><th>Code</th><th>Label</th><th>Status</th><th></th></tr></thead>
-        <tbody id="codesTbody"></tbody>
-      </table>
+      <table><thead><tr><th>Code</th><th>Label</th><th>Status</th><th></th></tr></thead><tbody id="codesTbody"></tbody></table>
     </div>
   </div>
 
@@ -296,14 +259,8 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
       <div class="ch"><div class="ct">Change admin PIN</div></div>
       <div class="cb">
         <div class="form-grid" style="grid-template-columns:1fr 1fr auto">
-          <div class="fgroup">
-            <div class="flbl">New PIN</div>
-            <input type="password" id="newPin" inputmode="numeric" placeholder="New PIN">
-          </div>
-          <div class="fgroup">
-            <div class="flbl">Confirm new PIN</div>
-            <input type="password" id="confirmPin" inputmode="numeric" placeholder="Confirm new PIN">
-          </div>
+          <div class="fgroup"><div class="flbl">New PIN</div><input type="password" id="newPin" inputmode="numeric" placeholder="New PIN"></div>
+          <div class="fgroup"><div class="flbl">Confirm new PIN</div><input type="password" id="confirmPin" inputmode="numeric" placeholder="Confirm new PIN"></div>
           <button class="btn btn-rye" onclick="changePin()">Save</button>
         </div>
         <div class="muted-note">This is the PIN anyone will need to get into this admin page. Use at least 4 digits, and share it only with the people who should have access.</div>
@@ -315,8 +272,6 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 </div><!-- /admin-content -->
 
 <div id="toast"></div>
-
-<!-- Print frame (reliable on iOS) -->
 <div id="print-frame">
   <button id="print-close" onclick="closePrintFrame()">&#10005; Close</button>
   <div id="print-content"></div>
@@ -324,9 +279,6 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ============================================================
-   CONFIG -- same Supabase project/tables as office-badge-clock.html
-============================================================ */
 const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -335,7 +287,7 @@ let staffList = [];
 let codesList = [];
 let tcWeekStart = getMonday(new Date());
 
-/* ---------- helpers ---------- */
+// ── HELPERS ──────────────────────────────────────────────────────────────────
 function toast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg; t.classList.add('on');
@@ -343,582 +295,492 @@ function toast(msg){
   t._timer=setTimeout(()=>t.classList.remove('on'),3000);
 }
 function getMonday(d){
-  const x=new Date(d);
-  const day=x.getDay();
+  const x=new Date(d); const day=x.getDay();
   const diff=day===0?-6:1-day;
-  x.setDate(x.getDate()+diff);
-  x.setHours(0,0,0,0);
-  return x;
+  x.setDate(x.getDate()+diff); x.setHours(0,0,0,0); return x;
 }
-function fmtDate(d){
-  return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+function getSunday(d){
+  const x=new Date(d); x.setDate(x.getDate()+6); x.setHours(23,59,59,999); return x;
 }
-function fmtTime(d){
-  return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-}
+function fmtDate(d){return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+function fmtTime(d){return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
 function dateKeyLocal(d){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
-function startOfToday(){
-  const d=new Date(); d.setHours(0,0,0,0); return d;
-}
+function startOfToday(){const d=new Date(); d.setHours(0,0,0,0); return d;}
 
-/* ---------- header clock ---------- */
+// header clock
 function tickClock(){
-  const el = document.getElementById('hdrClock');
-  if(el) el.textContent = new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit'});
+  const el=document.getElementById('hdrClock');
+  if(el) el.textContent=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',second:'2-digit'});
 }
 setInterval(tickClock,1000); tickClock();
 
-/* ============================================================
-   PIN GATE
-============================================================ */
-function handlePinSubmit(e){
-  e.preventDefault();
-  verifyPin();
-  return false;
-}
+// ── PIN GATE ─────────────────────────────────────────────────────────────────
+function handlePinSubmit(e){e.preventDefault(); verifyPin(); return false;}
 
 async function verifyPin(){
-  const entered = document.getElementById('pinInput').value.trim();
-  const errEl = document.getElementById('pinError');
-  if(!entered){ return; }
-
-  const { data, error } = await supabaseClient
-    .from('office_portal_settings')
-    .select('value')
-    .eq('key','admin_pin')
-    .limit(1);
-
-  if(error || !data || data.length===0){
-    errEl.textContent = 'Could not check the PIN -- check your connection and try again.';
-    errEl.classList.add('on');
-    return;
+  const entered=document.getElementById('pinInput').value.trim();
+  const errEl=document.getElementById('pinError');
+  if(!entered) return;
+  const {data,error}=await supabaseClient.from('office_portal_settings').select('value').eq('key','admin_pin').limit(1);
+  if(error||!data||data.length===0){
+    errEl.textContent='Could not check the PIN -- check your connection and try again.';
+    errEl.classList.add('on'); return;
   }
-
-  if(entered === data[0].value){
-    sessionStorage.setItem('office_admin_unlocked','true');
-    unlockAdmin();
+  if(entered===data[0].value){
+    sessionStorage.setItem('office_admin_unlocked','true'); unlockAdmin();
   } else {
-    errEl.textContent = 'Incorrect PIN. Try again.';
-    errEl.classList.add('on');
-    document.getElementById('pinInput').value='';
-    document.getElementById('pinInput').focus();
+    errEl.textContent='Incorrect PIN. Try again.'; errEl.classList.add('on');
+    document.getElementById('pinInput').value=''; document.getElementById('pinInput').focus();
   }
 }
-
 function unlockAdmin(){
   document.getElementById('pin-gate').style.display='none';
   document.getElementById('admin-content').classList.add('on');
   initAdmin();
 }
-
 function lockAdmin(){
   sessionStorage.removeItem('office_admin_unlocked');
   document.getElementById('admin-content').classList.remove('on');
   document.getElementById('pin-gate').style.display='flex';
-  document.getElementById('pinInput').value='';
-  document.getElementById('pinInput').focus();
+  document.getElementById('pinInput').value=''; document.getElementById('pinInput').focus();
 }
-
 async function changePin(){
-  const p1 = document.getElementById('newPin').value.trim();
-  const p2 = document.getElementById('confirmPin').value.trim();
-  if(p1.length<4){ toast('PIN should be at least 4 digits'); return; }
-  if(p1!==p2){ toast('PINs do not match'); return; }
-
-  const { error } = await supabaseClient
-    .from('office_portal_settings')
-    .update({ value: p1 })
-    .eq('key','admin_pin');
-
-  if(error){ toast('Error: '+error.message); return; }
-  document.getElementById('newPin').value='';
-  document.getElementById('confirmPin').value='';
+  const p1=document.getElementById('newPin').value.trim();
+  const p2=document.getElementById('confirmPin').value.trim();
+  if(p1.length<4){toast('PIN should be at least 4 digits');return;}
+  if(p1!==p2){toast('PINs do not match');return;}
+  const {error}=await supabaseClient.from('office_portal_settings').update({value:p1}).eq('key','admin_pin');
+  if(error){toast('Error: '+error.message);return;}
+  document.getElementById('newPin').value=''; document.getElementById('confirmPin').value='';
   toast('Admin PIN updated');
 }
 
-/* ---------- tabs ---------- */
+// ── TABS ─────────────────────────────────────────────────────────────────────
 function goTab(btn,name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
   ['jobs','timecards','staff','codes','settings'].forEach(n=>{
     document.getElementById('pane-'+n).className='pane'+(n===name?' on':'');
   });
-  if(name==='jobs'){ loadJobsList(); loadJobSignIns(); }
-  if(name==='timecards'){ renderWeekLabel(); loadRoster(); }
+  if(name==='jobs'){loadJobsList();loadJobSignIns();}
+  if(name==='timecards'){renderWeekLabel();loadRoster();loadTimecard();}
   if(name==='staff') loadStaff();
   if(name==='codes') loadCostCodes();
 }
 
-/* ============================================================
-   CURRENTLY CLOCKED IN (today's live roster)
-============================================================ */
+// ── ROSTER ───────────────────────────────────────────────────────────────────
 async function loadRoster(){
-  const { data, error } = await supabaseClient
+  const {data,error}=await supabaseClient
     .from('office_portal_punches')
     .select('employee_id,event_type,punched_at')
-    .gte('punched_at', startOfToday().toISOString())
+    .gte('punched_at',startOfToday().toISOString())
     .order('punched_at',{ascending:true});
-
-  const list = document.getElementById('rosterList');
-  const countEl = document.getElementById('rosterCount');
-  if(!list || !countEl) return;
-  if(error || !data){
-    list.innerHTML = '<div class="roster-row"><span class="muted-note">Could not load roster</span></div>';
-    return;
-  }
-
-  const lastByEmp = {};
-  data.forEach(p => { lastByEmp[p.employee_id] = p; });
-
-  const currentlyIn = Object.values(lastByEmp).filter(p=>p.event_type==='in');
-  countEl.textContent = currentlyIn.length;
-
-  if(currentlyIn.length===0){
-    list.innerHTML = '<div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div>';
-    return;
-  }
-
-  list.innerHTML = currentlyIn
-    .sort((a,b)=> new Date(a.punched_at) - new Date(b.punched_at))
+  const list=document.getElementById('rosterList');
+  const countEl=document.getElementById('rosterCount');
+  if(!list||!countEl) return;
+  if(error||!data){list.innerHTML='<div class="roster-row"><span class="muted-note">Could not load roster</span></div>';return;}
+  const lastByEmp={};
+  data.forEach(p=>{lastByEmp[p.employee_id]=p;});
+  const currentlyIn=Object.values(lastByEmp).filter(p=>p.event_type==='in');
+  countEl.textContent=currentlyIn.length;
+  if(currentlyIn.length===0){list.innerHTML='<div class="roster-row"><span class="muted-note">No one is currently clocked in</span></div>';return;}
+  list.innerHTML=currentlyIn
+    .sort((a,b)=>new Date(a.punched_at)-new Date(b.punched_at))
     .map(p=>{
-      const emp = staffList.find(e=>e.employee_id===p.employee_id);
-      const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+p.employee_id;
-      return '<div class="roster-row"><span class="roster-name">'+name+'</span>'
-        +'<span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
+      const emp=staffList.find(e=>e.employee_id===p.employee_id);
+      const name=emp?emp.first_name+' '+emp.last_name:'Employee '+p.employee_id;
+      return '<div class="roster-row"><span class="roster-name">'+name+'</span><span class="roster-time">since '+fmtTime(new Date(p.punched_at))+'</span></div>';
     }).join('');
 }
 
-/* ============================================================
-   TIMECARDS TAB
-============================================================ */
-function populateEmployeeDropdown(){
-  const sel = document.getElementById('tcEmployee');
-  const current = sel.value;
-  sel.innerHTML = '<option value="">-- Select employee --</option>'
-    + staffList
-        .slice()
-        .sort((a,b)=> a.last_name.localeCompare(b.last_name))
-        .map(e=>'<option value="'+e.employee_id+'">'+e.first_name+' '+e.last_name+'</option>')
-        .join('');
-  if(current) sel.value = current;
-}
-
+// ── WEEK NAV ─────────────────────────────────────────────────────────────────
 function renderWeekLabel(){
-  const end = new Date(tcWeekStart); end.setDate(end.getDate()+6);
-  document.getElementById('weekLabel').textContent =
-    fmtDate(tcWeekStart) + '  --  ' + fmtDate(end);
+  const end=new Date(tcWeekStart); end.setDate(end.getDate()+6);
+  document.getElementById('weekLabel').textContent=fmtDate(tcWeekStart)+'  —  '+fmtDate(end);
 }
-
 function shiftWeek(dir){
-  tcWeekStart.setDate(tcWeekStart.getDate() + dir*7);
-  renderWeekLabel();
-  loadTimecard();
+  tcWeekStart.setDate(tcWeekStart.getDate()+dir*7);
+  renderWeekLabel(); loadTimecard();
 }
 
+// ── TIMECARDS (card style matching service tracker) ───────────────────────────
 async function loadTimecard(){
   renderWeekLabel();
-  const empId = parseInt(document.getElementById('tcEmployee').value,10);
-  const body = document.getElementById('timecardBody');
-  if(!empId){
-    body.innerHTML = '<div class="muted-note">Select an employee to view their timecard.</div>';
-    return;
-  }
+  const body=document.getElementById('timecardBody');
+  const summary=document.getElementById('tc-week-summary');
+  body.innerHTML='<div class="muted-note" style="padding:20px 0">Loading...</div>';
 
-  const weekEnd = new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+7);
-  const weekEndDateOnly = new Date(tcWeekStart); weekEndDateOnly.setDate(weekEndDateOnly.getDate()+6);
+  const weekEnd=new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+7);
+  const weekEndDateOnly=new Date(tcWeekStart); weekEndDateOnly.setDate(weekEndDateOnly.getDate()+6);
 
-  const [{ data, error }, { data: dayCodeRows }] = await Promise.all([
-    supabaseClient
-      .from('office_portal_punches')
+  // Fetch all punches for this week
+  const [{data:punches,error},{data:dayCodes}]=await Promise.all([
+    supabaseClient.from('office_portal_punches')
       .select('*')
-      .eq('employee_id', empId)
-      .gte('punched_at', tcWeekStart.toISOString())
-      .lt('punched_at', weekEnd.toISOString())
+      .gte('punched_at',tcWeekStart.toISOString())
+      .lt('punched_at',weekEnd.toISOString())
       .order('punched_at',{ascending:true}),
-    supabaseClient
-      .from('office_portal_day_codes')
+    supabaseClient.from('office_portal_day_codes')
       .select('*')
-      .eq('employee_id', empId)
-      .gte('work_date', dateKeyLocal(tcWeekStart))
-      .lte('work_date', dateKeyLocal(weekEndDateOnly))
+      .gte('work_date',dateKeyLocal(tcWeekStart))
+      .lte('work_date',dateKeyLocal(weekEndDateOnly))
   ]);
 
-  if(error){
-    body.innerHTML = '<div class="muted-note">Could not load timecard.</div>';
+  if(error){body.innerHTML='<div class="muted-note">Could not load timecards.</div>';return;}
+
+  // Find employees who have punches this week
+  const empIds=[...new Set((punches||[]).map(p=>p.employee_id))];
+
+  if(empIds.length===0){
+    body.innerHTML='<div class="muted-note" style="padding:20px 0">No punch data for this week.</div>';
+    document.getElementById('tc-week-summary').textContent='';
+    // Clear employee dropdown
+    document.getElementById('tcEmployee').innerHTML='<option value="">-- no entries this week --</option>';
     return;
   }
 
-  const codeByDate = {};
-  (dayCodeRows||[]).forEach(r=>{ codeByDate[r.work_date] = r.cost_code; });
+  // Populate employee dropdown with ONLY employees who have entries this week
+  const sel=document.getElementById('tcEmployee');
+  const selVal=sel.value;
+  const empsWithData=empIds
+    .map(id=>staffList.find(e=>e.employee_id===id)||{employee_id:id,first_name:'Employee',last_name:String(id)})
+    .sort((a,b)=>a.last_name.localeCompare(b.last_name));
 
-  const byDay = {};
-  (data||[]).forEach(p=>{
-    const d = new Date(p.punched_at);
-    const key = d.toDateString();
-    if(!byDay[key]) byDay[key]=[];
-    byDay[key].push(p);
-  });
+  sel.innerHTML='<option value="">— All employees this week —</option>'
+    +empsWithData.map(e=>`<option value="${e.employee_id}" ${selVal==e.employee_id?'selected':''}>${e.first_name} ${e.last_name}</option>`).join('');
 
-  let weekReg=0, weekOT=0, weekTotal=0;
-  const dayRows=[];
+  // Filter by selected employee if set
+  const filterEmp=sel.value?parseInt(sel.value):null;
+  const filteredEmpIds=filterEmp?[filterEmp]:empIds;
 
-  for(let i=0;i<7;i++){
-    const d = new Date(tcWeekStart); d.setDate(d.getDate()+i);
-    const key = d.toDateString();
-    const punches = (byDay[key]||[]).sort((a,b)=> new Date(a.punched_at)-new Date(b.punched_at));
-    const dayCode = codeByDate[dateKeyLocal(d)] || null;
+  const codeByEmpDate={};
+  (dayCodes||[]).forEach(r=>{codeByEmpDate[r.employee_id+'|'+r.work_date]=r.cost_code;});
 
-    if(punches.length===0){
-      dayRows.push({date:d, segments:[], hours:0, reg:0, ot:0, incomplete:false, code:dayCode});
-      continue;
-    }
+  let totalWeekHrs=0;
+  const cards=[];
 
-    const segments=[];
-    let hours=0;
-    for(let j=0;j<punches.length;j+=2){
-      const inP = punches[j];
-      const outP = punches[j+1];
-      if(outP){
-        const h = (new Date(outP.punched_at) - new Date(inP.punched_at)) / 3600000;
-        hours += h;
-        segments.push({in:new Date(inP.punched_at), out:new Date(outP.punched_at)});
-      } else {
-        segments.push({in:new Date(inP.punched_at), out:null});
+  for(const empId of filteredEmpIds){
+    const emp=staffList.find(e=>e.employee_id===empId)||{employee_id:empId,first_name:'Employee',last_name:String(empId)};
+    const name=emp.first_name+' '+emp.last_name;
+
+    const empPunches=(punches||[]).filter(p=>p.employee_id===empId);
+
+    // Build per-day entries
+    const byDay={};
+    empPunches.forEach(p=>{
+      const d=new Date(p.punched_at);
+      const key=dateKeyLocal(d);
+      if(!byDay[key]) byDay[key]=[];
+      byDay[key].push(p);
+    });
+
+    let weekReg=0,weekOT=0,weekTotal=0;
+    const entryRows=[];
+
+    for(let i=0;i<7;i++){
+      const d=new Date(tcWeekStart); d.setDate(d.getDate()+i);
+      const key=dateKeyLocal(d);
+      const dayPunches=(byDay[key]||[]).sort((a,b)=>new Date(a.punched_at)-new Date(b.punched_at));
+      if(dayPunches.length===0) continue;
+
+      const code=codeByEmpDate[empId+'|'+key]||null;
+      const codeInfo=code?codesList.find(c=>c.code===code):null;
+      const codeText=code?code+(codeInfo?' — '+codeInfo.label:''):'—';
+
+      const segs=[];
+      let hours=0;
+      for(let j=0;j<dayPunches.length;j+=2){
+        const inP=dayPunches[j];
+        const outP=dayPunches[j+1];
+        if(outP){
+          const h=(new Date(outP.punched_at)-new Date(inP.punched_at))/3600000;
+          hours+=h;
+          segs.push(fmtTime(new Date(inP.punched_at))+' → '+fmtTime(new Date(outP.punched_at)));
+        } else {
+          segs.push(fmtTime(new Date(inP.punched_at))+' → <span style="color:var(--red)">missing out</span>');
+        }
       }
+      const incomplete=dayPunches.length%2!==0;
+      const reg=Math.min(hours,8);
+      const ot=Math.max(0,hours-8);
+      weekReg+=reg; weekOT+=ot; weekTotal+=hours;
+
+      entryRows.push(`<tr>
+        <td>${fmtDate(d)}</td>
+        <td>${segs.join('<br>')}</td>
+        <td>${codeText}</td>
+        <td style="text-align:center;font-weight:700;color:#2980b9">${hours>0?reg.toFixed(2):'—'}</td>
+        <td style="text-align:center;font-weight:700;color:var(--gold)">${ot>0?ot.toFixed(2):'—'}</td>
+        <td style="text-align:center;font-weight:700">${hours>0?hours.toFixed(2):'—'}</td>
+        <td style="text-align:center">${incomplete?'<span class="bdg b-warn">missing punch</span>':hours>0?'<span class="bdg b-ok">✓</span>':''}</td>
+      </tr>`);
     }
-    const incomplete = punches.length % 2 !== 0;
-    const reg = Math.min(hours,8);
-    const ot  = Math.max(0,hours-8);
-    weekReg += reg; weekOT += ot; weekTotal += hours;
-    dayRows.push({date:d, segments, hours, reg, ot, incomplete, code:dayCode});
+
+    totalWeekHrs+=weekTotal;
+    if(entryRows.length===0) continue;
+
+    cards.push(`
+      <div class="ts-card">
+        <div class="ts-card-header">
+          <div>
+            <div class="ts-card-name">${name}</div>
+            <div class="ts-card-week">Week of ${fmtDate(tcWeekStart)} — ${fmtDate(weekEndDateOnly)}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <div class="ts-stat-box">
+              <div class="ts-stat-label" style="color:#79B7F1">Reg</div>
+              <div class="ts-stat-val" style="color:#79B7F1">${weekReg.toFixed(2)}</div>
+            </div>
+            <div class="ts-stat-box">
+              <div class="ts-stat-label" style="color:var(--gold)">OT</div>
+              <div class="ts-stat-val" style="color:var(--gold)">${weekOT.toFixed(2)}</div>
+            </div>
+            <div class="ts-stat-box total">
+              <div class="ts-stat-label" style="color:rgba(255,255,255,.7)">Total</div>
+              <div class="ts-stat-val" style="color:#fff">${weekTotal.toFixed(2)}</div>
+            </div>
+            <button class="btn btn-g btn-sm" onclick="printOneTimecard(${empId})" style="background:#1a1a1a;border-color:#444;color:#aaa">🖨 Print</button>
+          </div>
+        </div>
+        <table class="ts-entry-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time In / Out</th>
+              <th>Cost Code</th>
+              <th style="text-align:center;color:#2980b9">Reg Hrs</th>
+              <th style="text-align:center;color:var(--gold)">OT Hrs</th>
+              <th style="text-align:center">Total</th>
+              <th style="text-align:center">Status</th>
+            </tr>
+          </thead>
+          <tbody>${entryRows.join('')}</tbody>
+          <tfoot>
+            <tr class="ts-totals-row">
+              <td colspan="3">WEEK TOTALS</td>
+              <td style="text-align:center;color:#79B7F1">${weekReg.toFixed(2)}</td>
+              <td style="text-align:center;color:var(--gold)">${weekOT>0?weekOT.toFixed(2):'—'}</td>
+              <td style="text-align:center">${weekTotal.toFixed(2)}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>`);
   }
 
-  body.innerHTML = buildTimecardHTML(empId, dayRows, weekReg, weekOT, weekTotal);
-}
-
-function buildTimecardHTML(empId, dayRows, weekReg, weekOT, weekTotal){
-  const emp = staffList.find(e=>e.employee_id===empId);
-  const name = emp ? emp.first_name+' '+emp.last_name : 'Employee '+empId;
-  const weekEnd = new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+6);
-
-  const rows = dayRows.map(r=>{
-    const segText = r.segments.length===0
-      ? '<span class="muted-note">--</span>'
-      : r.segments.map(s=> fmtTime(s.in) + ' &ndash; ' + (s.out?fmtTime(s.out):'<span style="color:var(--red)">missing punch</span>')).join('<br>');
-    const codeInfo = r.code ? codesList.find(c=>c.code===r.code) : null;
-    const codeText = r.code ? '<span class="bdg b-ok">'+r.code+'</span> '+(codeInfo?codeInfo.label:'') : '<span class="muted-note">--</span>';
-    return '<tr>'
-      +'<td>'+fmtDate(r.date)+'</td>'
-      +'<td>'+segText+'</td>'
-      +'<td>'+codeText+'</td>'
-      +'<td>'+(r.hours?r.reg.toFixed(2):'--')+'</td>'
-      +'<td>'+(r.ot>0?r.ot.toFixed(2):'--')+'</td>'
-      +'<td>'+(r.hours?r.hours.toFixed(2):'--')+'</td>'
-      +'<td>'+(r.incomplete?'<span class="bdg b-warn">missing punch</span>':(r.hours?'<span class="bdg b-ok">complete</span>':'<span class="bdg b-off">no entry</span>'))+'</td>'
-    +'</tr>';
-  }).join('');
-
-  return '<div id="tc-printable">'
-    +'<div style="margin-bottom:14px"><strong style="font-size:15px">'+name+'</strong>'
-      +'<div class="muted-note">Week of '+fmtDate(tcWeekStart)+' &ndash; '+fmtDate(weekEnd)+'</div></div>'
-    +'<table><thead><tr><th>Date</th><th>Time In / Out</th><th>Cost Code</th><th>Reg Hrs</th><th>OT Hrs</th><th>Total</th><th>Status</th></tr></thead>'
-    +'<tbody>'+rows+'</tbody>'
-    +'<tfoot><tr><td colspan="3">Weekly Total</td><td>'+weekReg.toFixed(2)+'</td><td>'+weekOT.toFixed(2)+'</td><td>'+weekTotal.toFixed(2)+'</td><td></td></tr></tfoot>'
-    +'</table></div>';
-}
-
-function printTimecard(){
-  const empId = document.getElementById('tcEmployee').value;
-  if(!empId){ toast('Select an employee first'); return; }
-  const content = document.getElementById('timecardBody').innerHTML;
-  const frame = document.getElementById('print-frame');
-  const inner = document.getElementById('print-content');
-  inner.innerHTML = '<style>body{font-family:Arial,sans-serif;color:#111}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:6px 10px;font-size:12px}</style>'
-    + '<h2 style="font-family:Arial;margin-bottom:6px">Rye Electric -- Weekly Timecard</h2>' + content;
-  frame.style.display='block';
-  document.body.style.overflow='hidden';
-  setTimeout(()=>window.print(),300);
-}
-function closePrintFrame(){
-  document.getElementById('print-frame').style.display='none';
-  document.body.style.overflow='';
-}
-
-/* ============================================================
-   STAFF TAB
-============================================================ */
-async function loadStaff(){
-  const { data, error } = await supabaseClient
-    .from('office_portal_employees')
-    .select('*')
-    .order('last_name',{ascending:true});
-
-  if(error){ toast('Could not load staff: '+error.message); return; }
-  staffList = data || [];
-  populateEmployeeDropdown();
-  renderStaffTable();
-}
-
-function renderStaffTable(){
-  const tbody = document.getElementById('staffTbody');
-  if(staffList.length===0){
-    tbody.innerHTML = '<tr><td colspan="4" class="muted-note">No staff added yet.</td></tr>';
-    return;
+  if(cards.length===0){
+    body.innerHTML='<div class="muted-note" style="padding:20px 0">No entries found for the selected filters.</div>';
+  } else {
+    body.innerHTML=cards.join('');
   }
-  tbody.innerHTML = staffList.map(e=>
-    '<tr>'
-    +'<td>'+e.employee_id+'</td>'
-    +'<td>'+e.first_name+' '+e.last_name+'</td>'
-    +'<td>'+(e.active?'<span class="bdg b-ok">active</span>':'<span class="bdg b-off">inactive</span>')+'</td>'
-    +'<td style="display:flex;gap:6px">'
-      +'<button class="btn btn-g btn-sm" onclick="toggleActive('+e.employee_id+','+(!e.active)+')">'+(e.active?'Deactivate':'Activate')+'</button>'
-      +'<button class="btn btn-danger btn-sm" onclick="deleteStaff('+e.employee_id+')">Delete</button>'
-    +'</td>'
-    +'</tr>'
-  ).join('');
+
+  const empWord=filteredEmpIds.length===1?'employee':'employees';
+  summary.textContent=filteredEmpIds.length+' '+empWord+' · '+totalWeekHrs.toFixed(2)+' total hrs this week';
 }
 
-async function addStaff(){
-  const id = parseInt(document.getElementById('newEmpId').value,10);
-  const first = document.getElementById('newFirstName').value.trim();
-  const last = document.getElementById('newLastName').value.trim();
-  if(!id){ toast('Enter the employee ID from their badge'); return; }
-  if(!first || !last){ toast('Enter a first and last name'); return; }
+// ── PRINT ONE TIMECARD ────────────────────────────────────────────────────────
+async function printOneTimecard(empId){
+  const cardEl=document.querySelector('.ts-card');
+  if(!cardEl){toast('No timecard to print');return;}
+  // Find the card for this employee by re-querying
+  const emp=staffList.find(e=>e.employee_id===empId);
+  const name=emp?emp.first_name+' '+emp.last_name:'Employee '+empId;
+  const weekEnd=new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+6);
 
-  const { error } = await supabaseClient.from('office_portal_employees').insert({
-    employee_id:id, first_name:first, last_name:last
+  // Find the card HTML that belongs to this employee
+  const allCards=document.querySelectorAll('.ts-card');
+  let targetCard=null;
+  allCards.forEach(c=>{
+    if(c.querySelector('.ts-card-name')?.textContent===name) targetCard=c;
   });
-  if(error){
-    toast(error.code==='23505' ? 'That employee ID already exists' : 'Error: '+error.message);
-    return;
-  }
-  document.getElementById('newEmpId').value='';
-  document.getElementById('newFirstName').value='';
-  document.getElementById('newLastName').value='';
-  toast('Added '+first+' '+last);
-  loadStaff();
-}
+  if(!targetCard){toast('Card not found');return;}
 
-async function toggleActive(id, newVal){
-  const { error } = await supabaseClient.from('office_portal_employees').update({active:newVal}).eq('employee_id',id);
-  if(error){ toast('Error: '+error.message); return; }
-  loadStaff();
-}
-
-async function deleteStaff(id){
-  if(!confirm('Delete this staff member? This only works if they have no punch history yet.')) return;
-  const { error } = await supabaseClient.from('office_portal_employees').delete().eq('employee_id',id);
-  if(error){
-    toast('Could not delete -- this person has punch history. Use Deactivate instead.');
-    return;
-  }
-  toast('Staff member deleted');
-  loadStaff();
-}
-
-/* ============================================================
-   COST CODES TAB
-============================================================ */
-async function loadCostCodes(){
-  const { data, error } = await supabaseClient
-    .from('office_portal_cost_codes')
-    .select('*')
-    .order('sort_order',{ascending:true});
-
-  if(error){ toast('Could not load cost codes: '+error.message); return; }
-  codesList = data || [];
-  renderCostCodesTable();
-}
-
-function renderCostCodesTable(){
-  const tbody = document.getElementById('codesTbody');
-  if(!tbody) return;
-  if(codesList.length===0){
-    tbody.innerHTML = '<tr><td colspan="4" class="muted-note">No cost codes yet -- add one above.</td></tr>';
-    return;
-  }
-  tbody.innerHTML = codesList.map(c=>
-    '<tr>'
-    +'<td>'+c.code+'</td>'
-    +'<td>'+c.label+'</td>'
-    +'<td>'+(c.active?'<span class="bdg b-ok">active</span>':'<span class="bdg b-off">inactive</span>')+'</td>'
-    +'<td style="display:flex;gap:6px">'
-      +'<button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(\''+c.code+'\','+(!c.active)+')">'+(c.active?'Deactivate':'Activate')+'</button>'
-      +'<button class="btn btn-danger btn-sm" onclick="deleteCostCode(\''+c.code+'\')">Delete</button>'
-    +'</td>'
-    +'</tr>'
-  ).join('');
-}
-
-async function addCostCode(){
-  const code = document.getElementById('newCodeId').value.trim().toUpperCase();
-  const label = document.getElementById('newCodeLabel').value.trim();
-  if(!code){ toast('Enter a short code, like PM or EST'); return; }
-  if(!label){ toast('Enter a label for this code'); return; }
-
-  const { error } = await supabaseClient.from('office_portal_cost_codes').insert({
-    code: code, label: label, sort_order: codesList.length+1
-  });
-  if(error){
-    toast(error.code==='23505' ? 'That code already exists' : 'Error: '+error.message);
-    return;
-  }
-  document.getElementById('newCodeId').value='';
-  document.getElementById('newCodeLabel').value='';
-  toast('Added '+code);
-  loadCostCodes();
-}
-
-async function toggleCostCodeActive(code, newVal){
-  const { error } = await supabaseClient.from('office_portal_cost_codes').update({active:newVal}).eq('code',code);
-  if(error){ toast('Error: '+error.message); return; }
-  loadCostCodes();
-}
-
-async function deleteCostCode(code){
-  if(!confirm('Delete this cost code? This only works if no one has used it yet.')) return;
-  const { error } = await supabaseClient.from('office_portal_cost_codes').delete().eq('code',code);
-  if(error){
-    toast('Could not delete -- this code is already in use on a timecard. Use Deactivate instead.');
-    return;
-  }
-  toast('Cost code deleted');
-  loadCostCodes();
-}
-
-/* ============================================================
-   JOBS TAB -- reads signin_data, written by the field trackers'
-   badge-scan sign-in (one row per job+date, rows = each employee)
-============================================================ */
-async function loadJobsList(){
-  const { data, error } = await supabaseClient
-    .from('signin_data')
-    .select('job');
-  if(error){ toast('Could not load jobs: '+error.message); return; }
-  const jobs = Array.from(new Set((data||[]).map(r=>r.job))).sort();
-  const sel = document.getElementById('jobSelect');
-  const current = sel.value;
-  sel.innerHTML = '<option value="">-- Select job --</option>'
-    + jobs.map(j=>'<option value="'+j.replace(/"/g,'&quot;')+'">'+j+'</option>').join('');
-  if(jobs.includes(current)) sel.value = current;
-}
-
-function jobSignInStatus(r){
-  if(r.finish)   return {label:'Signed out', cls:'b-off'};
-  if(r.lunchOut) return {label:'Working',    cls:'b-ok'};
-  if(r.lunchIn)  return {label:'At lunch',   cls:'b-warn'};
-  if(r.start)    return {label:'Signed in',  cls:'b-ok'};
-  return {label:'--', cls:'b-off'};
-}
-
-async function loadJobSignIns(){
-  const job = document.getElementById('jobSelect').value;
-  const date = document.getElementById('jobDate').value;
-  if(!job || !date){
-    document.getElementById('jobSignInBody').innerHTML = '<div class="muted-note">Select a job and date to see who\'s signed in.</div>';
-    document.getElementById('jobSignInCount').textContent = '0';
-    document.getElementById('jobSupervisor').textContent = '';
-    return;
-  }
-  const { data, error } = await supabaseClient
-    .from('signin_data')
-    .select('*')
-    .eq('job', job)
-    .eq('entry_date', date)
-    .limit(1);
-  if(error){ toast('Could not load sign-in data: '+error.message); return; }
-  renderJobSignInTable((data && data[0]) || null);
-}
-
-function renderJobSignInTable(record){
-  const wrap = document.getElementById('jobSignInBody');
-  const countEl = document.getElementById('jobSignInCount');
-  const supEl = document.getElementById('jobSupervisor');
-
-  if(!record || !record.rows || record.rows.length===0){
-    wrap.innerHTML = '<div class="muted-note">No sign-in data for this job and date yet.</div>';
-    countEl.textContent = '0';
-    supEl.textContent = '';
-    return;
-  }
-
-  const rows = record.rows.filter(r=>r.name);
-  countEl.textContent = String(rows.length);
-  supEl.textContent = record.supervisor ? ('Supervisor: '+record.supervisor) : '';
-
-  if(rows.length===0){
-    wrap.innerHTML = '<div class="muted-note">No employees signed in yet.</div>';
-    return;
-  }
-
-  wrap.innerHTML = '<table><thead><tr>'
-    +'<th>Emp #</th><th>Name</th><th>Status</th><th>Start</th><th>Lunch In</th><th>Lunch Out</th><th>Finish</th><th>Reg</th><th>OT</th><th>Total</th>'
-    +'</tr></thead><tbody>'
-    + rows.map(r=>{
-        const st = jobSignInStatus(r);
-        return '<tr>'
-          +'<td>'+(r.empNum||'')+'</td>'
-          +'<td>'+(r.name||'')+'</td>'
-          +'<td><span class="bdg '+st.cls+'">'+st.label+'</span></td>'
-          +'<td>'+(r.start||'--')+'</td>'
-          +'<td>'+(r.lunchIn||'--')+'</td>'
-          +'<td>'+(r.lunchOut||'--')+'</td>'
-          +'<td>'+(r.finish||'--')+'</td>'
-          +'<td>'+(r.regHrs||'0')+'</td>'
-          +'<td>'+(r.otHrs||'0')+'</td>'
-          +'<td>'+(r.total||'0')+'</td>'
-        +'</tr>';
-      }).join('')
-    +'</tbody></table>';
-}
-
-function printJobSignIn(){
-  const job = document.getElementById('jobSelect').value;
-  const date = document.getElementById('jobDate').value;
-  if(!job || !date){ toast('Select a job and date first'); return; }
-  const tableHtml = document.getElementById('jobSignInBody').innerHTML;
-  if(tableHtml.indexOf('<table')===-1){ toast('No sign-in data to print'); return; }
-
-  const dateFmt = new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const inner = document.getElementById('print-content');
-  inner.innerHTML = '<style>body{font-family:Arial,sans-serif;color:#111}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:6px 10px;font-size:12px}</style>'
-    + '<h2 style="font-family:Arial;margin-bottom:2px">Rye Electric -- Daily Sign In Sheet</h2>'
-    + '<div style="font-size:13px;color:#444;margin-bottom:10px">'+job+' &middot; '+dateFmt+'</div>'
-    + tableHtml;
+  const inner=document.getElementById('print-content');
+  inner.innerHTML=`<style>
+    body{font-family:Arial,sans-serif;color:#111}
+    table{border-collapse:collapse;width:100%}
+    td,th{border:1px solid #ccc;padding:6px 10px;font-size:11px}
+    .ts-card-header{background:#1a1a1a;color:#fff;padding:12px;margin-bottom:0}
+    .ts-totals-row td{background:#1a1a1a;color:#fff;font-weight:700}
+    h2{font-family:Arial;margin-bottom:6px}
+  </style>
+  <h2>Rye Electric — Weekly Timecard</h2>
+  <div style="font-size:13px;color:#444;margin-bottom:14px">${name} &nbsp;·&nbsp; Week of ${fmtDate(tcWeekStart)} — ${fmtDate(weekEnd)}</div>
+  ${targetCard.outerHTML}`;
   document.getElementById('print-frame').style.display='block';
   document.body.style.overflow='hidden';
   setTimeout(()=>window.print(),300);
 }
 
-/* ============================================================
-   INIT
-============================================================ */
-async function initAdmin(){
-  const jobDateEl = document.getElementById('jobDate');
-  if(jobDateEl && !jobDateEl.value) jobDateEl.value = new Date().toISOString().slice(0,10);
-
-  try{ await loadJobsList(); loadJobSignIns(); }
-  catch(e){ console.warn('Jobs tab failed to load:', e); }
-
-  try{ await loadStaff(); }
-  catch(e){ console.warn('Staff failed to load:', e); }
-
-  try{ await loadCostCodes(); }
-  catch(e){ console.warn('Cost codes failed to load:', e); }
-
-  loadRoster();
-  renderWeekLabel();
-  setInterval(loadRoster, 30000);
+function closePrintFrame(){
+  document.getElementById('print-frame').style.display='none';
+  document.body.style.overflow='';
 }
 
-(function initGate(){
-  if(sessionStorage.getItem('office_admin_unlocked')==='true'){
-    unlockAdmin();
-  } else {
-    document.getElementById('pinInput').focus();
+// ── STAFF ─────────────────────────────────────────────────────────────────────
+async function loadStaff(){
+  const {data,error}=await supabaseClient.from('office_portal_employees').select('*').order('last_name',{ascending:true});
+  if(error){toast('Could not load staff: '+error.message);return;}
+  staffList=data||[];
+  renderStaffTable();
+}
+function renderStaffTable(){
+  const tbody=document.getElementById('staffTbody');
+  if(staffList.length===0){tbody.innerHTML='<tr><td colspan="4" class="muted-note">No staff added yet.</td></tr>';return;}
+  tbody.innerHTML=staffList.map(e=>
+    '<tr><td>'+e.employee_id+'</td><td>'+e.first_name+' '+e.last_name+'</td>'
+    +'<td>'+(e.active?'<span class="bdg b-ok">active</span>':'<span class="bdg b-off">inactive</span>')+'</td>'
+    +'<td style="display:flex;gap:6px">'
+    +'<button class="btn btn-g btn-sm" onclick="toggleActive('+e.employee_id+','+(!e.active)+')">'+(e.active?'Deactivate':'Activate')+'</button>'
+    +'<button class="btn btn-danger btn-sm" onclick="deleteStaff('+e.employee_id+')">Delete</button>'
+    +'</td></tr>'
+  ).join('');
+}
+async function addStaff(){
+  const id=parseInt(document.getElementById('newEmpId').value,10);
+  const first=document.getElementById('newFirstName').value.trim();
+  const last=document.getElementById('newLastName').value.trim();
+  if(!id){toast('Enter the employee ID from their badge');return;}
+  if(!first||!last){toast('Enter a first and last name');return;}
+  const {error}=await supabaseClient.from('office_portal_employees').insert({employee_id:id,first_name:first,last_name:last});
+  if(error){toast(error.code==='23505'?'That employee ID already exists':'Error: '+error.message);return;}
+  document.getElementById('newEmpId').value='';document.getElementById('newFirstName').value='';document.getElementById('newLastName').value='';
+  toast('Added '+first+' '+last); loadStaff();
+}
+async function toggleActive(id,newVal){
+  const {error}=await supabaseClient.from('office_portal_employees').update({active:newVal}).eq('employee_id',id);
+  if(error){toast('Error: '+error.message);return;} loadStaff();
+}
+async function deleteStaff(id){
+  if(!confirm('Delete this staff member? This only works if they have no punch history yet.')) return;
+  const {error}=await supabaseClient.from('office_portal_employees').delete().eq('employee_id',id);
+  if(error){toast('Could not delete -- this person has punch history. Use Deactivate instead.');return;}
+  toast('Staff member deleted'); loadStaff();
+}
+
+// ── COST CODES ────────────────────────────────────────────────────────────────
+async function loadCostCodes(){
+  const {data,error}=await supabaseClient.from('office_portal_cost_codes').select('*').order('sort_order',{ascending:true});
+  if(error){toast('Could not load cost codes: '+error.message);return;}
+  codesList=data||[]; renderCostCodesTable();
+}
+function renderCostCodesTable(){
+  const tbody=document.getElementById('codesTbody');
+  if(!tbody) return;
+  if(codesList.length===0){tbody.innerHTML='<tr><td colspan="4" class="muted-note">No cost codes yet -- add one above.</td></tr>';return;}
+  tbody.innerHTML=codesList.map(c=>
+    '<tr><td>'+c.code+'</td><td>'+c.label+'</td>'
+    +'<td>'+(c.active?'<span class="bdg b-ok">active</span>':'<span class="bdg b-off">inactive</span>')+'</td>'
+    +'<td style="display:flex;gap:6px">'
+    +'<button class="btn btn-g btn-sm" onclick="toggleCostCodeActive(\''+c.code+'\','+(!c.active)+')">'+(c.active?'Deactivate':'Activate')+'</button>'
+    +'<button class="btn btn-danger btn-sm" onclick="deleteCostCode(\''+c.code+'\')">Delete</button>'
+    +'</td></tr>'
+  ).join('');
+}
+async function addCostCode(){
+  const code=document.getElementById('newCodeId').value.trim().toUpperCase();
+  const label=document.getElementById('newCodeLabel').value.trim();
+  if(!code){toast('Enter a short code, like PM or EST');return;}
+  if(!label){toast('Enter a label for this code');return;}
+  const {error}=await supabaseClient.from('office_portal_cost_codes').insert({code:code,label:label,sort_order:codesList.length+1});
+  if(error){toast(error.code==='23505'?'That code already exists':'Error: '+error.message);return;}
+  document.getElementById('newCodeId').value='';document.getElementById('newCodeLabel').value='';
+  toast('Added '+code); loadCostCodes();
+}
+async function toggleCostCodeActive(code,newVal){
+  const {error}=await supabaseClient.from('office_portal_cost_codes').update({active:newVal}).eq('code',code);
+  if(error){toast('Error: '+error.message);return;} loadCostCodes();
+}
+async function deleteCostCode(code){
+  if(!confirm('Delete this cost code? This only works if no one has used it yet.')) return;
+  const {error}=await supabaseClient.from('office_portal_cost_codes').delete().eq('code',code);
+  if(error){toast('Could not delete -- this code is already in use on a timecard. Use Deactivate instead.');return;}
+  toast('Cost code deleted'); loadCostCodes();
+}
+
+// ── JOBS TAB ──────────────────────────────────────────────────────────────────
+async function loadJobsList(){
+  const {data,error}=await supabaseClient.from('signin_data').select('job');
+  if(error){toast('Could not load jobs: '+error.message);return;}
+  const jobs=Array.from(new Set((data||[]).map(r=>r.job))).sort();
+  const sel=document.getElementById('jobSelect');
+  const current=sel.value;
+  sel.innerHTML='<option value="">-- Select job --</option>'+jobs.map(j=>'<option value="'+j.replace(/"/g,'&quot;')+'">'+j+'</option>').join('');
+  if(jobs.includes(current)) sel.value=current;
+}
+function jobSignInStatus(r){
+  if(r.finish)   return{label:'Signed out',cls:'b-off'};
+  if(r.lunchOut) return{label:'Working',cls:'b-ok'};
+  if(r.lunchIn)  return{label:'At lunch',cls:'b-warn'};
+  if(r.start)    return{label:'Signed in',cls:'b-ok'};
+  return{label:'--',cls:'b-off'};
+}
+async function loadJobSignIns(){
+  const job=document.getElementById('jobSelect').value;
+  const date=document.getElementById('jobDate').value;
+  if(!job||!date){
+    document.getElementById('jobSignInBody').innerHTML='<div class="muted-note">Select a job and date to see who\'s signed in.</div>';
+    document.getElementById('jobSignInCount').textContent='0';
+    document.getElementById('jobSupervisor').textContent='';
+    return;
   }
+  const {data,error}=await supabaseClient.from('signin_data').select('*').eq('job',job).eq('entry_date',date).limit(1);
+  if(error){toast('Could not load sign-in data: '+error.message);return;}
+  renderJobSignInTable((data&&data[0])||null);
+}
+function renderJobSignInTable(record){
+  const wrap=document.getElementById('jobSignInBody');
+  const countEl=document.getElementById('jobSignInCount');
+  const supEl=document.getElementById('jobSupervisor');
+  if(!record||!record.rows||record.rows.length===0){
+    wrap.innerHTML='<div class="muted-note">No sign-in data for this job and date yet.</div>';
+    countEl.textContent='0'; supEl.textContent=''; return;
+  }
+  const rows=record.rows.filter(r=>r.name);
+  countEl.textContent=String(rows.length);
+  supEl.textContent=record.supervisor?('Supervisor: '+record.supervisor):'';
+  if(rows.length===0){wrap.innerHTML='<div class="muted-note">No employees signed in yet.</div>';return;}
+  wrap.innerHTML='<table><thead><tr><th>Emp #</th><th>Name</th><th>Status</th><th>Start</th><th>Lunch In</th><th>Lunch Out</th><th>Finish</th><th>Reg</th><th>OT</th><th>Total</th></tr></thead><tbody>'
+    +rows.map(r=>{
+      const st=jobSignInStatus(r);
+      return '<tr><td>'+(r.empNum||'')+'</td><td>'+(r.name||'')+'</td>'
+        +'<td><span class="bdg '+st.cls+'">'+st.label+'</span></td>'
+        +'<td>'+(r.start||'--')+'</td><td>'+(r.lunchIn||'--')+'</td>'
+        +'<td>'+(r.lunchOut||'--')+'</td><td>'+(r.finish||'--')+'</td>'
+        +'<td>'+(r.regHrs||'0')+'</td><td>'+(r.otHrs||'0')+'</td><td>'+(r.total||'0')+'</td></tr>';
+    }).join('')+'</tbody></table>';
+}
+function printJobSignIn(){
+  const job=document.getElementById('jobSelect').value;
+  const date=document.getElementById('jobDate').value;
+  if(!job||!date){toast('Select a job and date first');return;}
+  const tableHtml=document.getElementById('jobSignInBody').innerHTML;
+  if(tableHtml.indexOf('<table')===-1){toast('No sign-in data to print');return;}
+  const dateFmt=new Date(date+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const inner=document.getElementById('print-content');
+  inner.innerHTML='<style>body{font-family:Arial,sans-serif;color:#111}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:6px 10px;font-size:12px}</style>'
+    +'<h2 style="font-family:Arial;margin-bottom:2px">Rye Electric -- Daily Sign In Sheet</h2>'
+    +'<div style="font-size:13px;color:#444;margin-bottom:10px">'+job+' &middot; '+dateFmt+'</div>'+tableHtml;
+  document.getElementById('print-frame').style.display='block';
+  document.body.style.overflow='hidden';
+  setTimeout(()=>window.print(),300);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+async function initAdmin(){
+  const jobDateEl=document.getElementById('jobDate');
+  if(jobDateEl&&!jobDateEl.value) jobDateEl.value=new Date().toISOString().slice(0,10);
+  try{await loadJobsList();loadJobSignIns();}catch(e){console.warn('Jobs tab failed:',e);}
+  try{await loadStaff();}catch(e){console.warn('Staff failed:',e);}
+  try{await loadCostCodes();}catch(e){console.warn('Cost codes failed:',e);}
+  loadRoster();renderWeekLabel();
+  setInterval(loadRoster,30000);
+}
+(function initGate(){
+  if(sessionStorage.getItem('office_admin_unlocked')==='true'){unlockAdmin();}
+  else{document.getElementById('pinInput').focus();}
 })();
 </script>
 </body>
