@@ -2946,6 +2946,7 @@ function consolidateTimesheets() {
 
   renderTimesheets();
   const saved = timesheets.length;
+  toast('✓ Consolidated to ' + saved + ' timesheet' + (saved !== 1 ? 's' : ''));
   console.log('Timesheets consolidated:', saved, 'unique employee/week combinations');
 }
 function getWeekEnding(dateStr) {
