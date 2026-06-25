@@ -90,12 +90,19 @@
 <body>
 <div class="container">
   <div class="hdr">
-    <div class="wordmark">
-      <span>⚡</span>
-      <span>rye <span class="electric">electric</span></span>
-      <span class="hdr-title" style="margin-left:12px;">OFFICE CLOCK</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 28px">
+      <div class="wordmark">
+        <span>⚡</span>
+        <span>rye <span class="electric">electric</span></span>
+        <span class="hdr-title" style="margin-left:12px;">OFFICE CLOCK</span>
+      </div>
+      <div class="hdr-clock" id="hdrClock">--:--:--</div>
     </div>
-    <div class="hdr-clock" id="hdrClock">--:--:--</div>
+    <div style="background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.1);padding:0 28px;display:flex;gap:4px">
+      <a href="https://dfurst-ux.github.io/rye-electric/office-badge-admin.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block;border-bottom:2px solid transparent">⚙️ Office Admin</a>
+      <span style="color:#fff;border-bottom:2px solid #79B7F1;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block">⏱ Office Clock</span>
+      <a href="https://dfurst-ux.github.io/rye-electric/field-timesheets.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block;border-bottom:2px solid transparent">📋 Field Timesheets</a>
+    </div>
   </div>
 
   <div class="scan-container">
@@ -312,10 +319,10 @@
     const {empId,emp}=pendingClockOut;
 
     const {error}=await supabaseClient.from('office_portal_punches').insert({
-      employee_id:empId, event_type:'out', source:'break'
+      employee_id:empId, event_type:'out', source:'scanner'
     });
     if(error){
-      showResult('err','Clock error','Failed to record break. Please try again.');
+      showResult('err','Clock error','Failed to record break: '+error.message);
       return;
     }
 
