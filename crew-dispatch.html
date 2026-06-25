@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crew Dispatch — Rye Electric</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F4F8F9;
+    --card: #ffffff;
+    --banner: #1a2a3a;
+    --accent: #2980b9;
+    --accent-dark: #1f6391;
+    --accent-light: #eaf4fb;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --text: #1e2a35;
+    --muted: #6b7a8d;
+    --border: #dce6ed;
+    --shadow: 0 1px 4px rgba(0,0,0,0.08);
+    --radius: 8px;
+  }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--banner);
+    color: #fff;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .header-logo { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #7fb8d8; }
+  .header-title { font-size: 16px; font-weight: 700; color: #fff; }
+  .header-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.2); }
+
+  .mode-badge {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    padding: 5px 12px; border-radius: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s;
+  }
+  .mode-badge.view { background: rgba(255,255,255,0.12); color: #a0b8cc; }
+  .mode-badge.admin { background: #2980b9; color: #fff; }
+  .mode-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+  /* ── Toolbar ── */
+  .toolbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    flex-wrap: wrap;
+  }
+  .toolbar-title { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 6px; border: none;
+    font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: background 0.15s, opacity 0.15s;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger { background: #fef0ef; color: var(--danger); border: 1.5px solid #f5c6c2; }
+  .btn-danger:hover { background: var(--danger); color: #fff; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn svg { width: 14px; height: 14px; }
+
+  /* ── Board ── */
+  .board-wrap { padding: 24px; overflow-x: auto; }
+  .board {
+    display: flex; gap: 18px; align-items: flex-start;
+    min-width: max-content;
+  }
+
+  /* ── Job Column ── */
+  .job-col {
+    width: 230px; flex-shrink: 0;
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .job-col.drag-over { border-color: var(--accent); background: var(--accent-light); }
+
+  .job-header {
+    background: var(--banner);
+    padding: 12px 14px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+  }
+  .job-header-info { flex: 1; min-width: 0; }
+  .job-number { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7fb8d8; margin-bottom: 2px; }
+  .job-name { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; word-break: break-word; }
+  .job-delete-btn {
+    background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.3);
+    padding: 2px; border-radius: 4px; display: flex; align-items: center;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .job-delete-btn:hover { color: #e74c3c; }
+  .job-delete-btn svg { width: 13px; height: 13px; }
+
+  .job-body { padding: 10px; min-height: 60px; }
+  .job-footer {
+    padding: 8px 10px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .crew-count { font-size: 11px; font-weight: 700; color: var(--muted); }
+
+  /* ── Worker Card ── */
+  .worker-card {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 10px; margin-bottom: 6px;
+    background: var(--bg);
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    font-size: 13px; font-weight: 600; color: var(--text);
+    cursor: default;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    user-select: none;
+  }
+  .worker-card.draggable { cursor: grab; }
+  .worker-card.draggable:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(41,128,185,0.15); }
+  .worker-card.dragging { opacity: 0.4; }
+  .worker-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+  }
+  .worker-info { flex: 1; min-width: 0; }
+  .worker-name { font-size: 13px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .worker-role { font-size: 11px; color: var(--muted); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .worker-remove-btn {
+    background: none; border: none; cursor: pointer; color: #c0c8d2;
+    padding: 2px; border-radius: 4px; display: flex; align-items: center;
+    transition: color 0.15s; flex-shrink: 0;
+  }
+  .worker-remove-btn:hover { color: var(--danger); }
+  .worker-remove-btn svg { width: 12px; height: 12px; }
+
+  /* Unassigned pool */
+  .unassigned-col .job-header { background: #3d4f5d; }
+  .unassigned-col .job-number { color: #a0b4c4; }
+
+  /* Add Job column */
+  .add-job-col {
+    width: 200px; flex-shrink: 0;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 120px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 13px; font-weight: 700;
+    gap: 8px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .add-job-col:hover { border-color: var(--accent); color: var(--accent); }
+  .add-job-col svg { width: 18px; height: 18px; }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(10,20,30,0.55);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 500;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 28px;
+    width: 360px;
+    max-width: calc(100vw - 40px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    transform: translateY(8px);
+    transition: transform 0.15s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h2 { font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+  .modal p { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 9px 12px;
+    border: 1.5px solid var(--border); border-radius: 6px;
+    font-family: 'Lato', sans-serif; font-size: 14px; color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+  .form-group input[type="password"] { letter-spacing: 3px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions .btn { flex: 1; justify-content: center; padding: 10px; }
+  .error-msg { font-size: 12px; color: var(--danger); font-weight: 700; margin-top: -8px; margin-bottom: 10px; display: none; }
+  .error-msg.show { display: block; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--banner); color: #fff;
+    padding: 12px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 700;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 999;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Status bar */
+  .status-bar {
+    padding: 8px 24px;
+    background: var(--accent-light);
+    border-bottom: 1px solid #c3dff0;
+    font-size: 12px; color: var(--accent-dark);
+    font-weight: 700;
+    display: none;
+  }
+  .status-bar.show { display: block; }
+
+  /* View mode lock */
+  body.view-mode .job-delete-btn,
+  body.view-mode .worker-remove-btn,
+  body.view-mode .add-job-col,
+  body.view-mode #toolbar-admin { display: none !important; }
+  body.view-mode .worker-card { cursor: default !important; }
+
+  @media (max-width: 600px) {
+    .board-wrap { padding: 14px; }
+    .toolbar { padding: 12px 14px; }
+    .header { padding: 0 14px; }
+  }
+</style>
+</head>
+<body class="view-mode">
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <span class="header-logo">Rye Electric</span>
+    <div class="header-sep"></div>
+    <span class="header-title">Crew Dispatch</span>
+  </div>
+  <button class="mode-badge view" id="modeBtn" onclick="handleModeClick()">
+    <span class="dot"></span>
+    <span id="modeBtnLabel">View Only</span>
+  </button>
+</div>
+
+<!-- Status bar -->
+<div class="status-bar" id="statusBar">🔒 Admin mode active — drag workers between jobs, add/remove crew and jobs.</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <span class="toolbar-title">Actions</span>
+  <div id="toolbar-admin" style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="openAddWorkerModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Add Worker
+    </button>
+    <button class="btn btn-ghost" onclick="openAddJobModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      Add Job
+    </button>
+  </div>
+  <span style="margin-left:auto;font-size:12px;color:var(--muted);" id="lastSaved"></span>
+</div>
+
+<!-- Board -->
+<div class="board-wrap">
+  <div class="board" id="board"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ── Modals ── -->
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <h2>Admin Access</h2>
+    <p>Enter the admin password to enable drag-and-drop crew management.</p>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="authInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()">
+    </div>
+    <div class="error-msg" id="authError">Incorrect password. Try again.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('authModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAuth()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Worker Modal -->
+<div class="modal-overlay" id="addWorkerModal">
+  <div class="modal">
+    <h2>Add Worker</h2>
+    <p>Add a crew member and assign them to a job (or leave unassigned).</p>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="workerName" placeholder="e.g. Mike Torres">
+    </div>
+    <div class="form-group">
+      <label>Role / Trade</label>
+      <input type="text" id="workerRole" placeholder="e.g. Journeyman, Foreman, Apprentice">
+    </div>
+    <div class="form-group">
+      <label>Assign to Job</label>
+      <select id="workerJob"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('addWorkerModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAddWorker()">Add Worker</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Job Modal -->
+<div class="modal-overlay" id="addJobModal">
+  <div class="modal">
+    <h2>Add Job</h2>
+    <p>Create a new job column on the dispatch board.</p>
+    <div class="form-group">
+      <label>Job Number</label>
+      <input type="text" id="jobNumber" placeholder="e.g. 26007">
+    </div>
+    <div class="form-group">
+      <label>Job Name</label>
+      <input type="text" id="jobNameInput" placeholder="e.g. Sunset Commons">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('addJobModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAddJob()">Add Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <h2 id="confirmTitle">Are you sure?</h2>
+    <p id="confirmMsg"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('confirmModal')">Cancel</button>
+      <button class="btn btn-danger" id="confirmOkBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// CONFIG — replace with your Supabase details
+// ─────────────────────────────────────────────
+const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+const ADMIN_PASSWORD = 'Rye2024!'; // change this
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let state = {
+  jobs: [
+    { id: 'unassigned',  number: '',        name: 'Unassigned'          },
+    { id: 'j25002',      number: '25002',   name: 'Bellamy Agoura Hills'},
+    { id: 'j25001',      number: '25001',   name: 'Decena Apt.'         },
+    { id: 'j24010',      number: '24010',   name: 'The Commons'         },
+    { id: 'j24006',      number: '24006',   name: 'Vintage Farms'       },
+    { id: 'j24005',      number: '24005',   name: 'Van Nuys & Vose'     },
+    { id: 'j24002',      number: '24002',   name: 'Sepulveda'           },
+    { id: 'j24001',      number: '24001',   name: 'Biola Cinema'        },
+    { id: 'j26003',      number: '26003',   name: 'Carina'              },
+    { id: 'j26005',      number: '26005',   name: 'Marina Shores'       },
+    { id: 'j26006',      number: 'SP26006', name: 'LA Times'            },
+  ],
+  workers: []
+};
+let isAdmin = false;
+let dragWorker = null;
+let saveTimeout = null;
+
+// ─────────────────────────────────────────────
+// SUPABASE HELPERS
+// ─────────────────────────────────────────────
+async function sbFetch(path, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Prefer': method === 'POST' ? 'return=representation' : ''
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(SUPABASE_URL + path, opts);
+  if (!res.ok) return null;
+  try { return await res.json(); } catch { return null; }
+}
+
+async function loadFromSupabase() {
+  // Try to load saved state from a single row in a key-value table
+  const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.board_state&select=value');
+  if (data && data.length > 0) {
+    try {
+      const saved = JSON.parse(data[0].value);
+      if (saved.jobs && saved.workers) state = saved;
+    } catch {}
+  }
+}
+
+async function publishCrewToSupabase() {
+  // Write per-job crew lists so field trackers can read them
+  const byJob = {};
+  state.jobs.forEach(j => { byJob[j.id] = { number: j.number, name: j.name, crew: [] }; });
+  state.workers.forEach(w => {
+    if (byJob[w.jobId]) byJob[w.jobId].crew.push({ name: w.name, role: w.role || '' });
+  });
+  // One row per job keyed as "crew_<jobNumber>"
+  for (const job of state.jobs) {
+    if (job.id === 'unassigned') continue;
+    const key = 'crew_' + job.number;
+    const value = JSON.stringify(byJob[job.id].crew);
+    await sbFetch('/rest/v1/crew_dispatch', 'POST', { key, value });
+  }
+}
+
+async function saveToSupabase() {
+  const value = JSON.stringify(state);
+  await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'board_state', value });
+  await publishCrewToSupabase();
+  setLastSaved();
+}
+
+// ─────────────────────────────────────────────
+// LOCAL STORAGE FALLBACK
+// ─────────────────────────────────────────────
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem('rye_crew_dispatch');
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (saved.jobs && saved.workers) state = saved;
+    }
+  } catch {}
+}
+
+function saveLocal() {
+  try { localStorage.setItem('rye_crew_dispatch', JSON.stringify(state)); } catch {}
+  setLastSaved();
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+      saveToSupabase().catch(() => saveLocal());
+    } else {
+      saveLocal();
+    }
+  }, 600);
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+async function init() {
+  if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+    await loadFromSupabase().catch(() => loadLocal());
+  } else {
+    loadLocal();
+  }
+  render();
+}
+
+function setLastSaved() {
+  const el = document.getElementById('lastSaved');
+  const now = new Date();
+  el.textContent = `Saved ${now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+}
+
+// ─────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────
+function render() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+
+  state.jobs.forEach(job => {
+    const workers = state.workers.filter(w => w.jobId === job.id);
+    const col = document.createElement('div');
+    col.className = 'job-col' + (job.id === 'unassigned' ? ' unassigned-col' : '');
+    col.dataset.jobId = job.id;
+
+    col.innerHTML = `
+      <div class="job-header">
+        <div class="job-header-info">
+          ${job.number ? `<div class="job-number">Job ${job.number}</div>` : '<div class="job-number">Pool</div>'}
+          <div class="job-name">${esc(job.name)}</div>
+        </div>
+        ${job.id !== 'unassigned' ? `
+        <button class="job-delete-btn" onclick="confirmDeleteJob('${job.id}')" title="Remove job">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>` : ''}
+      </div>
+      <div class="job-body" id="body-${job.id}">
+        ${workers.map(w => workerCardHTML(w)).join('')}
+      </div>
+      <div class="job-footer">
+        <span class="crew-count">${workers.length} crew</span>
+      </div>
+    `;
+
+    // Drop events
+    const body = col.querySelector('.job-body');
+    body.addEventListener('dragover', e => {
+      if (!isAdmin) return;
+      e.preventDefault();
+      col.classList.add('drag-over');
+    });
+    body.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+    body.addEventListener('drop', e => {
+      e.preventDefault();
+      col.classList.remove('drag-over');
+      if (!isAdmin || !dragWorker) return;
+      moveWorker(dragWorker, job.id);
+    });
+
+    board.appendChild(col);
+
+    // Attach drag events to worker cards
+    workers.forEach(w => {
+      const card = document.getElementById('wc-' + w.id);
+      if (!card) return;
+      card.addEventListener('dragstart', () => {
+        dragWorker = w.id;
+        setTimeout(() => card.classList.add('dragging'), 0);
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        dragWorker = null;
+      });
+    });
+  });
+
+  // Add Job button (admin only)
+  if (isAdmin) {
+    const addCol = document.createElement('div');
+    addCol.className = 'add-job-col';
+    addCol.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Add Job`;
+    addCol.onclick = openAddJobModal;
+    board.appendChild(addCol);
+  }
+}
+
+function workerCardHTML(w) {
+  const initials = w.name.split(' ').map(p => p[0]).join('').slice(0,2).toUpperCase();
+  const draggable = isAdmin ? 'draggable="true" class="worker-card draggable"' : 'class="worker-card"';
+  return `
+    <div ${draggable} id="wc-${w.id}">
+      <div class="worker-avatar">${initials}</div>
+      <div class="worker-info">
+        <div class="worker-name">${esc(w.name)}</div>
+        ${w.role ? `<div class="worker-role">${esc(w.role)}</div>` : ''}
+      </div>
+      ${isAdmin ? `
+      <button class="worker-remove-btn" onclick="confirmDeleteWorker('${w.id}')" title="Remove worker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>` : ''}
+    </div>
+  `;
+}
+
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────
+// MOVE WORKER
+// ─────────────────────────────────────────────
+function moveWorker(workerId, targetJobId) {
+  const w = state.workers.find(x => x.id === workerId);
+  if (!w || w.jobId === targetJobId) return;
+  const fromJob = state.jobs.find(j => j.id === w.jobId);
+  const toJob = state.jobs.find(j => j.id === targetJobId);
+  w.jobId = targetJobId;
+  render();
+  scheduleSave();
+  showToast(`${w.name} moved to ${toJob.name}`);
+}
+
+// ─────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────
+function handleModeClick() {
+  if (isAdmin) {
+    isAdmin = false;
+    applyMode();
+    showToast('Switched to view mode');
+  } else {
+    openModal('authModal');
+    setTimeout(() => document.getElementById('authInput').focus(), 100);
+  }
+}
+
+function submitAuth() {
+  const pw = document.getElementById('authInput').value;
+  if (pw === ADMIN_PASSWORD) {
+    isAdmin = true;
+    document.getElementById('authInput').value = '';
+    document.getElementById('authError').classList.remove('show');
+    closeModal('authModal');
+    applyMode();
+    showToast('Admin mode unlocked');
+  } else {
+    document.getElementById('authError').classList.add('show');
+    document.getElementById('authInput').value = '';
+    document.getElementById('authInput').focus();
+  }
+}
+
+function applyMode() {
+  document.body.classList.toggle('view-mode', !isAdmin);
+  const btn = document.getElementById('modeBtn');
+  btn.className = 'mode-badge ' + (isAdmin ? 'admin' : 'view');
+  document.getElementById('modeBtnLabel').textContent = isAdmin ? 'Admin' : 'View Only';
+  document.getElementById('statusBar').classList.toggle('show', isAdmin);
+  render();
+}
+
+// ─────────────────────────────────────────────
+// ADD WORKER
+// ─────────────────────────────────────────────
+function openAddWorkerModal() {
+  // Populate job dropdown
+  const sel = document.getElementById('workerJob');
+  sel.innerHTML = state.jobs.map(j =>
+    `<option value="${j.id}">${j.number ? 'Job ' + j.number + ' — ' : ''}${j.name}</option>`
+  ).join('');
+  openModal('addWorkerModal');
+  setTimeout(() => document.getElementById('workerName').focus(), 100);
+}
+
+function submitAddWorker() {
+  const name = document.getElementById('workerName').value.trim();
+  const role = document.getElementById('workerRole').value.trim();
+  const jobId = document.getElementById('workerJob').value;
+  if (!name) { document.getElementById('workerName').focus(); return; }
+  const worker = { id: uid(), name, role, jobId };
+  state.workers.push(worker);
+  closeModal('addWorkerModal');
+  document.getElementById('workerName').value = '';
+  document.getElementById('workerRole').value = '';
+  render();
+  scheduleSave();
+  showToast(`${name} added`);
+}
+
+// ─────────────────────────────────────────────
+// ADD JOB
+// ─────────────────────────────────────────────
+function openAddJobModal() {
+  openModal('addJobModal');
+  setTimeout(() => document.getElementById('jobNumber').focus(), 100);
+}
+
+function submitAddJob() {
+  const number = document.getElementById('jobNumber').value.trim();
+  const name = document.getElementById('jobNameInput').value.trim();
+  if (!name) { document.getElementById('jobNameInput').focus(); return; }
+  state.jobs.push({ id: uid(), number, name });
+  closeModal('addJobModal');
+  document.getElementById('jobNumber').value = '';
+  document.getElementById('jobNameInput').value = '';
+  render();
+  scheduleSave();
+  showToast(`Job added: ${name}`);
+}
+
+// ─────────────────────────────────────────────
+// DELETE
+// ─────────────────────────────────────────────
+function confirmDeleteWorker(workerId) {
+  const w = state.workers.find(x => x.id === workerId);
+  if (!w) return;
+  document.getElementById('confirmTitle').textContent = 'Remove Worker?';
+  document.getElementById('confirmMsg').textContent = `Remove ${w.name} from the dispatch board?`;
+  document.getElementById('confirmOkBtn').onclick = () => {
+    state.workers = state.workers.filter(x => x.id !== workerId);
+    closeModal('confirmModal');
+    render();
+    scheduleSave();
+    showToast(`${w.name} removed`);
+  };
+  openModal('confirmModal');
+}
+
+function confirmDeleteJob(jobId) {
+  const job = state.jobs.find(j => j.id === jobId);
+  if (!job) return;
+  const count = state.workers.filter(w => w.jobId === jobId).length;
+  document.getElementById('confirmTitle').textContent = 'Remove Job?';
+  document.getElementById('confirmMsg').textContent =
+    `Remove "${job.name}"?${count > 0 ? ` ${count} worker(s) will be moved to Unassigned.` : ''}`;
+  document.getElementById('confirmOkBtn').onclick = () => {
+    // Move workers to unassigned
+    state.workers.forEach(w => { if (w.jobId === jobId) w.jobId = 'unassigned'; });
+    state.jobs = state.jobs.filter(j => j.id !== jobId);
+    closeModal('confirmModal');
+    render();
+    scheduleSave();
+    showToast(`${job.name} removed`);
+  };
+  openModal('confirmModal');
+}
+
+// ─────────────────────────────────────────────
+// MODAL HELPERS
+// ─────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(el => closeModal(el.id));
+});
+
+// ─────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─────────────────────────────────────────────
+// UTIL
+// ─────────────────────────────────────────────
+function uid() { return Math.random().toString(36).slice(2,10); }
+
+// ─────────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
