@@ -2897,35 +2897,37 @@ function pushToTimesheetSilent(t) {
 }
 
 // ── CONSOLIDATE TIMESHEETS ────────────────────────────────────────────────────
-// Merges duplicate timesheets for same employee + week into one
-function consolidateTimesheets() {
+async function consolidateTimesheets() {
+  toast('Consolidating timesheets...');
   const grouped = {};
+  const toDelete = [];
 
+  // Group by employee + weekEnding
   timesheets.forEach(ts => {
     const key = (ts.employee || '') + '|' + (ts.weekEnding || '');
     if (!grouped[key]) {
       grouped[key] = { ...ts, entries: [...(ts.entries || [])] };
     } else {
-      // Merge entries — avoid duplicates by ticketId
+      // Merge entries into the first one — avoid duplicates
       const existing = grouped[key];
       (ts.entries || []).forEach(e => {
         const isDupe = existing.entries.some(ex =>
-          ex.ticketId === e.ticketId && ex.date === e.date && ex.regHours === e.regHours
+          ex.ticketId === e.ticketId && ex.date === e.date
         );
         if (!isDupe) existing.entries.push(e);
       });
-      // Keep the approved one if any
+      // Keep approved status if either is approved
       if (ts.status === 'Approved') {
         grouped[key].status     = 'Approved';
         grouped[key].approvedBy = ts.approvedBy;
         grouped[key].approvedAt = ts.approvedAt;
       }
-      // Mark old duplicate for deletion
-      ts._delete = true;
+      // Mark duplicate for deletion
+      toDelete.push(ts.id);
     }
   });
 
-  // Recalculate totals for merged timesheets
+  // Recalculate totals
   Object.values(grouped).forEach(ts => {
     const totalReg = ts.entries.reduce((s,e) => s + (parseFloat(e.regHours)||0), 0);
     const totalOT  = ts.entries.reduce((s,e) => s + (parseFloat(e.otHours) ||0), 0);
@@ -2935,19 +2937,22 @@ function consolidateTimesheets() {
   });
 
   // Delete duplicates from Supabase
-  timesheets.filter(ts => ts._delete).forEach(ts => sbDeleteTimesheet(ts.id));
+  for (const id of toDelete) {
+    await sbDeleteTimesheet(id);
+  }
 
-  // Replace timesheets with consolidated list
+  // Replace local array with consolidated list
   timesheets = Object.values(grouped);
   save();
 
-  // Push consolidated timesheets to Supabase
-  timesheets.forEach(ts => sbUpsertTimesheet(ts));
+  // Upsert all consolidated timesheets to Supabase
+  for (const ts of timesheets) {
+    await sbUpsertTimesheet(ts);
+  }
 
   renderTimesheets();
-  const saved = timesheets.length;
-  toast('✓ Consolidated to ' + saved + ' timesheet' + (saved !== 1 ? 's' : ''));
-  console.log('Timesheets consolidated:', saved, 'unique employee/week combinations');
+  const merged = toDelete.length;
+  toast('✓ Consolidated — ' + (merged > 0 ? merged + ' duplicate' + (merged !== 1 ? 's' : '') + ' merged' : 'already clean'));
 }
 function getWeekEnding(dateStr) {
   // Week ending = Sunday of that week
