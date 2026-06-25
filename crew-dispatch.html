@@ -250,6 +250,17 @@
   }
   .status-bar.show { display: block; }
 
+  /* Cost display */
+  .job-cost { font-size: 12px; font-weight: 700; color: var(--accent-dark); }
+  .grand-total-badge {
+    font-size: 12px; font-weight: 700;
+    background: rgba(255,255,255,0.12);
+    color: #7fb8d8;
+    padding: 4px 12px; border-radius: 20px;
+    margin-left: 8px;
+    letter-spacing: 0.3px;
+  }
+
   /* Employee search dropdown */
   .emp-dropdown {
     position: absolute; top: 100%; left: 0; right: 0;
@@ -329,6 +340,7 @@
     <span class="header-logo">Rye Electric</span>
     <div class="header-sep"></div>
     <span class="header-title">Crew Dispatch</span>
+    <span class="grand-total-badge" id="grandTotal"></span>
   </div>
   <button class="mode-badge view" id="modeBtn" onclick="handleModeClick()">
     <span class="dot"></span>
@@ -722,11 +734,125 @@ const EMP_NUM_MAP = {
   'ENRIQUE LAGUNA':587,'PEDRO BARRERA':177,'BRENDA QUIJADA':791,
 };
 
+const WAGE_MAP = {
+  '5': 0,
+  '34': 33.0,
+  '63': 72.115,
+  '69': 43.269,
+  '76': 42.0,
+  '77': 50.0,
+  '85': 39.0,
+  '86': 38.0,
+  '92': 52.885,
+  '106': 43.0,
+  '123': 41.0,
+  '138': 40.0,
+  '140': 45.0,
+  '145': 37.0,
+  '152': 34.0,
+  '177': 41.0,
+  '204': 72.115,
+  '222': 41.0,
+  '231': 30.0,
+  '235': 30.0,
+  '261': 45.0,
+  '262': 49.0,
+  '263': 35.0,
+  '269': 38.0,
+  '287': 55.288,
+  '388': 35.0,
+  '393': 38.0,
+  '395': 32.0,
+  '455': 34.0,
+  '531': 38.0,
+  '536': 37.0,
+  '587': 29.0,
+  '613': 41.0,
+  '628': 65.87,
+  '630': 33.0,
+  '640': 33.0,
+  '651': 39.0,
+  '660': 30.0,
+  '666': 50.0,
+  '671': 30.0,
+  '737': 0,
+  '770': 0,
+  '788': 32.0,
+  '791': 22.0,
+  '792': 25.0,
+  '807': 27.0,
+  '816': 39.0,
+  '817': 37.0,
+  '819': 28.0,
+  '820': 26.0,
+  '822': 24.0,
+  '823': 37.0,
+  '825': 28.0,
+  '831': 22.0,
+  '832': 26.0,
+  '834': 28.0,
+  '835': 26.0,
+  '836': 37.0,
+  '844': 27.0,
+  '848': 22.0,
+  '849': 21.0,
+  '850': 28.0,
+  '855': 35.0,
+  '856': 24.0,
+  '858': 24.0,
+  '859': 22.0,
+  '861': 22.0,
+  '862': 24.0,
+  '865': 24.0,
+  '866': 28.0,
+  '868': 23.0,
+  '870': 22.0,
+  '872': 23.0,
+  '873': 23.0,
+  '876': 34.0,
+  '877': 26.0,
+  '878': 34.0,
+  '879': 26.0,
+  '880': 23.0,
+  '882': 21.0,
+  '883': 35.0,
+  '884': 25.0,
+  '886': 32.0,
+  '887': 21.0,
+  '888': 21.0,
+  '889': 35.0,
+  '892': 38.0,
+  '893': 38.0,
+  '894': 26.0,
+  '896': 21.0,
+  '897': 21.0,
+  '898': 52.88,
+  '899': 20.0,
+  '901': 44.0,
+  '902': 43.0,
+  '903': 24.0,
+  '905': 23.0,
+  '906': 25.0,
+  '908': 40.0,
+  '909': 33.0,
+  '910': 33.0,
+  '911': 22.0,
+  '912': 22.0,
+  '914': 22.0,
+  '915': 45.0,
+  '917': 50.0,
+  '918': 22.0
+};
+
 function patchEmpNums() {
   state.workers.forEach(w => {
     if (!w.empNum) {
       const num = EMP_NUM_MAP[w.name.toUpperCase()];
       if (num) w.empNum = String(num);
+    }
+    // Patch wage from wage map if not set
+    if (!w.wage && w.empNum && WAGE_MAP[w.empNum]) {
+      w.wage = WAGE_MAP[w.empNum];
     }
   });
 }
@@ -735,6 +861,27 @@ function setLastSaved() {
   const el = document.getElementById('lastSaved');
   const now = new Date();
   el.textContent = `Saved ${now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+}
+
+// ─────────────────────────────────────────────
+// COST CALCULATIONS
+// ─────────────────────────────────────────────
+function workerWeekCost(w) {
+  const rate = w.wage || (w.empNum ? (WAGE_MAP[w.empNum] || 0) : 0);
+  return rate * 40;
+}
+
+function weeklyJobCost(workers) {
+  const total = workers.reduce((sum, w) => sum + workerWeekCost(w), 0);
+  if (!total) return '';
+  return '$' + total.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0}) + '/wk';
+}
+
+function grandTotalCost() {
+  const total = state.workers
+    .filter(w => w.jobId !== 'unassigned')
+    .reduce((sum, w) => sum + workerWeekCost(w), 0);
+  return '$' + total.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
 }
 
 // ─────────────────────────────────────────────
@@ -766,6 +913,7 @@ function render() {
       </div>
       <div class="job-footer">
         <span class="crew-count">${workers.length} crew</span>
+        <span class="job-cost">${weeklyJobCost(workers)}</span>
       </div>
     `;
 
@@ -800,6 +948,10 @@ function render() {
       });
     });
   });
+
+  // Update grand total in header
+  const gt = document.getElementById('grandTotal');
+  if (gt) gt.textContent = grandTotalCost() + ' / week';
 
   // Add Job button (admin only)
   if (isAdmin) {
