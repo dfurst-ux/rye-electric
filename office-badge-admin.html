@@ -113,6 +113,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:1
 .empty-state{text-align:center;padding:48px 20px;color:var(--muted);font-size:15px}
 .week-nav{display:flex;align-items:center;gap:10px}
 .week-label{font-size:14px;font-weight:700;color:var(--dark);min-width:220px;text-align:center}
+.nav-link{color:#aaa;text-decoration:none;font-size:12px;font-weight:700;padding:10px 14px;display:inline-block;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nav-link:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.nav-link.active{color:var(--teal);border-bottom-color:var(--teal)}
 </style>
 </head>
 <body>
@@ -158,6 +161,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:1
       <div class="wordmark">rye <span>electric</span></div>
       <div class="hdr-badge">Field Timesheets</div>
       <div class="hdr-clock" id="hdrClock">--:--:--</div>
+    </div>
+    <div style="background:#0d0d0d;border-top:1px solid #2a2a2a;padding:0 24px;display:flex;gap:4px;max-width:1100px;margin:0 auto">
+      <a href="https://dfurst-ux.github.io/rye-electric/rye-service-hub.html" class="nav-link">🏠 Home</a>
+      <a href="https://dfurst-ux.github.io/rye-electric/rye-service-tracker.html" class="nav-link">📊 Service Tracker</a>
+      <a href="https://dfurst-ux.github.io/rye-electric/office-badge-admin.html" class="nav-link">🏢 Office Admin</a>
+      <a href="https://dfurst-ux.github.io/rye-electric/office-badge-clock.html" class="nav-link">⏱ Office Clock</a>
+      <span class="nav-link active">📋 Field Timesheets</span>
     </div>
   </header>
 
