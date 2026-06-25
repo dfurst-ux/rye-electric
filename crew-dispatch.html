@@ -155,6 +155,7 @@
   }
   .worker-info { flex: 1; min-width: 0; }
   .worker-name { font-size: 13px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .worker-name.name-urgent { color: #c0392b; }
   .worker-role { font-size: 11px; color: var(--muted); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .worker-remove-btn {
     background: none; border: none; cursor: pointer; color: #c0c8d2;
@@ -249,6 +250,60 @@
   }
   .status-bar.show { display: block; }
 
+  /* Employee search dropdown */
+  .emp-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--card);
+    border: 1.5px solid var(--accent);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    z-index: 200;
+    max-height: 220px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .emp-option {
+    padding: 9px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .emp-option:last-child { border-bottom: none; }
+  .emp-option:hover { background: var(--accent-light); color: var(--accent-dark); }
+  .emp-none { color: var(--muted); cursor: default; font-weight: 400; }
+  .emp-none:hover { background: none; }
+
+  /* Availability badges */
+  .avail-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 6px;
+    border-radius: 10px; letter-spacing: 0.3px; white-space: nowrap;
+  }
+  .avail-now  { background: #e8f8f0; color: #1e8449; border: 1px solid #a9dfbf; }
+  .avail-soon { background: #fef9e7; color: #b7770d; border: 1px solid #f9e79f; }
+  .avail-later{ background: #eaf4fb; color: #1a6fa0; border: 1px solid #aed6f1; }
+
+  .worker-action-btn {
+    background: none; border: none; cursor: pointer; color: #c0c8d2;
+    padding: 2px; border-radius: 4px; display: flex; align-items: center;
+    transition: color 0.15s; flex-shrink: 0;
+  }
+  .worker-action-btn:hover { color: var(--accent); }
+  .worker-action-btn svg { width: 12px; height: 12px; }
+
+  .selected-worker-tag {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--accent-light);
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-dark);
+  }
+
   /* View mode lock */
   body.view-mode .job-delete-btn,
   body.view-mode .worker-remove-btn,
@@ -328,22 +383,37 @@
 <div class="modal-overlay" id="addWorkerModal">
   <div class="modal">
     <h2>Add Worker</h2>
-    <p>Add a crew member and assign them to a job (or leave unassigned).</p>
-    <div class="form-group">
-      <label>Full Name</label>
-      <input type="text" id="workerName" placeholder="e.g. Mike Torres">
+    <p>Search for a crew member and assign them to a job.</p>
+    <div class="form-group" id="searchGroup">
+      <label>Search Employee</label>
+      <div style="position:relative;">
+        <input type="text" id="workerSearch" placeholder="Type a name…" autocomplete="off" oninput="filterEmployees()" onfocus="showEmpDropdown()">
+        <div id="employeeDropdown" class="emp-dropdown" style="display:none;"></div>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Role / Trade</label>
-      <input type="text" id="workerRole" placeholder="e.g. Journeyman, Foreman, Apprentice">
+    <div class="form-group" id="selectedWorkerDisplay" style="display:none;">
+      <label>Selected</label>
+      <div class="selected-worker-tag">
+        <span id="selectedWorkerName"></span>
+        <button onclick="clearWorkerSelection()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:0 4px;">×</button>
+      </div>
     </div>
+    <input type="hidden" id="workerName">
+    <input type="hidden" id="workerRole">
     <div class="form-group">
       <label>Assign to Job</label>
       <select id="workerJob"></select>
     </div>
+    <div class="form-group">
+      <label>Duration on this Job</label>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <input type="number" id="workerWeeks" min="0" max="52" value="0" style="width:80px;">
+        <span style="font-size:13px;color:var(--muted);font-weight:600;">weeks &nbsp;(0 = no end date)</span>
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('addWorkerModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitAddWorker()">Add Worker</button>
+      <button class="btn btn-primary" onclick="submitAddWorker()">Add to Job</button>
     </div>
   </div>
 </div>
@@ -364,6 +434,27 @@
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('addJobModal')">Cancel</button>
       <button class="btn btn-primary" onclick="submitAddJob()">Add Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- Set Duration Modal -->
+<div class="modal-overlay" id="setWeeksModal">
+  <div class="modal">
+    <h2>Set Duration</h2>
+    <p id="setWeeksWorkerName" style="font-weight:700;color:var(--text);margin-bottom:4px;font-size:15px;"></p>
+    <p>How many weeks is this worker assigned to this job?</p>
+    <div class="form-group">
+      <label>Number of Weeks</label>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <input type="number" id="setWeeksInput" min="0" max="52" value="0" style="width:80px;">
+        <span style="font-size:13px;color:var(--muted);font-weight:600;">weeks &nbsp;(0 = no end date)</span>
+      </div>
+    </div>
+    <input type="hidden" id="setWeeksWorkerId">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('setWeeksModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitSetWeeks()">Save</button>
     </div>
   </div>
 </div>
@@ -393,19 +484,111 @@ const ADMIN_PASSWORD = '1234';
 // ─────────────────────────────────────────────
 let state = {
   jobs: [
-    { id: 'unassigned',  number: '',        name: 'Unassigned'          },
-    { id: 'j25002',      number: '25002',   name: 'Bellamy Agoura Hills'},
-    { id: 'j25001',      number: '25001',   name: 'Decena Apt.'         },
-    { id: 'j24010',      number: '24010',   name: 'The Commons'         },
-    { id: 'j24006',      number: '24006',   name: 'Vintage Farms'       },
-    { id: 'j24005',      number: '24005',   name: 'Van Nuys & Vose'     },
-    { id: 'j24002',      number: '24002',   name: 'Sepulveda'           },
-    { id: 'j24001',      number: '24001',   name: 'Biola Cinema'        },
-    { id: 'j26003',      number: '26003',   name: 'Carina'              },
-    { id: 'j26005',      number: '26005',   name: 'Marina Shores'       },
-    { id: 'j26006',      number: 'SP26006', name: 'LA Times'            },
+    { id: 'unassigned',  number: '',         name: 'Unassigned'          },
+    { id: 'j25002',      number: '25002',    name: 'Bellamy Agoura Hills'},
+    { id: 'j25001',      number: '25001',    name: 'Decena Apt.'         },
+    { id: 'j24010',      number: '24010',    name: 'The Commons'         },
+    { id: 'j24006',      number: '24006',    name: 'Vintage Farms'       },
+    { id: 'j24005',      number: '24005',    name: 'Van Nuys & Vose'     },
+    { id: 'j24002',      number: '24002',    name: 'Sepulveda'           },
+    { id: 'j24001',      number: '24001',    name: 'Biola Cinema'        },
+    { id: 'j26003',      number: '26003',    name: 'Carina'              },
+    { id: 'j26005',      number: '26005',    name: 'Marina Shores'       },
+    { id: 'j26006',      number: 'SP26006',  name: 'LA Times'            },
+    { id: 'j26002',      number: '26002',    name: '600 Wilshire'        },
+    { id: 'jSP25010',    number: 'SP25010',  name: '530 Mapleton'        },
+    { id: 'jSP25018',    number: 'SP25018',  name: 'CDC Plaza'           },
   ],
-  workers: []
+  workers: [
+    // 24005 Van Nuys & Vose
+    {id:'w001', name:'Leo Mazariegos',      role:'Foreman',        jobId:'j24005', weeks:0, startDate:''},
+    {id:'w002', name:'Enrique Laguna',      role:'Apprentice',     jobId:'j24005', weeks:0, startDate:''},
+    {id:'w003', name:'Miguel Dominguez',    role:'Roper/Garage',   jobId:'j24005', weeks:0, startDate:''},
+    {id:'w004', name:'Sergio Sandoval',     role:'JW',             jobId:'j24005', weeks:0, startDate:''},
+    {id:'w005', name:'Manuel Martinez',     role:'JW',             jobId:'j24005', weeks:0, startDate:''},
+    {id:'w006', name:'Lizeth Marcos',       role:'Apprentice',     jobId:'j24005', weeks:0, startDate:''},
+    {id:'w007', name:'Jerlin Mendoza',      role:'JW',             jobId:'j24005', weeks:0, startDate:''},
+    {id:'w008', name:'Oscar Aguirre',       role:'Apprentice',     jobId:'j24005', weeks:0, startDate:''},
+    // 24001 Biola
+    {id:'w009', name:'Filiberto Ramos',     role:'Foreman',        jobId:'j24001', weeks:0, startDate:''},
+    {id:'w010', name:'Brian Campos',        role:'JW Lead',        jobId:'j24001', weeks:0, startDate:''},
+    {id:'w011', name:'Jaime Moya',          role:'JW',             jobId:'j24001', weeks:0, startDate:''},
+    {id:'w012', name:'Rusel Santiago',      role:'Apprentice',     jobId:'j24001', weeks:0, startDate:''},
+    {id:'w013', name:'Randdy De Paz',       role:'Apprentice',     jobId:'j24001', weeks:0, startDate:''},
+    {id:'w014', name:'Edwin Martinez',      role:'JW',             jobId:'j24001', weeks:0, startDate:''},
+    // 24010 The Commons
+    {id:'w015', name:'Adrian Flores',       role:'Foreman',        jobId:'j24010', weeks:0, startDate:''},
+    {id:'w016', name:'Jose Ramirez',        role:'Lead',           jobId:'j24010', weeks:0, startDate:''},
+    {id:'w017', name:'Louis Aceves',        role:'JW',             jobId:'j24010', weeks:0, startDate:''},
+    {id:'w018', name:'Angel Hernandez',     role:'Apprentice',     jobId:'j24010', weeks:0, startDate:''},
+    {id:'w019', name:'Lorenzo Tanguma',     role:'Apprentice',     jobId:'j24010', weeks:0, startDate:''},
+    {id:'w020', name:'Cristian Collin',     role:'Apprentice',     jobId:'j24010', weeks:0, startDate:''},
+    {id:'w021', name:'Jerry Munoz',         role:'',               jobId:'j24010', weeks:0, startDate:''},
+    // 25001 Decena
+    {id:'w022', name:'Jose Preciado',       role:'Foreman',        jobId:'j25001', weeks:0, startDate:''},
+    {id:'w023', name:'Isidro Enciso',       role:'JW',             jobId:'j25001', weeks:0, startDate:''},
+    {id:'w024', name:'Steven Sulewski',     role:'ET',             jobId:'j25001', weeks:0, startDate:''},
+    {id:'w025', name:'Jesus Heredia',       role:'ET',             jobId:'j25001', weeks:0, startDate:''},
+    {id:'w026', name:'Jayson Ortega',       role:'Apprentice',     jobId:'j25001', weeks:0, startDate:''},
+    {id:'w027', name:'Alex Osorio',         role:'ET',             jobId:'j25001', weeks:0, startDate:''},
+    {id:'w028', name:'Isaiah Ortiz Alvarado', role:'Apprentice',   jobId:'j25001', weeks:0, startDate:''},
+    {id:'w029', name:'Robert Stark',        role:'JW',             jobId:'j25001', weeks:0, startDate:''},
+    {id:'w030', name:'Victor Carrillo',     role:'L4 Apprentice',  jobId:'j25001', weeks:0, startDate:''},
+    {id:'w031', name:'Miguel Corral',       role:'L5 Apprentice',  jobId:'j25001', weeks:0, startDate:''},
+    {id:'w032', name:'Brandon Salazar',     role:'ET',             jobId:'j25001', weeks:0, startDate:''},
+    {id:'w033', name:'Daniel Lopez',        role:'',               jobId:'j25001', weeks:0, startDate:''},
+    // 25002 Bellamy Agoura Hills
+    {id:'w034', name:'Dillan Smith',        role:'Foreman',        jobId:'j25002', weeks:0, startDate:''},
+    {id:'w035', name:'Juan Mazariegos',     role:'Lead',           jobId:'j25002', weeks:0, startDate:''},
+    {id:'w036', name:'Anthony Macias',      role:'Lead',           jobId:'j25002', weeks:0, startDate:''},
+    {id:'w037', name:'Kevin Bautista',      role:'Apprentice',     jobId:'j25002', weeks:0, startDate:''},
+    {id:'w038', name:'Carlos Agapito',      role:'JW',             jobId:'j25002', weeks:0, startDate:''},
+    {id:'w039', name:'David Casarez',       role:'Apprentice',     jobId:'j25002', weeks:0, startDate:''},
+    {id:'w040', name:'Tony Broadnax',       role:'Roper',          jobId:'j25002', weeks:0, startDate:''},
+    {id:'w041', name:'Adrian Hernandez',    role:'Roper',          jobId:'j25002', weeks:0, startDate:''},
+    {id:'w042', name:'Henri Sibrian',       role:'Roper',          jobId:'j25002', weeks:0, startDate:''},
+    {id:'w043', name:'Julio Munoz',         role:'Apprentice',     jobId:'j25002', weeks:0, startDate:''},
+    {id:'w044', name:'Mario Lopez',         role:'Apprentice',     jobId:'j25002', weeks:0, startDate:''},
+    {id:'w045', name:'Edgar Solis',         role:'Roper',          jobId:'j25002', weeks:0, startDate:''},
+    // 24006 Vintage Farms
+    {id:'w046', name:'Filiberto Ramos',     role:'Foreman',        jobId:'j24006', weeks:0, startDate:''},
+    {id:'w047', name:'Alberto Lopez Ruiz',  role:'Roper',          jobId:'j24006', weeks:0, startDate:''},
+    {id:'w048', name:'Efren Hilario',       role:'Roper',          jobId:'j24006', weeks:0, startDate:''},
+    {id:'w049', name:'Jeffrey Rivera',      role:'Lead',           jobId:'j24006', weeks:0, startDate:''},
+    {id:'w050', name:'Irvin Rivera',        role:'Apprentice',     jobId:'j24006', weeks:0, startDate:''},
+    {id:'w051', name:'Edith Del Carmen',    role:'',               jobId:'j24006', weeks:0, startDate:''},
+    {id:'w052', name:'Daniel Villegas',     role:'',               jobId:'j24006', weeks:0, startDate:''},
+    {id:'w053', name:'Brian Flores',        role:'',               jobId:'j24006', weeks:0, startDate:''},
+    {id:'w054', name:'Dyana Quijada',       role:'Roper',          jobId:'j24006', weeks:0, startDate:''},
+    {id:'w055', name:'Angel Ibanez',        role:'',               jobId:'j24006', weeks:0, startDate:''},
+    {id:'w056', name:'Abiud Lopez',         role:'',               jobId:'j24006', weeks:0, startDate:''},
+    {id:'w057', name:'Antonio Castillo',    role:'Apprentice',     jobId:'j24006', weeks:0, startDate:''},
+    {id:'w058', name:'Noah Villareal',      role:'',               jobId:'j24006', weeks:0, startDate:''},
+    {id:'w059', name:'Samuel Munoz',        role:'Apprentice',     jobId:'j24006', weeks:0, startDate:''},
+    // 26003 Carina
+    {id:'w060', name:'Jorge Contreras',     role:'Foreman',        jobId:'j26003', weeks:0, startDate:''},
+    {id:'w061', name:'Mathew Gonzalez',     role:'ET',             jobId:'j26003', weeks:0, startDate:''},
+    {id:'w062', name:'Adrian Marquez',      role:'ET',             jobId:'j26003', weeks:0, startDate:''},
+    {id:'w063', name:'Rusel Santiago',      role:'Apprentice',     jobId:'j26003', weeks:0, startDate:''},
+    // SP25010 530 Mapleton
+    {id:'w064', name:'Francisco Flores',    role:'Lead',           jobId:'jSP25010', weeks:0, startDate:''},
+    {id:'w065', name:'Duvaldi Mazariegos',  role:'Roper',          jobId:'jSP25010', weeks:0, startDate:''},
+    {id:'w066', name:'Anthony Ibanez',      role:'Apprentice',     jobId:'jSP25010', weeks:0, startDate:''},
+    {id:'w067', name:'Oliver Galicia',      role:'Apprentice',     jobId:'jSP25010', weeks:0, startDate:''},
+    {id:'w068', name:'Luis Ramirez',        role:'Roper/JW',       jobId:'jSP25010', weeks:0, startDate:''},
+    // 26002 600 Wilshire
+    {id:'w069', name:'Vincent Sopha',       role:'JW',             jobId:'j26002', weeks:0, startDate:''},
+    {id:'w070', name:'Victor Armiento',     role:'Apprentice',     jobId:'j26002', weeks:0, startDate:''},
+    {id:'w071', name:'Armando Lopez',       role:'JW',             jobId:'j26002', weeks:0, startDate:''},
+    {id:'w072', name:'Anthony Zetina',      role:'JW',             jobId:'j26002', weeks:0, startDate:''},
+    {id:'w073', name:'Johnny Perez',        role:'Foreman',        jobId:'j26002', weeks:0, startDate:''},
+    // 26006 LA Times
+    {id:'w074', name:'Gabriel Flores',      role:'',               jobId:'j26006', weeks:0, startDate:''},
+    // SP25018 CDC Plaza
+    {id:'w075', name:'Brian Campos',        role:'JW Lead',        jobId:'jSP25018', weeks:0, startDate:''},
+    {id:'w076', name:'Anthony Lyons',       role:'Lead',           jobId:'jSP25018', weeks:0, startDate:''},
+    {id:'w077', name:'Sotero Dominguez',    role:'',               jobId:'jSP25018', weeks:0, startDate:''},
+  ]
 };
 let isAdmin = false;
 let dragWorker = null;
@@ -588,17 +771,26 @@ function render() {
 function workerCardHTML(w) {
   const initials = w.name.split(' ').map(p => p[0]).join('').slice(0,2).toUpperCase();
   const draggable = isAdmin ? 'draggable="true" class="worker-card draggable"' : 'class="worker-card"';
+  const avail = availableDateLabel(w);
   return `
     <div ${draggable} id="wc-${w.id}">
       <div class="worker-avatar">${initials}</div>
       <div class="worker-info">
-        <div class="worker-name">${esc(w.name)}</div>
-        ${w.role ? `<div class="worker-role">${esc(w.role)}</div>` : ''}
+        <div class="worker-name${avail && (avail.cls === 'avail-soon' || avail.cls === 'avail-now') ? ' name-urgent' : ''}">${esc(w.name)}</div>
+        <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
+          ${w.role ? `<span class="worker-role">${esc(w.role)}</span>` : ''}
+          ${avail ? `<span class="avail-badge ${avail.cls}">${avail.label}</span>` : ''}
+        </div>
       </div>
-      ${isAdmin ? `
-      <button class="worker-remove-btn" onclick="confirmDeleteWorker('${w.id}')" title="Remove worker">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>` : ''}
+      <div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">
+        ${isAdmin ? `
+        <button class="worker-action-btn" onclick="openSetWeeksModal('${w.id}')" title="Set duration">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </button>
+        <button class="worker-remove-btn" onclick="confirmDeleteWorker('${w.id}')" title="Remove worker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>` : ''}
+      </div>
     </div>
   `;
 }
@@ -661,31 +853,133 @@ function applyMode() {
 }
 
 // ─────────────────────────────────────────────
+// EMPLOYEE MASTER LIST
+// ─────────────────────────────────────────────
+const EMPLOYEE_LIST = [
+  'ABIUD LOPEZ','ADRIAN FLORES','ADRIAN HERNANDEZ','ADRIAN MARQUEZ',
+  'ALBERTO LOPEZ RUIZ','ALEJANDRO LOPEZ','ALEX OSORIO','ANGEL HERNANDEZ',
+  'ANGEL IBANEZ','ANTHONY IBANEZ','ANTHONY LYONS','ANTHONY MACIAS',
+  'ANTHONY ZETINA','ANTONIO CASTILLO','ARMANDO LOPEZ','AXEL SALAS',
+  'BRANDON SALAZAR','BRIAN CAMPOS','BRIAN FLORES','BRIAN KITAJIMA',
+  'BRIAN RAMIREZ','CARLOS AGAPITO','CARLOS LANDAVERDE','CARLA QUIJADA',
+  'CHRISTIAN MORAN','CRISTIAN COLLIN','DANIEL BURLESON','DANIEL LOPEZ',
+  'DANIEL VILLEGAS','DAVID CASAREZ','DAVID SMITH','DILLAN SMITH',
+  'DUVALDI MAZARIEGOS','DYANA QUIJADA','EDITH DEL CARMEN','EDGAR SOLIS',
+  'EDUARDO ECHEVERRIA','EDWIN MARTINEZ','EFRAIN CORNEJO','EFREN HILARIO',
+  'ENRIQUE LAGUNA','ERIK LOPEZ','ESTEVAN SANDOVAL','FILIBERTO RAMOS',
+  'FRANCISCO FLORES','GABRIEL FLORES','GUILLERMO SILVA','HENRI SIBRIAN',
+  'HUMBERTO FLORES','ISAIAH ORTIZ ALVARADO','ISIDRO ENCISO','JAIME MOYA',
+  'JAIME QUINTERO','JAMES MARQUEZ','JAYSON ORTEGA','JERLIN MENDOZA',
+  'JERRY MUNOZ','JESUS HEREDIA','JIMMY CASCIO','JOAQUIN GARCIA',
+  'JONATHAN JACOBO','JORGE CONTRERAS','JOSE LUNA','JOSE PRECIADO',
+  'JOSE RAMIREZ','JOSUE VILLEGAS','JEFFREY RIVERA','IRVIN RIVERA',
+  'JUAN MAZARIEGOS','JULIO MUNOZ','JUSTIN BURLESON','KENNETH WILLIAM',
+  'KEVIN BAUTISTA','LEONARDO MAZARIEGOS','LIZETH MARCOS','LORENZO TANGUMA',
+  'LOUIS ACEVES','LUIS RAMIREZ','MANUEL MARTINEZ','MANUEL PALACIOS',
+  'MARIO ARIAS','MARIO LOPEZ','MATHEW GONZALEZ','MATTHEW BACIU',
+  'MIGUEL CORRAL','MIGUEL DOMINGUEZ','NOAH VILLAREAL','OLIVER GALICIA',
+  'OSCAR AGUIRRE','PEDRO BARRERA','RANDDY DE PAZ','ROBERT STARK',
+  'RUSEL SANTIAGO','SALVADOR PEREZ','SAMUEL MUNOZ','SERGIO DIAZ',
+  'SERGIO SANDOVAL','SOTERO DOMINGUEZ','STEVEN SULEWSKI','TONY BROADNAX',
+  'URIEL CHAVEZ','VICTOR ARMIENTO','VICTOR CARRILLO','VINCENT SOPHA',
+  'VINCENT STANCATI','XAVIER CONTRERAS','XAVIER CONTRERAS',
+  'BRENDA QUIJADA','EDGAR SOLIS','EFRAIN CORNEJO','JAYSON ORTEGA',
+  'JOHNNY PEREZ','JOSE LUNA','SAMUEL MUNOZ',
+].filter((v,i,a) => a.indexOf(v) === i).sort();
+
+function toTitleCase(str) {
+  return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// ─────────────────────────────────────────────
 // ADD WORKER
 // ─────────────────────────────────────────────
 function openAddWorkerModal() {
-  // Populate job dropdown
   const sel = document.getElementById('workerJob');
   sel.innerHTML = state.jobs.map(j =>
     `<option value="${j.id}">${j.number ? 'Job ' + j.number + ' — ' : ''}${j.name}</option>`
   ).join('');
+  clearWorkerSelection();
   openModal('addWorkerModal');
-  setTimeout(() => document.getElementById('workerName').focus(), 100);
+  setTimeout(() => document.getElementById('workerSearch').focus(), 100);
+}
+
+function filterEmployees() {
+  const q = document.getElementById('workerSearch').value.trim().toLowerCase();
+  const dd = document.getElementById('employeeDropdown');
+  if (!q) { dd.style.display = 'none'; return; }
+  const already = state.workers.map(w => w.name.toUpperCase());
+  const matches = EMPLOYEE_LIST.filter(n =>
+    n.toLowerCase().includes(q) && !already.includes(n)
+  ).slice(0, 8);
+  if (!matches.length) {
+    dd.innerHTML = '<div class="emp-option emp-none">No results</div>';
+  } else {
+    dd.innerHTML = matches.map(n =>
+      `<div class="emp-option" onclick="selectEmployee('${n.replace(/'/g,"\\'")}')">` + toTitleCase(n) + '</div>'
+    ).join('');
+  }
+  dd.style.display = 'block';
+}
+
+function showEmpDropdown() {
+  if (document.getElementById('workerSearch').value.trim()) filterEmployees();
+}
+
+function selectEmployee(name) {
+  document.getElementById('workerName').value = name;
+  document.getElementById('workerSearch').value = '';
+  document.getElementById('employeeDropdown').style.display = 'none';
+  document.getElementById('searchGroup').style.display = 'none';
+  document.getElementById('selectedWorkerDisplay').style.display = 'block';
+  document.getElementById('selectedWorkerName').textContent = toTitleCase(name);
+}
+
+function clearWorkerSelection() {
+  document.getElementById('workerName').value = '';
+  document.getElementById('workerSearch').value = '';
+  const dd = document.getElementById('employeeDropdown');
+  if (dd) { dd.innerHTML = ''; dd.style.display = 'none'; }
+  document.getElementById('searchGroup').style.display = 'block';
+  document.getElementById('selectedWorkerDisplay').style.display = 'none';
 }
 
 function submitAddWorker() {
   const name = document.getElementById('workerName').value.trim();
-  const role = document.getElementById('workerRole').value.trim();
   const jobId = document.getElementById('workerJob').value;
-  if (!name) { document.getElementById('workerName').focus(); return; }
-  const worker = { id: uid(), name, role, jobId };
+  if (!name) { showToast('Please select a worker first'); return; }
+  const displayName = toTitleCase(name);
+  const weeks = parseInt(document.getElementById('workerWeeks').value) || 0;
+  const startDate = weeks > 0 ? todayStr() : '';
+  const worker = { id: uid(), name: displayName, role: '', jobId, weeks, startDate };
   state.workers.push(worker);
   closeModal('addWorkerModal');
-  document.getElementById('workerName').value = '';
-  document.getElementById('workerRole').value = '';
   render();
   scheduleSave();
-  showToast(`${name} added`);
+  showToast(displayName + ' added');
+}
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function availableDate(w) {
+  if (!w.weeks || !w.startDate) return null;
+  const d = new Date(w.startDate + 'T12:00:00');
+  d.setDate(d.getDate() + w.weeks * 7);
+  return d;
+}
+
+function availableDateLabel(w) {
+  const d = availableDate(w);
+  if (!d) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.ceil((d - today) / 86400000);
+  const dateStr = d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  if (diff < 0) return { label: 'Avail. now', cls: 'avail-now' };
+  if (diff === 0) return { label: 'Avail. today', cls: 'avail-soon' };
+  if (diff <= 7) return { label: `Avail. ${dateStr}`, cls: 'avail-soon' };
+  return { label: `Avail. ${dateStr}`, cls: 'avail-later' };
 }
 
 // ─────────────────────────────────────────────
@@ -744,6 +1038,32 @@ function confirmDeleteJob(jobId) {
     showToast(`${job.name} removed`);
   };
   openModal('confirmModal');
+}
+
+// ─────────────────────────────────────────────
+// SET WEEKS / DURATION
+// ─────────────────────────────────────────────
+function openSetWeeksModal(workerId) {
+  const w = state.workers.find(x => x.id === workerId);
+  if (!w) return;
+  document.getElementById('setWeeksWorkerId').value = workerId;
+  document.getElementById('setWeeksWorkerName').textContent = w.name;
+  document.getElementById('setWeeksInput').value = w.weeks || 0;
+  openModal('setWeeksModal');
+  setTimeout(() => document.getElementById('setWeeksInput').focus(), 100);
+}
+
+function submitSetWeeks() {
+  const workerId = document.getElementById('setWeeksWorkerId').value;
+  const weeks = parseInt(document.getElementById('setWeeksInput').value) || 0;
+  const w = state.workers.find(x => x.id === workerId);
+  if (!w) return;
+  w.weeks = weeks;
+  w.startDate = weeks > 0 ? todayStr() : '';
+  closeModal('setWeeksModal');
+  render();
+  scheduleSave();
+  showToast(weeks > 0 ? `${w.name} — ${weeks} week${weeks !== 1 ? 's' : ''} set` : `Duration cleared`);
 }
 
 // ─────────────────────────────────────────────
