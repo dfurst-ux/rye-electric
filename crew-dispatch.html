@@ -868,7 +868,7 @@ function setLastSaved() {
 // ─────────────────────────────────────────────
 function workerWeekCost(w) {
   const rate = w.wage || (w.empNum ? (WAGE_MAP[w.empNum] || 0) : 0);
-  return rate * 40;
+  return rate * 40 * 1.32;
 }
 
 function weeklyJobCost(workers) {
@@ -973,6 +973,8 @@ function workerCardHTML(w) {
     ? '<span class="split-badge">+' + otherJobs.map(x => { const j = state.jobs.find(jj => jj.id === x.jobId); return j ? (j.number || j.name) : ''; }).join(', ') + '</span>'
     : '';
   const empTag = w.empNum ? '<span class="emp-num-tag">#' + w.empNum + '</span>' : '';
+  const rate = w.wage || (w.empNum ? (WAGE_MAP[w.empNum] || 0) : 0);
+  const rateTag = rate ? '<span class="emp-num-tag" style="color:var(--accent-dark);">$' + rate.toFixed(2) + '/hr</span>' : '';
   const roleTag = w.role ? '<span class="worker-role">' + esc(w.role) + '</span>' : '';
   const availTag = avail ? '<span class="avail-badge ' + avail.cls + '">' + avail.label + '</span>' : '';
   const adminBtns = isAdmin
@@ -984,7 +986,7 @@ function workerCardHTML(w) {
     + '<div class="worker-info">'
       + '<div class="worker-name' + nameUrgent + '">' + esc(w.name) + '</div>'
       + '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-top:2px;">'
-        + empTag + roleTag + availTag + splitBadge
+        + empTag + rateTag + roleTag + availTag + splitBadge
       + '</div>'
     + '</div>'
     + '<div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">' + adminBtns + '</div>'
