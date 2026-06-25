@@ -139,7 +139,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:1
     <div class="approver-btns">
       <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Joey Java')">Joey Java</button>
       <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Dennis Furst')">Dennis Furst</button>
-      <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Mychal Kirschbaum')">Mychal Kirschbaum</button>
+      <button class="btn btn-green" style="justify-content:center;font-size:15px" onclick="confirmApproval('Jonathan Jacobo')">Jonathan Jacobo</button>
       <button class="btn btn-ghost" style="justify-content:center" onclick="closeApprover()">Cancel</button>
     </div>
   </div>
@@ -421,6 +421,7 @@ function renderTimesheets() {
 
     const entryRows = ts.entries.map((e,i) => `
       <tr>
+        <td style="font-weight:700;color:var(--muted)">${e.empNum||'—'}</td>
         <td>${fmtDate(e.date)}</td>
         <td style="font-weight:600;color:var(--teal)">${e.job}</td>
         <td style="text-align:center">${e.timeIn}</td>
@@ -437,7 +438,7 @@ function renderTimesheets() {
 
     const totalsRow = `
       <tr class="ts-totals">
-        <td colspan="4">WEEK TOTALS</td>
+        <td colspan="5">WEEK TOTALS</td>
         <td style="text-align:center;color:var(--teal)">${totalReg.toFixed(2)}</td>
         <td style="text-align:center;color:var(--gold)">${totalOT>0?totalOT.toFixed(2):'—'}</td>
         <td style="text-align:center">${totalHrs.toFixed(2)}</td>
@@ -482,6 +483,7 @@ function renderTimesheets() {
         </div>
         <table class="ts-tbl">
           <thead><tr>
+            <th>Emp #</th>
             <th>Date</th>
             <th>Job</th>
             <th style="text-align:center">Time In</th>
