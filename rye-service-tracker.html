@@ -1976,30 +1976,40 @@ async function uploadAttachment(file) {
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const path = ticketId + '/' + Date.now() + '_' + safeName;
 
-  // Add pending item to UI
   const itemId = 'att-' + Date.now();
   addAttachItem(itemId, file.name, file.size, null, 'uploading');
 
   try {
-    const res = await fetch(SB_STORAGE_URL + path, {
-      method: 'POST',
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Content-Type': file.type || 'application/octet-stream',
-        'x-upsert': 'true',
-      },
-      body: file,
-    });
+    const formData = new FormData();
+    formData.append('', file, safeName);
 
-    if (!res.ok) throw new Error(await res.text());
+    const res = await fetch(
+      'https://okesnavkxmqucgvvhncx.supabase.co/storage/v1/object/service-attachments/' + path,
+      {
+        method: 'POST',
+        headers: {
+          'apikey':        SB_KEY,
+          'Authorization': 'Bearer ' + SB_KEY,
+          'x-upsert':      'true',
+        },
+        body: file,
+      }
+    );
 
-    const url = SB_STORAGE_LIST + path;
+    if (!res.ok) {
+      const errText = await res.text();
+      console.warn('Upload error response:', errText);
+      throw new Error(errText);
+    }
+
+    const url = 'https://okesnavkxmqucgvvhncx.supabase.co/storage/v1/object/public/service-attachments/' + path;
     currentAttachments.push({ id: itemId, name: file.name, size: file.size, type: file.type, url, path });
     updateAttachItem(itemId, 'done', url);
+    toast('✓ ' + file.name + ' uploaded');
   } catch(e) {
     console.warn('Upload failed:', e);
     updateAttachItem(itemId, 'error', null);
+    toast('Upload failed — ' + e.message, true);
   }
 }
 
