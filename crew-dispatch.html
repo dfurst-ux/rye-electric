@@ -165,6 +165,11 @@
   .worker-remove-btn:hover { color: var(--danger); }
   .worker-remove-btn svg { width: 12px; height: 12px; }
 
+
+  /* Sign-in status */
+  .signed-in-dot { display:inline-block;width:8px;height:8px;background:#38a169;border-radius:50%;margin-left:6px;flex-shrink:0;box-shadow:0 0 4px rgba(56,161,105,.6); }
+  .worker-card.signed-in { border-left:3px solid #38a169; }
+  .worker-card.signed-in .worker-avatar { background:#276749; }
   /* Unassigned pool */
   .unassigned-col .job-header { background: #3d4f5d; }
   .unassigned-col .job-number { color: #a0b4c4; }
@@ -1334,6 +1339,54 @@ function uid() { return Math.random().toString(36).slice(2,10); }
 // BOOT
 // ─────────────────────────────────────────────
 init();
+
+// ─────────────────────────────────────────────
+// SIGN-IN STATUS (from field trackers)
+// ─────────────────────────────────────────────
+let signedInByJob = {}; // { '24001': Set(['John Smith', ...]) }
+
+async function loadSignedInStatus() {
+  const today = new Date().toISOString().slice(0, 10);
+  const jobs = state.jobs.filter(j => j.id !== 'unassigned' && j.number);
+  signedInByJob = {};
+  for (const job of jobs) {
+    const key = 'signed_in_' + job.number + '_' + today;
+    const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value');
+    if (data && data.length > 0) {
+      try {
+        const names = JSON.parse(data[0].value);
+        signedInByJob[job.number] = new Set(names.map(n => n.toUpperCase()));
+      } catch {}
+    }
+  }
+  applySignedInHighlights();
+}
+
+function applySignedInHighlights() {
+  state.workers.forEach(w => {
+    const card = document.getElementById('wc-' + w.id);
+    if (!card) return;
+    const job = state.jobs.find(j => j.id === w.jobId);
+    if (!job || job.id === 'unassigned') return;
+    const signedIn = signedInByJob[job.number];
+    const isSignedIn = signedIn && signedIn.has(w.name.toUpperCase());
+    card.classList.toggle('signed-in', isSignedIn);
+    // Add/remove dot next to name
+    const nameEl = card.querySelector('.worker-name');
+    if (nameEl) {
+      const existingDot = nameEl.querySelector('.signed-in-dot');
+      if (isSignedIn && !existingDot) {
+        const dot = document.createElement('span');
+        dot.className = 'signed-in-dot';
+        dot.title = 'Signed in today';
+        nameEl.appendChild(dot);
+      } else if (!isSignedIn && existingDot) {
+        existingDot.remove();
+      }
+    }
+  });
+}
+
 </script>
 </body>
 </html>
