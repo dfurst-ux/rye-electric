@@ -1162,15 +1162,15 @@ tbody tr:hover td{background:#f7fbfc}
           <div class="form-grid four">
             <div class="fgroup">
               <div class="flbl">AM Temp (°F)</div>
-              <input type="text" id="djr-temp-am" placeholder="e.g. 62">
+              <input type="text" id="djr-temp-am" placeholder="Auto-filling...">
             </div>
             <div class="fgroup">
               <div class="flbl">PM Temp (°F)</div>
-              <input type="text" id="djr-temp-pm" placeholder="e.g. 75">
+              <input type="text" id="djr-temp-pm" placeholder="Auto-filling...">
             </div>
             <div class="fgroup" style="grid-column:span 2">
               <div class="flbl">Weather description</div>
-              <input type="text" id="djr-weather" placeholder="e.g. Cold in morning, hot afternoon">
+              <input type="text" id="djr-weather" placeholder="Auto-filling...">
             </div>
           </div>
         </div>
@@ -4098,6 +4098,55 @@ function getYNValue(fieldId){
   return yBtn.dataset.val==='yes' ? 'YES' : (document.getElementById(fieldId+'-no')?.dataset.val==='no'?'NO':'');
 }
 
+
+/* === AUTO WEATHER === */
+const JOB_COORDS = {
+  '24001 - BIOLA':                  {lat:33.9425,lon:-118.1339,name:'La Mirada, CA'},
+  '24002 - SEPULVEDA':              {lat:34.2206,lon:-118.4342,name:'Panorama City, CA'},
+  '24005 - VNV':                    {lat:34.1919,lon:-118.4515,name:'Van Nuys, CA'},
+  '24006 - VF':                     {lat:33.5539,lon:-117.2139,name:'Murrieta, CA'},
+  '24010 - COMMONS':                {lat:34.1575,lon:-118.6339,name:'Calabasas, CA'},
+  '25001 - DECENA':                 {lat:32.7157,lon:-117.1611,name:'San Diego, CA'},
+  '25002 - BAH':                    {lat:34.1467,lon:-118.7606,name:'Agoura Hills, CA'},
+  '26002 - WILSHIRE':               {lat:34.0614,lon:-118.3089,name:'Los Angeles, CA'},
+  '26003 - CARINA':                 {lat:33.7963,lon:-117.9271,name:'Santa Ana, CA'},
+  '26005 - MARINA SHORES':          {lat:34.0195,lon:-118.4912,name:'Marina del Rey, CA'},
+  'SP25018 - CDC PLAZA':            {lat:34.0522,lon:-118.2437,name:'Los Angeles, CA'},
+  'SP26006 - LOS ANGELES TIMES':    {lat:34.0414,lon:-118.2535,name:'Los Angeles, CA'},
+};
+
+const WMO_CODES = {
+  0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+  45:'Foggy', 48:'Rime fog', 51:'Light drizzle', 53:'Moderate drizzle',
+  55:'Dense drizzle', 61:'Slight rain', 63:'Moderate rain', 65:'Heavy rain',
+  71:'Slight snow', 73:'Moderate snow', 75:'Heavy snow', 77:'Snow grains',
+  80:'Rain showers', 81:'Moderate showers', 82:'Violent showers',
+  85:'Slight snow showers', 86:'Heavy snow showers',
+  95:'Thunderstorm', 96:'Thunderstorm w/ hail', 99:'Heavy thunderstorm'
+};
+
+async function fetchJobWeather(job) {
+  const coords = JOB_COORDS[job];
+  if (!coords) return null;
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,weathercode,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FLos_Angeles`;
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const cur = data.current;
+    const temp = Math.round(cur.temperature_2m);
+    const code = cur.weathercode;
+    const wind = Math.round(cur.windspeed_10m);
+    const desc = WMO_CODES[code] || 'Variable conditions';
+    const windStr = wind > 5 ? `, winds ${wind} mph` : '';
+    return { temp, desc: desc + windStr, location: coords.name };
+  } catch(e) {
+    console.warn('Weather fetch failed:', e);
+    return null;
+  }
+}
+/* === END AUTO WEATHER === */
+
 function loadDJR(){
   const job  = document.getElementById('djr-job').value;
   const date = document.getElementById('djr-date').value;
@@ -4106,6 +4155,27 @@ function loadDJR(){
 
   document.getElementById('djr-empty').style.display = 'none';
   document.getElementById('djr-form').style.display  = 'block';
+
+  // Auto-fill weather if fields are empty and no saved report
+  const _weatherJob = document.getElementById('djr-job').value;
+  const _weatherKey = _weatherJob + '|' + document.getElementById('djr-date').value;
+  const _hasSaved = djrReports[_weatherKey] && djrReports[_weatherKey].tempAM;
+  if (!_hasSaved) {
+    const _tempAmEl = document.getElementById('djr-temp-am');
+    const _weatherEl = document.getElementById('djr-weather');
+    if (!_tempAmEl.value && !_weatherEl.value) {
+      fetchJobWeather(_weatherJob).then(w => {
+        if (!w) return;
+        if (!document.getElementById('djr-temp-am').value)
+          document.getElementById('djr-temp-am').value = w.temp;
+        if (!document.getElementById('djr-temp-pm').value)
+          document.getElementById('djr-temp-pm').value = w.temp;
+        if (!document.getElementById('djr-weather').value)
+          document.getElementById('djr-weather').value = w.desc;
+        toast('Weather auto-filled for ' + w.location);
+      });
+    }
+  }
 
   // Auto-populate workforce from dailyLogs for this job + date
   const entries = dailyLogs.filter(l=>l.job===job && l.date===date);
