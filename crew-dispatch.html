@@ -1079,11 +1079,14 @@ function moveWorker(workerId, targetJobId) {
   if (!w || w.jobId === targetJobId) return;
   const fromJob = state.jobs.find(j => j.id === w.jobId);
   const toJob = state.jobs.find(j => j.id === targetJobId);
+  const fromLabel = fromJob ? (fromJob.number ? 'Job ' + fromJob.number + ' \u2014 ' + fromJob.name : fromJob.name) : 'Unknown';
+  const toLabel = toJob ? (toJob.number ? 'Job ' + toJob.number + ' \u2014 ' + toJob.name : toJob.name) : 'Unknown';
+  const note = w.name + (w.empNum ? ' #' + w.empNum : '') + '  \u2192  ' + fromLabel + '  \u279C  ' + toLabel;
   w.jobId = targetJobId;
-  logEntry('move', workerId, targetJobId, '');
+  logEntry('move', workerId, targetJobId, note);
   render();
   scheduleSave();
-  showToast(`${w.name} moved to ${toJob.name}`);
+  showToast(w.name + ' moved to ' + toJob.name);
 }
 
 // ─────────────────────────────────────────────
