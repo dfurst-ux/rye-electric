@@ -467,7 +467,7 @@ async function submitAll() {
     // Fire confirmation emails with full data for PDF generation
     try {
       console.log('Calling Edge Function...');
-      const efRes = await fetch(`${SUPABASE_URL}/functions/v1/send-onboarding-email`, {
+      const efRes = await fetch(`${SUPABASE_URL}/functions/v1/bright-handler`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
         body: JSON.stringify({
