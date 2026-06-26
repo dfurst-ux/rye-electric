@@ -6981,9 +6981,7 @@ renderCCRef();
               job:sJobId,
               task_date:new Date().toLocaleDateString(),
               task_time:new Date().toLocaleTimeString(),
-              task_notes:'Document: '+DOC_TYPES[docType]+'
-Week ending: '+getWeekEnding()+'
-Friday required: '+isFriday(),
+              task_notes:'Document: '+DOC_TYPES[docType]+'\nWeek ending: '+getWeekEnding()+'\nFriday required: '+isFriday(),
               task_priority:'completed',
               calendar_link:''
             });
