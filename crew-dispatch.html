@@ -1148,8 +1148,10 @@ function applyMode() {
 // CHANGE PASSWORD
 // ─────────────────────────────────────────────
 function openChangePwModal() {
+  if (!currentUser) return;
   const sel = document.getElementById('changePwUser');
-  sel.innerHTML = USERS.map(u => '<option value="' + u.id + '">' + u.name + '</option>').join('');
+  // Only show the currently logged-in user
+  sel.innerHTML = '<option value="' + currentUser.id + '">' + currentUser.name + '</option>';
   document.getElementById('changePwNew').value = '';
   document.getElementById('changePwConfirm').value = '';
   document.getElementById('changePwError').classList.remove('show');
