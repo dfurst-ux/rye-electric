@@ -1367,6 +1367,9 @@ async function loadSignedInStatus() {
 }
 
 function applySignedInHighlights() {
+  // Clear all existing highlights first
+  document.querySelectorAll('.signed-in').forEach(el => el.classList.remove('signed-in'));
+  document.querySelectorAll('.signed-in-dot').forEach(el => el.remove());
   state.workers.forEach(w => {
     const card = document.getElementById('wc-' + w.id);
     if (!card) return;
