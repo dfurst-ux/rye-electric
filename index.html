@@ -466,7 +466,8 @@ async function submitAll() {
 
     // Fire confirmation emails with full data for PDF generation
     try {
-      await fetch(`${SUPABASE_URL}/functions/v1/send-onboarding-email`, {
+      console.log('Calling Edge Function...');
+      const efRes = await fetch(`${SUPABASE_URL}/functions/v1/send-onboarding-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
         body: JSON.stringify({
@@ -489,7 +490,10 @@ async function submitAll() {
           submitted_at: new Date().toISOString()
         })
       });
-    } catch(e) { console.warn('Email failed:', e); }
+      console.log('Edge Function response status:', efRes.status);
+      const efBody = await efRes.text();
+      console.log('Edge Function response body:', efBody);
+    } catch(e) { console.error('Email fetch error:', e); }
 
     document.getElementById('progress').innerHTML = '';
     document.getElementById('content').innerHTML = `
