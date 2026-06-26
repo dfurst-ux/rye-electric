@@ -127,8 +127,13 @@
     padding: 8px 10px;
     border-top: 1px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 4px;
   }
   .crew-count { font-size: 11px; font-weight: 700; color: var(--muted); }
+  .job-cost-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+  .job-cost-week { font-size: 12px; font-weight: 900; color: var(--accent-dark); }
+  .job-cost-label { font-size: 10px; font-weight: 700; color: var(--muted); margin-left: 1px; }
+  .job-cost-forecast { font-size: 10px; font-weight: 700; color: var(--success); }
 
   /* ── Worker Card ── */
   .worker-card {
@@ -165,11 +170,6 @@
   .worker-remove-btn:hover { color: var(--danger); }
   .worker-remove-btn svg { width: 12px; height: 12px; }
 
-
-  /* Sign-in status */
-  .signed-in-dot { display:inline-block;width:8px;height:8px;background:#38a169;border-radius:50%;margin-left:6px;flex-shrink:0;box-shadow:0 0 4px rgba(56,161,105,.6); }
-  .worker-card.signed-in { border-left:3px solid #38a169; }
-  .worker-card.signed-in .worker-avatar { background:#276749; }
   /* Unassigned pool */
   .unassigned-col .job-header { background: #3d4f5d; }
   .unassigned-col .job-number { color: #a0b4c4; }
@@ -876,17 +876,27 @@ function workerWeekCost(w) {
   return rate * 40 * 1.32;
 }
 
-function weeklyJobCost(workers) {
-  const total = workers.reduce((sum, w) => sum + workerWeekCost(w), 0);
-  if (!total) return '';
-  return '$' + total.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0}) + '/wk';
+function workerForecastCost(w) {
+  const weekly = workerWeekCost(w);
+  const weeks = w.weeks || 0;
+  return weeks > 0 ? weekly * weeks : 0;
+}
+
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+function jobCostSummary(workers) {
+  const weekly = workers.reduce((sum, w) => sum + workerWeekCost(w), 0);
+  const forecast = workers.reduce((sum, w) => sum + workerForecastCost(w), 0);
+  return { weekly, forecast };
 }
 
 function grandTotalCost() {
-  const total = state.workers
-    .filter(w => w.jobId !== 'unassigned')
-    .reduce((sum, w) => sum + workerWeekCost(w), 0);
-  return '$' + total.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+  const assigned = state.workers.filter(w => w.jobId !== 'unassigned');
+  const weekly = assigned.reduce((sum, w) => sum + workerWeekCost(w), 0);
+  const forecast = assigned.reduce((sum, w) => sum + workerForecastCost(w), 0);
+  return { weekly, forecast };
 }
 
 // ─────────────────────────────────────────────
@@ -918,7 +928,13 @@ function render() {
       </div>
       <div class="job-footer">
         <span class="crew-count">${workers.length} crew</span>
-        <span class="job-cost">${weeklyJobCost(workers)}</span>
+        ${job.id !== 'unassigned' ? (() => {
+          const { weekly, forecast } = jobCostSummary(workers);
+          return weekly ? `<div class="job-cost-wrap">
+            <span class="job-cost-week">${fmt(weekly)}<span class="job-cost-label">/wk</span></span>
+            ${forecast ? `<span class="job-cost-forecast">↗ ${fmt(forecast)} total</span>` : ''}
+          </div>` : '';
+        })() : ''}
       </div>
     `;
 
@@ -956,7 +972,10 @@ function render() {
 
   // Update grand total in header
   const gt = document.getElementById('grandTotal');
-  if (gt) gt.textContent = grandTotalCost() + ' / week';
+  if (gt) {
+    const { weekly, forecast } = grandTotalCost();
+    gt.textContent = fmt(weekly) + '/wk' + (forecast ? '  ·  ↗ ' + fmt(forecast) + ' forecast' : '');
+  }
 
   // Add Job button (admin only)
   if (isAdmin) {
@@ -1338,62 +1357,7 @@ function uid() { return Math.random().toString(36).slice(2,10); }
 // ─────────────────────────────────────────────
 // BOOT
 // ─────────────────────────────────────────────
-init().then(function() {
-  // Load signed-in status after board is rendered, then poll every 60s
-  loadSignedInStatus();
-  setInterval(function(){ loadSignedInStatus(); }, 60000);
-});
-
-// ─────────────────────────────────────────────
-// SIGN-IN STATUS (from field trackers)
-// ─────────────────────────────────────────────
-let signedInByJob = {}; // { '24001': Set(['John Smith', ...]) }
-
-async function loadSignedInStatus() {
-  const today = new Date().toISOString().slice(0, 10);
-  const jobs = state.jobs.filter(j => j.id !== 'unassigned' && j.number);
-  signedInByJob = {};
-  for (const job of jobs) {
-    const key = 'signed_in_' + job.number + '_' + today;
-    const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value');
-    if (data && data.length > 0) {
-      try {
-        const names = JSON.parse(data[0].value);
-        signedInByJob[job.number] = new Set(names.map(n => n.toUpperCase()));
-      } catch {}
-    }
-  }
-  applySignedInHighlights();
-}
-
-function applySignedInHighlights() {
-  // Clear all existing highlights first
-  document.querySelectorAll('.signed-in').forEach(el => el.classList.remove('signed-in'));
-  document.querySelectorAll('.signed-in-dot').forEach(el => el.remove());
-  state.workers.forEach(w => {
-    const card = document.getElementById('wc-' + w.id);
-    if (!card) return;
-    const job = state.jobs.find(j => j.id === w.jobId);
-    if (!job || job.id === 'unassigned') return;
-    const signedIn = signedInByJob[job.number];
-    const isSignedIn = signedIn && signedIn.has(w.name.toUpperCase());
-    card.classList.toggle('signed-in', isSignedIn);
-    // Add/remove dot next to name
-    const nameEl = card.querySelector('.worker-name');
-    if (nameEl) {
-      const existingDot = nameEl.querySelector('.signed-in-dot');
-      if (isSignedIn && !existingDot) {
-        const dot = document.createElement('span');
-        dot.className = 'signed-in-dot';
-        dot.title = 'Signed in today';
-        nameEl.appendChild(dot);
-      } else if (!isSignedIn && existingDot) {
-        existingDot.remove();
-      }
-    }
-  });
-}
-
+init();
 </script>
 </body>
 </html>
