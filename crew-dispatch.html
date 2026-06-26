@@ -1338,10 +1338,11 @@ function uid() { return Math.random().toString(36).slice(2,10); }
 // ─────────────────────────────────────────────
 // BOOT
 // ─────────────────────────────────────────────
-init();
-// Auto-poll signed-in status every 60 seconds
-loadSignedInStatus();
-setInterval(function(){ loadSignedInStatus(); }, 60000);
+init().then(function() {
+  // Load signed-in status after board is rendered, then poll every 60s
+  loadSignedInStatus();
+  setInterval(function(){ loadSignedInStatus(); }, 60000);
+});
 
 // ─────────────────────────────────────────────
 // SIGN-IN STATUS (from field trackers)
