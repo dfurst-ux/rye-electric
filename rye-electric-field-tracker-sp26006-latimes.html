@@ -7595,22 +7595,23 @@ async function publishSignedIn() {
     var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
     var date = dateEl.value;
     if (!jobNum || !date) return;
-
-    // Collect signed-in names from the sign-in sheet rows
     var names = [];
-    document.querySelectorAll('#si-signin-tbody tr').forEach(function(tr) {
-      var nameEl = tr.querySelector('.si-name');
-      if (nameEl && nameEl.value && nameEl.value.trim()) names.push(nameEl.value.trim());
-      // Also check td text content for rendered name cells
-      var nameTd = tr.querySelector('td:first-child');
-      if (nameTd && nameTd.textContent.trim() && !nameEl) names.push(nameTd.textContent.trim());
-    });
-    // Also grab from siData rows if available
+    // Use collectSIRows if available (most reliable)
+    if (typeof collectSIRows === 'function') {
+      collectSIRows().forEach(function(r){ if(r.name && r.name.trim()) names.push(r.name.trim()); });
+    }
+    // Fallback: check DOM directly — si-tbody is the correct tbody ID
+    if (!names.length) {
+      document.querySelectorAll('#si-tbody tr').forEach(function(tr) {
+        var nameEl = tr.querySelector('.si-emp-name');
+        if (nameEl && nameEl.value && nameEl.value.trim()) names.push(nameEl.value.trim());
+      });
+    }
+    // Also check siData in memory
     var siKey = jobVal + '|' + date;
-    if (typeof siData !== 'undefined' && siData[siKey] && siData[siKey].rows) {
+    if (!names.length && typeof siData !== 'undefined' && siData[siKey] && siData[siKey].rows) {
       siData[siKey].rows.forEach(function(r){ if(r.name && names.indexOf(r.name) === -1) names.push(r.name); });
     }
-
     if (!names.length) return;
     var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
     var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
