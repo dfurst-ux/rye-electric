@@ -78,6 +78,20 @@
   .time-display{text-align:center;padding:12px;background:#f8f8f8;border-radius:8px;margin-bottom:18px;font-size:13px;color:var(--text-soft);}
   .time-display strong{color:var(--text);font-size:15px;}
 
+  .job-row{display:grid;grid-template-columns:1fr 130px auto auto;gap:8px;align-items:center;margin-bottom:8px;}
+  .job-row-select{border:1.5px solid #d0d0d0;border-radius:8px;font-size:13px;font-family:'Lato',sans-serif;padding:8px 10px;color:var(--text);outline:none;background:#fff;width:100%;height:40px;}
+  .job-row-select:focus{border-color:var(--primary);}
+  .job-row-hours{border:1.5px solid #d0d0d0;border-radius:8px;font-size:13px;font-family:'Lato',sans-serif;padding:8px 10px;color:var(--text);outline:none;width:100%;height:40px;text-align:center;}
+  .job-row-hours:focus{border-color:var(--primary);}
+  .job-row-hours.err{border-color:var(--error);}
+  .job-row-cc{border:1.5px solid #d0d0d0;border-radius:8px;font-size:13px;font-family:'Lato',sans-serif;padding:8px 10px;color:var(--text);outline:none;background:#fff;height:40px;}
+  .job-row-cc:focus{border-color:var(--primary);}
+  .job-row-del{background:none;border:none;cursor:pointer;color:#bbb;font-size:18px;padding:0 4px;line-height:1;}
+  .job-row-del:hover{color:var(--error);}
+  .hours-ok{background:#e8f8ef;color:var(--success);}
+  .hours-over{background:#fdecea;color:var(--error);}
+  .hours-under{background:#fff8e1;color:#e67e22;}
+
   .toast-container{position:fixed;top:20px;right:20px;z-index:10000;pointer-events:none;}
   .toast{background:#fff;padding:14px 18px;border-radius:8px;margin-bottom:10px;box-shadow:0 4px 16px rgba(0,0,0,0.15);pointer-events:all;animation:slideIn 0.3s ease;}
   @keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
@@ -99,7 +113,6 @@
       <div class="hdr-clock" id="hdrClock">--:--:--</div>
     </div>
     <div style="background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.1);padding:0 28px;display:flex;gap:4px">
-      <a href="https://dfurst-ux.github.io/rye-electric/office-home.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block;border-bottom:2px solid transparent">🏠 Home</a>
       <a href="https://dfurst-ux.github.io/rye-electric/office-badge-admin.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block;border-bottom:2px solid transparent">⚙️ Office Admin</a>
       <span style="color:#fff;border-bottom:2px solid #79B7F1;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block">⏱ Office Clock</span>
       <a href="https://dfurst-ux.github.io/rye-electric/field-timesheets.html" style="color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-weight:700;padding:8px 14px;display:inline-block;border-bottom:2px solid transparent">📋 Field Timesheets</a>
@@ -149,26 +162,17 @@
 
       <div class="modal-divider"></div>
 
-      <!-- Job (optional) -->
-      <div class="modal-optional">
-        Bill to job <span class="optional-badge">OPTIONAL</span>
+      <!-- Multi-job splits -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div class="modal-optional" style="margin-bottom:0">Job Billing <span class="optional-badge">OPTIONAL</span></div>
+        <button type="button" onclick="addJobRow()" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;">+ Add Job</button>
       </div>
-      <select class="modal-select" id="modal-job-bill" style="margin-bottom:4px">
-        <option value="">— No specific job (office overhead) —</option>
-        <option value="24001 - BIOLA">24001 — BIOLA</option>
-        <option value="24002 - SEPULVEDA">24002 — SEPULVEDA</option>
-        <option value="24005 - VNV">24005 — VNV</option>
-        <option value="24006 - VF">24006 — VF</option>
-        <option value="25001 - DECENA">25001 — DECENA</option>
-        <option value="25002 - BAH">25002 — BAH</option>
-        <option value="SP25018 - CDC PLAZA">SP25018 — CDC PLAZA</option>
-        <option value="26003 - CARINA">26003 — CARINA</option>
-        <option value="26005 - MARINA SHORES">26005 — MARINA SHORES</option>
-        <option value="24010 - THE COMMONS">24010 — THE COMMONS</option>
-        <option value="SP26002 - SERVICE">SP26002 — SERVICE</option>
-        <option value="SP26012 - ONTARIO TC">SP26012 — ONTARIO TOWN CENTER</option>
-      </select>
-      <div style="font-size:11px;color:var(--text-soft);margin-top:4px">If this time is billable to a specific project, select it above.</div>
+
+      <div id="job-rows-container"></div>
+
+      <div id="hours-summary" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:700;text-align:right;"></div>
+
+      <div style="font-size:11px;color:var(--text-soft);margin-top:6px">Split your time across multiple jobs. Hours must add up to your total time clocked.</div>
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="cancelClockOut()">Cancel</button>
@@ -303,8 +307,10 @@
     ccSel.innerHTML='<option value="">— Select cost code —</option>'
       +codesList.filter(c=>c.active).map(c=>'<option value="'+c.code+'">'+c.code+' — '+c.label+'</option>').join('');
 
-    // Reset job
-    document.getElementById('modal-job-bill').value='';
+    // Reset job rows
+    totalClockMinutes = Math.round((new Date() - clockInTime) / 60000);
+    document.getElementById('job-rows-container').innerHTML='';
+    document.getElementById('hours-summary').style.display='none';
 
     document.getElementById('clockOutModal').classList.remove('hidden');
   }
@@ -334,18 +340,139 @@
     loadRoster();
   }
 
+  const JOB_OPTIONS = [
+    {value:'24001-BIOLA',   label:'24001 — BIOLA'},
+    {value:'24002-SEPULVEDA',label:'24002 — SEPULVEDA'},
+    {value:'24005-VNV',     label:'24005 — VNV'},
+    {value:'24006-VF',      label:'24006 — VF'},
+    {value:'24010-COMMONS', label:'24010 — THE COMMONS'},
+    {value:'25001-DECENA',  label:'25001 — DECENA'},
+    {value:'25002-BAH',     label:'25002 — BAH'},
+    {value:'26002-WILSHIRE',label:'26002 — WILSHIRE'},
+    {value:'26003-CARINA',  label:'26003 — CARINA'},
+    {value:'26005-MARINA',  label:'26005 — MARINA SHORES'},
+    {value:'SP25018-CDC',   label:'SP25018 — CDC PLAZA'},
+    {value:'SP26002-SVC',   label:'SP26002 — SERVICE'},
+    {value:'SP26012-OTC',   label:'SP26012 — ONTARIO TC'},
+  ];
+
+  let totalClockMinutes = 0;
+  let jobRowCounter = 0;
+
+  function buildCcOptions(){
+    return '<option value="">— Cost code —</option>'
+      + codesList.filter(c=>c.active).map(c=>`<option value="${c.code}">${c.code} — ${c.label}</option>`).join('');
+  }
+
+  function buildJobOptions(){
+    return '<option value="">— No specific job (overhead) —</option>'
+      + JOB_OPTIONS.map(j=>`<option value="${j.value}">${j.label}</option>`).join('');
+  }
+
+  function addJobRow(){
+    const id = ++jobRowCounter;
+    const container = document.getElementById('job-rows-container');
+    const row = document.createElement('div');
+    row.className = 'job-row';
+    row.id = 'job-row-'+id;
+    row.innerHTML = `
+      <select class="job-row-select" id="jr-job-${id}">${buildJobOptions()}</select>
+      <select class="job-row-cc"     id="jr-cc-${id}">${buildCcOptions()}</select>
+      <input  class="job-row-hours"  id="jr-hrs-${id}" type="number" min="0.25" max="24" step="0.25" placeholder="Hrs" oninput="updateHoursSummary()">
+      <button class="job-row-del" onclick="removeJobRow(${id})" title="Remove">✕</button>
+    `;
+    container.appendChild(row);
+    updateHoursSummary();
+  }
+
+  function removeJobRow(id){
+    const row = document.getElementById('job-row-'+id);
+    if(row) row.remove();
+    updateHoursSummary();
+  }
+
+  function updateHoursSummary(){
+    const rows = document.querySelectorAll('#job-rows-container .job-row');
+    if(rows.length === 0){
+      document.getElementById('hours-summary').style.display='none';
+      return;
+    }
+    let totalEntered = 0;
+    rows.forEach(r=>{
+      const hrsEl = r.querySelector('input[type=number]');
+      totalEntered += parseFloat(hrsEl.value)||0;
+    });
+    const totalH = (totalClockMinutes/60).toFixed(2);
+    const entH   = totalEntered.toFixed(2);
+    const diff    = totalEntered - totalClockMinutes/60;
+    const summaryEl = document.getElementById('hours-summary');
+    summaryEl.style.display='block';
+    if(Math.abs(diff) < 0.01){
+      summaryEl.className='hours-ok';
+      summaryEl.textContent=`✓ ${entH}h entered — matches total clocked time`;
+    } else if(diff > 0){
+      summaryEl.className='hours-over';
+      summaryEl.textContent=`⚠ ${entH}h entered — ${Math.abs(diff).toFixed(2)}h over total (${totalH}h)`;
+    } else {
+      summaryEl.className='hours-under';
+      summaryEl.textContent=`${entH}h entered — ${Math.abs(diff).toFixed(2)}h unaccounted (total ${totalH}h)`;
+    }
+  }
+
+  function getJobRows(){
+    const rows = document.querySelectorAll('#job-rows-container .job-row');
+    const result = [];
+    rows.forEach(r=>{
+      const id  = r.id.replace('job-row-','');
+      result.push({
+        job:  document.getElementById('jr-job-'+id).value,
+        cc:   document.getElementById('jr-cc-'+id).value,
+        hrs:  parseFloat(document.getElementById('jr-hrs-'+id).value)||0,
+      });
+    });
+    return result;
+  }
+
   async function confirmClockOut(){
     if(!pendingClockOut) return;
     const {empId,emp,clockInTime}=pendingClockOut;
-    const costCode=document.getElementById('modal-cost-code').value;
-    const jobBill=document.getElementById('modal-job-bill').value;
 
-    if(!costCode){
-      document.getElementById('modal-cost-code').style.borderColor='var(--error)';
-      document.getElementById('modal-cost-code').focus();
-      return;
+    const jobRows = getJobRows();
+
+    // If job rows exist, validate them
+    if(jobRows.length > 0){
+      // Each row needs a cost code
+      let valid = true;
+      document.querySelectorAll('#job-rows-container .job-row').forEach(r=>{
+        const id = r.id.replace('job-row-','');
+        const ccEl  = document.getElementById('jr-cc-'+id);
+        const hrsEl = document.getElementById('jr-hrs-'+id);
+        if(!ccEl.value){ ccEl.style.borderColor='var(--error)'; valid=false; }
+        else ccEl.style.borderColor='';
+        if(!hrsEl.value||parseFloat(hrsEl.value)<=0){ hrsEl.classList.add('err'); valid=false; }
+        else hrsEl.classList.remove('err');
+      });
+      if(!valid){
+        showResult('err','Incomplete rows','Each job row needs a cost code and hours.');
+        return;
+      }
+      // Hours must not exceed total
+      const totalEntered = jobRows.reduce((s,r)=>s+r.hrs,0);
+      const totalH = totalClockMinutes/60;
+      if(totalEntered > totalH + 0.01){
+        showResult('err','Hours over','Job hours exceed your total clocked time. Please correct.');
+        return;
+      }
+    } else {
+      // No job rows — require top-level cost code (original single-job path)
+      const costCode = document.getElementById('modal-cost-code').value;
+      if(!costCode){
+        document.getElementById('modal-cost-code').style.borderColor='var(--error)';
+        document.getElementById('modal-cost-code').focus();
+        return;
+      }
+      document.getElementById('modal-cost-code').style.borderColor='';
     }
-    document.getElementById('modal-cost-code').style.borderColor='';
 
     // Record clock-out punch
     const {error:outErr}=await supabaseClient.from('office_portal_punches').insert({
@@ -356,19 +483,40 @@
       return;
     }
 
-    // Save cost code for the day
     const today=new Date();
     const dateKey=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
-    await supabaseClient.from('office_portal_day_codes').upsert({
-      employee_id:empId, work_date:dateKey, cost_code:costCode,
-      job_bill:jobBill||null,
-    },{onConflict:'employee_id,work_date'});
 
-    // Build summary message
-    const codeInfo=codesList.find(c=>c.code===costCode);
-    const codeLabel=codeInfo?codeInfo.label:costCode;
-    let msg='Clocked out at '+fmtTime(new Date())+' · '+codeLabel;
-    if(jobBill) msg+=' · Billed to '+jobBill;
+    // Delete any existing day codes for this employee today
+    await supabaseClient.from('office_portal_day_codes')
+      .delete().eq('employee_id',empId).eq('work_date',dateKey);
+
+    if(jobRows.length > 0){
+      // Insert one row per job split
+      const inserts = jobRows.map(r=>({
+        employee_id: empId,
+        work_date:   dateKey,
+        cost_code:   r.cc,
+        job_bill:    r.job||null,
+        hours:       r.hrs,
+      }));
+      await supabaseClient.from('office_portal_day_codes').insert(inserts);
+    } else {
+      // Single code, no job splits
+      const costCode = document.getElementById('modal-cost-code').value;
+      await supabaseClient.from('office_portal_day_codes').insert({
+        employee_id:empId, work_date:dateKey, cost_code:costCode, job_bill:null, hours:null,
+      });
+    }
+
+    // Build summary
+    let msg = 'Clocked out at '+fmtTime(new Date());
+    if(jobRows.length > 0){
+      msg += ' · '+jobRows.map(r=>(r.job||'Overhead')+' '+r.hrs+'h').join(', ');
+    } else {
+      const costCode = document.getElementById('modal-cost-code').value;
+      const codeInfo = codesList.find(c=>c.code===costCode);
+      msg += ' · '+(codeInfo?codeInfo.label:costCode);
+    }
 
     document.getElementById('clockOutModal').classList.add('hidden');
     pendingClockOut=null;
