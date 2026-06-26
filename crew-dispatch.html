@@ -368,7 +368,15 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
       Add Job
     </button>
+    <button class="btn btn-ghost" onclick="openChangePwModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Passwords
+    </button>
   </div>
+  <button class="btn btn-ghost" onclick="openLogPage()" style="margin-left:8px;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+    Activity Log
+  </button>
   <span style="margin-left:auto;font-size:12px;color:var(--muted);" id="lastSaved"></span>
 </div>
 
@@ -385,8 +393,14 @@
 <!-- Auth Modal -->
 <div class="modal-overlay" id="authModal">
   <div class="modal">
-    <h2>Admin Access</h2>
-    <p>Enter the admin password to enable drag-and-drop crew management.</p>
+    <h2>Admin Login</h2>
+    <p>Select your name and enter your password to make changes.</p>
+    <div class="form-group">
+      <label>Who are you?</label>
+      <select id="authUser">
+        <option value="">-- Select --</option>
+      </select>
+    </div>
     <div class="form-group">
       <label>Password</label>
       <input type="password" id="authInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()">
@@ -395,6 +409,31 @@
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('authModal')">Cancel</button>
       <button class="btn btn-primary" onclick="submitAuth()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="changePwModal">
+  <div class="modal">
+    <h2>Change Password</h2>
+    <p>Update a user's login password.</p>
+    <div class="form-group">
+      <label>User</label>
+      <select id="changePwUser"></select>
+    </div>
+    <div class="form-group">
+      <label>New Password</label>
+      <input type="password" id="changePwNew" placeholder="New password">
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" id="changePwConfirm" placeholder="Confirm password">
+    </div>
+    <div class="error-msg" id="changePwError">Passwords do not match.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('changePwModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitChangePassword()">Save</button>
     </div>
   </div>
 </div>
@@ -497,7 +536,16 @@
 // ─────────────────────────────────────────────
 const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
-const ADMIN_PASSWORD = '1234';
+// ─────────────────────────────────────────────
+// USERS — last name is default password, changeable in settings
+// ─────────────────────────────────────────────
+let USERS = [
+  { id: 'furst',      name: 'Dennis Furst',       password: 'Furst'     },
+  { id: 'jacobo',     name: 'Jonathan Jacobo',     password: 'Jacobo'    },
+  { id: 'java',       name: 'Joey Java',           password: 'Java'      },
+  { id: 'contreras',  name: 'Xavier Contreras',    password: 'Contreras' },
+];
+let currentUser = null; // { id, name } when logged in
 
 // ─────────────────────────────────────────────
 // STATE
@@ -699,11 +747,13 @@ function scheduleSave() {
 // INIT
 // ─────────────────────────────────────────────
 async function init() {
+  loadPasswordsLocally();
   if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
     await loadFromSupabase().catch(() => loadLocal());
   } else {
     loadLocal();
   }
+  await loadLog();
   patchEmpNums();
   render();
 }
@@ -1030,6 +1080,7 @@ function moveWorker(workerId, targetJobId) {
   const fromJob = state.jobs.find(j => j.id === w.jobId);
   const toJob = state.jobs.find(j => j.id === targetJobId);
   w.jobId = targetJobId;
+  logEntry('move', workerId, targetJobId, '');
   render();
   scheduleSave();
   showToast(`${w.name} moved to ${toJob.name}`);
@@ -1038,40 +1089,203 @@ function moveWorker(workerId, targetJobId) {
 // ─────────────────────────────────────────────
 // AUTH
 // ─────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────
 function handleModeClick() {
   if (isAdmin) {
     isAdmin = false;
+    currentUser = null;
     applyMode();
-    showToast('Switched to view mode');
+    showToast('Logged out');
   } else {
+    // Populate user dropdown
+    const sel = document.getElementById('authUser');
+    sel.innerHTML = '<option value="">-- Select --</option>' +
+      USERS.map(u => '<option value="' + u.id + '">' + u.name + '</option>').join('');
+    document.getElementById('authError').classList.remove('show');
+    document.getElementById('authInput').value = '';
     openModal('authModal');
-    setTimeout(() => document.getElementById('authInput').focus(), 100);
+    setTimeout(() => sel.focus(), 100);
   }
 }
 
 function submitAuth() {
+  const userId = document.getElementById('authUser').value;
   const pw = document.getElementById('authInput').value;
-  if (pw === ADMIN_PASSWORD) {
-    isAdmin = true;
-    document.getElementById('authInput').value = '';
-    document.getElementById('authError').classList.remove('show');
-    closeModal('authModal');
-    applyMode();
-    showToast('Admin mode unlocked');
-  } else {
+  const user = USERS.find(u => u.id === userId);
+  if (!user || pw !== user.password) {
     document.getElementById('authError').classList.add('show');
     document.getElementById('authInput').value = '';
     document.getElementById('authInput').focus();
+    return;
   }
+  currentUser = { id: user.id, name: user.name };
+  isAdmin = true;
+  document.getElementById('authInput').value = '';
+  document.getElementById('authError').classList.remove('show');
+  closeModal('authModal');
+  applyMode();
+  showToast('Welcome, ' + user.name.split(' ')[0] + '!');
 }
 
 function applyMode() {
   document.body.classList.toggle('view-mode', !isAdmin);
   const btn = document.getElementById('modeBtn');
   btn.className = 'mode-badge ' + (isAdmin ? 'admin' : 'view');
-  document.getElementById('modeBtnLabel').textContent = isAdmin ? 'Admin' : 'View Only';
+  document.getElementById('modeBtnLabel').textContent = isAdmin
+    ? (currentUser ? currentUser.name.split(' ')[0] : 'Admin')
+    : 'View Only';
   document.getElementById('statusBar').classList.toggle('show', isAdmin);
+  if (isAdmin && currentUser) {
+    document.getElementById('statusBar').textContent =
+      '🔒 Logged in as ' + currentUser.name + ' — drag workers between jobs, add/remove crew and jobs.';
+  }
   render();
+}
+
+// ─────────────────────────────────────────────
+// CHANGE PASSWORD
+// ─────────────────────────────────────────────
+function openChangePwModal() {
+  const sel = document.getElementById('changePwUser');
+  sel.innerHTML = USERS.map(u => '<option value="' + u.id + '">' + u.name + '</option>').join('');
+  document.getElementById('changePwNew').value = '';
+  document.getElementById('changePwConfirm').value = '';
+  document.getElementById('changePwError').classList.remove('show');
+  openModal('changePwModal');
+  setTimeout(() => document.getElementById('changePwNew').focus(), 100);
+}
+
+function submitChangePassword() {
+  const userId = document.getElementById('changePwUser').value;
+  const pw1 = document.getElementById('changePwNew').value;
+  const pw2 = document.getElementById('changePwConfirm').value;
+  if (!pw1 || pw1 !== pw2) {
+    document.getElementById('changePwError').classList.add('show');
+    return;
+  }
+  const user = USERS.find(u => u.id === userId);
+  if (user) {
+    user.password = pw1;
+    // Save updated passwords to Supabase/localStorage
+    savePasswordsLocally();
+    closeModal('changePwModal');
+    showToast(user.name + "'s password updated");
+    logEntry('password_change', null, null, 'Password changed for ' + user.name);
+  }
+}
+
+function savePasswordsLocally() {
+  try {
+    localStorage.setItem('rye_dispatch_passwords', JSON.stringify(USERS.map(u => ({ id: u.id, password: u.password }))));
+  } catch {}
+}
+
+function loadPasswordsLocally() {
+  try {
+    const raw = localStorage.getItem('rye_dispatch_passwords');
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    saved.forEach(s => {
+      const u = USERS.find(x => x.id === s.id);
+      if (u) u.password = s.password;
+    });
+  } catch {}
+}
+
+// ─────────────────────────────────────────────
+// AUDIT LOG
+// ─────────────────────────────────────────────
+let auditLog = [];
+
+function logEntry(type, workerId, toJobId, note) {
+  if (!currentUser) return;
+  const worker = workerId ? state.workers.find(w => w.id === workerId) : null;
+  const toJob = toJobId ? state.jobs.find(j => j.id === toJobId) : null;
+  const entry = {
+    id: uid(),
+    timestamp: new Date().toISOString(),
+    userId: currentUser.id,
+    userName: currentUser.name,
+    type,
+    workerName: worker ? worker.name : '',
+    workerNum: worker ? (worker.empNum || '') : '',
+    toJobName: toJob ? (toJob.number ? 'Job ' + toJob.number + ' — ' + toJob.name : toJob.name) : '',
+    note: note || ''
+  };
+  auditLog.unshift(entry);
+  saveLog();
+}
+
+async function saveLog() {
+  const value = JSON.stringify(auditLog.slice(0, 500)); // keep last 500 entries
+  try {
+    localStorage.setItem('rye_dispatch_log', value);
+    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+      await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'audit_log', value });
+    }
+  } catch {}
+}
+
+async function loadLog() {
+  try {
+    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+      const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.audit_log&select=value');
+      if (data && data.length) { auditLog = JSON.parse(data[0].value); return; }
+    }
+    const raw = localStorage.getItem('rye_dispatch_log');
+    if (raw) auditLog = JSON.parse(raw);
+  } catch {}
+}
+
+function openLogPage() {
+  // Populate filter dropdown
+  const sel = document.getElementById('logFilterUser');
+  sel.innerHTML = '<option value="">All Users</option>' +
+    USERS.map(u => '<option value="' + u.id + '">' + u.name + '</option>').join('');
+  renderLog();
+  document.getElementById('logPage').style.display = 'block';
+}
+
+function closeLogPage() {
+  document.getElementById('logPage').style.display = 'none';
+}
+
+function renderLog() {
+  const filterUser = document.getElementById('logFilterUser').value;
+  const entries = filterUser ? auditLog.filter(e => e.userId === filterUser) : auditLog;
+  const container = document.getElementById('logEntries');
+  if (!entries.length) {
+    container.innerHTML = '<div style="text-align:center;padding:48px;color:var(--muted);font-size:14px;">No activity logged yet.</div>';
+    return;
+  }
+  const typeLabel = { move: 'Moved', add: 'Added', remove: 'Removed', weeks: 'Duration Set', password_change: 'Password Changed', job_add: 'Job Added', job_remove: 'Job Removed' };
+  const typeColor = { move: '#2980b9', add: '#27ae60', remove: '#c0392b', weeks: '#8e44ad', password_change: '#7f8c8d', job_add: '#16a085', job_remove: '#c0392b' };
+  container.innerHTML = entries.map(e => {
+    const d = new Date(e.timestamp);
+    const dateStr = d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+    const timeStr = d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+    const color = typeColor[e.type] || '#6b7a8d';
+    const label = typeLabel[e.type] || e.type;
+    let detail = e.note || '';
+    if (!detail && e.workerName) {
+      detail = e.workerName + (e.workerNum ? ' #' + e.workerNum : '');
+      if (e.toJobName) detail += ' → ' + e.toJobName;
+    }
+    return '<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start;">'
+      + '<div style="width:8px;height:8px;border-radius:50%;background:' + color + ';margin-top:5px;flex-shrink:0;"></div>'
+      + '<div style="flex:1;">'
+        + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'
+          + '<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:' + color + '22;color:' + color + ';">' + label + '</span>'
+          + '<span style="font-size:13px;font-weight:700;color:var(--text);">' + detail + '</span>'
+        + '</div>'
+        + '<div style="font-size:11px;color:var(--muted);margin-top:4px;">'
+          + '<strong>' + e.userName + '</strong> &nbsp;·&nbsp; ' + dateStr + ' at ' + timeStr
+        + '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
 }
 
 // ─────────────────────────────────────────────
@@ -1211,6 +1425,7 @@ function submitAddWorker() {
   const empNum = document.getElementById('workerRole').value.trim();
   const worker = { id: uid(), name: displayName, role: '', empNum, jobId, weeks, startDate };
   state.workers.push(worker);
+  logEntry('add', worker.id, worker.jobId, '');
   closeModal('addWorkerModal');
   render();
   scheduleSave();
@@ -1252,7 +1467,9 @@ function submitAddJob() {
   const number = document.getElementById('jobNumber').value.trim();
   const name = document.getElementById('jobNameInput').value.trim();
   if (!name) { document.getElementById('jobNameInput').focus(); return; }
-  state.jobs.push({ id: uid(), number, name });
+  const newJobId = uid();
+  state.jobs.push({ id: newJobId, number, name });
+  logEntry('job_add', null, newJobId, 'Job added: ' + (number ? number + ' \u2014 ' : '') + name);
   closeModal('addJobModal');
   document.getElementById('jobNumber').value = '';
   document.getElementById('jobNameInput').value = '';
@@ -1270,6 +1487,7 @@ function confirmDeleteWorker(workerId) {
   document.getElementById('confirmTitle').textContent = 'Remove Worker?';
   document.getElementById('confirmMsg').textContent = `Remove ${w.name} from the dispatch board?`;
   document.getElementById('confirmOkBtn').onclick = () => {
+    logEntry('remove', workerId, null, w.name + ' removed from board');
     state.workers = state.workers.filter(x => x.id !== workerId);
     closeModal('confirmModal');
     render();
@@ -1290,6 +1508,7 @@ function confirmDeleteJob(jobId) {
     // Move workers to unassigned
     state.workers.forEach(w => { if (w.jobId === jobId) w.jobId = 'unassigned'; });
     state.jobs = state.jobs.filter(j => j.id !== jobId);
+    logEntry('job_remove', null, null, 'Job removed: ' + job.name);
     closeModal('confirmModal');
     render();
     scheduleSave();
@@ -1318,6 +1537,7 @@ function submitSetWeeks() {
   if (!w) return;
   w.weeks = weeks;
   w.startDate = weeks > 0 ? todayStr() : '';
+  logEntry('weeks', workerId, w.jobId, w.name + ' — ' + (weeks > 0 ? weeks + ' weeks' : 'duration cleared'));
   closeModal('setWeeksModal');
   render();
   scheduleSave();
@@ -1359,5 +1579,29 @@ function uid() { return Math.random().toString(36).slice(2,10); }
 // ─────────────────────────────────────────────
 init();
 </script>
+<!-- Log Page Overlay -->
+<div id="logPage" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;">
+  <div style="background:var(--banner);color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7fb8d8;">Rye Electric</span>
+      <div style="width:1px;height:20px;background:rgba(255,255,255,0.2);"></div>
+      <span style="font-size:16px;font-weight:700;">Activity Log</span>
+    </div>
+    <button class="btn btn-ghost" onclick="closeLogPage()" style="color:#fff;border-color:rgba(255,255,255,0.3);">← Back to Board</button>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:24px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+      <div>
+        <div style="font-size:20px;font-weight:900;color:var(--text);">Crew Movement Log</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px;">All crew assignments, moves, and changes</div>
+      </div>
+      <select id="logFilterUser" onchange="renderLog()" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Lato,sans-serif;font-size:13px;background:var(--card);">
+        <option value="">All Users</option>
+      </select>
+    </div>
+    <div id="logEntries"></div>
+  </div>
+</div>
+
 </body>
 </html>
