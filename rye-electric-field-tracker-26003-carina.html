@@ -4363,6 +4363,10 @@ function sigEnd(e){
         if(tsEl){ tsEl.textContent='Signed: '+sigTs; tsEl.style.display='block'; }
         var st = document.getElementById('sig-status-'+wid);
         if(st){ st.textContent='v'; st.style.color='#2e7d32'; }
+        // If this is an IN signature on the sign-in sheet, publish to crew dispatch immediately
+        if(wid.match(/^SI_\d+$/) && typeof publishSingleSignedIn === 'function'){
+          publishSingleSignedIn(wid);
+        }
       }
     }
   }
@@ -5630,6 +5634,8 @@ async function syncFromSupabase(){
     renderDLStats();
     if(JOB_MODE) filterEmployeesToJob(JOB_MODE);
     toast('Synced from cloud - ' + (dailyLogs.length + unitLogs.length) + ' entries');
+    // Auto-publish today's sign-in to crew dispatch on load
+    autoPublishTodaySignIn();
   } catch(e){
     console.error('Sync error:', e);
     toast('Sync failed - working offline');
@@ -7481,6 +7487,67 @@ function getWorkerOpts(selected) {
     + names.map(function(n){
         return '<option value="' + n + '"' + (n === selected ? ' selected' : '') + '>' + n + '</option>';
       }).join('');
+}
+
+function autoPublishTodaySignIn() {
+  try {
+    var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
+    if (!jobEl) return;
+    var jobVal = jobEl.value;
+    var today = new Date().toISOString().slice(0, 10);
+    var siKey = jobVal + '|' + today;
+    if (typeof siData === 'undefined' || !siData[siKey] || !siData[siKey].rows) return;
+    var names = siData[siKey].rows
+      .map(function(r){ return r.name; })
+      .filter(function(n){ return n && n.trim(); });
+    if (!names.length) return;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+      method: 'POST',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ key: 'signed_in_' + jobNum + '_' + today, value: JSON.stringify(names) })
+    }).catch(function(){});
+  } catch(e) {}
+}
+
+function publishSingleSignedIn(wid) {
+  try {
+    var jobEl = document.getElementById('si-job');
+    var dateEl = document.getElementById('si-date');
+    if (!jobEl || !dateEl) return;
+    var jobVal = jobEl.value;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var date = dateEl.value;
+    if (!jobNum || !date) return;
+    // Get the employee name from the row matching this wid
+    var rowIdx = parseInt(wid.replace('SI_', ''), 10);
+    var rows = document.querySelectorAll('#si-tbody tr');
+    if (!rows[rowIdx]) return;
+    var nameEl = rows[rowIdx].querySelector('.si-emp-name');
+    if (!nameEl || !nameEl.value.trim()) return;
+    var newName = nameEl.value.trim();
+    // Merge with any already-published names for today
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'signed_in_' + jobNum + '_' + date;
+    // Fetch existing, merge, re-save
+    fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    }).then(function(r){ return r.json(); }).then(function(data) {
+      var existing = [];
+      if (data && data.length > 0) {
+        try { existing = JSON.parse(data[0].value); } catch(e) {}
+      }
+      if (existing.indexOf(newName) === -1) existing.push(newName);
+      return fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+        method: 'POST',
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ key: key, value: JSON.stringify(existing) })
+      });
+    }).catch(function(){});
+  } catch(e) {}
 }
 /* === END DISPATCH CREW SYNC === */
 
