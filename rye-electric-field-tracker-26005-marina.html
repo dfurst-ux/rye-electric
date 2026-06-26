@@ -4771,6 +4771,7 @@ function initSignIn(){
   loadSIFromStorage();
   document.getElementById('si-empty').style.display='block';
   document.getElementById('si-forms').style.display='none';
+  loadCrewFromDispatch();
 }
 
 function showSIForm(which){
@@ -4942,7 +4943,7 @@ function addIncidentRow(){
   var i = existing;
   var wid = 'INC_'+i;
   var workerOpts = '<option value="">-- Select employee --</option>'
-    + WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }).join('');
+    + (_dispatchCrew.length ? _dispatchCrew.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }) : WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; })).join('');
 
   var tr = document.createElement('tr');
   tr.id = 'inc-row-'+i;
@@ -7372,6 +7373,101 @@ async function saveToDrive(docType, job, data, statusElId) {
   }
 }
 /* === END GOOGLE DRIVE SAVE === */
+
+/* === DISPATCH CREW SYNC === */
+var _dispatchCrew = []; // [{name, role}] for this job
+
+async function loadCrewFromDispatch() {
+  var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
+  if (!jobEl) return;
+  var jobVal = jobEl.value; // e.g. "24001 - BIOLA"
+  var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+  if (!jobNum) return;
+  try {
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'crew_' + jobNum;
+    var resp = await fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    if (!resp.ok) return;
+    var data = await resp.json();
+    if (data && data.length > 0) {
+      _dispatchCrew = JSON.parse(data[0].value); // [{name, role}]
+    } else {
+      _dispatchCrew = [];
+    }
+  } catch(e) {
+    console.warn('Dispatch crew load failed:', e);
+    _dispatchCrew = [];
+  }
+  populateWorkerDropdowns();
+}
+
+function populateWorkerDropdowns() {
+  if (!_dispatchCrew.length) return;
+  var names = _dispatchCrew.map(function(w){ return w.name; }).sort();
+
+  // Log tab worker dropdown
+  var selWorker = document.getElementById('sel-worker');
+  if (selWorker) {
+    var current = selWorker.value;
+    selWorker.innerHTML = names.map(function(n){
+      return '<option value="' + n + '"' + (n === current ? ' selected' : '') + '>' + n + '</option>';
+    }).join('');
+  }
+
+  // Incident report employee dropdowns (existing rows)
+  document.querySelectorAll('.inc-emp-name').forEach(function(sel) {
+    var cur = sel.value;
+    sel.innerHTML = '<option value="">-- Select employee --</option>'
+      + names.map(function(n){ return '<option value="' + n + '"' + (n === cur ? ' selected' : '') + '>' + n + '</option>'; }).join('');
+  });
+}
+
+async function publishSignedIn() {
+  try {
+    var jobEl = document.getElementById('si-job');
+    var dateEl = document.getElementById('si-date');
+    if (!jobEl || !dateEl) return;
+    var jobVal = jobEl.value;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var date = dateEl.value;
+    if (!jobNum || !date) return;
+
+    // Collect signed-in names from the sign-in sheet rows
+    var names = [];
+    document.querySelectorAll('#si-signin-tbody tr').forEach(function(tr) {
+      var nameEl = tr.querySelector('.si-name');
+      if (nameEl && nameEl.value && nameEl.value.trim()) names.push(nameEl.value.trim());
+      // Also check td text content for rendered name cells
+      var nameTd = tr.querySelector('td:first-child');
+      if (nameTd && nameTd.textContent.trim() && !nameEl) names.push(nameTd.textContent.trim());
+    });
+    // Also grab from siData rows if available
+    var siKey = jobVal + '|' + date;
+    if (typeof siData !== 'undefined' && siData[siKey] && siData[siKey].rows) {
+      siData[siKey].rows.forEach(function(r){ if(r.name && names.indexOf(r.name) === -1) names.push(r.name); });
+    }
+
+    if (!names.length) return;
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'signed_in_' + jobNum + '_' + date;
+    await fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ key: key, value: JSON.stringify(names) })
+    });
+  } catch(e) { console.warn('publishSignedIn failed:', e); }
+}
+/* === END DISPATCH CREW SYNC === */
+
 // DJR Yes/No question toggles
 (function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
 
