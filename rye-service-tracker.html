@@ -2989,37 +2989,42 @@ function pushToTimesheetSilent(t) {
 
 // ── CONSOLIDATE TIMESHEETS ────────────────────────────────────────────────────
 async function consolidateTimesheets() {
-  toast('Consolidating timesheets...');
-  const grouped = {};
-  const toDelete = [];
+  toast('Consolidating...');
 
-  // Group by employee + weekEnding
+  const grouped = {};
+
+  // Group all timesheets by employee + weekEnding
   timesheets.forEach(ts => {
-    const key = (ts.employee || '') + '|' + (ts.weekEnding || '');
+    const key = (ts.employee || '').trim() + '|' + (ts.weekEnding || '');
     if (!grouped[key]) {
-      grouped[key] = { ...ts, entries: [...(ts.entries || [])] };
+      // First one becomes the master
+      grouped[key] = {
+        ...ts,
+        entries: [...(ts.entries || [])],
+        _ids: [ts.id]  // track all IDs to delete dupes
+      };
     } else {
-      // Merge entries into the first one — avoid duplicates
-      const existing = grouped[key];
+      // Merge entries in, skip duplicates
       (ts.entries || []).forEach(e => {
-        const isDupe = existing.entries.some(ex =>
+        const isDupe = grouped[key].entries.some(ex =>
           ex.ticketId === e.ticketId && ex.date === e.date
         );
-        if (!isDupe) existing.entries.push(e);
+        if (!isDupe) grouped[key].entries.push(e);
       });
-      // Keep approved status if either is approved
+      // Keep approved status
       if (ts.status === 'Approved') {
         grouped[key].status     = 'Approved';
         grouped[key].approvedBy = ts.approvedBy;
         grouped[key].approvedAt = ts.approvedAt;
       }
-      // Mark duplicate for deletion
-      toDelete.push(ts.id);
+      // Track this duplicate ID for deletion
+      grouped[key]._ids.push(ts.id);
     }
   });
 
-  // Recalculate totals
+  // Recalculate totals and sort entries by date
   Object.values(grouped).forEach(ts => {
+    ts.entries.sort((a,b) => (a.date||'').localeCompare(b.date||''));
     const totalReg = ts.entries.reduce((s,e) => s + (parseFloat(e.regHours)||0), 0);
     const totalOT  = ts.entries.reduce((s,e) => s + (parseFloat(e.otHours) ||0), 0);
     ts.totalReg    = totalReg.toFixed(2);
@@ -3027,23 +3032,27 @@ async function consolidateTimesheets() {
     ts.totalHours  = (totalReg + totalOT).toFixed(2);
   });
 
-  // Delete duplicates from Supabase
-  for (const id of toDelete) {
-    await sbDeleteTimesheet(id);
+  // Delete ALL old records from Supabase for affected keys
+  let deleteCount = 0;
+  for (const ts of Object.values(grouped)) {
+    for (const id of ts._ids) {
+      await sbDeleteTimesheet(id);
+      deleteCount++;
+    }
+    delete ts._ids; // clean up temp property
   }
 
-  // Replace local array with consolidated list
+  // Replace local array
   timesheets = Object.values(grouped);
   save();
 
-  // Upsert all consolidated timesheets to Supabase
+  // Re-insert merged timesheets to Supabase
   for (const ts of timesheets) {
     await sbUpsertTimesheet(ts);
   }
 
   renderTimesheets();
-  const merged = toDelete.length;
-  toast('✓ Consolidated — ' + (merged > 0 ? merged + ' duplicate' + (merged !== 1 ? 's' : '') + ' merged' : 'already clean'));
+  toast('✓ Done — ' + timesheets.length + ' timesheet' + (timesheets.length !== 1 ? 's' : '') + ' (' + deleteCount + ' records merged)');
 }
 function getWeekEnding(dateStr) {
   // Week ending = Sunday of that week
