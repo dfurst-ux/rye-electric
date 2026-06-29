@@ -3694,24 +3694,16 @@ function loadDJR(){
 }
 
 function populateDJRWorkforce(job, date){
-  // Auto-populate workforce from dailyLogs for this job + date
+  // Pull only today's entries from dailyLogs (already includes unit log data)
   const entries = dailyLogs.filter(l=>l.job===job && l.date===date);
-  // Also pull from unit logs
-  const unitEntries = unitLogs.filter(l=>l.job===job);
 
-  // Group by worker
+  // Group by worker — hours come only from dailyLogs to avoid double-counting
   const workerMap = {};
   entries.forEach(l=>{
     if(!workerMap[l.worker]) workerMap[l.worker]={worker:l.worker,lines:[],hours:0};
     const desc = [l.units,l.notes].filter(Boolean).join(' -- ');
     if(desc) workerMap[l.worker].lines.push(desc);
-    workerMap[l.worker].hours += l.hours;
-  });
-  unitEntries.forEach(l=>{
-    if(!workerMap[l.worker]) workerMap[l.worker]={worker:l.worker,lines:[],hours:0};
-    const desc = 'Unit '+l.unit+' ('+l.bldg+') -- '+l.phase+(l.notes?' -- '+l.notes:'');
-    workerMap[l.worker].lines.push(desc);
-    workerMap[l.worker].hours += l.hrs||0;
+    workerMap[l.worker].hours += parseFloat(l.hours)||0;
   });
 
   // Render workforce table
