@@ -3627,15 +3627,47 @@ function printTimesheet(id) {
   const totalReg = parseFloat(ts.totalReg) || 0;
   const totalOT  = parseFloat(ts.totalOT)  || 0;
   const totalHrs = parseFloat(ts.totalHours) || 0;
+  const num      = empNum(ts.employee);
+  const title    = empTitle(ts.employee);
 
   const entryRows = (ts.entries || []).map((e, i) => `
     <tr style="background:${i%2===0?'#fff':'#f4f8f9'}">
       <td>${fmtDate(e.date)}</td>
+      <td>${e.ticketId || '—'}</td>
       <td>${e.job || '—'}</td>
+      <td style="text-align:center">${e.timeIn || '—'}</td>
+      <td style="text-align:center">${e.timeOut || '—'}</td>
       <td style="text-align:center;font-weight:600">${(parseFloat(e.regHours)||0).toFixed(2)}</td>
       <td style="text-align:center;font-weight:600">${(parseFloat(e.otHours)||0).toFixed(2)}</td>
       <td style="text-align:center;font-weight:700">${((parseFloat(e.regHours)||0)+(parseFloat(e.otHours)||0)).toFixed(2)}</td>
     </tr>`).join('');
+
+  // Edit history block
+  const editHistoryHtml = ts.editHistory && ts.editHistory.length
+    ? `<div style="margin:16px 0;background:#fff8e8;border:1px solid #D4A843;border-radius:6px;padding:12px 14px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#8a6000;margin-bottom:6px">Edit History</div>
+        ${ts.editHistory.map(h => `<div style="font-size:11px;color:#555;margin-bottom:3px">• ${h.editedBy} — ${h.reason || 'No reason given'} &nbsp;·&nbsp; ${new Date(h.editedAt).toLocaleString('en-US',{dateStyle:'short',timeStyle:'short'})}</div>`).join('')}
+      </div>` : '';
+
+  // Approval block
+  const approvalHtml = ts.status === 'Approved' && ts.approvedBy
+    ? `<div style="margin-top:16px;background:#eafaf1;border:1.5px solid #27ae60;border-radius:6px;padding:14px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1a6b3e;margin-bottom:4px">Approved By</div>
+          <div style="font-size:14px;font-weight:700;color:#1a1a1a">${ts.approvedBy}</div>
+          <div style="font-size:11px;color:#555">${empTitle(ts.approvedBy)}</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1a6b3e;margin-bottom:4px">Date Approved</div>
+          <div style="font-size:14px;font-weight:700;color:#1a1a1a">${new Date(ts.approvedAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</div>
+          <div style="font-size:11px;color:#555">${new Date(ts.approvedAt).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1a6b3e;margin-bottom:4px">Electronic Signature</div>
+          <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;color:#27ae60;border-bottom:2px solid #27ae60;padding-bottom:2px;display:inline-block;min-width:160px;text-align:center">${ts.approvedBy}</div>
+          <div style="font-size:9px;color:#888;margin-top:3px">Digitally approved via Rye Electric Service Tracker</div>
+        </div>
+      </div>` : '';
 
   const html = `<!DOCTYPE html>
 <html>
@@ -3650,25 +3682,38 @@ function printTimesheet(id) {
   .brand .word-electric { font-size: 11px; font-weight: 300; letter-spacing: 3px; color: #4E9DA8; display: block; margin-top: 2px; }
   .doc-title { font-size: 22px; font-weight: 700; color: #1a1a1a; text-align: right; }
   .doc-num { font-size: 13px; color: #888; text-align: right; margin-top: 4px; }
-  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; background: #f4f8f9; border-radius: 6px; padding: 14px 16px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; background: #f4f8f9; border-radius: 6px; padding: 14px 16px; }
   .meta-item label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; display: block; margin-bottom: 3px; }
-  .meta-item span { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; }
+  .meta-item span { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 11px; }
   th { background: #1a1a1a; color: #fff; padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
-  td { padding: 8px 10px; border-bottom: 1px solid #e2e2e2; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e2e2e2; }
   .totals-row td { background: #4E9DA8; color: #fff; font-weight: 700; font-size: 12px; border: none; }
-  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
   .summary-box { border: 2px solid #e2e2e2; border-radius: 6px; padding: 12px 14px; text-align: center; }
   .summary-box.total { border-color: #4E9DA8; background: #EAF5F7; }
   .summary-box label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; display: block; margin-bottom: 4px; }
   .summary-box span { font-size: 24px; font-weight: 700; color: #1a1a1a; }
   .summary-box.total span { color: #4E9DA8; }
-  .sig-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 32px; border-top: 1px solid #e2e2e2; padding-top: 20px; }
-  .sig-block label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; display: block; margin-bottom: 32px; }
-  .sig-line { border-bottom: 1px solid #1a1a1a; margin-bottom: 5px; height: 32px; }
-  .sig-name { font-size: 10px; color: #888; }
+
+  /* SIGNATURE SECTION */
+  .sig-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 28px; border-top: 2px solid #e2e2e2; padding-top: 20px; }
+  .sig-block label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; display: block; margin-bottom: 4px; }
+  .sig-name-line { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+  .sig-title-line { font-size: 11px; color: #888; margin-bottom: 12px; }
+  .sig-canvas-box { border: 1.5px dashed #4E9DA8; border-radius: 6px; height: 80px; background: #f9fcfd; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; position: relative; overflow: hidden; }
+  .sig-canvas-box canvas { position: absolute; inset: 0; cursor: crosshair; touch-action: none; }
+  .sig-canvas-hint { font-size: 11px; color: #aaa; pointer-events: none; }
+  .sig-date { font-size: 11px; color: #888; margin-top: 6px; }
+  .sig-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .sig-btn { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 4px; border: 1px solid #e2e2e2; cursor: pointer; background: #fff; color: #555; }
+  .sig-btn:hover { background: #f0f0f0; }
   .footer { margin-top: 24px; border-top: 1px solid #e2e2e2; padding-top: 10px; font-size: 10px; color: #888; text-align: center; }
-  @media print { body { padding: 16px; } }
+  @media print {
+    body { padding: 16px; }
+    .sig-actions { display: none; }
+    .no-print { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -3679,15 +3724,16 @@ function printTimesheet(id) {
     </div>
     <div>
       <div class="doc-title">WEEKLY TIMESHEET</div>
-      <div class="doc-num">${ts.id}</div>
+      <div class="doc-num">${ts.id} &nbsp;·&nbsp; ${ts.status.toUpperCase()}</div>
     </div>
   </div>
 
   <div class="meta-grid">
     <div class="meta-item"><label>Employee</label><span>${ts.employee}</span></div>
+    <div class="meta-item"><label>Employee #</label><span>${num !== '—' ? num : 'N/A'}</span></div>
+    <div class="meta-item"><label>Title</label><span>${title || 'Staff'}</span></div>
     <div class="meta-item"><label>Week Ending</label><span>${fmtDate(ts.weekEnding)}</span></div>
-    <div class="meta-item"><label>Status</label><span>${ts.status}</span></div>
-    <div class="meta-item"><label>${ts.approvedBy ? 'Approved By' : 'Generated'}</label><span>${ts.approvedBy || new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span></div>
+    <div class="meta-item"><label>Status</label><span style="color:${ts.status==='Approved'?'#27ae60':ts.status==='Submitted'?'#2980b9':'#888'}">${ts.status}</span></div>
   </div>
 
   <div class="summary">
@@ -3709,18 +3755,21 @@ function printTimesheet(id) {
     <thead>
       <tr>
         <th>Date</th>
+        <th>Ticket #</th>
         <th>Job / Project &amp; Cost Code</th>
+        <th style="text-align:center">Time In</th>
+        <th style="text-align:center">Time Out</th>
         <th style="text-align:center">Reg Hrs</th>
         <th style="text-align:center">OT Hrs</th>
         <th style="text-align:center">Total</th>
       </tr>
     </thead>
     <tbody>
-      ${entryRows || '<tr><td colspan="5" style="text-align:center;color:#888;padding:20px">No entries</td></tr>'}
+      ${entryRows || '<tr><td colspan="8" style="text-align:center;color:#888;padding:20px">No entries</td></tr>'}
     </tbody>
     <tfoot>
       <tr class="totals-row">
-        <td colspan="2">TOTALS</td>
+        <td colspan="5">WEEK TOTALS</td>
         <td style="text-align:center">${totalReg.toFixed(2)}</td>
         <td style="text-align:center">${totalOT.toFixed(2)}</td>
         <td style="text-align:center">${totalHrs.toFixed(2)}</td>
@@ -3728,35 +3777,116 @@ function printTimesheet(id) {
     </tfoot>
   </table>
 
+  ${editHistoryHtml}
+  ${approvalHtml}
+
+  <!-- SIGNATURE SECTION -->
   <div class="sig-section">
     <div class="sig-block">
       <label>Employee Signature</label>
-      <div class="sig-line"></div>
-      <div class="sig-name">${ts.employee} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date: _______________</div>
+      <div class="sig-name-line">${ts.employee}</div>
+      <div class="sig-title-line">${title}${num !== '—' ? ' &nbsp;·&nbsp; Emp #' + num : ''}</div>
+      <div class="sig-canvas-box" id="emp-sig-box">
+        <canvas id="emp-sig-canvas"></canvas>
+        <span class="sig-canvas-hint" id="emp-hint">Sign here</span>
+      </div>
+      <div class="sig-actions no-print">
+        <button class="sig-btn" onclick="clearSig('emp-sig-canvas','emp-hint')">Clear</button>
+      </div>
+      <div class="sig-date">Date: ___________________________</div>
     </div>
     <div class="sig-block">
-      <label>Approved By</label>
-      <div class="sig-line"></div>
-      <div class="sig-name">Supervisor &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Date: _______________</div>
+      <label>${ts.status === 'Approved' && ts.approvedBy ? 'Approved By' : 'Supervisor Signature'}</label>
+      <div class="sig-name-line">${ts.approvedBy || 'Supervisor'}</div>
+      <div class="sig-title-line">${ts.approvedBy ? empTitle(ts.approvedBy) : 'Management'}</div>
+      <div class="sig-canvas-box" id="sup-sig-box">
+        <canvas id="sup-sig-canvas"></canvas>
+        <span class="sig-canvas-hint" id="sup-hint">Sign here</span>
+      </div>
+      <div class="sig-actions no-print">
+        <button class="sig-btn" onclick="clearSig('sup-sig-canvas','sup-hint')">Clear</button>
+      </div>
+      <div class="sig-date">Date: ___________________________</div>
     </div>
   </div>
 
   <div class="footer">
-    Rye Electric, Inc. &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp; (949) 441-0545 &nbsp;·&nbsp; ryecompany.com
+    Rye Electric, Inc. &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp; (949) 441-0545 &nbsp;·&nbsp; ryecompany.com &nbsp;·&nbsp; CA Lic. 980345
   </div>
-  <script>window.addEventListener('load', function(){ setTimeout(function(){ window.print(); }, 500); });<\/script>
+
+<script>
+  function initSig(canvasId, hintId, boxId) {
+    const canvas = document.getElementById(canvasId);
+    const box    = document.getElementById(boxId);
+    const hint   = document.getElementById(hintId);
+    if (!canvas || !box) return;
+    canvas.width  = box.offsetWidth  || 400;
+    canvas.height = box.offsetHeight || 80;
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.lineWidth   = 2;
+    ctx.lineCap     = 'round';
+    ctx.lineJoin    = 'round';
+    let drawing = false;
+    let hasSig  = false;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const src  = e.touches ? e.touches[0] : e;
+      return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+    }
+    function start(e) {
+      e.preventDefault();
+      drawing = true;
+      const p = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      if (!hasSig) { hint.style.display = 'none'; hasSig = true; }
+    }
+    function move(e) {
+      e.preventDefault();
+      if (!drawing) return;
+      const p = getPos(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+    function end(e) { e.preventDefault(); drawing = false; }
+
+    canvas.addEventListener('mousedown',  start);
+    canvas.addEventListener('mousemove',  move);
+    canvas.addEventListener('mouseup',    end);
+    canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove',  move,  { passive: false });
+    canvas.addEventListener('touchend',   end);
+  }
+
+  function clearSig(canvasId, hintId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    const hint = document.getElementById(hintId);
+    if (hint) hint.style.display = 'block';
+  }
+
+  window.addEventListener('load', function() {
+    initSig('emp-sig-canvas', 'emp-hint', 'emp-sig-box');
+    initSig('sup-sig-canvas', 'sup-hint', 'sup-sig-box');
+  });
+<\/script>
 </body>
 </html>`;
 
-  // Blob URL approach - most reliable, no popup blocker issues
   const blob = new Blob([html], { type: 'text/html' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href     = url;
   a.target   = '_blank';
   a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
 }
+
+
 
 // ── RENDER CREW ──
 const CAT_LABELS = {
