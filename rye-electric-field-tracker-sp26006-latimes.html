@@ -328,8 +328,8 @@ tbody tr:hover td{background:#f7fbfc}
 
 </style>
   <script src="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/email.min.js.download"></script>
-  <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 </head>
 <body>
 
@@ -3820,6 +3820,7 @@ function collectDJRData(){
     superintendent: document.getElementById('djr-super').value.trim(),
     title:    document.getElementById('djr-title').value.trim(),
     superSig: (function(){ var c=document.getElementById('djr-sig-canvas'); if(!c) return ''; var blank=document.createElement('canvas'); blank.width=c.width; blank.height=c.height; return c.toDataURL()!==blank.toDataURL()?c.toDataURL('image/png'):''; })(),
+    superSig: (function(){ var c=document.getElementById('djr-sig-canvas'); if(!c) return ''; var blank=document.createElement('canvas'); blank.width=c.width; blank.height=c.height; return c.toDataURL()!==blank.toDataURL()?c.toDataURL('image/png'):''; })(),
     savedAt:  new Date().toISOString(),
     incidents:   getYN('incidents'),
     meetings:    getYN('meetings'),
@@ -3837,11 +3838,19 @@ function collectDJRData(){
 async function downloadDJRDocx(){
   if(typeof docx==='undefined'){
     toast('Loading Word library...');
-    var s=document.createElement('script');
-    s.src='https://unpkg.com/docx@8.5.0/build/index.js';
-    s.onload=function(){ downloadDJRDocx(); };
-    s.onerror=function(){ toast('Could not load Word library — check internet connection'); };
-    document.head.appendChild(s);
+    function tryLoad(urls, idx){
+      if(idx>=urls.length){ toast('Word doc unavailable — no internet connection'); return; }
+      var s=document.createElement('script');
+      s.src=urls[idx];
+      s.onload=function(){ downloadDJRDocx(); };
+      s.onerror=function(){ tryLoad(urls, idx+1); };
+      document.head.appendChild(s);
+    }
+    tryLoad([
+      'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js',
+      'https://unpkg.com/docx@8.5.0/build/index.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/index.js'
+    ], 0);
     return;
   }
   var job  = document.getElementById('djr-job').value;
@@ -6231,7 +6240,11 @@ var _employees = [];
 async function loadEmployeesForJob(){
   var jobEl = document.getElementById('sel-job');
   var job = jobEl ? jobEl.value : '';
-  if(!job) return;
+  // LA Times is a locked single-job tracker — sel-job may be empty on load
+  if(!job){
+    if(typeof JOB_MODE !== 'undefined' && JOB_MODE) job = JOB_MODE;
+    else job = 'SP26006 - LOS ANGELES TIMES';
+  }
   var jobNum = job.split(' - ')[0].trim();
   var crewKey = 'crew_' + jobNum;
   try{
