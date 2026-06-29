@@ -323,6 +323,15 @@
     color: var(--accent-dark);
   }
 
+  /* Signed-in green dot */
+  .worker-card.signed-in { border-color: #27ae60; background: #f0faf4; }
+  .worker-avatar { position: relative; }
+  .signed-in-dot {
+    position: absolute; bottom: 0; right: 0;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #27ae60; border: 2px solid #fff;
+  }
+
   /* View mode lock */
   body.view-mode .job-delete-btn,
   body.view-mode .worker-remove-btn,
@@ -989,14 +998,17 @@ function render() {
     `;
 
     // Drop events
-    const body = col.querySelector('.job-body');
-    body.addEventListener('dragover', e => {
+    const jobBody = col.querySelector('.job-body');
+    jobBody.addEventListener('dragover', e => {
       if (!isAdmin) return;
       e.preventDefault();
       col.classList.add('drag-over');
     });
-    body.addEventListener('dragleave', () => col.classList.remove('drag-over'));
-    body.addEventListener('drop', e => {
+    jobBody.addEventListener('dragleave', e => {
+      // Only remove if leaving the column entirely
+      if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+    });
+    jobBody.addEventListener('drop', e => {
       e.preventDefault();
       col.classList.remove('drag-over');
       if (!isAdmin || !dragWorker) return;
@@ -1009,12 +1021,16 @@ function render() {
     workers.forEach(w => {
       const card = document.getElementById('wc-' + w.id);
       if (!card) return;
-      card.addEventListener('dragstart', () => {
+      card.setAttribute('draggable', isAdmin ? 'true' : 'false');
+      card.addEventListener('dragstart', e => {
         dragWorker = w.id;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', w.id);
         setTimeout(() => card.classList.add('dragging'), 0);
       });
       card.addEventListener('dragend', () => {
         card.classList.remove('dragging');
+        document.querySelectorAll('.job-col').forEach(c => c.classList.remove('drag-over'));
         dragWorker = null;
       });
     });
@@ -1428,6 +1444,32 @@ function submitAddWorker() {
   const weeks = parseInt(document.getElementById('workerWeeks').value) || 0;
   const startDate = weeks > 0 ? todayStr() : '';
   const empNum = document.getElementById('workerRole').value.trim();
+
+  // Check if this worker already exists anywhere on the board
+  const existing = state.workers.find(w => w.name.toUpperCase() === name.toUpperCase());
+  if (existing) {
+    // Move them instead of duplicating
+    const fromJob = state.jobs.find(j => j.id === existing.jobId);
+    const toJob = state.jobs.find(j => j.id === jobId);
+    if (existing.jobId === jobId) {
+      showToast(displayName + ' is already on this job');
+      closeModal('addWorkerModal');
+      return;
+    }
+    const fromLabel = fromJob ? (fromJob.number ? 'Job ' + fromJob.number + ' \u2014 ' + fromJob.name : fromJob.name) : 'Unassigned';
+    const toLabel = toJob ? (toJob.number ? 'Job ' + toJob.number + ' \u2014 ' + toJob.name : toJob.name) : 'Unassigned';
+    const note = displayName + (empNum ? ' #' + empNum : '') + '  \u2192  ' + fromLabel + '  \u279C  ' + toLabel;
+    existing.jobId = jobId;
+    if (weeks > 0) { existing.weeks = weeks; existing.startDate = startDate; }
+    logEntry('move', existing.id, jobId, note);
+    closeModal('addWorkerModal');
+    render();
+    scheduleSave();
+    showToast(displayName + ' moved to ' + (toJob ? toJob.name : 'job'));
+    return;
+  }
+
+  // Brand new worker — add them
   const worker = { id: uid(), name: displayName, role: '', empNum, jobId, weeks, startDate };
   state.workers.push(worker);
   logEntry('add', worker.id, worker.jobId, '');
@@ -1575,14 +1617,64 @@ function showToast(msg) {
 }
 
 // ─────────────────────────────────────────────
-// UTIL
+// SIGNED-IN GREEN DOT
 // ─────────────────────────────────────────────
+let signedInByJob = {}; // { jobNumber: Set(uppercased names) }
+
+async function loadSignedInStatus() {
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    const keys = state.jobs
+      .filter(j => j.number)
+      .map(j => 'signed_in_' + j.number + '_' + today);
+    const results = await Promise.all(
+      keys.map(k => sbFetch('/rest/v1/crew_dispatch?key=eq.' + k + '&select=key,value'))
+    );
+    signedInByJob = {};
+    results.forEach(rows => {
+      if (!rows || !rows.length) return;
+      const key = rows[0].key; // signed_in_24010_2026-06-29
+      const jobNum = key.replace('signed_in_', '').replace('_' + today, '');
+      try {
+        const names = JSON.parse(rows[0].value);
+        signedInByJob[jobNum] = new Set(names.map(n => n.toUpperCase()));
+      } catch {}
+    });
+    applySignedInHighlights();
+  } catch {}
+}
+
+function applySignedInHighlights() {
+  // Clear all existing green dots and signed-in classes
+  document.querySelectorAll('.signed-in-dot').forEach(el => el.remove());
+  document.querySelectorAll('.worker-card.signed-in').forEach(el => el.classList.remove('signed-in'));
+
+  state.workers.forEach(w => {
+    const job = state.jobs.find(j => j.id === w.jobId);
+    if (!job || !job.number) return;
+    const signedIn = signedInByJob[job.number];
+    if (!signedIn || !signedIn.has(w.name.toUpperCase())) return;
+    const card = document.getElementById('wc-' + w.id);
+    if (!card) return;
+    card.classList.add('signed-in');
+    // Add green dot to avatar
+    const avatar = card.querySelector('.worker-avatar');
+    if (avatar && !avatar.querySelector('.signed-in-dot')) {
+      const dot = document.createElement('span');
+      dot.className = 'signed-in-dot';
+      avatar.appendChild(dot);
+    }
+  });
+}
 function uid() { return Math.random().toString(36).slice(2,10); }
 
 // ─────────────────────────────────────────────
 // BOOT
 // ─────────────────────────────────────────────
-init();
+init().then(() => {
+  loadSignedInStatus();
+  setInterval(loadSignedInStatus, 60000);
+});
 </script>
 <!-- Log Page Overlay -->
 <div id="logPage" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;">
