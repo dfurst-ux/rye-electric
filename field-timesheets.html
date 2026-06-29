@@ -229,7 +229,7 @@ const SB_HDRS = {
 };
 
 let weekStart   = getMonday(new Date());
-let timesheets  = []; // loaded from service_timesheets where source='field'
+let timesheets  = []; // loaded from field_timesheets where source='field'
 let pendingApprovalId = null;
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
@@ -330,12 +330,12 @@ async function loadTimesheets() {
     return;
   }
 
-  // Load existing approved/submitted timesheets for this week from service_timesheets
+  // Load existing approved/submitted timesheets for this week from field_timesheets
   const { data: existingTs } = await sb
-    .from('service_timesheets')
+    .from('field_timesheets')
     .select('*')
     .eq('week_ending', weekEndStr)
-    .like('id', 'FLD-%');
+    ;
 
   const existingMap = {};
   (existingTs || []).forEach(ts => { existingMap[ts.id] = ts; });
@@ -367,7 +367,7 @@ async function loadTimesheets() {
     const id = tsId(employee, weekEndStr);
     const existing = existingMap[id];
 
-    // If already exists in service_timesheets, use that status/approval
+    // If already exists in field_timesheets, use that status/approval
     const totalReg = entries.reduce((s,e) => s + e.regHours, 0);
     const totalOT  = entries.reduce((s,e) => s + e.otHours,  0);
     const totalHrs = entries.reduce((s,e) => s + e.total,    0);
@@ -546,7 +546,7 @@ async function confirmApproval(approverName) {
 
 // ── SUPABASE UPSERT ───────────────────────────────────────────────────────────
 async function sbUpsert(ts) {
-  await fetch(SUPABASE_URL + '/rest/v1/service_timesheets', {
+  await fetch(SUPABASE_URL + '/rest/v1/field_timesheets', {
     method:  'POST',
     headers: SB_HDRS,
     body:    JSON.stringify({
