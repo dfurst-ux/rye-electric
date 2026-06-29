@@ -1152,21 +1152,65 @@ textarea.form-control { resize: vertical; min-height: 80px; }
      MODAL: NEW TASK
 ══════════════════════════════════════════════ -->
 <div class="modal-overlay" id="taskModal">
-  <div class="modal" style="max-width:600px">
+  <div class="modal" style="max-width:700px">
     <div class="modal-header">
       <div class="modal-title">Assign New Task</div>
       <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
     </div>
     <div class="modal-body">
+
+      <!-- SERVICE TICKET INFO — auto-populates the ticket -->
+      <div class="form-section">
+        <div class="form-section-title red">Service Call Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Customer / Company <span style="color:var(--red)">*</span></label>
+            <input class="form-control" id="task-customer" placeholder="Customer name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service Address</label>
+            <input class="form-control" id="task-address" placeholder="Job site address">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Call Type</label>
+            <select class="form-control" id="task-call-type">
+              <option value="">Select type...</option>
+              <option>Emergency / Trouble Call</option>
+              <option>T&M Service Call</option>
+              <option>New Installation</option>
+              <option>Lighting</option>
+              <option>Outlets / Switches</option>
+              <option>Panel / Breaker</option>
+              <option>Warranty / Callback</option>
+              <option>Inspection</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">PO / Work Order #</label>
+            <input class="form-control" id="task-po" placeholder="PO or WO number">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Customer Email</label>
+            <input class="form-control" type="email" id="task-customer-email" placeholder="For rating survey">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Customer Phone</label>
+            <input class="form-control" id="task-customer-phone" placeholder="Customer phone">
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK DETAILS -->
       <div class="form-section">
         <div class="form-section-title red">Task Details</div>
         <div class="form-grid">
           <div class="form-group full-col">
-            <label class="form-label">Task Title / Description</label>
+            <label class="form-label">Task Title / Scope of Work <span style="color:var(--red)">*</span></label>
             <input class="form-control" id="task-title" placeholder="What needs to be done?">
           </div>
           <div class="form-group">
-            <label class="form-label">Assign To</label>
+            <label class="form-label">Assign To <span style="color:var(--red)">*</span></label>
             <select class="form-control" id="task-assignee">
               <option value="">Select employee...</option>
               <option>Mychal Kirschbaum</option>
@@ -1182,12 +1226,6 @@ textarea.form-control { resize: vertical; min-height: 80px; }
             <input class="form-control" type="date" id="task-due">
           </div>
           <div class="form-group">
-            <label class="form-label">Linked Service Call (optional)</label>
-            <select class="form-control" id="task-ticket">
-              <option value="">None</option>
-            </select>
-          </div>
-          <div class="form-group">
             <label class="form-label">NTE — Not To Exceed $</label>
             <div class="nte-field">
               <span class="nte-prefix">$</span>
@@ -1200,6 +1238,12 @@ textarea.form-control { resize: vertical; min-height: 80px; }
               <option>Normal</option>
               <option>High</option>
               <option>Urgent</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Linked Service Call (optional)</label>
+            <select class="form-control" id="task-ticket">
+              <option value="">None</option>
             </select>
           </div>
           <div class="form-group full-col">
@@ -2359,32 +2403,79 @@ function clearTicketForm() {
 
 // ── SAVE TASK ──
 function saveTask() {
-  const title = document.getElementById('task-title').value.trim();
+  const title    = document.getElementById('task-title').value.trim();
   const assignee = document.getElementById('task-assignee').value;
-  if (!title) { toast('Enter a task title', true); return; }
+  const customer = document.getElementById('task-customer').value.trim();
+  if (!title)    { toast('Enter a task title / scope of work', true); return; }
   if (!assignee) { toast('Select an assignee', true); return; }
+  if (!customer) { toast('Enter a customer name', true); return; }
+
+  const due           = document.getElementById('task-due').value;
+  const ticketRef     = document.getElementById('task-ticket').value;
+  const nte           = document.getElementById('task-nte').value;
+  const priority      = document.getElementById('task-priority').value;
+  const notes         = document.getElementById('task-notes').value;
+  const address       = document.getElementById('task-address').value.trim();
+  const callType      = document.getElementById('task-call-type').value;
+  const po            = document.getElementById('task-po').value.trim();
+  const custEmail     = document.getElementById('task-customer-email').value.trim();
+  const custPhone     = document.getElementById('task-customer-phone').value.trim();
 
   const task = {
     id: 'TSK-' + String(taskCounter++).padStart(4,'0'),
-    title,
-    assignee,
-    due: document.getElementById('task-due').value,
-    ticketRef: document.getElementById('task-ticket').value,
-    nte: document.getElementById('task-nte').value,
-    priority: document.getElementById('task-priority').value,
-    notes: document.getElementById('task-notes').value,
+    title, assignee, due, ticketRef, nte, priority, notes, customer, address,
     status: 'Open',
     createdAt: new Date().toISOString()
   };
 
+  // ── AUTO-CREATE SERVICE TICKET WITH ALL FIELDS ────────────────────────────
+  const newTicket = {
+    id:            'SVC-' + String(ticketCounter++).padStart(4,'0'),
+    customer,
+    address,
+    type:          callType || 'Other',
+    date:          due || today(),
+    tech:          assignee,
+    po,
+    nte:           nte || '',
+    status:        'Open',
+    scope:         title,
+    notes:         notes || '',
+    equipment:     '',
+    customerEmail: custEmail,
+    customerPhone: custPhone,
+    labor:         [{ employee: assignee, timeIn: '', timeOut: '', regHours: '', otHours: '', rate: '124.97', lineTotal: '', jobRef: 'Service Call' }],
+    materials:     [],
+    attachments:   [],
+    urgency:       priority === 'Urgent' ? 'Emergency' : priority === 'High' ? 'Urgent' : 'Standard',
+    source:        'Task',
+    taskId:        task.id,
+    ratings:       {},
+    dailyReport:   {},
+    createdAt:     new Date().toISOString(),
+  };
+
+  // Link task back to the new ticket
+  task.ticketRef = newTicket.id;
+
+  tickets.unshift(newTicket);
   tasks.unshift(task);
   save();
+  sbUpsert(newTicket);
   sendTaskEmail(task);
   closeModal('taskModal');
-  ['task-title','task-nte','task-notes'].forEach(id => document.getElementById(id).value = '');
+
+  // Clear all task form fields
+  ['task-title','task-nte','task-notes','task-customer','task-address','task-po','task-customer-email','task-customer-phone'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   document.getElementById('task-assignee').selectedIndex = 0;
+  document.getElementById('task-call-type').selectedIndex = 0;
+  document.getElementById('task-priority').selectedIndex = 0;
+
   renderAll();
-  toast('Task ' + task.id + ' assigned & email sent to Mychal ✓');
+  toast('Task ' + task.id + ' assigned — ticket ' + newTicket.id + ' created & open in Service Calls ✓');
 }
 
 // ── SAVE TIMESHEET ──
@@ -2616,7 +2707,7 @@ function taskCard(t, dimmed) {
         <span>${t.id}</span>
         <span>Due: ${fmtDate(t.due)}</span>
         ${t.nte ? `<span class="task-nte">NTE $${parseFloat(t.nte).toLocaleString()}</span>` : ''}
-        ${t.ticketRef ? `<span>📎 ${t.ticketRef}</span>` : ''}
+        ${t.ticketRef ? `<span style="cursor:pointer;color:var(--teal);font-weight:700" onclick="showView('tickets');setTimeout(()=>viewTicket('${t.ticketRef}'),200)">📎 ${t.ticketRef}</span>` : ''}
       </div>
       <div class="flex-row mt-8">
         <button class="btn btn-ghost btn-sm" onclick="cycleTaskStatus('${t.id}')">→ ${nextStatus(t.status)}</button>
