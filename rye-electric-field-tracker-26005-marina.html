@@ -835,6 +835,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="ch"><div class="ct">
           <svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 110-14h.5A5.5 5.5 0 0122 10v1.5A3.5 3.5 0 0117.5 19z"></path></svg>
           Weather &amp; conditions
+          <button onclick="fetchDJRWeather()" style="float:right;margin-top:-2px;background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer">🌤 Auto-fill</button>
         </div></div>
         <div class="cb">
           <div class="form-grid four">
@@ -3569,7 +3570,7 @@ function goTab(btn,name){
   if(name==='workers')   renderWorkers();
   if(name==='jobs')      renderJobsTab();
   if(name==='whiteboard') initWhiteboard();
-  if(name==='djr')        initDJR();
+  if(name==='djr')        { initDJR(); setTimeout(fetchDJRWeather, 800); }
   if(name==='signin')     initSignIn();
   if(name==='tasks'){  renderTaskCalendar(); renderTasks(); }
 }
@@ -4022,6 +4023,35 @@ function buildDJRZip(files){
   var nf=Object.keys(files).length;
   var eocd=cat(new Uint8Array([0x50,0x4B,0x05,0x06]),u16(0),u16(0),u16(nf),u16(nf),u32(cb.length),u32(lb.length),u16(0));
   return cat(lb,cb,eocd);
+}
+
+
+async function fetchDJRWeather(){
+  var city = 'Marina+del+Rey,CA';
+  try{
+    // wttr.in JSON API — no key required
+    var resp = await fetch('https://wttr.in/'+city+'?format=j1', {cache:'no-store'});
+    if(!resp.ok) return;
+    var wx = await resp.json();
+    var cur = wx.current_condition && wx.current_condition[0];
+    if(!cur) return;
+    var tempF = cur.temp_F || '';
+    // Morning temp from hourly[0] (around 6am), afternoon from hourly[3] (noon)
+    var hourly = wx.weather && wx.weather[0] && wx.weather[0].hourly;
+    var amTemp = hourly && hourly[1] ? hourly[1].tempF : tempF;
+    var pmTemp = hourly && hourly[4] ? hourly[4].tempF : tempF;
+    var desc = cur.weatherDesc && cur.weatherDesc[0] ? cur.weatherDesc[0].value : '';
+    var humidity = cur.humidity ? ', '+cur.humidity+'% humidity' : '';
+    var wind = cur.windspeedMiles ? ', Wind '+cur.windspeedMiles+'mph' : '';
+
+    var amEl = document.getElementById('djr-temp-am');
+    var pmEl = document.getElementById('djr-temp-pm');
+    var wxEl = document.getElementById('djr-weather');
+    if(amEl && !amEl.value) amEl.value = amTemp;
+    if(pmEl && !pmEl.value) pmEl.value = pmTemp;
+    if(wxEl && !wxEl.value) wxEl.value = desc + humidity + wind;
+    if(typeof toast==='function') toast('Weather loaded');
+  }catch(e){ console.warn('Weather fetch failed:', e); }
 }
 
 function djrSigInit(){
