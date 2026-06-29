@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- saved from url=(0144)file:///C:/Users/denni/AppData/Local/Temp/e8026187-75ca-42d0-9119-f3483a576ac9_files%20(13).zip.ac9/rye-electric-field-tracker-26003-carina.html -->
+<!-- saved from url=(0144)file:///C:/Users/denni/AppData/Local/Temp/1845075e-b2a7-459f-88c3-a33b169c089b_files%20(13).zip.89b/rye-electric-field-tracker-26005-marina.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rye Electric - Field Tracker - 26003 - CARINA MAIN PLACE MALL</title>
+<title>Rye Electric - Field Tracker</title>
 <link href="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/css2" rel="stylesheet">
 <style>
 :root{
@@ -348,8 +348,8 @@ tbody tr:hover td{background:#f7fbfc}
 <div class="shell">
   <div class="job-banner">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="#1a1a1a"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path></svg>
-  <span class="jb-num">26003</span>
-  <span class="jb-name">CARINA</span>
+  <span class="jb-num">26005</span>
+  <span class="jb-name">MARINA SHORES</span>
   <span class="jb-badge">Job Tracker</span>
   <a href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank" class="dash-btn"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
 </div>
@@ -455,7 +455,7 @@ tbody tr:hover td{background:#f7fbfc}
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
-            <select id="sel-job" disabled="" style="border-color:#2980b9;opacity:0.9"><option value="26003 - CARINA MAIN PLACE MALL" selected="">26003 - CARINA MAIN PLACE MALL</option></select>
+            <select id="sel-job" disabled="" style="border-color:#2980b9;opacity:0.9"><option value="26005 - MARINA SHORES" selected="">26005 - MARINA SHORES</option></select>
           </div>
         </div>
 
@@ -652,13 +652,13 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
       <div class="cb">
         <div class="form-grid">
-<div class="fgroup">
+          <div class="fgroup">
             <div class="flbl">Employee</div>
             <select id="wb-worker">
               <option value="">-- Select employee --</option>
             </select>
           </div>
-          <input type="hidden" id="wb-job" value="26003 - CARINA MAIN PLACE MALL">
+          <input type="hidden" id="wb-job" value="26005 - MARINA SHORES">
         </div>
         <div class="form-grid">
           <div class="fgroup">
@@ -786,7 +786,7 @@ tbody tr:hover td{background:#f7fbfc}
 
     <!-- Job + Employee filters -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <input type="hidden" id="dl-filter-job" value="26003 - CARINA MAIN PLACE MALL">
+      <input type="hidden" id="dl-filter-job" value="26005 - MARINA SHORES">
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
         <option value="all">All Workers</option>
       </select>
@@ -798,7 +798,7 @@ tbody tr:hover td{background:#f7fbfc}
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printWhiteboard()">🖨️ Print</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="emailWhiteboard()">✉️ Email</button>
         <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="exportCSV()">📥 Export CSV</button>
-        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=&#39;26003 - CARINA MAIN PLACE MALL&#39;; var dateVal=document.getElementById(&#39;dl-date&#39;)?document.getElementById(&#39;dl-date&#39;).value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal;}); if(!entries.length){toast(&#39;No entries for this date&#39;);return;} saveToDrive(&#39;whiteboard&#39;,job,{job:job,date:dateVal,entries:entries},&#39;wb-drive-status&#39;); })()">🗂️ Save to Drive</button>
+        <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=&#39;26005 - MARINA SHORES&#39;; var dateVal=document.getElementById(&#39;dl-date&#39;)?document.getElementById(&#39;dl-date&#39;).value:new Date().toISOString().slice(0,10); var entries=dailyLogs.filter(function(l){return l.date===dateVal;}); if(!entries.length){toast(&#39;No entries for this date&#39;);return;} saveToDrive(&#39;whiteboard&#39;,job,{job:job,date:dateVal,entries:entries},&#39;wb-drive-status&#39;); })()">🗂️ Save to Drive</button>
       </div>
       <div id="wb-drive-status" style="font-size:12px;text-align:center;margin-bottom:4px;"></div>
     </div>
@@ -821,7 +821,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Report date</div>
         <input type="date" id="djr-date" style="height:38px;width:100%">
       </div>
-      <input type="hidden" id="djr-job" value="26003 - CARINA MAIN PLACE MALL">
+      <input type="hidden" id="djr-job" value="26005 - MARINA SHORES">
       <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="loadDJR()">🔄 Load</button>
       <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="printDJR()">🖨️ Print</button>
       <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;margin-top:18px;width:auto;padding:9px 18px;" onclick="emailDJR()">✉️ Email</button>
@@ -835,6 +835,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="ch"><div class="ct">
           <svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 110-14h.5A5.5 5.5 0 0122 10v1.5A3.5 3.5 0 0117.5 19z"></path></svg>
           Weather &amp; conditions
+          <button onclick="fetchDJRWeather()" style="float:right;margin-top:-2px;background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer">🌤 Auto-fill</button>
         </div></div>
         <div class="cb">
           <div class="form-grid four">
@@ -1068,7 +1069,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="flbl">Date</div>
         <input type="date" id="si-date" style="height:38px;width:100%">
       </div>
-      <input type="hidden" id="si-job" value="26003 - CARINA MAIN PLACE MALL">
+      <input type="hidden" id="si-job" value="26005 - MARINA SHORES">
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Supervisor</div>
         <input type="text" id="si-supervisor" placeholder="Supervisor name" style="height:38px">
@@ -1218,118 +1219,11 @@ tbody tr:hover td{background:#f7fbfc}
 
     <!-- Filter bar -->
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <input type="hidden" id="unit-filter-job" value="26003 - CARINA MAIN PLACE MALL">
+      <input type="hidden" id="unit-filter-job" value="26005 - MARINA SHORES">
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by employee</div>
         <select id="unit-filter-worker" onchange="renderUnitsTab()">
-          <option value="all">All employees</option>
-          <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
-          <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
-          <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
-          <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
-          <option value="76 - David Smith">76 - David Smith</option>
-          <option value="77 - Dillan Smith">77 - Dillan Smith</option>
-          <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
-          <option value="86 - Efren Hilario">86 - Efren Hilario</option>
-          <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
-          <option value="106 - Johnny Perez">106 - Johnny Perez</option>
-          <option value="123 - Armando Lopez">123 - Armando Lopez</option>
-          <option value="138 - Francisco Flores">138 - Francisco Flores</option>
-          <option value="140 - Adrian Flores">140 - Adrian Flores</option>
-          <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
-          <option value="152 - Brian Campos">152 - Brian Campos</option>
-          <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
-          <option value="204 - Kenneth William">204 - Kenneth William</option>
-          <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
-          <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
-          <option value="235 - Louis Aceves">235 - Louis Aceves</option>
-          <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
-          <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
-          <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
-          <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
-          <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
-          <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
-          <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
-          <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
-          <option value="455 - Edgar Solis">455 - Edgar Solis</option>
-          <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
-          <option value="536 - Anthony Macias">536 - Anthony Macias</option>
-          <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
-          <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
-          <option value="628 - Humberto Flores">628 - Humberto Flores</option>
-          <option value="630 - Jaime Moya">630 - Jaime Moya</option>
-          <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
-          <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
-          <option value="660 - Carla Quijada">660 - Carla Quijada</option>
-          <option value="666 - Jose Preciado">666 - Jose Preciado</option>
-          <option value="671 - Brian Flores">671 - Brian Flores</option>
-          <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
-          <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
-          <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
-          <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
-          <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
-          <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
-          <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
-          <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
-          <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
-          <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
-          <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
-          <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
-          <option value="825 - Josue Villegas">825 - Josue Villegas</option>
-          <option value="831 - Salvador Perez">831 - Salvador Perez</option>
-          <option value="832 - David Casarez">832 - David Casarez</option>
-          <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
-          <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
-          <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
-          <option value="844 - Robert Stark">844 - Robert Stark</option>
-          <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
-          <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
-          <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
-          <option value="855 - Mario Arias">855 - Mario Arias</option>
-          <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
-          <option value="858 - Mario Lopez">858 - Mario Lopez</option>
-          <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
-          <option value="861 - Cristian Collin">861 - Cristian Collin</option>
-          <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
-          <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
-          <option value="866 - Axel Salas">866 - Axel Salas</option>
-          <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
-          <option value="870 - Alex Osorio">870 - Alex Osorio</option>
-          <option value="872 - Julio Munoz">872 - Julio Munoz</option>
-          <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
-          <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
-          <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
-          <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
-          <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
-          <option value="880 - Noah Villareal">880 - Noah Villareal</option>
-          <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
-          <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
-          <option value="884 - Jose Luna">884 - Jose Luna</option>
-          <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
-          <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
-          <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
-          <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
-          <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
-          <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
-          <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
-          <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
-          <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
-          <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
-          <option value="899 - Victor Armienta">899 - Victor Armienta</option>
-          <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
-          <option value="902 - Erik Lopez">902 - Erik Lopez</option>
-          <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
-          <option value="905 - James Marquez">905 - James Marquez</option>
-          <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
-          <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
-          <option value="909 - Christian Moran">909 - Christian Moran</option>
-          <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
-          <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
-          <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
-          <option value="914 - Miguel Corral">914 - Miguel Corral</option>
-          <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
-          <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
-          <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
+          <option value="all">All Workers</option>
         </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
@@ -2193,7 +2087,7 @@ const JOBS_CONFIG = {
   '26002 - WILSHIRE':           { buildings: ["Bldg 1","Bldg 2","Bldg 3"], unitsPerBldg: 20 },
   'SP25018 - CDC PLAZA':        { buildings: ["Tower A","Tower B"], unitsPerBldg: 30 },
   '26003 - CARINA MAIN PLACE MALL': { buildings: ["Bldg North","Bldg South"], unitsPerBldg: 25 },
-  '26003 - CARINA MAIN PLACE MALL':          { buildings: ["Bldg A","Bldg B","Bldg C"], unitsPerBldg: 20 },
+  '26005 - MARINA SHORES':          { buildings: ["Bldg A","Bldg B","Bldg C"], unitsPerBldg: 20 },
 };
 
 const COST_CODES = [
@@ -3064,8 +2958,12 @@ function buildWhiteboardHTML(jobKey, entries, dispDate){
   // Group by worker
   const byWorker = {};
   entries.forEach(e=>{
-    if(!byWorker[e.worker]) byWorker[e.worker] = {worker:e.worker, empNum:e.empNum||'', rows:[]};
-    byWorker[e.worker].rows.push(e);
+    const wMatch = (e.worker||'').match(/^(\d+)\s*-\s*(.*)/);
+    const wEmpNum = e.empNum || (wMatch ? wMatch[1] : '');
+    const wName   = wMatch ? wMatch[2] : (e.worker||'');
+    const wKey    = wName || e.worker;
+    if(!byWorker[wKey]) byWorker[wKey] = {worker:wKey, empNum:wEmpNum, rows:[]};
+    byWorker[wKey].rows.push({...e, worker:wName||e.worker, empNum:wEmpNum});
   });
   const workerCount = Object.keys(byWorker).length;
 
@@ -3672,7 +3570,7 @@ function goTab(btn,name){
   if(name==='workers')   renderWorkers();
   if(name==='jobs')      renderJobsTab();
   if(name==='whiteboard') initWhiteboard();
-  if(name==='djr')        initDJR();
+  if(name==='djr')        { initDJR(); setTimeout(fetchDJRWeather, 800); }
   if(name==='signin')     initSignIn();
   if(name==='tasks'){  renderTaskCalendar(); renderTasks(); }
 }
@@ -3868,11 +3766,8 @@ function addDJRWorker(){
   const tr = document.createElement('tr');
   tr.style.borderBottom = '1px solid var(--border)';
   tr.innerHTML = `
-    <td style="padding:6px 8px;vertical-align:top;width:50px">
-      <input class="djr-emp-num" placeholder="#" style="width:46px;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:4px 6px;height:34px;text-align:center;">
-    </td>
     <td style="padding:6px 8px;vertical-align:top">
-      <select class="djr-worker-name" onchange="autoFillDJREmpNum(this)" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;height:34px">
+      <select class="djr-worker-name" style="width:100%;background:#fff;border:1.5px solid #e2e2e2;border-radius:6px;color:#1a1a1a;font-size:12px;padding:6px 8px;height:34px">
         <option value="">-- Select employee --</option>
       </select>
     </td>
@@ -4128,6 +4023,35 @@ function buildDJRZip(files){
   var nf=Object.keys(files).length;
   var eocd=cat(new Uint8Array([0x50,0x4B,0x05,0x06]),u16(0),u16(0),u16(nf),u16(nf),u32(cb.length),u32(lb.length),u16(0));
   return cat(lb,cb,eocd);
+}
+
+
+async function fetchDJRWeather(){
+  var city = 'Marina+del+Rey,CA';
+  try{
+    // wttr.in JSON API — no key required
+    var resp = await fetch('https://wttr.in/'+city+'?format=j1', {cache:'no-store'});
+    if(!resp.ok) return;
+    var wx = await resp.json();
+    var cur = wx.current_condition && wx.current_condition[0];
+    if(!cur) return;
+    var tempF = cur.temp_F || '';
+    // Morning temp from hourly[0] (around 6am), afternoon from hourly[3] (noon)
+    var hourly = wx.weather && wx.weather[0] && wx.weather[0].hourly;
+    var amTemp = hourly && hourly[1] ? hourly[1].tempF : tempF;
+    var pmTemp = hourly && hourly[4] ? hourly[4].tempF : tempF;
+    var desc = cur.weatherDesc && cur.weatherDesc[0] ? cur.weatherDesc[0].value : '';
+    var humidity = cur.humidity ? ', '+cur.humidity+'% humidity' : '';
+    var wind = cur.windspeedMiles ? ', Wind '+cur.windspeedMiles+'mph' : '';
+
+    var amEl = document.getElementById('djr-temp-am');
+    var pmEl = document.getElementById('djr-temp-pm');
+    var wxEl = document.getElementById('djr-weather');
+    if(amEl && !amEl.value) amEl.value = amTemp;
+    if(pmEl && !pmEl.value) pmEl.value = pmTemp;
+    if(wxEl && !wxEl.value) wxEl.value = desc + humidity + wind;
+    if(typeof toast==='function') toast('Weather loaded');
+  }catch(e){ console.warn('Weather fetch failed:', e); }
 }
 
 function djrSigInit(){
@@ -6043,7 +5967,6 @@ const JOB_EMAILS = {
   '26003 - CARINA MAIN PLACE MALL':  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26003 - CARINA':                  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26005 - MARINA SHORES':           {to:'MarinaShores26005@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
-  'SP26006 - LOS ANGELES TIMES':     {to:'onnitimes26006@ryecompany.com',          cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   'SP25018 - CDC PLAZA':             {to:'cdcplazasp25018@ryecompany.com',         cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
 };
 
@@ -6312,7 +6235,7 @@ function saveTask(){
           '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
           'SP25018 - CDC PLAZA': 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html',
           '26003 - CARINA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html',
-          '26003 - CARINA MAIN PLACE MALL':'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html'
+          '26005 - MARINA SHORES':'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26005-marina.html'
         };
         var jobLink = jobTrackerLinks[job] || 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker.html';
         var smsBody = 'Rye Electric - Task Assigned to You\n\n'
@@ -6666,7 +6589,7 @@ renderCCRef();
 
 
   window.printSafetyForms=function(){
-    var jobName=typeof jobSlug!=='undefined'&&jobSlug?jobSlug:(typeof JOB_ID!=='undefined'&&JOB_ID?JOB_ID:(document.getElementById('sel-job')?document.getElementById('sel-job').value:'26003 - CARINA MAIN PLACE MALL'));
+    var jobName=typeof jobSlug!=='undefined'&&jobSlug?jobSlug:(typeof JOB_ID!=='undefined'&&JOB_ID?JOB_ID:(document.getElementById('sel-job')?document.getElementById('sel-job').value:'26005 - MARINA SHORES'));
     var submittedBy=document.getElementById('safetySubmittedByInput')?document.getElementById('safetySubmittedByInput').value:'';
     var dateStr=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
     var checkLabels={gc_fire:'Fire Protection Equipment',gc_firstaid:'First Aid & Emergency Equipment',gc_phone:'Emergency Phone Numbers Posted',gc_sanitary:'Sanitary Toilets & Wash Water',gc_water:'Drinking Water',gc_lighting:'Task Lighting',gc_cranes:'Cranes, Rigging, Forklifts, Scissor & Aerial Lifts',ae_access:'Safe access and egress to all work areas',ae_ladders:'Ladders and stairs safe and used correctly',ae_aisles:'Aisles and passageways free from hazards',ae_scaffolds:'Scaffolds - proper construction and free from hazards',fp_ppe:'PPE is safe',fp_rigging:'Rigging and Anchors are safe',fp_compliance:'Workers in compliance with fall protection rules',fp_guardrails:'Guardrails and Handrails are safe',fp_holes:'Floor holes and openings are covered or guarded',fp_walls:'Wall openings or open-sided floors are guarded',tc_electrical:'Electrical tools and cords',tc_pneumatic:'Pneumatic hoses and connections',tc_oxyacetylene:'Oxy-Acetylene gauges, cylinders, hoses & torch',ppe_clothing:'Proper work clothing and footwear',ppe_head:'Head Protection',ppe_eye:'Eye Protection',ppe_hearing:'Hearing Protection',ppe_task:'Task Specific PPE'};
