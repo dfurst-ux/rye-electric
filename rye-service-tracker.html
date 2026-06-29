@@ -5336,6 +5336,41 @@ function toast(msg, error) {
 // ── INIT ──
 loadTickets(); // pulls from Supabase, falls back to localStorage
 document.getElementById('dash-date').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// ── AUTO-REFRESH — silently poll Supabase every 30 seconds ──────────────────
+async function silentRefresh() {
+  try {
+    const remote = await sbGet();
+    if (!remote.length) return;
+
+    // Find any tickets on remote that aren't in local array yet
+    const localIds  = new Set(tickets.map(t => t.id));
+    const newRemote = remote.filter(t => !localIds.has(t.id));
+
+    // Find any tickets whose status changed on remote
+    const changed = remote.filter(t => {
+      const local = tickets.find(x => x.id === t.id);
+      return local && local.status !== t.status;
+    });
+
+    if (newRemote.length || changed.length) {
+      // Merge remote into local
+      const remoteIds = new Set(remote.map(t => t.id));
+      const localOnly = tickets.filter(t => !remoteIds.has(t.id));
+      tickets = [...remote, ...localOnly];
+      save();
+      renderAll();
+      if (newRemote.length) {
+        toast(`↓ ${newRemote.length} new ticket${newRemote.length>1?'s':''} synced from Supabase`);
+      }
+    }
+  } catch(e) {
+    // Silent fail — don't disturb the user
+    console.warn('Auto-refresh failed:', e);
+  }
+}
+
+setInterval(silentRefresh, 30000); // every 30 seconds
 </script>
 </body>
 </html>
