@@ -3842,7 +3842,11 @@ async function downloadDJRDocx(){
   var job  = document.getElementById('djr-job').value;
   var date = document.getElementById('djr-date').value;
   if(!job||!date){ toast('Select job and date first'); return; }
-  if(document.getElementById('djr-form').style.display==='none'){ toast('Click Load first'); return; }
+  // Auto-load if not already loaded
+  if(document.getElementById('djr-form').style.display==='none'){
+    if(typeof loadDJR==='function'){ loadDJR(); setTimeout(downloadDJRDocx, 600); return; }
+    toast('Click Load first'); return;
+  }
   var data = collectDJRData();
   var jobNum  = job.split(' - ')[0];
   var jobName = job.split(' - ').slice(1).join(' - ');
@@ -3927,7 +3931,39 @@ async function downloadDJRDocx(){
 
   body+=para('',{spacing:{before:300,after:0}});
   body+='<w:p><w:pPr><w:spacing w:before="0" w:after="0"/><w:pBdr><w:bottom w:val="single" w:sz="8" w:space="1" w:color="111111"/></w:pBdr></w:pPr></w:p>';
-  body+=para(data.superintendent||'_____________________________',{bold:true,size:9,spacing:{before:60,after:0}});
+
+  // Signature image embedding
+  var sigRel='', sigDraw='', sigBase64='', imgRels='';
+  if(data.superSig){
+    try{
+      sigBase64=data.superSig.split(',')[1];
+      sigRel='<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/sig.png"/>';
+      // EMU dimensions: 200px wide at 96dpi = 1905000 EMU, 50px tall = 476250 EMU
+      sigDraw='<w:p><w:r><w:rPr/><w:drawing>'
+        +'<wp:inline distT="0" distB="0" distL="0" distR="0"'
+        +' xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">'
+        +'<wp:extent cx="1905000" cy="476250"/>'
+        +'<wp:effectExtent l="0" t="0" r="0" b="0"/>'
+        +'<wp:docPr id="1" name="Signature"/>'
+        +'<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">'
+        +'<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">'
+        +'<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">'
+        +'<pic:nvPicPr><pic:cNvPr id="1" name="Signature"/><pic:cNvPicPr/></pic:nvPicPr>'
+        +'<pic:blipFill>'
+        +'<a:blip r:embed="rId2" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"/>'
+        +'<a:stretch><a:fillRect/></a:stretch>'
+        +'</pic:blipFill>'
+        +'<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="1905000" cy="476250"/></a:xfrm>'
+        +'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+        +'</pic:spPr>'
+        +'</pic:pic>'
+        +'</a:graphicData></a:graphic>'
+        +'</wp:inline></w:drawing></w:r></w:p>';
+      imgRels=sigRel;
+    }catch(e){ sigDraw=''; sigBase64=''; }
+  }
+  body+=sigDraw;
+  body+=para(data.superintendent||'_____________________________',{bold:true,size:9,spacing:{before:40,after:0}});
   body+=para(data.title||'RYE SUPERINTENDENT',{size:8,color:'666666',spacing:{before:0,after:0}});
   body+=para('This Daily Report is provided as a record of work progress and conditions at the jobsite.',{size:7,color:'999999',spacing:{before:200,after:0},jc:'center',border:true});
 
@@ -3939,12 +3975,26 @@ async function downloadDJRDocx(){
     +'<w:pgMar w:top="1080" w:right="1080" w:bottom="1080" w:left="1080" w:header="720" w:footer="720" w:gutter="0"/>'
     +'</w:sectPr></w:body></w:document>';
 
+  // Decode signature base64 to binary for embedding
+  var sigBytes=null;
+  if(sigBase64){
+    try{
+      var bin=atob(sigBase64); sigBytes=new Uint8Array(bin.length);
+      for(var si=0;si<bin.length;si++) sigBytes[si]=bin.charCodeAt(si);
+    }catch(e){ sigBytes=null; }
+  }
+
+  var contentTypes='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>'+(sigBytes?'<Default Extension="png" ContentType="image/png"/>':'')+'<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>';
+
+  var docRels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+imgRels+'</Relationships>';
+
   var zipFiles={
-    '[Content_Types].xml':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>',
+    '[Content_Types].xml':contentTypes,
     '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
-    'word/_rels/document.xml.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>',
+    'word/_rels/document.xml.rels':docRels,
     'word/document.xml':docXml
   };
+  if(sigBytes) zipFiles['word/media/sig.png']=sigBytes;
 
   var blob=new Blob([buildDJRZip(zipFiles)],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
   var url=URL.createObjectURL(blob);
@@ -3963,7 +4013,7 @@ function buildDJRZip(files){
   function crc32(b){if(!crc32._t){var t=crc32._t=new Uint32Array(256);for(var i=0;i<256;i++){var x=i;for(var j=0;j<8;j++)x=x&1?(0xEDB88320^(x>>>1)):(x>>>1);t[i]=x;}}var c=0xFFFFFFFF,T=crc32._t;for(var i=0;i<b.length;i++)c=(c>>>8)^T[(c^b[i])&255];return(c^0xFFFFFFFF)>>>0;}
   var LP=[],CP=[],off=0,DT=u16(0),DD=u16(0x4A21);
   Object.keys(files).forEach(function(name){
-    var dat=enc.encode(files[name]),nm=enc.encode(name),crc=crc32(dat);
+    var raw=files[name]; var dat=(raw instanceof Uint8Array)?raw:enc.encode(raw); var nm=enc.encode(name),crc=crc32(dat);
     var lh=cat(new Uint8Array([0x50,0x4B,0x03,0x04]),u16(20),u16(0),u16(0),DT,DD,u32(crc),u32(dat.length),u32(dat.length),u16(nm.length),u16(0),nm);
     LP.push(lh,dat);
     CP.push(cat(new Uint8Array([0x50,0x4B,0x01,0x02]),u16(20),u16(20),u16(0),u16(0),DT,DD,u32(crc),u32(dat.length),u32(dat.length),u16(nm.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(off),nm));
