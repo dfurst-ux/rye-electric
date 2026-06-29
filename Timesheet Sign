@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rye Electric — Timesheet Signature</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --teal:#4E9DA8;--teal-dk:#357884;--teal-lt:#EAF5F7;
+  --dark:#141414;--mid:#444;--muted:#777;
+  --border:#e2e2e2;--bg:#F4F8F9;--white:#fff;
+  --green:#27AE60;--green-lt:#EAF7F0;
+  --red:#C0392B;--gold:#D4A843;
+  --shadow:0 2px 8px rgba(0,0,0,.07);
+  --radius:8px;
+  --font:'Lato',Helvetica,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--dark);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+.hdr{background:var(--dark);border-bottom:3px solid var(--teal);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.wordmark{font-family:'Poppins',var(--font);font-weight:700;font-size:20px;color:#fff}
+.wordmark span{color:var(--teal)}
+.hdr-badge{background:rgba(78,157,168,.15);border:1px solid rgba(78,157,168,.3);color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:5px 14px;border-radius:20px}
+
+.shell{max-width:740px;margin:32px auto;padding:0 20px 60px}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:20px}
+.card-hdr{background:var(--dark);padding:16px 20px}
+.card-title{font-size:18px;font-weight:700;color:#fff}
+.card-sub{font-size:12px;color:#888;margin-top:3px}
+.card-body{padding:20px}
+
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;background:var(--teal-lt);border-radius:8px;padding:14px 16px}
+.meta-item label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:block;margin-bottom:3px}
+.meta-item span{font-size:14px;font-weight:700;color:var(--dark)}
+
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sum-box{border:2px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.sum-box.total{border-color:var(--teal);background:var(--teal-lt)}
+.sum-box label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:block;margin-bottom:4px}
+.sum-box span{font-size:24px;font-weight:700;color:var(--dark)}
+.sum-box.total span{color:var(--teal)}
+
+table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px}
+thead th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+tbody td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--mid)}
+tbody tr:nth-child(even) td{background:var(--bg)}
+tfoot td{background:var(--teal);color:#fff;font-weight:700;padding:9px 10px;border:none}
+
+.sig-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px;display:block}
+.sig-name{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.sig-emp{font-size:12px;color:var(--muted);margin-bottom:12px}
+.sig-box{border:2px dashed var(--teal);border-radius:8px;height:120px;background:#f9fcfd;position:relative;overflow:hidden;cursor:crosshair;touch-action:none;margin-bottom:8px}
+.sig-box canvas{position:absolute;inset:0;width:100%;height:100%}
+.sig-hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);pointer-events:none}
+.sig-actions{display:flex;gap:8px;margin-bottom:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;height:38px;border-radius:var(--radius);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .14s}
+.btn-ghost{background:#fff;color:var(--mid);border:1.5px solid var(--border)}.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn-green{background:var(--green);color:#fff;width:100%;height:50px;font-size:16px}.btn-green:hover{background:#1e8a4e}
+.btn-green:disabled{background:#ccc;cursor:not-allowed}
+
+.alert{border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:13px;font-weight:600}
+.alert-green{background:var(--green-lt);border:1.5px solid var(--green);color:#1a6b3e}
+.alert-red{background:#f9eded;border:1.5px solid var(--red);color:var(--red)}
+.alert-blue{background:var(--teal-lt);border:1.5px solid var(--teal);color:var(--teal-dk)}
+
+#toast{position:fixed;bottom:20px;right:20px;background:var(--dark);color:#fff;border-radius:var(--radius);padding:12px 18px;font-size:13px;font-weight:600;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .22s;z-index:9999}
+#toast.on{opacity:1;transform:translateY(0)}
+
+.loading{text-align:center;padding:60px 20px;color:var(--muted);font-size:15px}
+.footer{text-align:center;font-size:11px;color:var(--muted);margin-top:32px}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wordmark">rye <span>electric</span></div>
+  <div class="hdr-badge">Timesheet Signature</div>
+</header>
+
+<div class="shell">
+  <div id="loading" class="loading">Loading timesheet...</div>
+  <div id="main" style="display:none"></div>
+  <div id="already-signed" style="display:none">
+    <div class="alert alert-green" style="font-size:15px;text-align:center;padding:24px">
+      ✅ This timesheet has already been signed. Thank you!
+    </div>
+  </div>
+  <div id="error-state" style="display:none">
+    <div class="alert alert-red" style="font-size:15px;text-align:center;padding:24px">
+      ❌ Timesheet not found. Please check the link and try again.
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SB_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+const sb = window.supabase.createClient(SB_URL, SB_KEY);
+
+const EMP_DIR = {
+  'Mychal Kirschbaum': { num: '900', title: 'Service Manager' },
+  'Guillermo Silva':   { num: '901', title: 'Field Electrician' },
+  'Erik Lopez':        { num: '902', title: 'Field Electrician' },
+  'James Marquez':     { num: '905', title: 'Field Electrician' },
+  'Mario Arias':       { num: '855', title: 'Field Electrician' },
+  'Dak Golden':        { num: '840', title: 'Field Electrician' },
+};
+function empNum(n)   { return EMP_DIR[n]?.num   || '—'; }
+function empTitle(n) { return EMP_DIR[n]?.title || 'Staff'; }
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d + 'T12:00:00').toLocaleDateString('en-US', {weekday:'short',month:'short',day:'numeric',year:'numeric'});
+}
+
+function toast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = err ? '#c0392b' : '#141414';
+  t.classList.add('on');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('on'), 3200);
+}
+
+// ── SIGNATURE PAD ─────────────────────────────────────────────────────────────
+let sigCanvas, sigCtx, drawing = false, hasSig = false;
+
+function initSigPad() {
+  const box = document.getElementById('sig-box');
+  sigCanvas = document.getElementById('sig-canvas');
+  sigCanvas.width  = box.offsetWidth;
+  sigCanvas.height = box.offsetHeight;
+  sigCtx = sigCanvas.getContext('2d');
+  sigCtx.strokeStyle = '#141414';
+  sigCtx.lineWidth   = 2.5;
+  sigCtx.lineCap     = 'round';
+  sigCtx.lineJoin    = 'round';
+
+  function pos(e) {
+    const r = sigCanvas.getBoundingClientRect();
+    const s = e.touches ? e.touches[0] : e;
+    return { x: (s.clientX - r.left) * (sigCanvas.width / r.width),
+             y: (s.clientY - r.top)  * (sigCanvas.height / r.height) };
+  }
+  function start(e) {
+    e.preventDefault(); drawing = true;
+    const p = pos(e);
+    sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y);
+    if (!hasSig) {
+      document.getElementById('sig-hint').style.display = 'none';
+      hasSig = true;
+    }
+  }
+  function move(e) {
+    e.preventDefault();
+    if (!drawing) return;
+    const p = pos(e);
+    sigCtx.lineTo(p.x, p.y); sigCtx.stroke();
+  }
+  function end(e) { e.preventDefault(); drawing = false; }
+
+  sigCanvas.addEventListener('mousedown',  start);
+  sigCanvas.addEventListener('mousemove',  move);
+  sigCanvas.addEventListener('mouseup',    end);
+  sigCanvas.addEventListener('mouseleave', end);
+  sigCanvas.addEventListener('touchstart', start, { passive: false });
+  sigCanvas.addEventListener('touchmove',  move,  { passive: false });
+  sigCanvas.addEventListener('touchend',   end);
+}
+
+function clearSig() {
+  if (!sigCtx) return;
+  sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+  hasSig = false;
+  document.getElementById('sig-hint').style.display = 'flex';
+}
+
+// ── LOAD TIMESHEET ────────────────────────────────────────────────────────────
+async function loadTimesheet() {
+  const params = new URLSearchParams(window.location.search);
+  const tsId   = params.get('id');
+  const table  = params.get('table') || 'service_timesheets';
+
+  if (!tsId) {
+    document.getElementById('loading').style.display    = 'none';
+    document.getElementById('error-state').style.display = 'block';
+    return;
+  }
+
+  const { data, error } = await sb
+    .from(table)
+    .select('*')
+    .eq('id', tsId)
+    .limit(1);
+
+  document.getElementById('loading').style.display = 'none';
+
+  if (error || !data || !data.length) {
+    document.getElementById('error-state').style.display = 'block';
+    return;
+  }
+
+  const ts = data[0];
+
+  // Already signed?
+  if (ts.employee_signed_at) {
+    document.getElementById('already-signed').style.display = 'block';
+    return;
+  }
+
+  const entries  = Array.isArray(ts.entries) ? ts.entries : JSON.parse(ts.entries || '[]');
+  const totalReg = parseFloat(ts.total_reg)   || 0;
+  const totalOT  = parseFloat(ts.total_ot)    || 0;
+  const totalHrs = parseFloat(ts.total_hours) || 0;
+
+  const entryRows = entries.map((e, i) => `
+    <tr>
+      <td>${fmtDate(e.date)}</td>
+      <td style="font-weight:600;color:var(--teal)">${e.ticketId || e.job || '—'}</td>
+      <td>${e.job || '—'}</td>
+      <td style="text-align:center">${e.timeIn || '—'}</td>
+      <td style="text-align:center">${e.timeOut || '—'}</td>
+      <td style="text-align:center;font-weight:700;color:var(--teal)">${(parseFloat(e.regHours)||0).toFixed(2)}</td>
+      <td style="text-align:center;font-weight:700;color:var(--gold)">${(parseFloat(e.otHours)||0)>0?(parseFloat(e.otHours)||0).toFixed(2):'—'}</td>
+      <td style="text-align:center;font-weight:700">${((parseFloat(e.regHours)||0)+(parseFloat(e.otHours)||0)).toFixed(2)}</td>
+    </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">No entries</td></tr>';
+
+  document.getElementById('main').style.display = 'block';
+  document.getElementById('main').innerHTML = `
+    <div class="alert alert-blue" style="margin-bottom:20px">
+      📋 Please review your timesheet below carefully. If everything looks correct, sign at the bottom and click <strong>Submit Signature</strong>.
+    </div>
+
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">${ts.employee}</div>
+        <div class="card-sub">${ts.id} &nbsp;·&nbsp; Emp #${empNum(ts.employee)} &nbsp;·&nbsp; ${empTitle(ts.employee)}</div>
+      </div>
+      <div class="card-body">
+        <div class="meta-grid">
+          <div class="meta-item"><label>Week Ending</label><span>${fmtDate(ts.week_ending)}</span></div>
+          <div class="meta-item"><label>Status</label><span>${ts.status}</span></div>
+          <div class="meta-item"><label>Total Entries</label><span>${entries.length} day${entries.length!==1?'s':''}</span></div>
+        </div>
+
+        <div class="summary">
+          <div class="sum-box"><label>Regular Hours</label><span>${totalReg.toFixed(2)}</span></div>
+          <div class="sum-box"><label>Overtime Hours</label><span>${totalOT.toFixed(2)}</span></div>
+          <div class="sum-box total"><label>Total Hours</label><span>${totalHrs.toFixed(2)}</span></div>
+        </div>
+
+        <table>
+          <thead><tr>
+            <th>Date</th><th>Ticket</th><th>Job / Cost Code</th>
+            <th style="text-align:center">In</th><th style="text-align:center">Out</th>
+            <th style="text-align:center;color:#79B7F1">Reg</th>
+            <th style="text-align:center;color:var(--gold)">OT</th>
+            <th style="text-align:center">Total</th>
+          </tr></thead>
+          <tbody>${entryRows}</tbody>
+          <tfoot><tr>
+            <td colspan="5">WEEK TOTALS</td>
+            <td style="text-align:center">${totalReg.toFixed(2)}</td>
+            <td style="text-align:center">${totalOT>0?totalOT.toFixed(2):'—'}</td>
+            <td style="text-align:center">${totalHrs.toFixed(2)}</td>
+          </tr></tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Your Signature</div>
+        <div class="card-sub">Sign below to confirm these hours are accurate</div>
+      </div>
+      <div class="card-body">
+        <span class="sig-label">Employee Signature</span>
+        <div class="sig-name">${ts.employee}</div>
+        <div class="sig-emp">Emp #${empNum(ts.employee)} &nbsp;·&nbsp; ${empTitle(ts.employee)}</div>
+        <div class="sig-box" id="sig-box">
+          <canvas id="sig-canvas"></canvas>
+          <div class="sig-hint" id="sig-hint">✍ Sign here with mouse or finger</div>
+        </div>
+        <div class="sig-actions">
+          <button class="btn btn-ghost" onclick="clearSig()">✕ Clear</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:16px">
+          By signing above I confirm that the hours shown on this timesheet are accurate and complete.
+        </div>
+        <button class="btn btn-green" id="submit-btn" onclick="submitSignature('${tsId}','${table}')">
+          ✅ Submit Signature
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Rye Electric, Inc. &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp; CA Lic. 980345
+    </div>`;
+
+  setTimeout(initSigPad, 100);
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+async function submitSignature(tsId, table) {
+  if (!hasSig) {
+    toast('Please sign before submitting', true);
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Submitting...';
+
+  // Export signature as base64 PNG
+  const sigData = sigCanvas.toDataURL('image/png');
+  const signedAt = new Date().toISOString();
+
+  const { error } = await sb
+    .from(table)
+    .update({
+      employee_sig:       sigData,
+      employee_signed_at: signedAt,
+      status:             'Submitted',
+    })
+    .eq('id', tsId);
+
+  if (error) {
+    toast('Submission failed: ' + error.message, true);
+    btn.disabled = false;
+    btn.textContent = '✅ Submit Signature';
+    return;
+  }
+
+  document.getElementById('main').innerHTML = `
+    <div class="alert alert-green" style="font-size:15px;text-align:center;padding:32px">
+      ✅ Signature submitted successfully!<br>
+      <span style="font-size:13px;font-weight:400;margin-top:8px;display:block">Your timesheet has been sent to your manager for approval.</span>
+    </div>
+    <div class="footer">Rye Electric, Inc. &nbsp;·&nbsp; 75 Doppler, Irvine, CA 92618 &nbsp;·&nbsp; CA Lic. 980345</div>`;
+}
+
+loadTimesheet();
+</script>
+</body>
+</html>
