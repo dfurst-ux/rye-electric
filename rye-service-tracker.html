@@ -1598,6 +1598,21 @@ let invoiceCounter = parseInt(localStorage.getItem('svc_invoice_counter') || '10
 // ── SUPABASE CONFIG ──────────────────────────────────────────────────────────
 const SB_URL  = 'https://okesnavkxmqucgvvhncx.supabase.co';
 const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+
+// ── EMPLOYEE DIRECTORY ────────────────────────────────────────────────────────
+const EMP_DIR = {
+  'Mychal Kirschbaum': { num: '—',   title: 'Service Manager' },
+  'Guillermo Silva':   { num: '901', title: 'Field Electrician' },
+  'Erik Lopez':        { num: '902', title: 'Field Electrician' },
+  'James Marquez':     { num: '905', title: 'Field Electrician' },
+  'Mario Arias':       { num: '855', title: 'Field Electrician' },
+  'Dak Golden':        { num: '—',   title: 'Field Electrician' },
+  'Joey Java':         { num: '—',   title: 'Operations Manager' },
+  'Dennis Furst':      { num: '—',   title: 'Project Executive' },
+  'Jonathan Jacobo':   { num: '—',   title: 'Director of Field Operations' },
+};
+function empNum(name) { return EMP_DIR[name]?.num || '—'; }
+function empTitle(name) { return EMP_DIR[name]?.title || ''; }
 const SB_HDRS = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
 
 async function sbGet() {
@@ -3270,7 +3285,7 @@ function renderTimesheets() {
         <div style="background:var(--dark);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
           <div style="display:flex;align-items:center;gap:16px">
             <div>
-              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--teal);text-transform:uppercase">${ts.id}</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--teal);text-transform:uppercase">${ts.id} &nbsp;·&nbsp; EMP #${empNum(ts.employee)}</div>
               <div style="font-size:17px;font-weight:700;color:#fff">${ts.employee}</div>
               <div style="font-size:12px;color:#888">Week ending ${fmtDate(ts.weekEnding)}${ts.lastEditedBy ? ` &nbsp;·&nbsp; <span style="color:var(--gold)">✏ Edited by ${ts.lastEditedBy}</span>` : ''}</div>
             </div>
@@ -3308,6 +3323,24 @@ function renderTimesheets() {
           <tbody>${entryRows}</tbody>
           <tfoot>${totalsRow}</tfoot>
         </table>
+        ${isApproved ? `
+        <div style="border-top:2px solid var(--green);padding:14px 20px;background:#f9fffe;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Approved By</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark)">${ts.approvedBy || '—'}</div>
+            <div style="font-size:11px;color:var(--muted)">${empTitle(ts.approvedBy||'')} &nbsp;·&nbsp; Emp #${empNum(ts.approvedBy||'')}</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Date Approved</div>
+            <div style="font-size:14px;font-weight:700;color:var(--dark)">${ts.approvedAt ? new Date(ts.approvedAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '—'}</div>
+            <div style="font-size:11px;color:var(--muted)">${ts.approvedAt ? new Date(ts.approvedAt).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}) : ''}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Electronic Signature</div>
+            <div style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:700;color:var(--green);border-bottom:2px solid var(--green);padding-bottom:2px;min-width:200px;text-align:center">${ts.approvedBy || ''}</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:3px">Digitally approved via Rye Electric Service Tracker</div>
+          </div>
+        </div>` : ''}
       </div>
     </td></tr>`;
   }).join('');
