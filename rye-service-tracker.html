@@ -3299,7 +3299,7 @@ function renderTimesheets() {
                  </select>`
             }
             <button class="btn btn-sm" style="background:var(--teal);color:#fff;font-size:12px;padding:6px 12px" onclick="printTimesheet('${ts.id}')">🖨 Print</button>
-            ${!isApproved ? `<button class="btn btn-sm" style="background:#2a2a2a;color:#aaa;font-size:12px;padding:6px 12px" onclick="openEditTimesheet('${ts.id}')">Edit</button>` : ''}
+            <button class="btn btn-sm" style="background:#2a2a2a;color:#aaa;font-size:12px;padding:6px 12px" onclick="openEditTimesheet('${ts.id}')">Edit</button>
             <button class="btn btn-sm" style="background:#2a2a2a;color:#666;font-size:12px;padding:6px 12px" onclick="deleteTs('${ts.id}')">Del</button>
           </div>
         </div>
@@ -3540,19 +3540,31 @@ function saveEditedTimesheet() {
 
   // Record edit history
   if (!ts.editHistory) ts.editHistory = [];
+  const wasApproved = ts.status === 'Approved';
   ts.editHistory.push({
-    editedBy:  editor,
-    reason:    reason || 'No reason given',
-    editedAt:  new Date().toISOString(),
+    editedBy:    editor,
+    reason:      reason || 'No reason given',
+    editedAt:    new Date().toISOString(),
+    priorStatus: ts.status,
   });
   ts.lastEditedBy = editor;
   ts.lastEditedAt = new Date().toISOString();
+
+  // If it was approved, reset to Submitted — needs re-approval
+  if (wasApproved) {
+    ts.status = 'Submitted';
+    ts.approvedBy = null;
+    ts.approvedAt = null;
+  }
 
   save();
   sbUpsertTimesheet(ts);
   renderTimesheets();
   closeModal('editTimesheetModal');
-  toast('Timesheet ' + ts.id + ' updated by ' + editor + ' ✓');
+  toast(wasApproved
+    ? 'Timesheet ' + ts.id + ' edited by ' + editor + ' — approval reset, re-approval required ✓'
+    : 'Timesheet ' + ts.id + ' updated by ' + editor + ' ✓'
+  );
 }
 function printTimesheet(id) {
   const ts = timesheets.find(x => x.id === id);
