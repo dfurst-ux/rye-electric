@@ -3675,6 +3675,25 @@ function loadDJR(){
   document.getElementById('djr-empty').style.display = 'none';
   document.getElementById('djr-form').style.display  = 'block'; setTimeout(djrSigInit,50);
 
+  // Sync from Supabase first to get latest Log Unit entries, then populate
+  (async function(){
+    try{
+      const [unitData, dailyData] = await Promise.all([
+        sbFetch('unit_logs'),
+        sbFetch('daily_logs')
+      ]);
+      if(unitData && unitData.length > 0){
+        unitLogs = unitData.map(function(r){ return {id:r.id,ts:r.ts,worker:r.worker,job:r.job,bldg:r.bldg,unit:r.unit,phase:r.phase,costcode:r.costcode,boxes:r.boxes,lights:r.lights,hrs:r.hrs,notes:r.notes}; });
+      }
+      if(dailyData && dailyData.length > 0){
+        dailyLogs = dailyData.map(function(r){ return {id:r.id,date:r.entry_date,worker:r.worker,job:r.job,phaseCode:r.phase_code,phaseDesc:r.phase_desc,units:r.units_text,hours:r.hours,notes:r.notes}; });
+      }
+    }catch(e){ console.warn('DJR sync error:', e); }
+    populateDJRWorkforce(job, date);
+  })();
+}
+
+function populateDJRWorkforce(job, date){
   // Auto-populate workforce from dailyLogs for this job + date
   const entries = dailyLogs.filter(l=>l.job===job && l.date===date);
   // Also pull from unit logs
