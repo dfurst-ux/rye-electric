@@ -328,8 +328,7 @@ tbody tr:hover td{background:#f7fbfc}
 
 </style>
   <script src="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/email.min.js.download"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
 </head>
 <body>
 
@@ -3836,24 +3835,10 @@ function collectDJRData(){
 
 
 
+
+
+
 async function downloadDJRDocx(){
-  if(typeof docx==='undefined'){
-    toast('Loading Word library...');
-    function tryLoad(urls, idx){
-      if(idx>=urls.length){ toast('Word doc unavailable — no internet connection'); return; }
-      var s=document.createElement('script');
-      s.src=urls[idx];
-      s.onload=function(){ downloadDJRDocx(); };
-      s.onerror=function(){ tryLoad(urls, idx+1); };
-      document.head.appendChild(s);
-    }
-    tryLoad([
-      'https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js',
-      'https://unpkg.com/docx@8.5.0/build/index.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/index.js'
-    ], 0);
-    return;
-  }
   var job  = document.getElementById('djr-job').value;
   var date = document.getElementById('djr-date').value;
   if(!job||!date){ toast('Select job and date first'); return; }
@@ -3864,94 +3849,131 @@ async function downloadDJRDocx(){
   var dateObj = new Date(date+'T12:00:00');
   var dispDate= dateObj.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'});
   var dayName = dateObj.toLocaleDateString('en-US',{weekday:'long'}).toUpperCase();
-  var totalHrs= data.workforce.reduce(function(a,r){return a+(parseFloat(r.hours)||0);},0);
+  var totalHrs= (data.workforce||[]).reduce(function(a,r){return a+(parseFloat(r.hours)||0);},0);
 
-  var D=docx;
-  var border  = {style:D.BorderStyle.SINGLE,size:1,color:'AAAAAA'};
-  var borders = {top:border,bottom:border,left:border,right:border};
-  var cellMar = {top:80,bottom:80,left:120,right:120};
-  var W = 9360;
+  function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  function hdr(txt){ return new D.Paragraph({children:[new D.TextRun({text:txt,bold:true,size:20,font:'Arial'})],spacing:{before:200,after:80},border:{bottom:{style:D.BorderStyle.SINGLE,size:6,color:'111111',space:1}}}); }
-  function metaCell(label,value,w){ return new D.TableCell({borders,width:{size:w,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'F5F5F5',type:D.ShadingType.CLEAR},children:[new D.Paragraph({children:[new D.TextRun({text:label+': ',bold:true,size:18,font:'Arial',color:'555555'}),new D.TextRun({text:value||'--',size:20,font:'Arial'})]})]});}
-
-  var children = [];
-  var third=Math.round(W/3);
-
-  children.push(new D.Paragraph({alignment:D.AlignmentType.CENTER,spacing:{after:40},children:[new D.TextRun({text:'RYE ELECTRIC, INC.',bold:true,size:32,font:'Arial'})]}));
-  children.push(new D.Paragraph({alignment:D.AlignmentType.CENTER,spacing:{after:160},children:[new D.TextRun({text:'DAILY JOB REPORT',bold:true,size:24,font:'Arial',color:'444444'})]}));
-
-  children.push(new D.Table({width:{size:W,type:D.WidthType.DXA},columnWidths:[third,third,W-third*2],rows:[new D.TableRow({children:[metaCell('Job',jobNum+' \u2014 '+jobName,third),metaCell('Date',dispDate,third),metaCell('Day',dayName,W-third*2)]})]}));
-  children.push(new D.Paragraph({spacing:{after:40}}));
-  children.push(new D.Table({width:{size:W,type:D.WidthType.DXA},columnWidths:[third,third,W-third*2],rows:[new D.TableRow({children:[metaCell('Temp AM',data.tempAM?(data.tempAM+'\u00b0F'):'--',third),metaCell('Temp PM',data.tempPM?(data.tempPM+'\u00b0F'):'--',third),metaCell('Weather',data.weather,W-third*2)]})]}));
-  children.push(new D.Paragraph({spacing:{after:80}}));
-
-  children.push(hdr('WORK FORCE \u2014 LOCATION AND DESCRIPTION OF WORK'));
-  var wfRows=[new D.TableRow({children:[
-    new D.TableCell({borders,width:{size:2200,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'EEEEEE',type:D.ShadingType.CLEAR},children:[new D.Paragraph({children:[new D.TextRun({text:'EMPLOYEE',bold:true,size:18,font:'Arial'})]})] }),
-    new D.TableCell({borders,width:{size:6760,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'EEEEEE',type:D.ShadingType.CLEAR},children:[new D.Paragraph({children:[new D.TextRun({text:'DESCRIPTION OF WORK',bold:true,size:18,font:'Arial'})]})] }),
-    new D.TableCell({borders,width:{size:400,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'EEEEEE',type:D.ShadingType.CLEAR},children:[new D.Paragraph({alignment:D.AlignmentType.CENTER,children:[new D.TextRun({text:'HRS',bold:true,size:18,font:'Arial'})]})] }),
-  ]})];
-  data.workforce.forEach(function(r){
-    wfRows.push(new D.TableRow({children:[
-      new D.TableCell({borders,width:{size:2200,type:D.WidthType.DXA},margins:cellMar,children:[new D.Paragraph({children:[new D.TextRun({text:r.worker.toUpperCase(),bold:true,size:18,font:'Arial'})]})] }),
-      new D.TableCell({borders,width:{size:6760,type:D.WidthType.DXA},margins:cellMar,children:[new D.Paragraph({children:[new D.TextRun({text:r.description||'',size:18,font:'Arial'})]})] }),
-      new D.TableCell({borders,width:{size:400,type:D.WidthType.DXA},margins:cellMar,children:[new D.Paragraph({alignment:D.AlignmentType.CENTER,children:[new D.TextRun({text:String(r.hours||''),size:18,font:'Arial'})]})] }),
-    ]}));
-  });
-  wfRows.push(new D.TableRow({children:[
-    new D.TableCell({borders,width:{size:8960,type:D.WidthType.DXA},columnSpan:2,margins:cellMar,shading:{fill:'F5F5F5',type:D.ShadingType.CLEAR},children:[new D.Paragraph({alignment:D.AlignmentType.RIGHT,children:[new D.TextRun({text:'Total manpower hours:',bold:true,size:18,font:'Arial'})]})] }),
-    new D.TableCell({borders,width:{size:400,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'F5F5F5',type:D.ShadingType.CLEAR},children:[new D.Paragraph({alignment:D.AlignmentType.CENTER,children:[new D.TextRun({text:String(totalHrs),bold:true,size:18,font:'Arial'})]})] }),
-  ]}));
-  children.push(new D.Table({width:{size:W,type:D.WidthType.DXA},columnWidths:[2200,6760,400],rows:wfRows}));
-  children.push(new D.Paragraph({spacing:{after:80}}));
-
-  children.push(hdr('JOB CONDITIONS'));
-  var ynRows=[new D.TableRow({children:[
-    new D.TableCell({borders,width:{size:5500,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'EEEEEE',type:D.ShadingType.CLEAR},children:[new D.Paragraph({children:[new D.TextRun({text:'Question',bold:true,size:18,font:'Arial'})]})] }),
-    new D.TableCell({borders,width:{size:700,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'EEEEEE',type:D.ShadingType.CLEAR},children:[new D.Paragraph({alignment:D.AlignmentType.CENTER,children:[new D.TextRun({text:'Answer',bold:true,size:18,font:'Arial'})]})] }),
-    new D.TableCell({borders,width:{size:3160,type:D.WidthType.DXA},margins:cellMar,shading:{fill:'EEEEEE',type:D.ShadingType.CLEAR},children:[new D.Paragraph({children:[new D.TextRun({text:'Details',bold:true,size:18,font:'Arial'})]})] }),
-  ]})];
-  if(typeof DJR_YN_FIELDS!=='undefined') DJR_YN_FIELDS.forEach(function(f){
-    var ans=data.yn[f.id]||''; var det=(data.detailValues&&data.detailValues[f.id])||'';
-    ynRows.push(new D.TableRow({children:[
-      new D.TableCell({borders,width:{size:5500,type:D.WidthType.DXA},margins:cellMar,children:[new D.Paragraph({children:[new D.TextRun({text:f.label,size:18,font:'Arial'})]})] }),
-      new D.TableCell({borders,width:{size:700,type:D.WidthType.DXA},margins:cellMar,children:[new D.Paragraph({alignment:D.AlignmentType.CENTER,children:[new D.TextRun({text:ans,bold:true,size:18,font:'Arial',color:ans==='YES'?'006600':'CC0000'})]})] }),
-      new D.TableCell({borders,width:{size:3160,type:D.WidthType.DXA},margins:cellMar,children:[new D.Paragraph({children:[new D.TextRun({text:det,size:18,font:'Arial',color:'555555'})]})] }),
-    ]}));
-  });
-  children.push(new D.Table({width:{size:W,type:D.WidthType.DXA},columnWidths:[5500,700,3160],rows:ynRows}));
-  children.push(new D.Paragraph({spacing:{after:80}}));
-
-  function notesSection(title,text){
-    if(!text) return;
-    children.push(hdr(title));
-    children.push(new D.Paragraph({spacing:{after:80},children:[new D.TextRun({text:text,size:18,font:'Arial'})]}));
+  function para(text,opts){
+    opts=opts||{};
+    var pPr='';
+    if(opts.spacing) pPr+='<w:spacing w:before="'+(opts.spacing.before||0)+'" w:after="'+(opts.spacing.after||0)+'"/>';
+    if(opts.jc) pPr+='<w:jc w:val="'+opts.jc+'"/>';
+    if(opts.border) pPr+='<w:pBdr><w:top w:val="single" w:sz="4" w:space="1" w:color="DDDDDD"/></w:pBdr>';
+    var rPr='<w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>';
+    if(opts.bold) rPr+='<w:b/>';
+    if(opts.size) rPr+='<w:sz w:val="'+(opts.size*2)+'"/><w:szCs w:val="'+(opts.size*2)+'"/>';
+    if(opts.color) rPr+='<w:color w:val="'+opts.color+'"/>';
+    return '<w:p>'+(pPr?'<w:pPr>'+pPr+'</w:pPr>':'')+'<w:r><w:rPr>'+rPr+'</w:rPr><w:t xml:space="preserve">'+esc(text)+'</w:t></w:r></w:p>';
   }
+
+  function hdr(text){
+    return '<w:p><w:pPr><w:spacing w:before="200" w:after="80"/><w:pBdr><w:bottom w:val="single" w:sz="12" w:space="1" w:color="111111"/></w:pBdr></w:pPr>'
+      +'<w:r><w:rPr><w:b/><w:sz w:val="20"/><w:szCs w:val="20"/><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/></w:rPr><w:t>'+esc(text)+'</w:t></w:r></w:p>';
+  }
+
+  function cell(text,opts){
+    opts=opts||{};
+    var tcPr='<w:tcPr>';
+    if(opts.w) tcPr+='<w:tcW w:w="'+opts.w+'" w:type="dxa"/>';
+    if(opts.shade) tcPr+='<w:shd w:val="clear" w:color="auto" w:fill="'+opts.shade+'"/>';
+    if(opts.span) tcPr+='<w:gridSpan w:val="'+opts.span+'"/>';
+    tcPr+='<w:tcMar><w:top w:w="80" w:type="dxa"/><w:bottom w:w="80" w:type="dxa"/><w:left w:w="120" w:type="dxa"/><w:right w:w="120" w:type="dxa"/></w:tcMar></w:tcPr>';
+    var rPr='<w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>';
+    if(opts.bold) rPr+='<w:b/>';
+    if(opts.size) rPr+='<w:sz w:val="'+(opts.size*2)+'"/><w:szCs w:val="'+(opts.size*2)+'"/>';
+    if(opts.color) rPr+='<w:color w:val="'+opts.color+'"/>';
+    var jc=opts.center?'<w:jc w:val="center"/>':'';
+    return '<w:tc>'+tcPr+'<w:p><w:pPr>'+jc+'</w:pPr><w:r><w:rPr>'+rPr+'</w:rPr><w:t xml:space="preserve">'+esc(text)+'</w:t></w:r></w:p></w:tc>';
+  }
+
+  function row(cells){ return '<w:tr>'+cells+'</w:tr>'; }
+
+  function tbl(rows,colWidths){
+    var grid=colWidths.map(function(w){return '<w:gridCol w:w="'+w+'"/>';}).join('');
+    return '<w:tbl><w:tblPr><w:tblW w:w="9360" w:type="dxa"/>'
+      +'<w:tblBorders><w:top w:val="single" w:sz="2" w:color="AAAAAA"/><w:left w:val="single" w:sz="2" w:color="AAAAAA"/><w:bottom w:val="single" w:sz="2" w:color="AAAAAA"/><w:right w:val="single" w:sz="2" w:color="AAAAAA"/><w:insideH w:val="single" w:sz="2" w:color="AAAAAA"/><w:insideV w:val="single" w:sz="2" w:color="AAAAAA"/></w:tblBorders>'
+      +'</w:tblPr><w:tblGrid>'+grid+'</w:tblGrid>'+rows.join('')+'</w:tbl>';
+  }
+
+  var body='';
+  var t=Math.round(9360/3);
+
+  body+=para('RYE ELECTRIC, INC.',{bold:true,size:16,spacing:{before:0,after:40},jc:'center'});
+  body+=para('DAILY JOB REPORT',{bold:true,size:13,color:'444444',spacing:{before:0,after:160},jc:'center'});
+
+  body+=tbl([row(cell('Job: '+jobNum+' \u2014 '+jobName,{w:t*2,shade:'F5F5F5',size:9})+cell('Date: '+dispDate,{w:t,shade:'F5F5F5',size:9}))],[t*2,t]);
+  body+=para('',{spacing:{before:40,after:0}});
+  body+=tbl([row(cell('Day: '+dayName,{w:t,shade:'F5F5F5',size:9})+cell('Temp AM: '+(data.tempAM?data.tempAM+'\u00b0F':'--'),{w:t,shade:'F5F5F5',size:9})+cell('Weather: '+esc(data.weather||'--'),{w:t,shade:'F5F5F5',size:9}))],[t,t,t]);
+  body+=para('',{spacing:{before:80,after:0}});
+
+  body+=hdr('WORK FORCE \u2014 LOCATION AND DESCRIPTION OF WORK');
+  var wfRows=[row(cell('EMPLOYEE',{w:2200,shade:'EEEEEE',bold:true,size:9})+cell('DESCRIPTION OF WORK',{w:6760,shade:'EEEEEE',bold:true,size:9})+cell('HRS',{w:400,shade:'EEEEEE',bold:true,size:9,center:true}))];
+  (data.workforce||[]).forEach(function(r){ wfRows.push(row(cell((r.worker||'').toUpperCase(),{w:2200,bold:true,size:9})+cell(r.description||'',{w:6760,size:9})+cell(String(r.hours||''),{w:400,size:9,center:true}))); });
+  wfRows.push(row(cell('Total manpower hours:',{w:8960,shade:'F5F5F5',bold:true,size:9,span:2})+cell(String(totalHrs),{w:400,shade:'F5F5F5',bold:true,size:9,center:true})));
+  body+=tbl(wfRows,[2200,6760,400]);
+  body+=para('',{spacing:{before:80,after:0}});
+
+  body+=hdr('JOB CONDITIONS');
+  var ynFields=[{id:'incidents',label:'Were there any incidents or near misses?'},{id:'meetings',label:'Were there any meetings held?'},{id:'visitors',label:'Were there any visitors on site?'},{id:'shortage',label:'Were there any material shortages?'},{id:'deliveries',label:'Were there any deliveries?'},{id:'inspections',label:'Were there any inspections?'},{id:'extrawork',label:'Was any extra work performed?'},{id:'gcdirection',label:'Was any work performed per GC direction?'}];
+  var ynRows=[row(cell('Question',{w:5500,shade:'EEEEEE',bold:true,size:9})+cell('Answer',{w:700,shade:'EEEEEE',bold:true,size:9,center:true})+cell('Details',{w:3160,shade:'EEEEEE',bold:true,size:9}))];
+  ynFields.forEach(function(f){ var ans=(data.yn&&data.yn[f.id])||''; var det=(data.detailValues&&data.detailValues[f.id])||''; ynRows.push(row(cell(f.label,{w:5500,size:9})+cell(ans,{w:700,size:9,bold:true,color:ans==='YES'?'006600':'CC0000',center:true})+cell(det,{w:3160,size:9,color:'555555'}))); });
+  body+=tbl(ynRows,[5500,700,3160]);
+  body+=para('',{spacing:{before:80,after:0}});
+
+  function notesSection(title,text){ if(!text) return; body+=hdr(title); body+=para(text,{size:9,spacing:{before:0,after:80}}); }
   notesSection('DELAYS / INTERFERENCES BY OTHERS',data.delays);
   notesSection('EXTRA WORK / CHANGE ORDER NOTES',data.extra);
   notesSection('OTHER NOTES',data.other);
 
-  // Signature block
-  children.push(new D.Paragraph({spacing:{before:400,after:0},border:{bottom:{style:D.BorderStyle.SINGLE,size:4,color:'111111',space:1}},children:[new D.TextRun({text:' ',size:18})]}));
-  if(data.superSig){
-    try{
-      var base64=data.superSig.split(',')[1];
-      var binary=atob(base64);
-      var bytes=new Uint8Array(binary.length);
-      for(var i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
-      children.push(new D.Paragraph({spacing:{before:60,after:0},children:[new D.ImageRun({data:bytes.buffer,transformation:{width:200,height:50},type:'png'})]}));
-    }catch(e){}
-  }
-  children.push(new D.Paragraph({spacing:{before:60,after:0},children:[new D.TextRun({text:data.superintendent||'_____________________________',bold:true,size:18,font:'Arial'})]}));
-  children.push(new D.Paragraph({spacing:{before:0,after:0},children:[new D.TextRun({text:data.title||'RYE SUPERINTENDENT',size:16,font:'Arial',color:'666666'})]}));
-  children.push(new D.Paragraph({spacing:{before:200},border:{top:{style:D.BorderStyle.SINGLE,size:2,color:'DDDDDD',space:1}},alignment:D.AlignmentType.CENTER,children:[new D.TextRun({text:'This Daily Report is provided as a record of work progress and conditions at the jobsite.',size:14,font:'Arial',color:'999999'})]}));
+  body+=para('',{spacing:{before:300,after:0}});
+  body+='<w:p><w:pPr><w:spacing w:before="0" w:after="0"/><w:pBdr><w:bottom w:val="single" w:sz="8" w:space="1" w:color="111111"/></w:pBdr></w:pPr></w:p>';
+  body+=para(data.superintendent||'_____________________________',{bold:true,size:9,spacing:{before:60,after:0}});
+  body+=para(data.title||'RYE SUPERINTENDENT',{size:8,color:'666666',spacing:{before:0,after:0}});
+  body+=para('This Daily Report is provided as a record of work progress and conditions at the jobsite.',{size:7,color:'999999',spacing:{before:200,after:0},jc:'center',border:true});
 
-  var doc2=new D.Document({styles:{default:{document:{run:{font:'Arial',size:20}}}},sections:[{properties:{page:{size:{width:12240,height:15840},margin:{top:1080,right:1080,bottom:1080,left:1080}}},children:children}]});
-  var blob=await D.Packer.toBlob(doc2);
-  var filename='DJR_'+jobNum.replace(/[^a-zA-Z0-9]/g,'_')+'_'+date+'.docx';
-  saveAs(blob,filename);
+  var docXml='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+    +'<w:document xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"'
+    +' xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
+    +'<w:body>'+body
+    +'<w:sectPr><w:pgSz w:w="12240" w:h="15840"/>'
+    +'<w:pgMar w:top="1080" w:right="1080" w:bottom="1080" w:left="1080" w:header="720" w:footer="720" w:gutter="0"/>'
+    +'</w:sectPr></w:body></w:document>';
+
+  var zipFiles={
+    '[Content_Types].xml':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>',
+    '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
+    'word/_rels/document.xml.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>',
+    'word/document.xml':docXml
+  };
+
+  var blob=new Blob([buildDJRZip(zipFiles)],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download='DJR_'+jobNum.replace(/[^a-zA-Z0-9]/g,'_')+'_'+date+'.docx';
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},1000);
   if(typeof toast==='function') toast('Word doc downloaded');
+}
+
+function buildDJRZip(files){
+  var enc=new TextEncoder();
+  function u16(n){return new Uint8Array([n&255,(n>>8)&255]);}
+  function u32(n){return new Uint8Array([n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255]);}
+  function cat(){var tot=0;for(var i=0;i<arguments.length;i++)tot+=arguments[i].length;var out=new Uint8Array(tot),p=0;for(var i=0;i<arguments.length;i++){out.set(arguments[i],p);p+=arguments[i].length;}return out;}
+  function crc32(b){if(!crc32._t){var t=crc32._t=new Uint32Array(256);for(var i=0;i<256;i++){var x=i;for(var j=0;j<8;j++)x=x&1?(0xEDB88320^(x>>>1)):(x>>>1);t[i]=x;}}var c=0xFFFFFFFF,T=crc32._t;for(var i=0;i<b.length;i++)c=(c>>>8)^T[(c^b[i])&255];return(c^0xFFFFFFFF)>>>0;}
+  var LP=[],CP=[],off=0,DT=u16(0),DD=u16(0x4A21);
+  Object.keys(files).forEach(function(name){
+    var dat=enc.encode(files[name]),nm=enc.encode(name),crc=crc32(dat);
+    var lh=cat(new Uint8Array([0x50,0x4B,0x03,0x04]),u16(20),u16(0),u16(0),DT,DD,u32(crc),u32(dat.length),u32(dat.length),u16(nm.length),u16(0),nm);
+    LP.push(lh,dat);
+    CP.push(cat(new Uint8Array([0x50,0x4B,0x01,0x02]),u16(20),u16(20),u16(0),u16(0),DT,DD,u32(crc),u32(dat.length),u32(dat.length),u16(nm.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(off),nm));
+    off+=lh.length+dat.length;
+  });
+  var lb=new Uint8Array(LP.reduce(function(s,x){return s+x.length;},0)),lp=0;LP.forEach(function(x){lb.set(x,lp);lp+=x.length;});
+  var cb=new Uint8Array(CP.reduce(function(s,x){return s+x.length;},0)),cp=0;CP.forEach(function(x){cb.set(x,cp);cp+=x.length;});
+  var nf=Object.keys(files).length;
+  var eocd=cat(new Uint8Array([0x50,0x4B,0x05,0x06]),u16(0),u16(0),u16(nf),u16(nf),u32(cb.length),u32(lb.length),u16(0));
+  return cat(lb,cb,eocd);
 }
 
 function djrSigInit(){
