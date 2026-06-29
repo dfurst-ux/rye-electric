@@ -722,13 +722,14 @@ textarea.form-control { resize: vertical; min-height: 80px; }
           <th>Assigned Tech</th>
           <th>Hours</th>
           <th>NTE</th>
+          <th>Total Ticket</th>
           <th>Status</th>
           <th>Rating</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody id="tickets-tbody">
-        <tr><td colspan="10"><div class="empty-state"><div class="icon">🔧</div><p>No service calls yet.</p></div></td></tr>
+        <tr><td colspan="11"><div class="empty-state"><div class="icon">🔧</div><p>No service calls yet.</p></div></td></tr>
       </tbody>
     </table>
   </div>
@@ -2683,6 +2684,25 @@ function renderTicketsTable() {
     const filled = Object.values(r).filter(v=>v>0);
     const avg = filled.length ? (filled.reduce((a,b)=>a+b,0)/filled.length).toFixed(1) : '—';
     const starDisp = filled.length ? `<span style="color:var(--gold)">${avg} ★</span>` : '<span style="color:#ccc">—</span>';
+
+    // Calculate total ticket from labor + materials + 20% O&P
+    const laborTotal = (t.labor||[]).reduce((s,r) => {
+      const rate = parseFloat(r.rate) || 124.97;
+      const reg  = parseFloat(r.regHours) || 0;
+      const ot   = parseFloat(r.otHours)  || 0;
+      return s + (parseFloat(r.lineTotal) || (reg * rate) + (ot * rate * 1.5));
+    }, 0);
+    const matTotal = (t.materials||[]).reduce((s,r) => s + (parseFloat(r.total) || 0), 0);
+    const ticketTotal = (laborTotal + matTotal) * 1.20;
+    const totalDisp = ticketTotal > 0
+      ? `<span style="font-weight:700;color:var(--teal)">$${Math.round(ticketTotal).toLocaleString()}</span>`
+      : '—';
+
+    // NTE — always pull directly from ticket field
+    const nteDisp = t.nte && parseFloat(t.nte) > 0
+      ? `$${parseFloat(t.nte).toLocaleString()}`
+      : '—';
+
     return `
       <tr>
         <td><strong>${t.id}</strong></td>
@@ -2691,7 +2711,8 @@ function renderTicketsTable() {
         <td>${typeBadge(t.type)}</td>
         <td>${t.tech}</td>
         <td>${totalHours ? totalHours.toFixed(1)+'h' : '—'}</td>
-        <td>${t.nte ? '$'+parseFloat(t.nte).toLocaleString() : '—'}</td>
+        <td>${nteDisp}</td>
+        <td>${totalDisp}</td>
         <td>${statusBadge(t.status)}</td>
         <td>${starDisp}</td>
         <td>
