@@ -3447,12 +3447,25 @@ function openEditTimesheet(id) {
 function addEditTsRow(entry) {
   const tbody = document.getElementById('edit-ts-entries-tbody');
   const tr = document.createElement('tr');
+
+  // Build service call options from live tickets
+  const svcOptions = tickets
+    .filter(t => t.id && t.customer)
+    .sort((a,b) => a.id.localeCompare(b.id))
+    .map(t => {
+      const val = t.id + ' — ' + t.customer;
+      return `<option value="${val}" ${entry?.job===val?'selected':''}>${t.id} — ${t.customer}</option>`;
+    }).join('');
+
   tr.innerHTML = `
     <td><input type="date" class="form-control edit-ts-date" value="${entry?.date || today()}" oninput="updateEditTotals()"></td>
-    <td><select class="form-control edit-ts-job" oninput="updateEditTotals()" style="font-size:13px">
+    <td><select class="form-control edit-ts-job" oninput="updateEditTotals()" style="font-size:12px">
       <option value="">— Billed To —</option>
-      <optgroup label="Service Call">
+      <optgroup label="Service Call (general)">
         <option value="Service Call" ${entry?.job==='Service Call'?'selected':''}>Service Call (default)</option>
+      </optgroup>
+      <optgroup label="Specific Service Calls">
+        ${svcOptions}
       </optgroup>
       <optgroup label="Construction Projects — Cost Code 1000-01">
         <option value="24001 - BIOLA | 1000-01" ${entry?.job==='24001 - BIOLA | 1000-01'?'selected':''}>24001 - BIOLA | 1000-01</option>
