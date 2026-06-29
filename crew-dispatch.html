@@ -743,13 +743,16 @@ function saveLocal() {
 
 function scheduleSave() {
   clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => {
-    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
-      saveToSupabase().catch(() => saveLocal());
-    } else {
-      saveLocal();
-    }
-  }, 600);
+  saveTimeout = setTimeout(() => saveNow(), 600);
+}
+
+async function saveNow() {
+  clearTimeout(saveTimeout);
+  if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+    await saveToSupabase().catch(() => saveLocal());
+  } else {
+    saveLocal();
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -1101,7 +1104,7 @@ function moveWorker(workerId, targetJobId) {
   w.jobId = targetJobId;
   logEntry('move', workerId, targetJobId, note);
   render();
-  scheduleSave();
+  saveNow();
   showToast(w.name + ' moved to ' + toJob.name);
 }
 
@@ -1464,7 +1467,7 @@ function submitAddWorker() {
     logEntry('move', existing.id, jobId, note);
     closeModal('addWorkerModal');
     render();
-    scheduleSave();
+    saveNow();
     showToast(displayName + ' moved to ' + (toJob ? toJob.name : 'job'));
     return;
   }
