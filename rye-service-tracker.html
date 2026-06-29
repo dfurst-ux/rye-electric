@@ -1614,47 +1614,52 @@ const EMP_DIR = {
 };
 function empNum(name) { return EMP_DIR[name]?.num || '—'; }
 function empTitle(name) { return EMP_DIR[name]?.title || ''; }
-const SB_HDRS = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
+const SB_HDRS = { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Prefer': 'count=none' };
 
 async function sbGet() {
   try {
-    const res = await fetch(SB_URL + '/rest/v1/service_tickets?order=created_at.desc', { headers: SB_HDRS });
+    const res = await fetch(SB_URL + '/rest/v1/service_tickets?order=created_at.desc&limit=1000', {
+      headers: { ...SB_HDRS, 'Range': '0-999' }
+    });
     if (!res.ok) throw new Error(await res.text());
     const rows = await res.json();
-    // Map snake_case columns back to camelCase for the UI
     return rows.map(r => ({
-      id:          r.id,
-      customer:    r.customer,
-      address:     r.address,
-      type:        r.type,
-      date:        r.date,
-      tech:        r.tech,
-      po:          r.po,
-      nte:         r.nte,
-      status:      r.status,
-      scope:       r.scope,
-      notes:       r.notes,
-      equipment:   r.equipment,
-      sigName:     r.sig_name,
-      sigDate:     r.sig_date,
-      rating:      r.rating,
-      ratings:     r.ratings || {},
-      ratingNotes: r.rating_notes,
-      labor:       r.labor || [],
-      materials:   r.materials || [],
-      dailyReport: r.daily_report || {},
-      urgency:     r.urgency,
-      source:      r.source,
-      company:     r.company,
-      phone:       r.phone,
-      email:       r.email,
-      contactPref: r.contact_pref,
-      propType:    r.prop_type,
-      prefDate:    r.pref_date,
-      altDate:     r.alt_date,
-      timeWindow:  r.time_window,
-      extraNotes:  r.extra_notes,
-      createdAt:   r.created_at,
+      id:            r.id,
+      customer:      r.customer,
+      address:       r.address,
+      type:          r.type,
+      date:          r.date,
+      tech:          r.tech,
+      po:            r.po,
+      nte:           r.nte,
+      status:        r.status,
+      scope:         r.scope,
+      notes:         r.notes,
+      equipment:     r.equipment,
+      sigName:       r.sig_name,
+      sigDate:       r.sig_date,
+      rating:        r.rating,
+      ratings:       r.ratings || {},
+      ratingNotes:   r.rating_notes,
+      labor:         Array.isArray(r.labor) ? r.labor : (r.labor ? JSON.parse(r.labor) : []),
+      materials:     Array.isArray(r.materials) ? r.materials : (r.materials ? JSON.parse(r.materials) : []),
+      dailyReport:   r.daily_report || {},
+      attachments:   (() => { try { return Array.isArray(r.attachments) ? r.attachments : JSON.parse(r.attachments || '[]'); } catch(e) { return []; } })(),
+      urgency:       r.urgency,
+      source:        r.source,
+      company:       r.company,
+      customerPhone: r.phone,
+      customerEmail: r.email,
+      contactPref:   r.contact_pref,
+      propType:      r.prop_type,
+      prefDate:      r.pref_date,
+      altDate:       r.alt_date,
+      timeWindow:    r.time_window,
+      extraNotes:    r.extra_notes,
+      paidAmount:    r.paid_amount,
+      paidAt:        r.paid_at,
+      invoiceNum:    r.invoice_num,
+      createdAt:     r.created_at,
     }));
   } catch(e) {
     console.warn('Supabase fetch failed, using localStorage:', e);
