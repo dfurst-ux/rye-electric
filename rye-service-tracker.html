@@ -3166,6 +3166,11 @@ function renderTimesheets() {
   const selectedStatus = document.getElementById('ts-status-filter')?.value || 'all';
 
   // Get all unique weeks and employees
+  // Normalize all weekEnding values to their Sunday before building dropdown
+  timesheets.forEach(ts => {
+    if (ts.weekEnding) ts.weekEnding = getWeekEnding(ts.weekEnding);
+  });
+
   const allWeeks = [...new Set(timesheets.map(ts => ts.weekEnding).filter(Boolean))]
     .sort((a,b) => b.localeCompare(a)); // newest first
   const allEmps = [...new Set(timesheets.map(ts => ts.employee).filter(Boolean))].sort();
