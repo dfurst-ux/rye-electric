@@ -1754,8 +1754,10 @@ async function sbUpsertTimesheet(ts) {
         total_ot:    ts.totalOT,
         total_hours: ts.totalHours,
         notes:       ts.notes || '',
-        approved_by: ts.approvedBy || null,
-        approved_at: ts.approvedAt || null,
+        approved_by:         ts.approvedBy       || null,
+        approved_at:         ts.approvedAt       || null,
+        employee_sig:        ts.employeeSig      || null,
+        employee_signed_at:  ts.employeeSignedAt || null,
       }),
     });
   } catch(e) { console.warn('Timesheet upsert failed:', e); }
@@ -1775,10 +1777,12 @@ async function sbGetTimesheets() {
       totalReg:   r.total_reg,
       totalOT:    r.total_ot,
       totalHours: r.total_hours,
-      notes:      r.notes,
-      approvedBy: r.approved_by,
-      approvedAt: r.approved_at,
-      createdAt:  r.created_at,
+      notes:            r.notes,
+      approvedBy:       r.approved_by,
+      approvedAt:       r.approved_at,
+      employeeSig:      r.employee_sig,
+      employeeSignedAt: r.employee_signed_at,
+      createdAt:        r.created_at,
     }));
   } catch(e) {
     console.warn('Timesheet fetch failed:', e);
@@ -2776,6 +2780,23 @@ function nextStatus(s) {
 }
 
 // ── RENDER TIMESHEETS ──
+// ── TIMESHEET SIGNATURE LINK ─────────────────────────────────────────────────
+function copySignLink(tsId) {
+  const url = 'https://dfurst-ux.github.io/rye-electric/timesheet-sign.html?id=' + encodeURIComponent(tsId) + '&table=service_timesheets';
+  navigator.clipboard.writeText(url).then(() => {
+    toast('✓ Signature link copied to clipboard — paste it and send to the employee');
+  }).catch(() => {
+    // Fallback for browsers that don't support clipboard API
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast('✓ Link copied — send to employee to sign');
+  });
+}
+
 // ── WEEKLY SCORECARD ──────────────────────────────────────────────────────────
 const SCORECARD_PASS = '1234';
 
@@ -3308,7 +3329,7 @@ function renderTimesheets() {
             <div>
               <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--teal);text-transform:uppercase">${ts.id} &nbsp;·&nbsp; EMP #${empNum(ts.employee)}</div>
               <div style="font-size:17px;font-weight:700;color:#fff">${ts.employee}</div>
-              <div style="font-size:12px;color:#888">Week ending ${fmtDate(ts.weekEnding)}${ts.lastEditedBy ? ` &nbsp;·&nbsp; <span style="color:var(--gold)">✏ Edited by ${ts.lastEditedBy}</span>` : ''}</div>
+              <div style="font-size:12px;color:#888">Week ending ${fmtDate(ts.weekEnding)}${ts.lastEditedBy ? ` &nbsp;·&nbsp; <span style="color:var(--gold)">✏ Edited by ${ts.lastEditedBy}</span>` : ''}${ts.employeeSignedAt ? ` &nbsp;·&nbsp; <span style="color:var(--green)">✅ Signed ${new Date(ts.employeeSignedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>` : ''}</div>
             </div>
             <div style="display:flex;gap:8px">
               <div style="background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center">
@@ -3335,6 +3356,7 @@ function renderTimesheets() {
                  </select>`
             }
             <button class="btn btn-sm" style="background:var(--teal);color:#fff;font-size:12px;padding:6px 12px" onclick="printTimesheet('${ts.id}')">🖨 Print</button>
+            ${ts.employeeSignedAt ? `<span style="background:var(--green-light);color:var(--green);border:1px solid var(--green);border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700">✅ Employee Signed</span>` : `<button class="btn btn-sm" style="background:#6c3483;color:#fff;font-size:12px;padding:6px 12px" onclick="copySignLink('${ts.id}')">🔗 Get Signature Link</button>`}
             <button class="btn btn-sm" style="background:#2a2a2a;color:#aaa;font-size:12px;padding:6px 12px" onclick="openEditTimesheet('${ts.id}')">Edit</button>
             <button class="btn btn-sm" style="background:#2a2a2a;color:#666;font-size:12px;padding:6px 12px" onclick="deleteTs('${ts.id}')">Del</button>
           </div>
