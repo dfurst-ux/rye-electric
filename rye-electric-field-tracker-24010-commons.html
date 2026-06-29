@@ -6220,67 +6220,57 @@ function initTasks(){
 var _employees = [];
 
 async function loadEmployeesForJob(){
-  var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
+  var jobEl = document.getElementById('sel-job');
+  var job = jobEl ? jobEl.value : '';
   if(!job) return;
+  // Derive crew_dispatch key from job number (e.g. "26005 - MARINA SHORES" -> "crew_26005")
+  var jobNum = job.split(' - ')[0].trim().replace(/^SP/i,'SP');
+  var crewKey = 'crew_' + jobNum;
   try{
-    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/employees?job=eq.'+encodeURIComponent(job)+'&order=name.asc', {
-      headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'}
+    var resp = await fetch(SUPABASE_URL+'/rest/v1/crew_dispatch?key=eq.'+encodeURIComponent(crewKey)+'&select=value&limit=1',{
+      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
     });
-    if(resp.ok){
-      _employees = await resp.json();
-      // Task assignee
-      var sel = document.getElementById('task-assignee');
-      if(sel){
-        sel.innerHTML = '<option value="">-- Select employee --</option>';
-        _employees.forEach(function(e){
-          sel.innerHTML += '<option value="'+e.id+'" data-email="'+(e.email||'')+'" data-phone="'+(e.phone||'')+'">'+e.name+'</option>';
-        });
-      }
-      // Log Unit worker dropdown
-      var workerSel = document.getElementById('sel-worker');
-      if(workerSel){
-        workerSel.innerHTML = '<option value="">-- Select employee --</option>';
-        _employees.forEach(function(e){
-          var label = (e.emp_id?e.emp_id+' - ':'')+e.name+(e.trade?' - '+e.trade:'');
-          var val   = (e.emp_id?e.emp_id+' - ':'')+e.name;
-          workerSel.innerHTML += '<option value="'+val+'">'+label+'</option>';
-        });
-      }
-      // Whiteboard worker filter
-      var wbSel = document.getElementById('wb-worker');
-      if(wbSel){
-        var cv=wbSel.value;
-        wbSel.innerHTML = '<option value="">-- Select employee --</option>';
-        _employees.forEach(function(e){
-          var name=(e.emp_id?e.emp_id+' - ':'')+e.name;
-          wbSel.innerHTML += '<option value="'+name+'">'+name+'</option>';
-        });
-        if(cv) wbSel.value=cv;
-      }
-      // Daily log filter
-      var dlSel = document.getElementById('dl-filter-worker');
-      if(dlSel){
-        var cv=dlSel.value;
-        dlSel.innerHTML = '<option value="all">All Workers</option>';
-        _employees.forEach(function(e){
-          var name=(e.emp_id?e.emp_id+' - ':'')+e.name;
-          dlSel.innerHTML += '<option value="'+name+'">'+name+'</option>';
-        });
-        if(cv) dlSel.value=cv;
-      }
-      // Units filter
-      var ufSel = document.getElementById('unit-filter-worker');
-      if(ufSel){
-        var cv=ufSel.value;
-        ufSel.innerHTML = '<option value="all">All Workers</option>';
-        _employees.forEach(function(e){
-          var name=(e.emp_id?e.emp_id+' - ':'')+e.name;
-          ufSel.innerHTML += '<option value="'+name+'">'+name+'</option>';
-        });
-        if(cv) ufSel.value=cv;
-      }
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    var rows = await resp.json();
+    if(!rows.length || !rows[0].value) return;
+    var crew = typeof rows[0].value === 'string' ? JSON.parse(rows[0].value) : rows[0].value;
+    if(!Array.isArray(crew) || !crew.length) return;
+    _employees = crew; // store for other uses
+
+    function buildOpts(includeAll){
+      var s = includeAll ? '<option value="all">All Workers</option>' : '<option value="">-- Select employee --</option>';
+      crew.forEach(function(e){
+        var name = e.name||'';
+        var role = e.role ? ' - '+e.role : '';
+        s += '<option value="'+name+'">'+name+role+'</option>';
+      });
+      return s;
     }
-  }catch(ex){ console.log('Employee load error:',ex); }
+
+    // Log Unit worker dropdown
+    var workerSel = document.getElementById('sel-worker');
+    if(workerSel) workerSel.innerHTML = buildOpts(false);
+
+    // Whiteboard worker filter
+    var wbSel = document.getElementById('wb-worker');
+    if(wbSel){ var cv=wbSel.value; wbSel.innerHTML=buildOpts(false); if(cv) wbSel.value=cv; }
+
+    // Daily log filter
+    var dlSel = document.getElementById('dl-filter-worker');
+    if(dlSel){ var cv=dlSel.value; dlSel.innerHTML=buildOpts(true); if(cv) dlSel.value=cv; }
+
+    // Units filter
+    var ufSel = document.getElementById('unit-filter-worker');
+    if(ufSel){ var cv=ufSel.value; ufSel.innerHTML=buildOpts(true); if(cv) ufSel.value=cv; }
+
+    // Task assignee (uses name not id)
+    var taSel = document.getElementById('task-assignee');
+    if(taSel){ taSel.innerHTML='<option value="">-- Select employee --</option>'; crew.forEach(function(e){ taSel.innerHTML+='<option value="'+(e.name||'')+'">'+e.name+(e.role?' - '+e.role:'')+'</option>'; }); }
+
+    // DJR workforce rows — refresh any open selects
+    document.querySelectorAll('.djr-worker-name').forEach(function(s){ var cv=s.value; s.innerHTML=buildOpts(false); if(cv) s.value=cv; });
+
+  }catch(ex){ console.warn('loadEmployeesForJob error:',ex); }
 }
 
 async function sendSMS(phone, message){
