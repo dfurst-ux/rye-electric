@@ -680,17 +680,19 @@ async function sbFetch(path, method = 'GET', body = null) {
       'Content-Type': 'application/json',
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Prefer': method === 'POST' ? 'return=representation' : ''
+      'Prefer': method === 'POST' ? 'resolution=merge-duplicates,return=representation' : ''
     }
   };
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(SUPABASE_URL + path, opts);
-  if (!res.ok) return null;
+  if (!res.ok) {
+    console.warn('Supabase error', res.status, path);
+    return null;
+  }
   try { return await res.json(); } catch { return null; }
 }
 
 async function loadFromSupabase() {
-  // Try to load saved state from a single row in a key-value table
   const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.board_state&select=value');
   if (data && data.length > 0) {
     try {
@@ -701,13 +703,11 @@ async function loadFromSupabase() {
 }
 
 async function publishCrewToSupabase() {
-  // Write per-job crew lists so field trackers can read them
   const byJob = {};
   state.jobs.forEach(j => { byJob[j.id] = { number: j.number, name: j.name, crew: [] }; });
   state.workers.forEach(w => {
     if (byJob[w.jobId]) byJob[w.jobId].crew.push({ name: w.name, role: w.role || '' });
   });
-  // One row per job keyed as "crew_<jobNumber>"
   for (const job of state.jobs) {
     if (job.id === 'unassigned') continue;
     const key = 'crew_' + job.number;
@@ -718,7 +718,12 @@ async function publishCrewToSupabase() {
 
 async function saveToSupabase() {
   const value = JSON.stringify(state);
-  await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'board_state', value });
+  const result = await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'board_state', value });
+  if (!result) {
+    console.warn('board_state save failed — falling back to localStorage');
+    saveLocal();
+    return;
+  }
   await publishCrewToSupabase();
   setLastSaved();
 }
