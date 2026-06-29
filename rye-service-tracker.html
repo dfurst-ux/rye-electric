@@ -1368,7 +1368,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
             <input class="form-control" id="edit-ts-employee" readonly style="background:#f4f4f4">
           </div>
           <div class="form-group">
-            <label class="form-label">Week Ending</label>
+            <label class="form-label">Week Ending (Sunday)</label>
             <input class="form-control" type="date" id="edit-ts-week" readonly style="background:#f4f4f4">
           </div>
           <div class="form-group">
@@ -1411,6 +1411,25 @@ textarea.form-control { resize: vertical; min-height: 80px; }
             <div class="stat-value" id="edit-ts-hr-total">0.00</div>
           </div>
         </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">Edited By <span style="color:var(--red)">*</span></div>
+        <div class="form-grid" style="align-items:end">
+          <div class="form-group">
+            <label class="form-label">Who is making this edit?</label>
+            <select class="form-control" id="edit-ts-editor">
+              <option value="">— Select your name —</option>
+              <option>Joey Java</option>
+              <option>Dennis Furst</option>
+              <option>Mychal Kirschbaum</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Reason for Edit</label>
+            <input class="form-control" id="edit-ts-reason" placeholder="e.g. Added missing hours from SP26021">
+          </div>
+        </div>
+        <div id="edit-ts-history" style="margin-top:12px;font-size:12px;color:var(--muted)"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -3253,7 +3272,7 @@ function renderTimesheets() {
             <div>
               <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--teal);text-transform:uppercase">${ts.id}</div>
               <div style="font-size:17px;font-weight:700;color:#fff">${ts.employee}</div>
-              <div style="font-size:12px;color:#888">Week ending ${fmtDate(ts.weekEnding)}</div>
+              <div style="font-size:12px;color:#888">Week ending ${fmtDate(ts.weekEnding)}${ts.lastEditedBy ? ` &nbsp;·&nbsp; <span style="color:var(--gold)">✏ Edited by ${ts.lastEditedBy}</span>` : ''}</div>
             </div>
             <div style="display:flex;gap:8px">
               <div style="background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center">
@@ -3400,6 +3419,21 @@ function openEditTimesheet(id) {
   document.getElementById('edit-ts-week').value = ts.weekEnding;
   document.getElementById('edit-ts-status').value = ts.status;
 
+  // Reset editor fields
+  document.getElementById('edit-ts-editor').value = '';
+  document.getElementById('edit-ts-reason').value = '';
+
+  // Show edit history if any
+  const histEl = document.getElementById('edit-ts-history');
+  if (ts.editHistory && ts.editHistory.length) {
+    histEl.innerHTML = '<strong style="color:var(--dark)">Edit History:</strong><br>' +
+      ts.editHistory.map(h =>
+        `<span style="color:var(--muted)">• ${h.editedBy} — ${h.reason || 'No reason given'} &nbsp;·&nbsp; ${new Date(h.editedAt).toLocaleString('en-US',{dateStyle:'short',timeStyle:'short'})}</span>`
+      ).join('<br>');
+  } else {
+    histEl.innerHTML = '<span style="color:var(--muted)">No edits recorded yet.</span>';
+  }
+
   // Build entry rows
   const tbody = document.getElementById('edit-ts-entries-tbody');
   tbody.innerHTML = '';
@@ -3467,6 +3501,10 @@ function saveEditedTimesheet() {
   const ts = timesheets.find(x => x.id === editingTsId);
   if (!ts) return;
 
+  const editor = document.getElementById('edit-ts-editor').value;
+  const reason = document.getElementById('edit-ts-reason').value.trim();
+  if (!editor) { toast('Please select who is making this edit', true); return; }
+
   const entries = [];
   document.querySelectorAll('#edit-ts-entries-tbody tr').forEach(tr => {
     const date = tr.querySelector('.edit-ts-date')?.value || '';
@@ -3487,11 +3525,21 @@ function saveEditedTimesheet() {
   ts.totalOT     = totalOT.toFixed(2);
   ts.totalHours  = (totalReg + totalOT).toFixed(2);
 
+  // Record edit history
+  if (!ts.editHistory) ts.editHistory = [];
+  ts.editHistory.push({
+    editedBy:  editor,
+    reason:    reason || 'No reason given',
+    editedAt:  new Date().toISOString(),
+  });
+  ts.lastEditedBy = editor;
+  ts.lastEditedAt = new Date().toISOString();
+
   save();
   sbUpsertTimesheet(ts);
   renderTimesheets();
   closeModal('editTimesheetModal');
-  toast('Timesheet ' + ts.id + ' updated ✓');
+  toast('Timesheet ' + ts.id + ' updated by ' + editor + ' ✓');
 }
 function printTimesheet(id) {
   const ts = timesheets.find(x => x.id === id);
