@@ -587,16 +587,21 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <p id="dash-date"></p>
   </div>
   <!-- FINANCIAL STATS ROW -->
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
     <div class="stat-card" style="border-left-color:var(--green)">
       <div class="stat-label">Revenue Produced (YTD)</div>
       <div class="stat-value" id="stat-revenue" style="color:var(--green);font-size:26px">$0</div>
-      <div class="stat-sub">Total invoiced to date</div>
+      <div class="stat-sub">Invoiced + Paid tickets</div>
     </div>
     <div class="stat-card" style="border-left-color:var(--gold)">
       <div class="stat-label">Open Invoices</div>
       <div class="stat-value" id="stat-open-invoices" style="color:var(--gold);font-size:26px">$0</div>
       <div class="stat-sub">Invoiced — awaiting payment</div>
+    </div>
+    <div class="stat-card" style="border-left-color:var(--red)">
+      <div class="stat-label">Ready to Invoice</div>
+      <div class="stat-value" id="stat-ready-invoice" style="color:var(--red);font-size:26px">$0</div>
+      <div class="stat-sub" id="stat-ready-sub">Completed — not yet invoiced</div>
     </div>
     <div class="stat-card" style="border-left-color:var(--teal)">
       <div class="stat-label">Weekly Pace (last 7 days)</div>
@@ -2610,6 +2615,10 @@ function renderDashboard() {
     .filter(t => t.status === 'Invoiced')
     .reduce((s, t) => s + calcTicketTotal(t), 0);
 
+  // Ready to Invoice = sum of all Completed tickets that haven't been invoiced yet
+  const readyTickets = tickets.filter(t => t.status === 'Completed');
+  const readyToInvoiceTotal = readyTickets.reduce((s, t) => s + calcTicketTotal(t), 0);
+
   // Weekly pace — revenue from Paid tickets in the last 7 days
   const oneWeekAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString();
   const weeklyPace = tickets
@@ -2619,7 +2628,11 @@ function renderDashboard() {
   const fmtDollar = n => '$' + Math.round(n).toLocaleString('en-US');
   document.getElementById('stat-revenue').textContent = fmtDollar(revProduced);
   document.getElementById('stat-open-invoices').textContent = fmtDollar(openInvoiceTotal);
+  document.getElementById('stat-ready-invoice').textContent = fmtDollar(readyToInvoiceTotal);
   document.getElementById('stat-weekly-pace').textContent = fmtDollar(weeklyPace);
+
+  const readySub = document.getElementById('stat-ready-sub');
+  if (readySub) readySub.textContent = readyTickets.length + ' ticket' + (readyTickets.length!==1?'s':'') + ' completed — not yet invoiced';
 
   const paceEl = document.getElementById('stat-weekly-pace');
   const paceSub = document.getElementById('stat-pace-sub');
