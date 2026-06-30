@@ -2725,15 +2725,8 @@ function renderTicketsTable() {
     const avg = filled.length ? (filled.reduce((a,b)=>a+b,0)/filled.length).toFixed(1) : '—';
     const starDisp = filled.length ? `<span style="color:var(--gold)">${avg} ★</span>` : '<span style="color:#ccc">—</span>';
 
-    // Calculate total ticket from labor + materials + 20% O&P
-    const laborTotal = (t.labor||[]).reduce((s,r) => {
-      const rate = parseFloat(r.rate) || 124.97;
-      const reg  = parseFloat(r.regHours) || 0;
-      const ot   = parseFloat(r.otHours)  || 0;
-      return s + (parseFloat(r.lineTotal) || (reg * rate) + (ot * rate * 1.5));
-    }, 0);
-    const matTotal = (t.materials||[]).reduce((s,r) => s + (parseFloat(r.total) || 0), 0);
-    const ticketTotal = (laborTotal + matTotal) * 1.20;
+    // Calculate total ticket — uses calcTicketTotal so Bid Work jobs use the flat bid price
+    const ticketTotal = calcTicketTotal(t);
     const totalDisp = ticketTotal > 0
       ? `<span style="font-weight:700;color:var(--teal)">$${Math.round(ticketTotal).toLocaleString()}</span>`
       : '—';
