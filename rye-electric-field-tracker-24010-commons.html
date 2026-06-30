@@ -3929,17 +3929,33 @@ async function downloadDJRDocx(){
   body+=tbl(wfRows,[2200,6760,400]);
   body+=para('',{spacing:{before:80,after:0}});
 
+  // ── JOB CONDITIONS (text fields first, matching form order) ──
   body+=hdr('JOB CONDITIONS');
-  var ynFields=[{id:'incidents',label:'Were there any incidents or near misses?'},{id:'meetings',label:'Were there any meetings held?'},{id:'visitors',label:'Were there any visitors on site?'},{id:'shortage',label:'Were there any material shortages?'},{id:'deliveries',label:'Were there any deliveries?'},{id:'inspections',label:'Were there any inspections?'},{id:'extrawork',label:'Was any extra work performed?'},{id:'gcdirection',label:'Was any work performed per GC direction?'}];
-  var ynRows=[row(cell('Question',{w:5500,shade:'EEEEEE',bold:true,size:9})+cell('Answer',{w:700,shade:'EEEEEE',bold:true,size:9,center:true})+cell('Details',{w:3160,shade:'EEEEEE',bold:true,size:9}))];
-  ynFields.forEach(function(f){ var ans=(data.yn&&data.yn[f.id])||''; var det=(data.detailValues&&data.detailValues[f.id])||''; ynRows.push(row(cell(f.label,{w:5500,size:9})+cell(ans,{w:700,size:9,bold:true,color:ans==='YES'?'006600':'CC0000',center:true})+cell(det,{w:3160,size:9,color:'555555'}))); });
-  body+=tbl(ynRows,[5500,700,3160]);
+  function notesSection(title,text){
+    body+=para(title,{bold:true,size:9,color:'444444',spacing:{before:120,after:40}});
+    body+=para(text||'',{size:9,spacing:{before:0,after:60}});
+    if(!text){ body+=para('',{size:9,spacing:{before:0,after:40}}); }
+  }
+  notesSection('Delays or Interferences by Others',data.delays);
+  notesSection('Extra Work / Change Order Notes',data.extra);
+  notesSection('Other Notes / Valuable Information',data.other);
   body+=para('',{spacing:{before:80,after:0}});
 
-  function notesSection(title,text){ if(!text) return; body+=hdr(title); body+=para(text,{size:9,spacing:{before:0,after:80}}); }
-  notesSection('DELAYS / INTERFERENCES BY OTHERS',data.delays);
-  notesSection('EXTRA WORK / CHANGE ORDER NOTES',data.extra);
-  notesSection('OTHER NOTES',data.other);
+  // ── DAILY QUESTIONS (Y/N radio buttons) ──
+  body+=hdr('DAILY QUESTIONS');
+  var ynFieldsDoc = typeof DJR_YN_FIELDS!=='undefined' ? DJR_YN_FIELDS : [];
+  var ynRows=[row(cell('Question',{w:5500,shade:'EEEEEE',bold:true,size:9})+cell('Answer',{w:700,shade:'EEEEEE',bold:true,size:9,center:true})+cell('Details',{w:3160,shade:'EEEEEE',bold:true,size:9}))];
+  ynFieldsDoc.forEach(function(f){
+    var ans=(data.yn&&data.yn[f.id])||'';
+    var det=(data.detailValues&&data.detailValues[f.id])||'';
+    if(!ans && f.id){
+      var yBtn=document.getElementById(f.id+'-yes');
+      if(yBtn) ans=yBtn.dataset.val==='yes'?'YES':'NO';
+    }
+    ynRows.push(row(cell(f.label,{w:5500,size:9})+cell(ans,{w:700,size:9,bold:true,color:ans==='YES'?'006600':'CC0000',center:true})+cell(det,{w:3160,size:9,color:'555555'})));
+  });
+  body+=tbl(ynRows,[5500,700,3160]);
+  body+=para('',{spacing:{before:80,after:0}});
 
   body+=para('',{spacing:{before:300,after:0}});
   body+='<w:p><w:pPr><w:spacing w:before="0" w:after="0"/><w:pBdr><w:bottom w:val="single" w:sz="8" w:space="1" w:color="111111"/></w:pBdr></w:pPr></w:p>';
