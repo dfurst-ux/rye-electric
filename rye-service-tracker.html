@@ -899,7 +899,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
           </div>
           <div class="form-group">
             <label class="form-label">Call Type</label>
-            <select class="form-control" id="t-type">
+            <select class="form-control" id="t-type" onchange="toggleBidPriceField()">
               <option value="">Select type...</option>
               <option>Emergency / Trouble Call</option>
               <option>T&amp;M Work</option>
@@ -934,6 +934,14 @@ textarea.form-control { resize: vertical; min-height: 80px; }
               <span class="nte-prefix">$</span>
               <input class="form-control" type="number" id="t-nte" placeholder="0.00" min="0" step="0.01">
             </div>
+          </div>
+          <div class="form-group" id="t-bid-price-group" style="display:none">
+            <label class="form-label">Bid Price (Total Ticket) $</label>
+            <div class="nte-field" style="border-color:var(--gold)">
+              <span class="nte-prefix">$</span>
+              <input class="form-control" type="number" id="t-bid-price" placeholder="0.00" min="0" step="0.01" oninput="document.getElementById('t-bid-price-hint').style.display = this.value ? 'block' : 'none'">
+            </div>
+            <div id="t-bid-price-hint" style="display:none;font-size:11px;color:var(--gold);margin-top:4px">⚡ This amount becomes the Total Ticket — labor &amp; materials are not added on top</div>
           </div>
           <div class="form-group">
             <label class="form-label">Status</label>
@@ -1637,6 +1645,7 @@ async function sbGet() {
       tech:          r.tech,
       po:            r.po,
       nte:           r.nte,
+      bidPrice:      r.bid_price,
       status:        r.status,
       scope:         r.scope,
       notes:         r.notes,
@@ -1683,6 +1692,7 @@ async function sbUpsert(ticket) {
     tech:         ticket.tech,
     po:           ticket.po,
     nte:          ticket.nte,
+    bid_price:    ticket.bidPrice || null,
     status:       ticket.status,
     scope:        ticket.scope,
     notes:        ticket.notes,
@@ -1874,6 +1884,13 @@ function openModal(id) {
     document.getElementById('modal-ticket-num').textContent = 'TICKET #SVC-' + String(ticketCounter).padStart(4,'0');
     document.getElementById('t-date').value = today();
     document.getElementById('t-sig-date').value = today();
+    // Reset bid price field for new tickets (editTicket calls toggleBidPriceField separately)
+    if (!editingTicketId) {
+      const bidGroup = document.getElementById('t-bid-price-group');
+      if (bidGroup) bidGroup.style.display = 'none';
+      const bidInput = document.getElementById('t-bid-price');
+      if (bidInput) bidInput.value = '';
+    }
     // Init daily report
     const drDate = document.getElementById('dr-date');
     if (drDate) drDate.value = today();
@@ -2392,6 +2409,7 @@ function saveTicket() {
     tech,
     po: document.getElementById('t-po').value,
     nte: document.getElementById('t-nte').value,
+    bidPrice: document.getElementById('t-bid-price').value,
     status: document.getElementById('t-status').value,
     scope: document.getElementById('t-scope').value,
     travelOut: document.getElementById('t-travel-out').value,
@@ -4071,6 +4089,7 @@ function editTicket(id) {
     set('t-address',  t.address);
     set('t-po',       t.po);
     set('t-nte',      t.nte);
+    set('t-bid-price',t.bidPrice);
     set('t-scope',    t.scope);
     set('t-equipment',t.equipment);
     set('t-notes',    t.notes);
@@ -4089,6 +4108,7 @@ function editTicket(id) {
     setDrop('t-type',   t.type);
     setDrop('t-tech',   t.tech);
     setDrop('t-status', t.status);
+    toggleBidPriceField();
 
     // Labor rows
     const laborTbody = document.getElementById('labor-tbody');
@@ -4197,6 +4217,7 @@ function updateTicket() {
     tech,
     po:            document.getElementById('t-po').value,
     nte:           document.getElementById('t-nte').value,
+    bidPrice:      document.getElementById('t-bid-price').value,
     status:        document.getElementById('t-status').value,
     scope:         document.getElementById('t-scope').value,
     travelOut:     document.getElementById('t-travel-out')?.value || '',
@@ -4362,7 +4383,17 @@ function printTicket() {
 
 
 // ── TICKET TOTAL CALCULATOR ────────────────────────────────────────────────
+function toggleBidPriceField() {
+  const type = document.getElementById('t-type').value;
+  const group = document.getElementById('t-bid-price-group');
+  if (group) group.style.display = type === 'Bid Work' ? 'block' : 'none';
+}
+
 function calcTicketTotal(t) {
+  // Bid jobs use a flat agreed price — labor & materials are not added on top
+  if (t.type === 'Bid Work' && t.bidPrice && parseFloat(t.bidPrice) > 0) {
+    return parseFloat(t.bidPrice);
+  }
   const laborTotal = (t.labor || []).reduce((s, r) => {
     const rate = parseFloat(r.rate) || 124.97;
     const reg  = parseFloat(r.regHours) || 0;
