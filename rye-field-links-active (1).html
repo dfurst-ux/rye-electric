@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rye Electric — Field Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #4db8b8;
+    --teal-dark: #2a8a8a;
+    --teal-dim: rgba(77,184,184,.12);
+    --bg: #0a0e12;
+    --bg2: #111820;
+    --bg3: #1a2433;
+    --white: #ffffff;
+    --muted: rgba(255,255,255,.45);
+    --border: rgba(255,255,255,.08);
+    --radius: 14px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── Nav ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+    position: relative;
+    z-index: 10;
+  }
+  .nav-logo { display: flex; flex-direction: column; line-height: 1; }
+  .nav-logo .rye { font-size: 20px; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+  .nav-logo .electric { font-size: 9px; font-weight: 500; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--teal); border: 1px solid var(--teal); border-radius: 20px; padding: 5px 14px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center;
+    padding: 60px 24px 56px;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(77,184,184,.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid rgba(77,184,184,.4);
+    border-radius: 20px; padding: 5px 16px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 28px;
+  }
+  .pill::before { content: '●'; font-size: 7px; }
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 62px);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -2px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero p {
+    font-size: 15px; color: var(--muted); max-width: 420px;
+    margin: 16px auto 0; line-height: 1.6;
+  }
+
+  /* ── Cards ── */
+  .cards-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 14px; padding-left: 2px;
+  }
+
+  /* Dashboard card */
+  .dash-card {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--bg3);
+    border: 1px solid rgba(77,184,184,.2);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    text-decoration: none;
+    margin-bottom: 36px;
+    transition: border-color .2s, transform .15s;
+    gap: 16px;
+  }
+  .dash-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+  .dash-left { display: flex; align-items: center; gap: 16px; }
+  .dash-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--teal-dim); border: 1px solid rgba(77,184,184,.25);
+    display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+  }
+  .dash-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .dash-name { font-size: 19px; font-weight: 800; color: var(--white); margin-top: 3px; }
+  .dash-cta {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; color: var(--teal);
+    white-space: nowrap;
+  }
+  .cta-arrow {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid rgba(77,184,184,.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: var(--teal); flex-shrink: 0;
+    transition: background .2s;
+  }
+  .dash-card:hover .cta-arrow { background: var(--teal); color: #000; }
+
+  /* Job grid */
+  .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+  }
+
+  .job-card {
+    display: block; text-decoration: none;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color .2s, transform .15s;
+  }
+  .job-card:hover { border-color: rgba(77,184,184,.4); transform: translateY(-3px); }
+
+  .job-top {
+    background: rgba(77,184,184,.08);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 20px 15px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .job-num { font-size: 10px; font-weight: 700; color: var(--teal); letter-spacing: 1px; text-transform: uppercase; }
+  .job-name { font-size: 17px; font-weight: 800; color: var(--white); margin-top: 3px; line-height: 1.2; }
+  .job-arrow { font-size: 16px; color: var(--muted); margin-top: 4px; flex-shrink: 0; }
+
+  .job-bottom {
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .job-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+  .job-tag { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 20px;
+    font-size: 11px; color: rgba(255,255,255,.2);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="rye">rye</span>
+    <span class="electric">electric</span>
+  </div>
+  <div class="nav-badge">Field Operations</div>
+</nav>
+
+<div class="hero">
+  <div class="pill">Active Jobs · 2026</div>
+  <h1>Field <span>Tracker</span><br>Quick Access</h1>
+  <p>Tap your job to open your daily field tracker. Log hours, sign in, submit safety forms, and save reports to Drive.</p>
+</div>
+
+<div class="cards-wrap">
+
+  <div class="section-label">Main Office</div>
+  <a class="dash-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-dashboard.html" target="_blank">
+    <div class="dash-left">
+      <div class="dash-icon">📊</div>
+      <div>
+        <div class="dash-label">Main Office</div>
+        <div class="dash-name">Operations Dashboard</div>
+      </div>
+    </div>
+    <div class="dash-cta">
+      Open dashboard
+      <div class="cta-arrow">→</div>
+    </div>
+  </a>
+
+  <div class="section-label">Field Trackers</div>
+  <div class="jobs-grid">
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24001-biola.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 24001</div>
+          <div class="job-name">Biola Cinema</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 24002</div>
+          <div class="job-name">Sepulveda</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 24005</div>
+          <div class="job-name">Van Nuys & Vose</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 24006</div>
+          <div class="job-name">Vintage Farms</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24010-commons.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 24010</div>
+          <div class="job-name">The Commons</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 25001</div>
+          <div class="job-name">Mission Gorge</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 25002</div>
+          <div class="job-name">Bellamy Agoura Hills</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 26002</div>
+          <div class="job-name">Wilshire</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 26003</div>
+          <div class="job-name">Carina</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26005-marina.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 26005</div>
+          <div class="job-name">Marina Shores</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp26006-latimes.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job 26006</div>
+          <div class="job-name">Onni Times</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+    <a class="job-card" href="https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html" target="_blank">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div class="job-num">Job SP25018</div>
+          <div class="job-name">CDC Plaza</div>
+        </div>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2"><polyline points="9,18 15,12 9,6"></polyline></svg>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.5px">→ Field Tracker</div>
+    </a>
+</div>
+</div>
+
+<footer>Rye Electric, Inc. · 75 Doppler, Irvine, CA 92618 · CA Lic. 980345</footer>
+
+</body>
+</html>
