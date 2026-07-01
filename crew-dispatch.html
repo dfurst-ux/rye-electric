@@ -623,7 +623,7 @@ async function sbFetch(path, method = 'GET', body = null) {
       'Content-Type': 'application/json',
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Prefer': method === 'POST' ? 'return=representation' : ''
+      'Prefer': method === 'POST' ? 'resolution=merge-duplicates,return=minimal' : ''
     }
   };
   if (body) opts.body = JSON.stringify(body);
