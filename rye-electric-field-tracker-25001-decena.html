@@ -7523,7 +7523,10 @@ function publishSingleSignedIn(wid) {
         r.readAsDataURL(file);
       });
 
-      statusText.textContent = 'Extracting schedule with AI...';
+      // Truncate to ~300KB to stay under API rate limits (~8k tokens)
+      var MAX_B64 = 300000;
+      var base64Send = base64.length > MAX_B64 ? base64.slice(0, MAX_B64) : base64;
+      statusText.textContent = 'Extracting schedule with AI' + (base64.length > MAX_B64 ? ' (summary pages)...' : '...');
 
       var response = await fetch('https://rye-claude.dfurst.workers.dev', {
         method: 'POST',
@@ -7531,17 +7534,17 @@ function publishSingleSignedIn(wid) {
         signal: AbortSignal.timeout(120000),
         body: JSON.stringify({
           model: 'claude-sonnet-4-6',
-          max_tokens: 8000,
+          max_tokens: 4000,
           messages: [{
             role: 'user',
             content: [
               {
                 type: 'document',
-                source: { type: 'base64', media_type: 'application/pdf', data: base64 }
+                source: { type: 'base64', media_type: 'application/pdf', data: base64Send }
               },
               {
                 type: 'text',
-                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no explanation, in this format: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule exists, put all tasks in "current" and use an empty array for "baseline". Each task object must have: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100 integer), assigned (string or empty), preds (array of predecessor id strings). Task names should be descriptive. If there is a legend showing color codes for different schedules (e.g. black=baseline, red=updated), use those to distinguish the two sets. Focus on extracting all tasks across all pages.'
+                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones, 20-40 tasks max. Use the comparison table if present.'
               }
             ]
           }]
@@ -7550,15 +7553,13 @@ function publishSingleSignedIn(wid) {
 
       var data = await response.json();
       var text = data.content && data.content[0] && data.content[0].text;
-      if (!text) throw new Error('No response from AI: ' + JSON.stringify(data).slice(0, 200));
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0, 300));
 
       statusText.textContent = 'Parsing tasks...';
 
-      // Clean and parse JSON
       var clean = text.replace(/```json|```/g, '').trim();
       var parsed = JSON.parse(clean);
 
-      // Handle both single array and {baseline, current} object
       var baselineTasks = [];
       var currentTasks = [];
       if (Array.isArray(parsed)) {
@@ -7572,7 +7573,6 @@ function publishSingleSignedIn(wid) {
 
       ganttTasks = [];
 
-      // Add baseline tasks first (grayed out, summary style)
       if (baselineTasks.length > 0) {
         baselineTasks.forEach(function(t, i) {
           ganttTasks.push({
@@ -7587,31 +7587,22 @@ function publishSingleSignedIn(wid) {
             indent: 0
           });
         });
-        // Add separator
         ganttTasks.push({
           id: 'SEP1',
           name: '━━━ CURRENT SCHEDULE ━━━',
           start: currentTasks[0] ? currentTasks[0].start : '',
           finish: currentTasks[currentTasks.length-1] ? currentTasks[currentTasks.length-1].finish : '',
-          pct: 0,
-          assigned: '',
-          preds: [],
-          summary: true,
-          indent: 0
+          pct: 0, assigned: '', preds: [], summary: true, indent: 0
         });
       }
 
-      // Add current tasks
       currentTasks.forEach(function(t, i) {
-        // Find matching baseline to calc delta
         var base = baselineTasks.find(function(b) {
           return b.name && t.name && b.name.toLowerCase().trim() === t.name.toLowerCase().trim();
         });
         var delta = '';
         if (base && base.start && t.start) {
-          var bDate = new Date(base.start);
-          var cDate = new Date(t.start);
-          var days = Math.round((cDate - bDate) / 86400000);
+          var days = Math.round((new Date(t.start) - new Date(base.start)) / 86400000);
           if (days !== 0) delta = ' [' + (days > 0 ? '+' : '') + days + 'd]';
         }
         ganttTasks.push({
