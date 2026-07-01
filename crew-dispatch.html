@@ -127,13 +127,8 @@
     padding: 8px 10px;
     border-top: 1px solid var(--border);
     display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 4px;
   }
   .crew-count { font-size: 11px; font-weight: 700; color: var(--muted); }
-  .job-cost-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
-  .job-cost-week { font-size: 12px; font-weight: 900; color: var(--accent-dark); }
-  .job-cost-label { font-size: 10px; font-weight: 700; color: var(--muted); margin-left: 1px; }
-  .job-cost-forecast { font-size: 10px; font-weight: 700; color: var(--success); }
 
   /* ── Worker Card ── */
   .worker-card {
@@ -170,6 +165,11 @@
   .worker-remove-btn:hover { color: var(--danger); }
   .worker-remove-btn svg { width: 12px; height: 12px; }
 
+
+  /* Sign-in status */
+  .signed-in-dot { display:inline-block;width:8px;height:8px;background:#38a169;border-radius:50%;margin-left:6px;flex-shrink:0;box-shadow:0 0 4px rgba(56,161,105,.6); }
+  .worker-card.signed-in { border-left:3px solid #38a169; }
+  .worker-card.signed-in .worker-avatar { background:#276749; }
   /* Unassigned pool */
   .unassigned-col .job-header { background: #3d4f5d; }
   .unassigned-col .job-number { color: #a0b4c4; }
@@ -323,15 +323,6 @@
     color: var(--accent-dark);
   }
 
-  /* Signed-in green dot */
-  .worker-card.signed-in { border-color: #27ae60; background: #f0faf4; }
-  .worker-avatar { position: relative; }
-  .signed-in-dot {
-    position: absolute; bottom: 0; right: 0;
-    width: 9px; height: 9px; border-radius: 50%;
-    background: #27ae60; border: 2px solid #fff;
-  }
-
   /* View mode lock */
   body.view-mode .job-delete-btn,
   body.view-mode .worker-remove-btn,
@@ -377,15 +368,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
       Add Job
     </button>
-    <button class="btn btn-ghost" onclick="openChangePwModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      Passwords
-    </button>
   </div>
-  <button class="btn btn-ghost" onclick="openLogPage()" style="margin-left:8px;">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-    Activity Log
-  </button>
   <span style="margin-left:auto;font-size:12px;color:var(--muted);" id="lastSaved"></span>
 </div>
 
@@ -402,14 +385,8 @@
 <!-- Auth Modal -->
 <div class="modal-overlay" id="authModal">
   <div class="modal">
-    <h2>Admin Login</h2>
-    <p>Select your name and enter your password to make changes.</p>
-    <div class="form-group">
-      <label>Who are you?</label>
-      <select id="authUser">
-        <option value="">-- Select --</option>
-      </select>
-    </div>
+    <h2>Admin Access</h2>
+    <p>Enter the admin password to enable drag-and-drop crew management.</p>
     <div class="form-group">
       <label>Password</label>
       <input type="password" id="authInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()">
@@ -418,31 +395,6 @@
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('authModal')">Cancel</button>
       <button class="btn btn-primary" onclick="submitAuth()">Unlock</button>
-    </div>
-  </div>
-</div>
-
-<!-- Change Password Modal -->
-<div class="modal-overlay" id="changePwModal">
-  <div class="modal">
-    <h2>Change Password</h2>
-    <p>Update a user's login password.</p>
-    <div class="form-group">
-      <label>User</label>
-      <select id="changePwUser"></select>
-    </div>
-    <div class="form-group">
-      <label>New Password</label>
-      <input type="password" id="changePwNew" placeholder="New password">
-    </div>
-    <div class="form-group">
-      <label>Confirm Password</label>
-      <input type="password" id="changePwConfirm" placeholder="Confirm password">
-    </div>
-    <div class="error-msg" id="changePwError">Passwords do not match.</div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('changePwModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="submitChangePassword()">Save</button>
     </div>
   </div>
 </div>
@@ -545,16 +497,7 @@
 // ─────────────────────────────────────────────
 const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
-// ─────────────────────────────────────────────
-// USERS — last name is default password, changeable in settings
-// ─────────────────────────────────────────────
-let USERS = [
-  { id: 'furst',      name: 'Dennis Furst',       password: 'Furst'     },
-  { id: 'jacobo',     name: 'Jonathan Jacobo',     password: 'Jacobo'    },
-  { id: 'java',       name: 'Joey Java',           password: 'Java'      },
-  { id: 'contreras',  name: 'Xavier Contreras',    password: 'Contreras' },
-];
-let currentUser = null; // { id, name } when logged in
+const ADMIN_PASSWORD = '1234';
 
 // ─────────────────────────────────────────────
 // STATE
@@ -571,7 +514,7 @@ let state = {
     { id: 'j24001',      number: '24001',    name: 'Biola Cinema'        },
     { id: 'j26003',      number: '26003',    name: 'Carina'              },
     { id: 'j26005',      number: '26005',    name: 'Marina Shores'       },
-    { id: 'j26006',      number: 'SP26006',  name: 'LA Times'            },
+    { id: 'j26006',      number: '26006',    name: 'Onni Times'          },
     { id: 'j26002',      number: '26002',    name: '600 Wilshire'        },
     { id: 'jSP25010',    number: 'SP25010',  name: '530 Mapleton'        },
     { id: 'jSP25018',    number: 'SP25018',  name: 'CDC Plaza'           },
@@ -680,19 +623,17 @@ async function sbFetch(path, method = 'GET', body = null) {
       'Content-Type': 'application/json',
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Prefer': method === 'POST' ? 'resolution=merge-duplicates,return=representation' : ''
+      'Prefer': method === 'POST' ? 'return=representation' : ''
     }
   };
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(SUPABASE_URL + path, opts);
-  if (!res.ok) {
-    console.warn('Supabase error', res.status, path);
-    return null;
-  }
+  if (!res.ok) return null;
   try { return await res.json(); } catch { return null; }
 }
 
 async function loadFromSupabase() {
+  // Try to load saved state from a single row in a key-value table
   const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.board_state&select=value');
   if (data && data.length > 0) {
     try {
@@ -703,11 +644,13 @@ async function loadFromSupabase() {
 }
 
 async function publishCrewToSupabase() {
+  // Write per-job crew lists so field trackers can read them
   const byJob = {};
   state.jobs.forEach(j => { byJob[j.id] = { number: j.number, name: j.name, crew: [] }; });
   state.workers.forEach(w => {
     if (byJob[w.jobId]) byJob[w.jobId].crew.push({ name: w.name, role: w.role || '' });
   });
+  // One row per job keyed as "crew_<jobNumber>"
   for (const job of state.jobs) {
     if (job.id === 'unassigned') continue;
     const key = 'crew_' + job.number;
@@ -718,12 +661,7 @@ async function publishCrewToSupabase() {
 
 async function saveToSupabase() {
   const value = JSON.stringify(state);
-  const result = await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'board_state', value });
-  if (!result) {
-    console.warn('board_state save failed — falling back to localStorage');
-    saveLocal();
-    return;
-  }
+  await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'board_state', value });
   await publishCrewToSupabase();
   setLastSaved();
 }
@@ -748,29 +686,24 @@ function saveLocal() {
 
 function scheduleSave() {
   clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => saveNow(), 600);
-}
-
-async function saveNow() {
-  clearTimeout(saveTimeout);
-  if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
-    await saveToSupabase().catch(() => saveLocal());
-  } else {
-    saveLocal();
-  }
+  saveTimeout = setTimeout(() => {
+    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
+      saveToSupabase().catch(() => saveLocal());
+    } else {
+      saveLocal();
+    }
+  }, 600);
 }
 
 // ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
 async function init() {
-  loadPasswordsLocally();
   if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
     await loadFromSupabase().catch(() => loadLocal());
   } else {
     loadLocal();
   }
-  await loadLog();
   patchEmpNums();
   render();
 }
@@ -943,27 +876,17 @@ function workerWeekCost(w) {
   return rate * 40 * 1.32;
 }
 
-function workerForecastCost(w) {
-  const weekly = workerWeekCost(w);
-  const weeks = w.weeks || 0;
-  return weeks > 0 ? weekly * weeks : 0;
-}
-
-function fmt(n) {
-  return '$' + Math.round(n).toLocaleString('en-US');
-}
-
-function jobCostSummary(workers) {
-  const weekly = workers.reduce((sum, w) => sum + workerWeekCost(w), 0);
-  const forecast = workers.reduce((sum, w) => sum + workerForecastCost(w), 0);
-  return { weekly, forecast };
+function weeklyJobCost(workers) {
+  const total = workers.reduce((sum, w) => sum + workerWeekCost(w), 0);
+  if (!total) return '';
+  return '$' + total.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0}) + '/wk';
 }
 
 function grandTotalCost() {
-  const assigned = state.workers.filter(w => w.jobId !== 'unassigned');
-  const weekly = assigned.reduce((sum, w) => sum + workerWeekCost(w), 0);
-  const forecast = assigned.reduce((sum, w) => sum + workerForecastCost(w), 0);
-  return { weekly, forecast };
+  const total = state.workers
+    .filter(w => w.jobId !== 'unassigned')
+    .reduce((sum, w) => sum + workerWeekCost(w), 0);
+  return '$' + total.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
 }
 
 // ─────────────────────────────────────────────
@@ -995,28 +918,19 @@ function render() {
       </div>
       <div class="job-footer">
         <span class="crew-count">${workers.length} crew</span>
-        ${job.id !== 'unassigned' ? (() => {
-          const { weekly, forecast } = jobCostSummary(workers);
-          return weekly ? `<div class="job-cost-wrap">
-            <span class="job-cost-week">${fmt(weekly)}<span class="job-cost-label">/wk</span></span>
-            ${forecast ? `<span class="job-cost-forecast">↗ ${fmt(forecast)} total</span>` : ''}
-          </div>` : '';
-        })() : ''}
+        <span class="job-cost">${weeklyJobCost(workers)}</span>
       </div>
     `;
 
     // Drop events
-    const jobBody = col.querySelector('.job-body');
-    jobBody.addEventListener('dragover', e => {
+    const body = col.querySelector('.job-body');
+    body.addEventListener('dragover', e => {
       if (!isAdmin) return;
       e.preventDefault();
       col.classList.add('drag-over');
     });
-    jobBody.addEventListener('dragleave', e => {
-      // Only remove if leaving the column entirely
-      if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
-    });
-    jobBody.addEventListener('drop', e => {
+    body.addEventListener('dragleave', () => col.classList.remove('drag-over'));
+    body.addEventListener('drop', e => {
       e.preventDefault();
       col.classList.remove('drag-over');
       if (!isAdmin || !dragWorker) return;
@@ -1029,16 +943,12 @@ function render() {
     workers.forEach(w => {
       const card = document.getElementById('wc-' + w.id);
       if (!card) return;
-      card.setAttribute('draggable', isAdmin ? 'true' : 'false');
-      card.addEventListener('dragstart', e => {
+      card.addEventListener('dragstart', () => {
         dragWorker = w.id;
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', w.id);
         setTimeout(() => card.classList.add('dragging'), 0);
       });
       card.addEventListener('dragend', () => {
         card.classList.remove('dragging');
-        document.querySelectorAll('.job-col').forEach(c => c.classList.remove('drag-over'));
         dragWorker = null;
       });
     });
@@ -1046,10 +956,7 @@ function render() {
 
   // Update grand total in header
   const gt = document.getElementById('grandTotal');
-  if (gt) {
-    const { weekly, forecast } = grandTotalCost();
-    gt.textContent = fmt(weekly) + '/wk' + (forecast ? '  ·  ↗ ' + fmt(forecast) + ' forecast' : '');
-  }
+  if (gt) gt.textContent = grandTotalCost() + ' / week';
 
   // Add Job button (admin only)
   if (isAdmin) {
@@ -1103,218 +1010,49 @@ function moveWorker(workerId, targetJobId) {
   if (!w || w.jobId === targetJobId) return;
   const fromJob = state.jobs.find(j => j.id === w.jobId);
   const toJob = state.jobs.find(j => j.id === targetJobId);
-  const fromLabel = fromJob ? (fromJob.number ? 'Job ' + fromJob.number + ' \u2014 ' + fromJob.name : fromJob.name) : 'Unknown';
-  const toLabel = toJob ? (toJob.number ? 'Job ' + toJob.number + ' \u2014 ' + toJob.name : toJob.name) : 'Unknown';
-  const note = w.name + (w.empNum ? ' #' + w.empNum : '') + '  \u2192  ' + fromLabel + '  \u279C  ' + toLabel;
   w.jobId = targetJobId;
-  logEntry('move', workerId, targetJobId, note);
   render();
-  saveNow();
-  showToast(w.name + ' moved to ' + toJob.name);
+  scheduleSave();
+  showToast(`${w.name} moved to ${toJob.name}`);
 }
 
-// ─────────────────────────────────────────────
-// AUTH
-// ─────────────────────────────────────────────
 // ─────────────────────────────────────────────
 // AUTH
 // ─────────────────────────────────────────────
 function handleModeClick() {
   if (isAdmin) {
     isAdmin = false;
-    currentUser = null;
     applyMode();
-    showToast('Logged out');
+    showToast('Switched to view mode');
   } else {
-    // Populate user dropdown
-    const sel = document.getElementById('authUser');
-    sel.innerHTML = '<option value="">-- Select --</option>' +
-      USERS.map(u => '<option value="' + u.id + '">' + u.name + '</option>').join('');
-    document.getElementById('authError').classList.remove('show');
-    document.getElementById('authInput').value = '';
     openModal('authModal');
-    setTimeout(() => sel.focus(), 100);
+    setTimeout(() => document.getElementById('authInput').focus(), 100);
   }
 }
 
 function submitAuth() {
-  const userId = document.getElementById('authUser').value;
   const pw = document.getElementById('authInput').value;
-  const user = USERS.find(u => u.id === userId);
-  if (!user || pw !== user.password) {
+  if (pw === ADMIN_PASSWORD) {
+    isAdmin = true;
+    document.getElementById('authInput').value = '';
+    document.getElementById('authError').classList.remove('show');
+    closeModal('authModal');
+    applyMode();
+    showToast('Admin mode unlocked');
+  } else {
     document.getElementById('authError').classList.add('show');
     document.getElementById('authInput').value = '';
     document.getElementById('authInput').focus();
-    return;
   }
-  currentUser = { id: user.id, name: user.name };
-  isAdmin = true;
-  document.getElementById('authInput').value = '';
-  document.getElementById('authError').classList.remove('show');
-  closeModal('authModal');
-  applyMode();
-  showToast('Welcome, ' + user.name.split(' ')[0] + '!');
 }
 
 function applyMode() {
   document.body.classList.toggle('view-mode', !isAdmin);
   const btn = document.getElementById('modeBtn');
   btn.className = 'mode-badge ' + (isAdmin ? 'admin' : 'view');
-  document.getElementById('modeBtnLabel').textContent = isAdmin
-    ? (currentUser ? currentUser.name.split(' ')[0] : 'Admin')
-    : 'View Only';
+  document.getElementById('modeBtnLabel').textContent = isAdmin ? 'Admin' : 'View Only';
   document.getElementById('statusBar').classList.toggle('show', isAdmin);
-  if (isAdmin && currentUser) {
-    document.getElementById('statusBar').textContent =
-      '🔒 Logged in as ' + currentUser.name + ' — drag workers between jobs, add/remove crew and jobs.';
-  }
   render();
-}
-
-// ─────────────────────────────────────────────
-// CHANGE PASSWORD
-// ─────────────────────────────────────────────
-function openChangePwModal() {
-  if (!currentUser) return;
-  const sel = document.getElementById('changePwUser');
-  // Only show the currently logged-in user
-  sel.innerHTML = '<option value="' + currentUser.id + '">' + currentUser.name + '</option>';
-  document.getElementById('changePwNew').value = '';
-  document.getElementById('changePwConfirm').value = '';
-  document.getElementById('changePwError').classList.remove('show');
-  openModal('changePwModal');
-  setTimeout(() => document.getElementById('changePwNew').focus(), 100);
-}
-
-function submitChangePassword() {
-  const userId = document.getElementById('changePwUser').value;
-  const pw1 = document.getElementById('changePwNew').value;
-  const pw2 = document.getElementById('changePwConfirm').value;
-  if (!pw1 || pw1 !== pw2) {
-    document.getElementById('changePwError').classList.add('show');
-    return;
-  }
-  const user = USERS.find(u => u.id === userId);
-  if (user) {
-    user.password = pw1;
-    // Save updated passwords to Supabase/localStorage
-    savePasswordsLocally();
-    closeModal('changePwModal');
-    showToast(user.name + "'s password updated");
-    logEntry('password_change', null, null, 'Password changed for ' + user.name);
-  }
-}
-
-function savePasswordsLocally() {
-  try {
-    localStorage.setItem('rye_dispatch_passwords', JSON.stringify(USERS.map(u => ({ id: u.id, password: u.password }))));
-  } catch {}
-}
-
-function loadPasswordsLocally() {
-  try {
-    const raw = localStorage.getItem('rye_dispatch_passwords');
-    if (!raw) return;
-    const saved = JSON.parse(raw);
-    saved.forEach(s => {
-      const u = USERS.find(x => x.id === s.id);
-      if (u) u.password = s.password;
-    });
-  } catch {}
-}
-
-// ─────────────────────────────────────────────
-// AUDIT LOG
-// ─────────────────────────────────────────────
-let auditLog = [];
-
-function logEntry(type, workerId, toJobId, note) {
-  if (!currentUser) return;
-  const worker = workerId ? state.workers.find(w => w.id === workerId) : null;
-  const toJob = toJobId ? state.jobs.find(j => j.id === toJobId) : null;
-  const entry = {
-    id: uid(),
-    timestamp: new Date().toISOString(),
-    userId: currentUser.id,
-    userName: currentUser.name,
-    type,
-    workerName: worker ? worker.name : '',
-    workerNum: worker ? (worker.empNum || '') : '',
-    toJobName: toJob ? (toJob.number ? 'Job ' + toJob.number + ' — ' + toJob.name : toJob.name) : '',
-    note: note || ''
-  };
-  auditLog.unshift(entry);
-  saveLog();
-}
-
-async function saveLog() {
-  const value = JSON.stringify(auditLog.slice(0, 500)); // keep last 500 entries
-  try {
-    localStorage.setItem('rye_dispatch_log', value);
-    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
-      await sbFetch('/rest/v1/crew_dispatch', 'POST', { key: 'audit_log', value });
-    }
-  } catch {}
-}
-
-async function loadLog() {
-  try {
-    if (SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
-      const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.audit_log&select=value');
-      if (data && data.length) { auditLog = JSON.parse(data[0].value); return; }
-    }
-    const raw = localStorage.getItem('rye_dispatch_log');
-    if (raw) auditLog = JSON.parse(raw);
-  } catch {}
-}
-
-function openLogPage() {
-  // Populate filter dropdown
-  const sel = document.getElementById('logFilterUser');
-  sel.innerHTML = '<option value="">All Users</option>' +
-    USERS.map(u => '<option value="' + u.id + '">' + u.name + '</option>').join('');
-  renderLog();
-  document.getElementById('logPage').style.display = 'block';
-}
-
-function closeLogPage() {
-  document.getElementById('logPage').style.display = 'none';
-}
-
-function renderLog() {
-  const filterUser = document.getElementById('logFilterUser').value;
-  const entries = filterUser ? auditLog.filter(e => e.userId === filterUser) : auditLog;
-  const container = document.getElementById('logEntries');
-  if (!entries.length) {
-    container.innerHTML = '<div style="text-align:center;padding:48px;color:var(--muted);font-size:14px;">No activity logged yet.</div>';
-    return;
-  }
-  const typeLabel = { move: 'Moved', add: 'Added', remove: 'Removed', weeks: 'Duration Set', password_change: 'Password Changed', job_add: 'Job Added', job_remove: 'Job Removed' };
-  const typeColor = { move: '#2980b9', add: '#27ae60', remove: '#c0392b', weeks: '#8e44ad', password_change: '#7f8c8d', job_add: '#16a085', job_remove: '#c0392b' };
-  container.innerHTML = entries.map(e => {
-    const d = new Date(e.timestamp);
-    const dateStr = d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-    const timeStr = d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
-    const color = typeColor[e.type] || '#6b7a8d';
-    const label = typeLabel[e.type] || e.type;
-    let detail = e.note || '';
-    if (!detail && e.workerName) {
-      detail = e.workerName + (e.workerNum ? ' #' + e.workerNum : '');
-      if (e.toJobName) detail += ' → ' + e.toJobName;
-    }
-    return '<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start;">'
-      + '<div style="width:8px;height:8px;border-radius:50%;background:' + color + ';margin-top:5px;flex-shrink:0;"></div>'
-      + '<div style="flex:1;">'
-        + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'
-          + '<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:' + color + '22;color:' + color + ';">' + label + '</span>'
-          + '<span style="font-size:13px;font-weight:700;color:var(--text);">' + detail + '</span>'
-        + '</div>'
-        + '<div style="font-size:11px;color:var(--muted);margin-top:4px;">'
-          + '<strong>' + e.userName + '</strong> &nbsp;·&nbsp; ' + dateStr + ' at ' + timeStr
-        + '</div>'
-      + '</div>'
-      + '</div>';
-  }).join('');
 }
 
 // ─────────────────────────────────────────────
@@ -1452,35 +1190,8 @@ function submitAddWorker() {
   const weeks = parseInt(document.getElementById('workerWeeks').value) || 0;
   const startDate = weeks > 0 ? todayStr() : '';
   const empNum = document.getElementById('workerRole').value.trim();
-
-  // Check if this worker already exists anywhere on the board
-  const existing = state.workers.find(w => w.name.toUpperCase() === name.toUpperCase());
-  if (existing) {
-    // Move them instead of duplicating
-    const fromJob = state.jobs.find(j => j.id === existing.jobId);
-    const toJob = state.jobs.find(j => j.id === jobId);
-    if (existing.jobId === jobId) {
-      showToast(displayName + ' is already on this job');
-      closeModal('addWorkerModal');
-      return;
-    }
-    const fromLabel = fromJob ? (fromJob.number ? 'Job ' + fromJob.number + ' \u2014 ' + fromJob.name : fromJob.name) : 'Unassigned';
-    const toLabel = toJob ? (toJob.number ? 'Job ' + toJob.number + ' \u2014 ' + toJob.name : toJob.name) : 'Unassigned';
-    const note = displayName + (empNum ? ' #' + empNum : '') + '  \u2192  ' + fromLabel + '  \u279C  ' + toLabel;
-    existing.jobId = jobId;
-    if (weeks > 0) { existing.weeks = weeks; existing.startDate = startDate; }
-    logEntry('move', existing.id, jobId, note);
-    closeModal('addWorkerModal');
-    render();
-    saveNow();
-    showToast(displayName + ' moved to ' + (toJob ? toJob.name : 'job'));
-    return;
-  }
-
-  // Brand new worker — add them
   const worker = { id: uid(), name: displayName, role: '', empNum, jobId, weeks, startDate };
   state.workers.push(worker);
-  logEntry('add', worker.id, worker.jobId, '');
   closeModal('addWorkerModal');
   render();
   scheduleSave();
@@ -1522,9 +1233,7 @@ function submitAddJob() {
   const number = document.getElementById('jobNumber').value.trim();
   const name = document.getElementById('jobNameInput').value.trim();
   if (!name) { document.getElementById('jobNameInput').focus(); return; }
-  const newJobId = uid();
-  state.jobs.push({ id: newJobId, number, name });
-  logEntry('job_add', null, newJobId, 'Job added: ' + (number ? number + ' \u2014 ' : '') + name);
+  state.jobs.push({ id: uid(), number, name });
   closeModal('addJobModal');
   document.getElementById('jobNumber').value = '';
   document.getElementById('jobNameInput').value = '';
@@ -1542,7 +1251,6 @@ function confirmDeleteWorker(workerId) {
   document.getElementById('confirmTitle').textContent = 'Remove Worker?';
   document.getElementById('confirmMsg').textContent = `Remove ${w.name} from the dispatch board?`;
   document.getElementById('confirmOkBtn').onclick = () => {
-    logEntry('remove', workerId, null, w.name + ' removed from board');
     state.workers = state.workers.filter(x => x.id !== workerId);
     closeModal('confirmModal');
     render();
@@ -1563,7 +1271,6 @@ function confirmDeleteJob(jobId) {
     // Move workers to unassigned
     state.workers.forEach(w => { if (w.jobId === jobId) w.jobId = 'unassigned'; });
     state.jobs = state.jobs.filter(j => j.id !== jobId);
-    logEntry('job_remove', null, null, 'Job removed: ' + job.name);
     closeModal('confirmModal');
     render();
     scheduleSave();
@@ -1592,7 +1299,6 @@ function submitSetWeeks() {
   if (!w) return;
   w.weeks = weeks;
   w.startDate = weeks > 0 ? todayStr() : '';
-  logEntry('weeks', workerId, w.jobId, w.name + ' — ' + (weeks > 0 ? weeks + ' weeks' : 'duration cleared'));
   closeModal('setWeeksModal');
   render();
   scheduleSave();
@@ -1625,88 +1331,69 @@ function showToast(msg) {
 }
 
 // ─────────────────────────────────────────────
-// SIGNED-IN GREEN DOT
+// UTIL
 // ─────────────────────────────────────────────
-let signedInByJob = {}; // { jobNumber: Set(uppercased names) }
-
-async function loadSignedInStatus() {
-  const today = new Date().toISOString().split('T')[0];
-  try {
-    const keys = state.jobs
-      .filter(j => j.number)
-      .map(j => 'signed_in_' + j.number + '_' + today);
-    const results = await Promise.all(
-      keys.map(k => sbFetch('/rest/v1/crew_dispatch?key=eq.' + k + '&select=key,value'))
-    );
-    signedInByJob = {};
-    results.forEach(rows => {
-      if (!rows || !rows.length) return;
-      const key = rows[0].key; // signed_in_24010_2026-06-29
-      const jobNum = key.replace('signed_in_', '').replace('_' + today, '');
-      try {
-        const names = JSON.parse(rows[0].value);
-        signedInByJob[jobNum] = new Set(names.map(n => n.toUpperCase()));
-      } catch {}
-    });
-    applySignedInHighlights();
-  } catch {}
-}
-
-function applySignedInHighlights() {
-  // Clear all existing green dots and signed-in classes
-  document.querySelectorAll('.signed-in-dot').forEach(el => el.remove());
-  document.querySelectorAll('.worker-card.signed-in').forEach(el => el.classList.remove('signed-in'));
-
-  state.workers.forEach(w => {
-    const job = state.jobs.find(j => j.id === w.jobId);
-    if (!job || !job.number) return;
-    const signedIn = signedInByJob[job.number];
-    if (!signedIn || !signedIn.has(w.name.toUpperCase())) return;
-    const card = document.getElementById('wc-' + w.id);
-    if (!card) return;
-    card.classList.add('signed-in');
-    // Add green dot to avatar
-    const avatar = card.querySelector('.worker-avatar');
-    if (avatar && !avatar.querySelector('.signed-in-dot')) {
-      const dot = document.createElement('span');
-      dot.className = 'signed-in-dot';
-      avatar.appendChild(dot);
-    }
-  });
-}
 function uid() { return Math.random().toString(36).slice(2,10); }
 
 // ─────────────────────────────────────────────
 // BOOT
 // ─────────────────────────────────────────────
-init().then(() => {
+init().then(function() {
+  // Load signed-in status after board is rendered, then poll every 60s
   loadSignedInStatus();
-  setInterval(loadSignedInStatus, 60000);
+  setInterval(function(){ loadSignedInStatus(); }, 60000);
 });
-</script>
-<!-- Log Page Overlay -->
-<div id="logPage" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;">
-  <div style="background:var(--banner);color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span style="font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7fb8d8;">Rye Electric</span>
-      <div style="width:1px;height:20px;background:rgba(255,255,255,0.2);"></div>
-      <span style="font-size:16px;font-weight:700;">Activity Log</span>
-    </div>
-    <button class="btn btn-ghost" onclick="closeLogPage()" style="color:#fff;border-color:rgba(255,255,255,0.3);">← Back to Board</button>
-  </div>
-  <div style="max-width:860px;margin:0 auto;padding:24px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
-      <div>
-        <div style="font-size:20px;font-weight:900;color:var(--text);">Crew Movement Log</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:2px;">All crew assignments, moves, and changes</div>
-      </div>
-      <select id="logFilterUser" onchange="renderLog()" style="padding:7px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:Lato,sans-serif;font-size:13px;background:var(--card);">
-        <option value="">All Users</option>
-      </select>
-    </div>
-    <div id="logEntries"></div>
-  </div>
-</div>
 
+// ─────────────────────────────────────────────
+// SIGN-IN STATUS (from field trackers)
+// ─────────────────────────────────────────────
+let signedInByJob = {}; // { '24001': Set(['John Smith', ...]) }
+
+async function loadSignedInStatus() {
+  const today = new Date().toISOString().slice(0, 10);
+  const jobs = state.jobs.filter(j => j.id !== 'unassigned' && j.number);
+  signedInByJob = {};
+  for (const job of jobs) {
+    const key = 'signed_in_' + job.number + '_' + today;
+    const data = await sbFetch('/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value');
+    if (data && data.length > 0) {
+      try {
+        const names = JSON.parse(data[0].value);
+        signedInByJob[job.number] = new Set(names.map(n => n.toUpperCase()));
+      } catch {}
+    }
+  }
+  applySignedInHighlights();
+}
+
+function applySignedInHighlights() {
+  // Clear all existing highlights first
+  document.querySelectorAll('.signed-in').forEach(el => el.classList.remove('signed-in'));
+  document.querySelectorAll('.signed-in-dot').forEach(el => el.remove());
+  state.workers.forEach(w => {
+    const card = document.getElementById('wc-' + w.id);
+    if (!card) return;
+    const job = state.jobs.find(j => j.id === w.jobId);
+    if (!job || job.id === 'unassigned') return;
+    const signedIn = signedInByJob[job.number];
+    const isSignedIn = signedIn && signedIn.has(w.name.toUpperCase());
+    card.classList.toggle('signed-in', isSignedIn);
+    // Add/remove dot next to name
+    const nameEl = card.querySelector('.worker-name');
+    if (nameEl) {
+      const existingDot = nameEl.querySelector('.signed-in-dot');
+      if (isSignedIn && !existingDot) {
+        const dot = document.createElement('span');
+        dot.className = 'signed-in-dot';
+        dot.title = 'Signed in today';
+        nameEl.appendChild(dot);
+      } else if (!isSignedIn && existingDot) {
+        existingDot.remove();
+      }
+    }
+  });
+}
+
+</script>
 </body>
 </html>
