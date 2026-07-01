@@ -7525,7 +7525,7 @@ function publishSingleSignedIn(wid) {
 
       statusText.textContent = 'Extracting schedule with AI...';
 
-      var response = await fetch('https://api.anthropic.com/v1/messages', {
+      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -7540,7 +7540,7 @@ function publishSingleSignedIn(wid) {
               },
               {
                 type: 'text',
-                text: 'Extract the construction schedule from this PDF. Return ONLY a JSON array with no markdown, no backticks, no explanation. Each task object must have: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100 integer), assigned (string or empty), preds (array of predecessor id strings). If dates are missing or unclear use your best estimate based on context. Focus on electrical and related trades if present, otherwise extract all tasks.'
+                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no explanation, in this format: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule exists, put all tasks in "current" and use an empty array for "baseline". Each task object must have: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100 integer), assigned (string or empty), preds (array of predecessor id strings). Task names should be descriptive. If there is a legend showing color codes for different schedules (e.g. black=baseline, red=updated), use those to distinguish the two sets. Focus on extracting all tasks across all pages.'
               }
             ]
           }]
@@ -7555,15 +7555,67 @@ function publishSingleSignedIn(wid) {
 
       // Clean and parse JSON
       var clean = text.replace(/```json|```/g, '').trim();
-      var tasks = JSON.parse(clean);
+      var parsed = JSON.parse(clean);
 
-      if (!Array.isArray(tasks) || tasks.length === 0) throw new Error('No tasks found in schedule');
+      // Handle both single array and {baseline, current} object
+      var baselineTasks = [];
+      var currentTasks = [];
+      if (Array.isArray(parsed)) {
+        currentTasks = parsed;
+      } else {
+        baselineTasks = parsed.baseline || [];
+        currentTasks = parsed.current || parsed.tasks || [];
+      }
 
-      // Map to gantt format
-      ganttTasks = tasks.map(function(t, i) {
-        return {
-          id: String(t.id || ('P' + i)),
-          name: t.name || 'Task ' + i,
+      if (currentTasks.length === 0) throw new Error('No tasks found in schedule');
+
+      ganttTasks = [];
+
+      // Add baseline tasks first (grayed out, summary style)
+      if (baselineTasks.length > 0) {
+        baselineTasks.forEach(function(t, i) {
+          ganttTasks.push({
+            id: 'B' + String(t.id || i),
+            name: '📋 BASELINE: ' + (t.name || 'Task ' + i),
+            start: t.start || '',
+            finish: t.finish || '',
+            pct: 0,
+            assigned: 'Baseline',
+            preds: [],
+            summary: true,
+            indent: 0
+          });
+        });
+        // Add separator
+        ganttTasks.push({
+          id: 'SEP1',
+          name: '━━━ CURRENT SCHEDULE ━━━',
+          start: currentTasks[0] ? currentTasks[0].start : '',
+          finish: currentTasks[currentTasks.length-1] ? currentTasks[currentTasks.length-1].finish : '',
+          pct: 0,
+          assigned: '',
+          preds: [],
+          summary: true,
+          indent: 0
+        });
+      }
+
+      // Add current tasks
+      currentTasks.forEach(function(t, i) {
+        // Find matching baseline to calc delta
+        var base = baselineTasks.find(function(b) {
+          return b.name && t.name && b.name.toLowerCase().trim() === t.name.toLowerCase().trim();
+        });
+        var delta = '';
+        if (base && base.start && t.start) {
+          var bDate = new Date(base.start);
+          var cDate = new Date(t.start);
+          var days = Math.round((cDate - bDate) / 86400000);
+          if (days !== 0) delta = ' [' + (days > 0 ? '+' : '') + days + 'd]';
+        }
+        ganttTasks.push({
+          id: 'C' + String(t.id || i),
+          name: (t.name || 'Task ' + i) + delta,
           start: t.start || '',
           finish: t.finish || '',
           pct: parseInt(t.pct) || 0,
@@ -7571,7 +7623,7 @@ function publishSingleSignedIn(wid) {
           preds: Array.isArray(t.preds) ? t.preds.map(String) : [],
           summary: false,
           indent: 0
-        };
+        });
       });
 
       ganttRender();
