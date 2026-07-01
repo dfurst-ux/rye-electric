@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0067)file:///C:/Users/Dennis%20Furst/Downloads/office-badge-admin_6.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rye Electric -- Office Admin</title>
-<link href="./Rye Electric -- Office Admin_files/css2" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
@@ -128,7 +128,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
     <div class="pin-title">Admin Access</div>
     <div class="pin-sub">Enter the office admin PIN to continue</div>
     <form id="pinForm" onsubmit="return handlePinSubmit(event)">
-      <input type="password" id="pinInput" inputmode="numeric" autocomplete="off" placeholder="----" autofocus="">
+      <input type="password" id="pinInput" inputmode="numeric" autocomplete="off" placeholder="----" autofocus>
       <div class="pin-error" id="pinError">Incorrect PIN. Try again.</div>
       <button class="btn btn-rye" style="width:100%" type="submit">Unlock</button>
     </form>
@@ -144,7 +144,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
       <div class="hdr-sub">Office Admin</div>
     </div>
     <div class="hdr-right">
-      <div class="hdr-clock" id="hdrClock">10:55:43 AM</div>
+      <div class="hdr-clock" id="hdrClock">--:--:--</div>
       <button class="lock-btn" onclick="lockAdmin()">Lock</button>
     </div>
   </div>
@@ -153,11 +153,15 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 <div class="shell">
 
   <div class="tabs">
-    <button class="tab on" onclick="goTab(this,&#39;jobs&#39;)">Jobs</button>
-    <button class="tab" onclick="goTab(this,&#39;timecards&#39;)">Timecards</button>
-    <button class="tab" onclick="goTab(this,&#39;staff&#39;)">Staff</button>
-    <button class="tab" onclick="goTab(this,&#39;codes&#39;)">Cost Codes</button>
-    <button class="tab" onclick="goTab(this,&#39;settings&#39;)">Settings</button>
+    <button class="tab on" onclick="goTab(this,'jobs')">Jobs</button>
+    <button class="tab" onclick="goTab(this,'timecards')">Timecards</button>
+    <button class="tab" onclick="goTab(this,'staff')">Staff</button>
+    <button class="tab" onclick="goTab(this,'clear')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h16zM10 11v6M14 11v6"></path></svg>
+      <span>Clear Punches</span>
+    </button>
+    <button class="tab" onclick="goTab(this,'codes')">Cost Codes</button>
+    <button class="tab" onclick="goTab(this,'settings')">Settings</button>
   </div>
 
   <!-- ===== JOBS TAB ===== -->
@@ -175,7 +179,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
             <div class="flbl">Date</div>
             <input type="date" id="jobDate" onchange="loadJobSignIns()">
           </div>
-          <button class="btn btn-g" onclick="loadJobsList()">↻ Refresh jobs</button>
+          <button class="btn btn-g" onclick="loadJobsList()">&#8635; Refresh jobs</button>
         </div>
       </div>
     </div>
@@ -183,7 +187,7 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
     <div class="card">
       <div class="ch">
         <div class="ct">Daily Sign In <span id="jobSignInCount" class="bdg b-ok" style="margin-left:8px">0</span></div>
-        <button class="btn btn-g btn-sm" onclick="printJobSignIn()">🖨️ Print</button>
+        <button class="btn btn-g btn-sm" onclick="printJobSignIn()">&#128424;&#65039; Print</button>
       </div>
       <div id="jobSupervisor" style="padding:10px 18px 0;font-size:12px;color:var(--muted)"></div>
       <div id="jobSignInBody" style="padding:18px;overflow-x:auto">
@@ -212,15 +216,15 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
     </div>
 
     <div class="week-nav">
-      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">← Prev week</button>
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(-1)">&larr; Prev week</button>
       <div class="week-label" id="weekLabel">--</div>
-      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week →</button>
+      <button class="btn btn-g btn-sm" onclick="shiftWeek(1)">Next week &rarr;</button>
     </div>
 
     <div class="card">
       <div class="ch">
         <div class="ct">Weekly Timecard</div>
-        <button class="btn btn-g btn-sm" onclick="printTimecard()">🖨️ Print</button>
+        <button class="btn btn-g btn-sm" onclick="printTimecard()">&#128424;&#65039; Print</button>
       </div>
       <div id="timecardBody" style="padding:18px">
         <div class="muted-note">Select an employee to view their timecard.</div>
@@ -318,11 +322,11 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 
 <!-- Print frame (reliable on iOS) -->
 <div id="print-frame">
-  <button id="print-close" onclick="closePrintFrame()">✕ Close</button>
+  <button id="print-close" onclick="closePrintFrame()">&#10005; Close</button>
   <div id="print-content"></div>
 </div>
 
-<script src="./Rye Electric -- Office Admin_files/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ============================================================
    CONFIG -- same Supabase project/tables as office-badge-clock.html
@@ -922,5 +926,81 @@ async function initAdmin(){
 })();
 </script>
 
-
-</body></html>
+    <script>
+    function confirmClearPunches() {
+      const beforeDate = document.getElementById('clearBeforeDate').value;
+      const msgDiv = document.getElementById('clearMessage');
+      
+      let message = 'Are you sure you want to delete ';
+      if (beforeDate) {
+        message += 'punch records BEFORE ' + beforeDate + '?';
+      } else {
+        message += 'ALL punch records? This cannot be undone!';
+      }
+      
+      if (!confirm(message)) {
+        return;
+      }
+      
+      clearPunches(beforeDate);
+    }
+    
+    async function clearPunches(beforeDate) {
+      const msgDiv = document.getElementById('clearMessage');
+      msgDiv.innerHTML = '<p style="color: #666;">Deleting punch records...</p>';
+      
+      try {
+        // Fetch all punches first
+        let url = 'https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/office_portal_punches?select=*';
+        
+        let response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch punches');
+        }
+        
+        const punches = await response.json();
+        let deleted = 0;
+        
+        for (const punch of punches) {
+          let shouldDelete = false;
+          
+          if (!beforeDate) {
+            shouldDelete = true;
+          } else {
+            const punchDate = new Date(punch.punched_at).toISOString().split('T')[0];
+            if (punchDate < beforeDate) {
+              shouldDelete = true;
+            }
+          }
+          
+          if (shouldDelete) {
+            await fetch('https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/office_portal_punches?id=eq.' + punch.id, {
+              method: 'DELETE',
+              headers: {
+                'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'
+              }
+            });
+            deleted++;
+          }
+        }
+        
+        msgDiv.innerHTML = '<div class="message success" style="padding: 15px; background: #D4EDDA; color: #155724; border: 1px solid #C3E6CB; border-radius: 4px;">✓ Deleted ' + deleted + ' punch record(s)</div>';
+        
+        // Reload staff list
+        loadStaffList();
+        
+      } catch (error) {
+        msgDiv.innerHTML = '<div class="message error" style="padding: 15px; background: #F8D7DA; color: #721C24; border: 1px solid #F5C6CB; border-radius: 4px;">✗ Error: ' + error.message + '</div>';
+      }
+    }
+    </script>
+</body>
+</html>
