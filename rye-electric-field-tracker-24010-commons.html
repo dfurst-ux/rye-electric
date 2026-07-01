@@ -278,6 +278,8 @@ tbody tr:hover td{background:#f7fbfc}
 .safety-submit-status.success{color:#276749}
 .safety-submit-status.error{color:#c53030}
 @media(max-width:600px){.safety-obs-row{grid-template-columns:28px 1fr}.ptp-tools-grid{grid-template-columns:1fr}}
+.safety-doc-status-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#2d3748;padding:6px 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;}
+.safety-doc-status-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center;}
 
   /* TBT Library */
   .tbt-intro{font-size:12px;color:#718096;margin-bottom:14px;padding:10px 12px;background:#f7fafc;border-radius:6px;border-left:3px solid #2b6cb0;}
@@ -328,7 +330,6 @@ tbody tr:hover td{background:#f7fbfc}
 
 </style>
   <script src="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/email.min.js.download"></script>
-
 </head>
 <body>
 
@@ -449,9 +450,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="sel-worker">
-              <option value="">-- Loading crew... --</option>
-            </select>
+            <select id="sel-worker"><option value="">-- Loading crew... --</option></select>
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
@@ -654,9 +653,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="wb-worker">
-              <option value="">-- Select employee --</option>
-            </select>
+            <select id="wb-worker"><option value="">-- Loading crew... --</option></select>
           </div>
           <input type="hidden" id="wb-job" value="24010 - COMMONS">
         </div>
@@ -788,7 +785,114 @@ tbody tr:hover td{background:#f7fbfc}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
       <input type="hidden" id="dl-filter-job" value="24010 - COMMONS">
       <select id="dl-filter-worker" onchange="renderDailyLogView()" style="width:100%;height:38px;font-size:12px;padding:0 10px;border-radius:8px;background:#fff;border:1.5px solid #e2e2e2;color:#1a1a1a">
-        <option value="all">All Workers</option>
+        <option value="all">All employees</option>
+              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+              <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+              <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+              <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+              <option value="76 - David Smith">76 - David Smith</option>
+              <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+              <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+              <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+              <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+              <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+              <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+              <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+              <option value="152 - Brian Campos">152 - Brian Campos</option>
+              <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+              <option value="204 - Kenneth William">204 - Kenneth William</option>
+              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+              <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+              <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+              <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+              <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+              <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+              <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+              <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+              <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+              <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+              <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+              <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+              <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+              <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+              <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+              <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+              <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+              <option value="671 - Brian Flores">671 - Brian Flores</option>
+              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+              <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+              <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+              <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+              <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+              <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+              <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+              <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+              <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+              <option value="832 - David Casarez">832 - David Casarez</option>
+              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+              <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+              <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+              <option value="844 - Robert Stark">844 - Robert Stark</option>
+              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+              <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+              <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+              <option value="855 - Mario Arias">855 - Mario Arias</option>
+              <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+              <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+              <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+              <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+              <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+              <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+              <option value="866 - Axel Salas">866 - Axel Salas</option>
+              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+              <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+              <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+              <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+              <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+              <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+              <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+              <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+              <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+              <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+              <option value="884 - Jose Luna">884 - Jose Luna</option>
+              <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+              <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+              <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+              <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+              <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+              <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+              <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+              <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+              <option value="905 - James Marquez">905 - James Marquez</option>
+              <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+              <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+              <option value="909 - Christian Moran">909 - Christian Moran</option>
+              <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+              <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+              <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+              <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+              <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+              <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
       </select>
     </div>
 
@@ -835,21 +939,20 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="ch"><div class="ct">
           <svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 110-14h.5A5.5 5.5 0 0122 10v1.5A3.5 3.5 0 0117.5 19z"></path></svg>
           Weather &amp; conditions
-          <button onclick="fetchDJRWeather()" style="float:right;margin-top:-2px;background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:4px 10px;cursor:pointer">🌤 Auto-fill</button>
         </div></div>
         <div class="cb">
           <div class="form-grid four">
             <div class="fgroup">
               <div class="flbl">AM Temp (°F)</div>
-              <input type="text" id="djr-temp-am" placeholder="e.g. 62">
+              <input type="text" id="djr-temp-am" placeholder="Auto-filling...">
             </div>
             <div class="fgroup">
               <div class="flbl">PM Temp (°F)</div>
-              <input type="text" id="djr-temp-pm" placeholder="e.g. 75">
+              <input type="text" id="djr-temp-pm" placeholder="Auto-filling...">
             </div>
             <div class="fgroup" style="grid-column:span 2">
               <div class="flbl">Weather description</div>
-              <input type="text" id="djr-weather" placeholder="e.g. Cold in morning, hot afternoon">
+              <input type="text" id="djr-weather" placeholder="Auto-filling...">
             </div>
           </div>
         </div>
@@ -1028,20 +1131,9 @@ tbody tr:hover td{background:#f7fbfc}
               <input type="text" id="djr-title" value="RYE SUPERINTENDENT">
             </div>
           </div>
-          <div style="margin-top:10px">
-            <div class="flbl" style="margin-bottom:6px">Supervisor Signature</div>
-            <div style="border:1.5px solid #e2e2e2;border-radius:8px;background:#fafafa;position:relative;touch-action:none">
-              <canvas id="djr-sig-canvas" width="600" height="100" style="width:100%;height:100px;border-radius:8px;display:block;cursor:crosshair"></canvas>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:6px">
-              <button onclick="djrSigClear()" style="background:#eee;color:#333;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 14px;cursor:pointer">✕ Clear</button>
-              <span style="font-size:11px;color:#999;align-self:center">Sign with finger or mouse</span>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
             <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="saveDJR()">💾 Save Report</button>
             <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var job=document.getElementById(&#39;djr-job&#39;).value; var date=document.getElementById(&#39;djr-date&#39;).value; if(!job||!date){toast(&#39;Load a report first&#39;);return;} var data=collectDJRData(); saveToDrive(&#39;daily_report&#39;,job,data,&#39;djr-drive-status&#39;); })()">🗂️ Save to Drive</button>
-            <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="downloadDJRDocx()">📄 Word Doc</button>
           </div>
           <div id="djr-drive-status" style="margin-top:6px;font-size:12px;text-align:center;"></div>
           <div id="djr-saved-msg" style="display:none;text-align:center;padding:8px;font-size:12px;color:var(--green);margin-top:8px">
@@ -1223,7 +1315,114 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="fgroup" style="flex:1;min-width:140px">
         <div class="flbl">Filter by employee</div>
         <select id="unit-filter-worker" onchange="renderUnitsTab()">
-          <option value="all">All Workers</option>
+          <option value="all">All employees</option>
+          <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
+          <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
+          <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
+          <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
+          <option value="76 - David Smith">76 - David Smith</option>
+          <option value="77 - Dillan Smith">77 - Dillan Smith</option>
+          <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
+          <option value="86 - Efren Hilario">86 - Efren Hilario</option>
+          <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
+          <option value="106 - Johnny Perez">106 - Johnny Perez</option>
+          <option value="123 - Armando Lopez">123 - Armando Lopez</option>
+          <option value="138 - Francisco Flores">138 - Francisco Flores</option>
+          <option value="140 - Adrian Flores">140 - Adrian Flores</option>
+          <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
+          <option value="152 - Brian Campos">152 - Brian Campos</option>
+          <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
+          <option value="204 - Kenneth William">204 - Kenneth William</option>
+          <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
+          <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
+          <option value="235 - Louis Aceves">235 - Louis Aceves</option>
+          <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
+          <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
+          <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
+          <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
+          <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
+          <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
+          <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
+          <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
+          <option value="455 - Edgar Solis">455 - Edgar Solis</option>
+          <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
+          <option value="536 - Anthony Macias">536 - Anthony Macias</option>
+          <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
+          <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
+          <option value="628 - Humberto Flores">628 - Humberto Flores</option>
+          <option value="630 - Jaime Moya">630 - Jaime Moya</option>
+          <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
+          <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
+          <option value="660 - Carla Quijada">660 - Carla Quijada</option>
+          <option value="666 - Jose Preciado">666 - Jose Preciado</option>
+          <option value="671 - Brian Flores">671 - Brian Flores</option>
+          <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
+          <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
+          <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
+          <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
+          <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
+          <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
+          <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
+          <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
+          <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
+          <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
+          <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
+          <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
+          <option value="825 - Josue Villegas">825 - Josue Villegas</option>
+          <option value="831 - Salvador Perez">831 - Salvador Perez</option>
+          <option value="832 - David Casarez">832 - David Casarez</option>
+          <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
+          <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
+          <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
+          <option value="844 - Robert Stark">844 - Robert Stark</option>
+          <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
+          <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
+          <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
+          <option value="855 - Mario Arias">855 - Mario Arias</option>
+          <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
+          <option value="858 - Mario Lopez">858 - Mario Lopez</option>
+          <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
+          <option value="861 - Cristian Collin">861 - Cristian Collin</option>
+          <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
+          <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
+          <option value="866 - Axel Salas">866 - Axel Salas</option>
+          <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
+          <option value="870 - Alex Osorio">870 - Alex Osorio</option>
+          <option value="872 - Julio Munoz">872 - Julio Munoz</option>
+          <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
+          <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
+          <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
+          <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
+          <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
+          <option value="880 - Noah Villareal">880 - Noah Villareal</option>
+          <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
+          <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
+          <option value="884 - Jose Luna">884 - Jose Luna</option>
+          <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
+          <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
+          <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
+          <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
+          <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
+          <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
+          <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
+          <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
+          <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
+          <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
+          <option value="899 - Victor Armienta">899 - Victor Armienta</option>
+          <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
+          <option value="902 - Erik Lopez">902 - Erik Lopez</option>
+          <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
+          <option value="905 - James Marquez">905 - James Marquez</option>
+          <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
+          <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
+          <option value="909 - Christian Moran">909 - Christian Moran</option>
+          <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
+          <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
+          <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
+          <option value="914 - Miguel Corral">914 - Miguel Corral</option>
+          <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
+          <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
+          <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
         </select>
       </div>
       <div class="fgroup" style="flex:1;min-width:140px">
@@ -1691,7 +1890,7 @@ tbody tr:hover td{background:#f7fbfc}
     <h2>Safety Documentation</h2>
     <div class="safety-meta">
       <span id="safetyDateDisplay">Friday, Jun 19, 2026</span>
-      <span id="safetyFridayNotice" class="safety-required-badge" style="display: inline-block;">📋 Friday — All 3 forms required</span>
+      <span id="safetyFridayNotice" class="safety-required-badge" style="display: inline-block;">📋 Friday — All 4 reports required</span>
       <span id="safetyOptionalNotice" class="safety-optional-badge" style="display: inline-block;">Optional today — required on Fridays</span>
     </div>
     <div id="safetySubmittedBanner" class="safety-submitted-banner" style="display: block;">
@@ -1757,6 +1956,10 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="safety-obs-hint">Include positive comments and note corrective action for any unsafe conditions.</div>
       <div id="wjsiObsTable"><div class="safety-obs-row"><div class="safety-obs-num">1</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs1" value="yes"> YES</label><label><input type="radio" name="wjsiObs1" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">2</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs2" value="yes"> YES</label><label><input type="radio" name="wjsiObs2" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">3</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs3" value="yes"> YES</label><label><input type="radio" name="wjsiObs3" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">4</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs4" value="yes"> YES</label><label><input type="radio" name="wjsiObs4" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">5</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs5" value="yes"> YES</label><label><input type="radio" name="wjsiObs5" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">6</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs6" value="yes"> YES</label><label><input type="radio" name="wjsiObs6" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">7</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs7" value="yes"> YES</label><label><input type="radio" name="wjsiObs7" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">8</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs8" value="yes"> YES</label><label><input type="radio" name="wjsiObs8" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">9</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs9" value="yes"> YES</label><label><input type="radio" name="wjsiObs9" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">10</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs10" value="yes"> YES</label><label><input type="radio" name="wjsiObs10" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div></div>
       <button class="safety-add-row-btn" onclick="addWjsiObsRow()">+ Add observation</button>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
+        <button class="safety-submit-btn" onclick="saveDocReport('wjsi')" id="wjsiSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; WJSI</button>
+        <span id="wjsiSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
+      </div>
       <div class="safety-signatories">
         <div class="safety-sig-row">
           <div class="safety-sig-field"><label>Field Representative Name</label><input type="text" id="wjsiFieldRep" placeholder="Print name"></div>
@@ -1809,6 +2012,10 @@ tbody tr:hover td{background:#f7fbfc}
         </table>
       </div>
       <button class="safety-add-row-btn" onclick="addJhaRow()">+ Add task step</button>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
+        <button class="safety-submit-btn" onclick="saveDocReport('jha')" id="jhaSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; JHA</button>
+        <span id="jhaSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
+      </div>
     </div>
   </div>
 
@@ -1900,6 +2107,10 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="safety-section-label" style="margin-top:20px;">Supervisor Review</div>
       <div class="safety-field"><label>Supervisor Notes</label><textarea id="ptpSupervisorNotes" rows="2" placeholder="Review notes and feedback to the team..."></textarea></div>
       <div class="safety-field" style="margin-top:8px;"><label>Supervisor Name</label><input type="text" id="ptpSupervisorName" placeholder="Supervisor name"></div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
+        <button class="safety-submit-btn" onclick="saveDocReport('ptp')" id="ptpSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; Pre-Task Plan</button>
+        <span id="ptpSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
+      </div>
     </div>
   </div>
 
@@ -2002,6 +2213,10 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
 
       <div class="tbt-remaining-note">📋 Have more Toolbox Talks to add? Upload remaining PDFs to the <code>toolbox-talks/</code> folder and they will appear here after the next update.</div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
+        <button class="safety-submit-btn" onclick="saveDocReport('tbt')" id="tbtSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; Toolbox Talk</button>
+        <span id="tbtSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
+      </div>
     </div>
   </div>
 
@@ -2023,22 +2238,20 @@ tbody tr:hover td{background:#f7fbfc}
   </div>
 
 
-  <!-- Submit -->
-  <div class="safety-submit-area">
-    <div class="safety-submitter-row">
-      <label>Submitted by</label>
-      <input type="text" id="safetySubmittedByInput" placeholder="Your name">
+  <!-- Safety Reports Summary -->
+  <div class="safety-submit-area" id="safetyReportsSummary" style="flex-direction:column;gap:8px;">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#4a5568;margin-bottom:4px;">Weekly Safety Reports</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="safetyDocStatusGrid">
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryWjsiIcon">—</span><span>Weekly Jobsite Safety Inspection</span></div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryJhaIcon">—</span><span>Job Hazard Analysis</span></div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryPtpIcon">—</span><span>Pre-Task Plan</span></div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryTbtIcon">—</span><span>Toolbox Talk</span></div>
     </div>
-    <button class="safety-submit-btn" id="safetySubmitBtn" onclick="submitSafetyForms()">Re-submit (Update)</button>
-    <div id="safetySubmitStatus" class="safety-submit-status"></div>
+    <div id="safetySubmitStatus" class="safety-submit-status" style="margin-top:4px;"></div>
   </div>
 
   <div style="margin-top:12px;padding:12px 16px;background:#f0f4ff;border:1px solid #c3d4f7;border-radius:10px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printSafetyForms()">🖨️ Print / PDF</button>
-      <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="(function(){ var by=document.getElementById(&#39;safetySubmittedByInput&#39;)?document.getElementById(&#39;safetySubmittedByInput&#39;).value.trim():&#39;&#39;; if(!by){toast(&#39;Enter your name first&#39;);return;} var jobId=typeof getSafetyJobId!==&#39;undefined&#39;?getSafetyJobId():&#39;&#39;; saveToDrive(&#39;safety&#39;,jobId,{job_id:jobId,submitted_by:by,week_ending:(function(){var n=new Date(),day=n.getDay(),diff=day===0?0:7-day,f=new Date(n);f.setDate(n.getDate()+diff);return f.toISOString().slice(0,10);})()},&#39;safety-drive-status&#39;); })()">🗂️ Save to Drive</button>
-    </div>
-    <div id="safety-drive-status" style="margin-top:6px;font-size:12px;text-align:center;"></div>
+    <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printSafetyForms()">&#x1F5A8;&#xFE0F; Print / PDF</button>
   </div>
 </div>
 <!-- ===== END SAFETY TAB ===== -->
@@ -3569,7 +3782,7 @@ function goTab(btn,name){
   if(name==='workers')   renderWorkers();
   if(name==='jobs')      renderJobsTab();
   if(name==='whiteboard') initWhiteboard();
-  if(name==='djr')        { initDJR(); setTimeout(fetchDJRWeather, 800); }
+  if(name==='djr')        initDJR();
   if(name==='signin')     initSignIn();
   if(name==='tasks'){  renderTaskCalendar(); renderTasks(); }
 }
@@ -3666,6 +3879,55 @@ function getYNValue(fieldId){
   return yBtn.dataset.val==='yes' ? 'YES' : (document.getElementById(fieldId+'-no')?.dataset.val==='no'?'NO':'');
 }
 
+
+/* === AUTO WEATHER === */
+const JOB_COORDS = {
+  '24001 - BIOLA':                  {lat:33.9425,lon:-118.1339,name:'La Mirada, CA'},
+  '24002 - SEPULVEDA':              {lat:34.2206,lon:-118.4342,name:'Panorama City, CA'},
+  '24005 - VNV':                    {lat:34.1919,lon:-118.4515,name:'Van Nuys, CA'},
+  '24006 - VF':                     {lat:33.5539,lon:-117.2139,name:'Murrieta, CA'},
+  '24010 - COMMONS':                {lat:34.1575,lon:-118.6339,name:'Calabasas, CA'},
+  '25001 - DECENA':                 {lat:32.7157,lon:-117.1611,name:'San Diego, CA'},
+  '25002 - BAH':                    {lat:34.1467,lon:-118.7606,name:'Agoura Hills, CA'},
+  '26002 - WILSHIRE':               {lat:34.0614,lon:-118.3089,name:'Los Angeles, CA'},
+  '26003 - CARINA':                 {lat:33.7963,lon:-117.9271,name:'Santa Ana, CA'},
+  '26005 - MARINA SHORES':          {lat:34.0195,lon:-118.4912,name:'Marina del Rey, CA'},
+  'SP25018 - CDC PLAZA':            {lat:34.0522,lon:-118.2437,name:'Los Angeles, CA'},
+  'SP26006 - LOS ANGELES TIMES':    {lat:34.0414,lon:-118.2535,name:'Los Angeles, CA'},
+};
+
+const WMO_CODES = {
+  0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+  45:'Foggy', 48:'Rime fog', 51:'Light drizzle', 53:'Moderate drizzle',
+  55:'Dense drizzle', 61:'Slight rain', 63:'Moderate rain', 65:'Heavy rain',
+  71:'Slight snow', 73:'Moderate snow', 75:'Heavy snow', 77:'Snow grains',
+  80:'Rain showers', 81:'Moderate showers', 82:'Violent showers',
+  85:'Slight snow showers', 86:'Heavy snow showers',
+  95:'Thunderstorm', 96:'Thunderstorm w/ hail', 99:'Heavy thunderstorm'
+};
+
+async function fetchJobWeather(job) {
+  const coords = JOB_COORDS[job];
+  if (!coords) return null;
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,weathercode,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FLos_Angeles`;
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const cur = data.current;
+    const temp = Math.round(cur.temperature_2m);
+    const code = cur.weathercode;
+    const wind = Math.round(cur.windspeed_10m);
+    const desc = WMO_CODES[code] || 'Variable conditions';
+    const windStr = wind > 5 ? `, winds ${wind} mph` : '';
+    return { temp, desc: desc + windStr, location: coords.name };
+  } catch(e) {
+    console.warn('Weather fetch failed:', e);
+    return null;
+  }
+}
+/* === END AUTO WEATHER === */
+
 function loadDJR(){
   const job  = document.getElementById('djr-job').value;
   const date = document.getElementById('djr-date').value;
@@ -3673,37 +3935,47 @@ function loadDJR(){
   if(!date){ toast('Select a date'); return; }
 
   document.getElementById('djr-empty').style.display = 'none';
-  document.getElementById('djr-form').style.display  = 'block'; setTimeout(djrSigInit,50);
+  document.getElementById('djr-form').style.display  = 'block';
 
-  // Sync from Supabase first to get latest Log Unit entries, then populate
-  (async function(){
-    try{
-      const [unitData, dailyData] = await Promise.all([
-        sbFetch('unit_logs'),
-        sbFetch('daily_logs')
-      ]);
-      if(unitData && unitData.length > 0){
-        unitLogs = unitData.map(function(r){ return {id:r.id,ts:r.ts,worker:r.worker,job:r.job,bldg:r.bldg,unit:r.unit,phase:r.phase,costcode:r.costcode,boxes:r.boxes,lights:r.lights,hrs:r.hrs,notes:r.notes}; });
-      }
-      if(dailyData && dailyData.length > 0){
-        dailyLogs = dailyData.map(function(r){ return {id:r.id,date:r.entry_date,worker:r.worker,job:r.job,phaseCode:r.phase_code,phaseDesc:r.phase_desc,units:r.units_text,hours:r.hours,notes:r.notes}; });
-      }
-    }catch(e){ console.warn('DJR sync error:', e); }
-    populateDJRWorkforce(job, date);
-  })();
-}
+  // Auto-fill weather if fields are empty and no saved report
+  const _weatherJob = document.getElementById('djr-job').value;
+  const _weatherKey = _weatherJob + '|' + document.getElementById('djr-date').value;
+  const _hasSaved = djrReports[_weatherKey] && djrReports[_weatherKey].tempAM;
+  if (!_hasSaved) {
+    const _tempAmEl = document.getElementById('djr-temp-am');
+    const _weatherEl = document.getElementById('djr-weather');
+    if (!_tempAmEl.value && !_weatherEl.value) {
+      fetchJobWeather(_weatherJob).then(w => {
+        if (!w) return;
+        if (!document.getElementById('djr-temp-am').value)
+          document.getElementById('djr-temp-am').value = w.temp;
+        if (!document.getElementById('djr-temp-pm').value)
+          document.getElementById('djr-temp-pm').value = w.temp;
+        if (!document.getElementById('djr-weather').value)
+          document.getElementById('djr-weather').value = w.desc;
+        toast('Weather auto-filled for ' + w.location);
+      });
+    }
+  }
 
-function populateDJRWorkforce(job, date){
-  // Pull only today's entries from dailyLogs (already includes unit log data)
+  // Auto-populate workforce from dailyLogs for this job + date
   const entries = dailyLogs.filter(l=>l.job===job && l.date===date);
+  // Also pull from unit logs
+  const unitEntries = unitLogs.filter(l=>l.job===job);
 
-  // Group by worker — hours come only from dailyLogs to avoid double-counting
+  // Group by worker
   const workerMap = {};
   entries.forEach(l=>{
     if(!workerMap[l.worker]) workerMap[l.worker]={worker:l.worker,lines:[],hours:0};
     const desc = [l.units,l.notes].filter(Boolean).join(' -- ');
     if(desc) workerMap[l.worker].lines.push(desc);
-    workerMap[l.worker].hours += parseFloat(l.hours)||0;
+    workerMap[l.worker].hours += l.hours;
+  });
+  unitEntries.forEach(l=>{
+    if(!workerMap[l.worker]) workerMap[l.worker]={worker:l.worker,lines:[],hours:0};
+    const desc = 'Unit '+l.unit+' ('+l.bldg+') -- '+l.phase+(l.notes?' -- '+l.notes:'');
+    workerMap[l.worker].lines.push(desc);
+    workerMap[l.worker].hours += l.hrs||0;
   });
 
   // Render workforce table
@@ -3723,7 +3995,6 @@ function populateDJRWorkforce(job, date){
     if(saved.other)   document.getElementById('djr-other').value   = saved.other;
     if(saved.superintendent) document.getElementById('djr-super').value = saved.superintendent;
     if(saved.title)   document.getElementById('djr-title').value   = saved.title;
-    if(saved.superSig){ var sc=document.getElementById('djr-sig-canvas'); if(sc){ var img=new Image(); img.onload=function(){ sc.getContext('2d').drawImage(img,0,0); }; img.src=saved.superSig; } }
     DJR_YN_FIELDS.forEach(f=>{ if(saved.yn&&saved.yn[f.id]) toggleYN(f.id,saved.yn[f.id].toLowerCase()); });
     // Use saved workforce if available
     if(saved.workforce && saved.workforce.length > 0){
@@ -3832,7 +4103,6 @@ function collectDJRData(){
     other:    document.getElementById('djr-other').value.trim(),
     superintendent: document.getElementById('djr-super').value.trim(),
     title:    document.getElementById('djr-title').value.trim(),
-    superSig: (function(){ var c=document.getElementById('djr-sig-canvas'); if(!c) return ''; var blank=document.createElement('canvas'); blank.width=c.width; blank.height=c.height; return c.toDataURL()!==blank.toDataURL()?c.toDataURL('image/png'):''; })(),
     savedAt:  new Date().toISOString(),
     incidents:   getYN('incidents'),
     meetings:    getYN('meetings'),
@@ -3843,262 +4113,6 @@ function collectDJRData(){
     extraWork:   getYN('extrawork'),
     gcDirection: getYN('gcdirection'),
   };
-}
-
-
-
-
-
-
-async function downloadDJRDocx(){
-  var job  = document.getElementById('djr-job').value;
-  var date = document.getElementById('djr-date').value;
-  if(!job||!date){ toast('Select job and date first'); return; }
-  // Auto-load if not already loaded
-  if(document.getElementById('djr-form').style.display==='none'){
-    if(typeof loadDJR==='function'){ loadDJR(); setTimeout(downloadDJRDocx, 600); return; }
-    toast('Click Load first'); return;
-  }
-  var data = collectDJRData();
-  var jobNum  = job.split(' - ')[0];
-  var jobName = job.split(' - ').slice(1).join(' - ');
-  var dateObj = new Date(date+'T12:00:00');
-  var dispDate= dateObj.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'});
-  var dayName = dateObj.toLocaleDateString('en-US',{weekday:'long'}).toUpperCase();
-  var totalHrs= (data.workforce||[]).reduce(function(a,r){return a+(parseFloat(r.hours)||0);},0);
-
-  function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-  function para(text,opts){
-    opts=opts||{};
-    var pPr='';
-    if(opts.spacing) pPr+='<w:spacing w:before="'+(opts.spacing.before||0)+'" w:after="'+(opts.spacing.after||0)+'"/>';
-    if(opts.jc) pPr+='<w:jc w:val="'+opts.jc+'"/>';
-    if(opts.border) pPr+='<w:pBdr><w:top w:val="single" w:sz="4" w:space="1" w:color="DDDDDD"/></w:pBdr>';
-    var rPr='<w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>';
-    if(opts.bold) rPr+='<w:b/>';
-    if(opts.size) rPr+='<w:sz w:val="'+(opts.size*2)+'"/><w:szCs w:val="'+(opts.size*2)+'"/>';
-    if(opts.color) rPr+='<w:color w:val="'+opts.color+'"/>';
-    return '<w:p>'+(pPr?'<w:pPr>'+pPr+'</w:pPr>':'')+'<w:r><w:rPr>'+rPr+'</w:rPr><w:t xml:space="preserve">'+esc(text)+'</w:t></w:r></w:p>';
-  }
-
-  function hdr(text){
-    return '<w:p><w:pPr><w:spacing w:before="200" w:after="80"/><w:pBdr><w:bottom w:val="single" w:sz="12" w:space="1" w:color="111111"/></w:pBdr></w:pPr>'
-      +'<w:r><w:rPr><w:b/><w:sz w:val="20"/><w:szCs w:val="20"/><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/></w:rPr><w:t>'+esc(text)+'</w:t></w:r></w:p>';
-  }
-
-  function cell(text,opts){
-    opts=opts||{};
-    var tcPr='<w:tcPr>';
-    if(opts.w) tcPr+='<w:tcW w:w="'+opts.w+'" w:type="dxa"/>';
-    if(opts.shade) tcPr+='<w:shd w:val="clear" w:color="auto" w:fill="'+opts.shade+'"/>';
-    if(opts.span) tcPr+='<w:gridSpan w:val="'+opts.span+'"/>';
-    tcPr+='<w:tcMar><w:top w:w="80" w:type="dxa"/><w:bottom w:w="80" w:type="dxa"/><w:left w:w="120" w:type="dxa"/><w:right w:w="120" w:type="dxa"/></w:tcMar></w:tcPr>';
-    var rPr='<w:rFonts w:ascii="Arial" w:hAnsi="Arial"/>';
-    if(opts.bold) rPr+='<w:b/>';
-    if(opts.size) rPr+='<w:sz w:val="'+(opts.size*2)+'"/><w:szCs w:val="'+(opts.size*2)+'"/>';
-    if(opts.color) rPr+='<w:color w:val="'+opts.color+'"/>';
-    var jc=opts.center?'<w:jc w:val="center"/>':'';
-    return '<w:tc>'+tcPr+'<w:p><w:pPr>'+jc+'</w:pPr><w:r><w:rPr>'+rPr+'</w:rPr><w:t xml:space="preserve">'+esc(text)+'</w:t></w:r></w:p></w:tc>';
-  }
-
-  function row(cells){ return '<w:tr>'+cells+'</w:tr>'; }
-
-  function tbl(rows,colWidths){
-    var grid=colWidths.map(function(w){return '<w:gridCol w:w="'+w+'"/>';}).join('');
-    return '<w:tbl><w:tblPr><w:tblW w:w="9360" w:type="dxa"/>'
-      +'<w:tblBorders><w:top w:val="single" w:sz="2" w:color="AAAAAA"/><w:left w:val="single" w:sz="2" w:color="AAAAAA"/><w:bottom w:val="single" w:sz="2" w:color="AAAAAA"/><w:right w:val="single" w:sz="2" w:color="AAAAAA"/><w:insideH w:val="single" w:sz="2" w:color="AAAAAA"/><w:insideV w:val="single" w:sz="2" w:color="AAAAAA"/></w:tblBorders>'
-      +'</w:tblPr><w:tblGrid>'+grid+'</w:tblGrid>'+rows.join('')+'</w:tbl>';
-  }
-
-  var body='';
-  var t=Math.round(9360/3);
-
-  body+=para('RYE ELECTRIC, INC.',{bold:true,size:16,spacing:{before:0,after:40},jc:'center'});
-  body+=para('DAILY JOB REPORT',{bold:true,size:13,color:'444444',spacing:{before:0,after:160},jc:'center'});
-
-  body+=tbl([row(cell('Job: '+jobNum+' \u2014 '+jobName,{w:t*2,shade:'F5F5F5',size:9})+cell('Date: '+dispDate,{w:t,shade:'F5F5F5',size:9}))],[t*2,t]);
-  body+=para('',{spacing:{before:40,after:0}});
-  body+=tbl([row(cell('Day: '+dayName,{w:t,shade:'F5F5F5',size:9})+cell('Temp AM: '+(data.tempAM?data.tempAM+'\u00b0F':'--'),{w:t,shade:'F5F5F5',size:9})+cell('Weather: '+esc(data.weather||'--'),{w:t,shade:'F5F5F5',size:9}))],[t,t,t]);
-  body+=para('',{spacing:{before:80,after:0}});
-
-  body+=hdr('WORK FORCE \u2014 LOCATION AND DESCRIPTION OF WORK');
-  var wfRows=[row(cell('EMPLOYEE',{w:2200,shade:'EEEEEE',bold:true,size:9})+cell('DESCRIPTION OF WORK',{w:6760,shade:'EEEEEE',bold:true,size:9})+cell('HRS',{w:400,shade:'EEEEEE',bold:true,size:9,center:true}))];
-  (data.workforce||[]).forEach(function(r){ wfRows.push(row(cell((r.worker||'').toUpperCase(),{w:2200,bold:true,size:9})+cell(r.description||'',{w:6760,size:9})+cell(String(r.hours||''),{w:400,size:9,center:true}))); });
-  wfRows.push(row(cell('Total manpower hours:',{w:8960,shade:'F5F5F5',bold:true,size:9,span:2})+cell(String(totalHrs),{w:400,shade:'F5F5F5',bold:true,size:9,center:true})));
-  body+=tbl(wfRows,[2200,6760,400]);
-  body+=para('',{spacing:{before:80,after:0}});
-
-  // ── JOB CONDITIONS (text fields first, matching form order) ──
-  body+=hdr('JOB CONDITIONS');
-  function notesSection(title,text){
-    body+=para(title,{bold:true,size:9,color:'444444',spacing:{before:120,after:40}});
-    body+=para(text||'',{size:9,spacing:{before:0,after:60}});
-    if(!text){ body+=para('',{size:9,spacing:{before:0,after:40}}); }
-  }
-  notesSection('Delays or Interferences by Others',data.delays);
-  notesSection('Extra Work / Change Order Notes',data.extra);
-  notesSection('Other Notes / Valuable Information',data.other);
-  body+=para('',{spacing:{before:80,after:0}});
-
-  // ── DAILY QUESTIONS (Y/N radio buttons) ──
-  body+=hdr('DAILY QUESTIONS');
-  var ynFieldsDoc = typeof DJR_YN_FIELDS!=='undefined' ? DJR_YN_FIELDS : [];
-  var ynRows=[row(cell('Question',{w:5500,shade:'EEEEEE',bold:true,size:9})+cell('Answer',{w:700,shade:'EEEEEE',bold:true,size:9,center:true})+cell('Details',{w:3160,shade:'EEEEEE',bold:true,size:9}))];
-  ynFieldsDoc.forEach(function(f){
-    var ans=(data.yn&&data.yn[f.id])||'';
-    var det=(data.detailValues&&data.detailValues[f.id])||'';
-    if(!ans && f.id){
-      var yBtn=document.getElementById(f.id+'-yes');
-      if(yBtn) ans=yBtn.dataset.val==='yes'?'YES':'NO';
-    }
-    ynRows.push(row(cell(f.label,{w:5500,size:9})+cell(ans,{w:700,size:9,bold:true,color:ans==='YES'?'006600':'CC0000',center:true})+cell(det,{w:3160,size:9,color:'555555'})));
-  });
-  body+=tbl(ynRows,[5500,700,3160]);
-  body+=para('',{spacing:{before:80,after:0}});
-
-  body+=para('',{spacing:{before:300,after:0}});
-  body+='<w:p><w:pPr><w:spacing w:before="0" w:after="0"/><w:pBdr><w:bottom w:val="single" w:sz="8" w:space="1" w:color="111111"/></w:pBdr></w:pPr></w:p>';
-
-  // Signature image embedding
-  var sigRel='', sigDraw='', sigBase64='', imgRels='';
-  if(data.superSig){
-    try{
-      sigBase64=data.superSig.split(',')[1];
-      sigRel='<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/sig.png"/>';
-      // EMU dimensions: 200px wide at 96dpi = 1905000 EMU, 50px tall = 476250 EMU
-      sigDraw='<w:p><w:r><w:rPr/><w:drawing>'
-        +'<wp:inline distT="0" distB="0" distL="0" distR="0"'
-        +' xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">'
-        +'<wp:extent cx="1905000" cy="476250"/>'
-        +'<wp:effectExtent l="0" t="0" r="0" b="0"/>'
-        +'<wp:docPr id="1" name="Signature"/>'
-        +'<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">'
-        +'<a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">'
-        +'<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">'
-        +'<pic:nvPicPr><pic:cNvPr id="1" name="Signature"/><pic:cNvPicPr/></pic:nvPicPr>'
-        +'<pic:blipFill>'
-        +'<a:blip r:embed="rId2" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"/>'
-        +'<a:stretch><a:fillRect/></a:stretch>'
-        +'</pic:blipFill>'
-        +'<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="1905000" cy="476250"/></a:xfrm>'
-        +'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
-        +'</pic:spPr>'
-        +'</pic:pic>'
-        +'</a:graphicData></a:graphic>'
-        +'</wp:inline></w:drawing></w:r></w:p>';
-      imgRels=sigRel;
-    }catch(e){ sigDraw=''; sigBase64=''; }
-  }
-  body+=sigDraw;
-  body+=para(data.superintendent||'_____________________________',{bold:true,size:9,spacing:{before:40,after:0}});
-  body+=para(data.title||'RYE SUPERINTENDENT',{size:8,color:'666666',spacing:{before:0,after:0}});
-  body+=para('This Daily Report is provided as a record of work progress and conditions at the jobsite.',{size:7,color:'999999',spacing:{before:200,after:0},jc:'center',border:true});
-
-  var docXml='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-    +'<w:document xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"'
-    +' xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
-    +'<w:body>'+body
-    +'<w:sectPr><w:pgSz w:w="12240" w:h="15840"/>'
-    +'<w:pgMar w:top="1080" w:right="1080" w:bottom="1080" w:left="1080" w:header="720" w:footer="720" w:gutter="0"/>'
-    +'</w:sectPr></w:body></w:document>';
-
-  // Decode signature base64 to binary for embedding
-  var sigBytes=null;
-  if(sigBase64){
-    try{
-      var bin=atob(sigBase64); sigBytes=new Uint8Array(bin.length);
-      for(var si=0;si<bin.length;si++) sigBytes[si]=bin.charCodeAt(si);
-    }catch(e){ sigBytes=null; }
-  }
-
-  var contentTypes='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>'+(sigBytes?'<Default Extension="png" ContentType="image/png"/>':'')+'<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>';
-
-  var docRels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+imgRels+'</Relationships>';
-
-  var zipFiles={
-    '[Content_Types].xml':contentTypes,
-    '_rels/.rels':'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
-    'word/_rels/document.xml.rels':docRels,
-    'word/document.xml':docXml
-  };
-  if(sigBytes) zipFiles['word/media/sig.png']=sigBytes;
-
-  var blob=new Blob([buildDJRZip(zipFiles)],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');
-  a.href=url; a.download='DJR_'+jobNum.replace(/[^a-zA-Z0-9]/g,'_')+'_'+date+'.docx';
-  document.body.appendChild(a); a.click();
-  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},1000);
-  if(typeof toast==='function') toast('Word doc downloaded');
-}
-
-function buildDJRZip(files){
-  var enc=new TextEncoder();
-  function u16(n){return new Uint8Array([n&255,(n>>8)&255]);}
-  function u32(n){return new Uint8Array([n&255,(n>>8)&255,(n>>16)&255,(n>>24)&255]);}
-  function cat(){var tot=0;for(var i=0;i<arguments.length;i++)tot+=arguments[i].length;var out=new Uint8Array(tot),p=0;for(var i=0;i<arguments.length;i++){out.set(arguments[i],p);p+=arguments[i].length;}return out;}
-  function crc32(b){if(!crc32._t){var t=crc32._t=new Uint32Array(256);for(var i=0;i<256;i++){var x=i;for(var j=0;j<8;j++)x=x&1?(0xEDB88320^(x>>>1)):(x>>>1);t[i]=x;}}var c=0xFFFFFFFF,T=crc32._t;for(var i=0;i<b.length;i++)c=(c>>>8)^T[(c^b[i])&255];return(c^0xFFFFFFFF)>>>0;}
-  var LP=[],CP=[],off=0,DT=u16(0),DD=u16(0x4A21);
-  Object.keys(files).forEach(function(name){
-    var raw=files[name]; var dat=(raw instanceof Uint8Array)?raw:enc.encode(raw); var nm=enc.encode(name),crc=crc32(dat);
-    var lh=cat(new Uint8Array([0x50,0x4B,0x03,0x04]),u16(20),u16(0),u16(0),DT,DD,u32(crc),u32(dat.length),u32(dat.length),u16(nm.length),u16(0),nm);
-    LP.push(lh,dat);
-    CP.push(cat(new Uint8Array([0x50,0x4B,0x01,0x02]),u16(20),u16(20),u16(0),u16(0),DT,DD,u32(crc),u32(dat.length),u32(dat.length),u16(nm.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(off),nm));
-    off+=lh.length+dat.length;
-  });
-  var lb=new Uint8Array(LP.reduce(function(s,x){return s+x.length;},0)),lp=0;LP.forEach(function(x){lb.set(x,lp);lp+=x.length;});
-  var cb=new Uint8Array(CP.reduce(function(s,x){return s+x.length;},0)),cp=0;CP.forEach(function(x){cb.set(x,cp);cp+=x.length;});
-  var nf=Object.keys(files).length;
-  var eocd=cat(new Uint8Array([0x50,0x4B,0x05,0x06]),u16(0),u16(0),u16(nf),u16(nf),u32(cb.length),u32(lb.length),u16(0));
-  return cat(lb,cb,eocd);
-}
-
-
-async function fetchDJRWeather(){
-  var city = 'Calabasas,CA';
-  try{
-    // wttr.in JSON API — no key required
-    var resp = await fetch('https://wttr.in/'+city+'?format=j1', {cache:'no-store'});
-    if(!resp.ok) return;
-    var wx = await resp.json();
-    var cur = wx.current_condition && wx.current_condition[0];
-    if(!cur) return;
-    var tempF = cur.temp_F || '';
-    // Morning temp from hourly[0] (around 6am), afternoon from hourly[3] (noon)
-    var hourly = wx.weather && wx.weather[0] && wx.weather[0].hourly;
-    var amTemp = hourly && hourly[1] ? hourly[1].tempF : tempF;
-    var pmTemp = hourly && hourly[4] ? hourly[4].tempF : tempF;
-    var desc = cur.weatherDesc && cur.weatherDesc[0] ? cur.weatherDesc[0].value : '';
-    var humidity = cur.humidity ? ', '+cur.humidity+'% humidity' : '';
-    var wind = cur.windspeedMiles ? ', Wind '+cur.windspeedMiles+'mph' : '';
-
-    var amEl = document.getElementById('djr-temp-am');
-    var pmEl = document.getElementById('djr-temp-pm');
-    var wxEl = document.getElementById('djr-weather');
-    if(amEl && !amEl.value) amEl.value = amTemp;
-    if(pmEl && !pmEl.value) pmEl.value = pmTemp;
-    if(wxEl && !wxEl.value) wxEl.value = desc + humidity + wind;
-    if(typeof toast==='function') toast('Weather loaded');
-  }catch(e){ console.warn('Weather fetch failed:', e); }
-}
-
-function djrSigInit(){
-  var canvas=document.getElementById('djr-sig-canvas');
-  if(!canvas||canvas._djrInited) return;
-  canvas._djrInited=true;
-  var ctx=canvas.getContext('2d');
-  var drawing=false, lastX=0, lastY=0;
-  function getPos(e){ var r=canvas.getBoundingClientRect(); var sx=canvas.width/r.width,sy=canvas.height/r.height; var s=e.touches?e.touches[0]:e; return{x:(s.clientX-r.left)*sx,y:(s.clientY-r.top)*sy}; }
-  function start(e){ e.preventDefault(); drawing=true; var p=getPos(e); lastX=p.x; lastY=p.y; }
-  function move(e){ e.preventDefault(); if(!drawing) return; var p=getPos(e); ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(p.x,p.y); ctx.strokeStyle='#1a202c'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke(); lastX=p.x; lastY=p.y; }
-  function end(){ drawing=false; }
-  canvas.addEventListener('mousedown',start); canvas.addEventListener('mousemove',move); canvas.addEventListener('mouseup',end); canvas.addEventListener('mouseleave',end);
-  canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchmove',move,{passive:false}); canvas.addEventListener('touchend',end);
-}
-function djrSigClear(){
-  var c=document.getElementById('djr-sig-canvas');
-  if(c){ var ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); }
 }
 
 function saveDJR(){
@@ -4233,18 +4247,19 @@ function printDJR(){
   ${data.other?`<div class="section-title">Other Notes</div>
   <div class="notes-box">${data.other.replace(/\n/g,'<br>')}</div>`:''}
 
-  <div style="margin-top:28px;display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:end">
+  <div class="sig-row">
     <div>
-      <div style="height:64px;display:flex;align-items:flex-end;border-bottom:1px solid #111;padding-bottom:4px">
-        ${data.superSig ? '<img src="'+data.superSig+'" style="height:60px;max-width:280px;object-fit:contain">' : '<div style="height:60px"></div>'}
+      <div style="border-top:1px solid #111;padding-top:6px">
+        <span style="font-size:12px;font-weight:700">${data.superintendent||'_____________________'}</span>
       </div>
-      <div style="font-size:11px;color:#666;margin-top:4px">${data.superintendent||'_____________________'}</div>
-      <div style="font-size:10px;color:#999">${data.title||'RYE SUPERINTENDENT'}</div>
+      <div style="font-size:11px;color:#666;margin-top:2px">${data.title||'RYE SUPERINTENDENT'} -- Signature</div>
     </div>
     <div></div>
     <div>
-      <div style="height:64px;border-bottom:1px solid #111"></div>
-      <div style="font-size:11px;color:#666;margin-top:4px">Date</div>
+      <div style="border-top:1px solid #111;padding-top:6px">
+        <span style="font-size:12px">&nbsp;</span>
+      </div>
+      <div style="font-size:11px;color:#666;margin-top:2px">Date</div>
     </div>
   </div>
 
@@ -4356,6 +4371,10 @@ function sigEnd(e){
         if(tsEl){ tsEl.textContent='Signed: '+sigTs; tsEl.style.display='block'; }
         var st = document.getElementById('sig-status-'+wid);
         if(st){ st.textContent='v'; st.style.color='#2e7d32'; }
+        // If this is an IN signature on the sign-in sheet, publish to crew dispatch immediately
+        if(wid.match(/^SI_\d+$/) && typeof publishSingleSignedIn === 'function'){
+          publishSingleSignedIn(wid);
+        }
       }
     }
   }
@@ -4540,6 +4559,9 @@ function initSignIn(){
   loadSIFromStorage();
   document.getElementById('si-empty').style.display='block';
   document.getElementById('si-forms').style.display='none';
+  loadCrewFromDispatch();
+  // Auto-load today's sign-in sheet so date is set before signing
+  setTimeout(function(){ loadSignIn(); }, 300);
 }
 
 function showSIForm(which){
@@ -4616,10 +4638,7 @@ function renderSIRows(rows){
   if(!tbody) return;
   tbody.innerHTML = rows.map(function(r,i){
     var wid = 'SI_'+i;
-    var opts = (function(){
-      var crew = (typeof _employees !== 'undefined' && _employees.length) ? _employees : (typeof WORKERS !== 'undefined' ? WORKERS.map(function(w){return{name:w.name};}) : []);
-      return '<option value="">-- Select --</option>' + crew.map(function(e){ return '<option value="'+(e.name||e)+'">'+( e.name||e)+'</option>'; }).join('');
-    })()
+    var opts = getWorkerOpts(r.name || '');
     if(r.name) opts = opts.replace('value="'+r.name+'"', 'value="'+r.name+'" selected');
     return '<tr style="border-bottom:1px solid #e2e2e2" id="si-row-'+i+'">'
       +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
@@ -4714,7 +4733,7 @@ function addIncidentRow(){
   var i = existing;
   var wid = 'INC_'+i;
   var workerOpts = '<option value="">-- Select employee --</option>'
-    + (typeof _employees !== 'undefined' && _employees.length ? _employees : WORKERS).map(function(w){ return '<option value="'+(w.name||w)+'">'+( w.name||w)+'</option>'; }).join('');
+    + (_dispatchCrew.length ? _dispatchCrew.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }) : WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; })).join('');
 
   var tr = document.createElement('tr');
   tr.id = 'inc-row-'+i;
@@ -4745,10 +4764,7 @@ function addSIRow(){
   var wid = 'SI_'+i;
   var tr = document.createElement('tr');
   tr.style.borderBottom = '1px solid var(--border)';
-  var workerOpts = (function(){
-    var crew = (typeof _employees !== 'undefined' && _employees.length) ? _employees : (typeof WORKERS !== 'undefined' ? WORKERS.map(function(w){return{name:w.name};}) : []);
-    return '<option value="">-- Select --</option>' + crew.map(function(e){ return '<option value="'+(e.name||e)+'">'+( e.name||e)+'</option>'; }).join('');
-  })();
+  var workerOpts = getWorkerOpts('');
   tr.innerHTML = '<td style="padding:4px 6px;vertical-align:top"><input type="text" class="si-emp-num" value="" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
     +'<td style="padding:4px 6px;vertical-align:top"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px">'+workerOpts+'</select></td>'
     +'<td style="padding:4px 6px;vertical-align:middle">'
@@ -5630,6 +5646,8 @@ async function syncFromSupabase(){
     renderDLStats();
     if(JOB_MODE) filterEmployeesToJob(JOB_MODE);
     toast('Synced from cloud - ' + (dailyLogs.length + unitLogs.length) + ' entries');
+    // Auto-publish today's sign-in to crew dispatch on load
+    autoPublishTodaySignIn();
   } catch(e){
     console.error('Sync error:', e);
     toast('Sync failed - working offline');
@@ -6370,57 +6388,23 @@ function initTasks(){
 var _employees = [];
 
 async function loadEmployeesForJob(){
-  var jobEl = document.getElementById('sel-job');
-  var job = jobEl ? jobEl.value : '';
+  var job = document.getElementById('sel-job') ? document.getElementById('sel-job').value : '';
   if(!job) return;
-  // Derive crew_dispatch key from job number (e.g. "26005 - MARINA SHORES" -> "crew_26005")
-  var jobNum = job.split(' - ')[0].trim().replace(/^SP/i,'SP');
-  var crewKey = 'crew_' + jobNum;
   try{
-    var resp = await fetch(SUPABASE_URL+'/rest/v1/crew_dispatch?key=eq.'+encodeURIComponent(crewKey)+'&select=value&limit=1',{
-      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+    var resp = await fetch('https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/employees?job=eq.'+encodeURIComponent(job)+'&order=name.asc', {
+      headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'}
     });
-    if(!resp.ok) throw new Error('HTTP '+resp.status);
-    var rows = await resp.json();
-    if(!rows.length || !rows[0].value) return;
-    var crew = typeof rows[0].value === 'string' ? JSON.parse(rows[0].value) : rows[0].value;
-    if(!Array.isArray(crew) || !crew.length) return;
-    _employees = crew; // store for other uses
-
-    function buildOpts(includeAll){
-      var s = includeAll ? '<option value="all">All Workers</option>' : '<option value="">-- Select employee --</option>';
-      crew.forEach(function(e){
-        var name = e.name||'';
-        var role = e.role ? ' - '+e.role : '';
-        s += '<option value="'+name+'">'+name+role+'</option>';
-      });
-      return s;
+    if(resp.ok){
+      _employees = await resp.json();
+      var sel = document.getElementById('task-assignee');
+      if(sel){
+        sel.innerHTML = '<option value="">-- Select employee --</option>';
+        _employees.forEach(function(e){
+          sel.innerHTML += '<option value="'+e.id+'" data-email="'+(e.email||'')+'" data-phone="'+(e.phone||'')+'">'+e.name+'</option>';
+        });
+      }
     }
-
-    // Log Unit worker dropdown
-    var workerSel = document.getElementById('sel-worker');
-    if(workerSel) workerSel.innerHTML = buildOpts(false);
-
-    // Whiteboard worker filter
-    var wbSel = document.getElementById('wb-worker');
-    if(wbSel){ var cv=wbSel.value; wbSel.innerHTML=buildOpts(false); if(cv) wbSel.value=cv; }
-
-    // Daily log filter
-    var dlSel = document.getElementById('dl-filter-worker');
-    if(dlSel){ var cv=dlSel.value; dlSel.innerHTML=buildOpts(true); if(cv) dlSel.value=cv; }
-
-    // Units filter
-    var ufSel = document.getElementById('unit-filter-worker');
-    if(ufSel){ var cv=ufSel.value; ufSel.innerHTML=buildOpts(true); if(cv) ufSel.value=cv; }
-
-    // Task assignee (uses name not id)
-    var taSel = document.getElementById('task-assignee');
-    if(taSel){ taSel.innerHTML='<option value="">-- Select employee --</option>'; crew.forEach(function(e){ taSel.innerHTML+='<option value="'+(e.name||'')+'">'+e.name+(e.role?' - '+e.role:'')+'</option>'; }); }
-
-    // DJR workforce rows — refresh any open selects
-    document.querySelectorAll('.djr-worker-name').forEach(function(s){ var cv=s.value; s.innerHTML=buildOpts(false); if(cv) s.value=cv; });
-
-  }catch(ex){ console.warn('loadEmployeesForJob error:',ex); }
+  }catch(ex){ console.log('Employee load error:',ex); }
 }
 
 async function sendSMS(phone, message){
@@ -6475,20 +6459,21 @@ renderCCRef();
   function getWeekEnding(){var n=new Date(),day=n.getDay(),diff=day<=5?5-day:5-day+7,f=new Date(n);f.setDate(n.getDate()+diff);return f.toISOString().slice(0,10)}
   function getSafetyJobId(){if(typeof jobSlug!=='undefined'&&jobSlug)return jobSlug;if(typeof JOB_ID!=='undefined')return JOB_ID;var m=window.location.search.match(/job=([^&]+)/);return m?m[1]:'UNKNOWN'}
 
-  // Register safety pane with existing tab system
-  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety'].forEach(function(n){
-    var p=document.getElementById('pane-'+n);
-    if(p&&!document.getElementById('pane-'+n+'_registered')){/* already in DOM */}
-  });
+  var DOC_TYPES={
+    wjsi:'Weekly Jobsite Safety Inspection',
+    jha:'Job Hazard Analysis',
+    ptp:'Pre-Task Plan',
+    tbt:'Toolbox Talk'
+  };
 
   window.addEventListener('DOMContentLoaded',function(){
-    // date display
     var el=document.getElementById('safetyDateDisplay');
     if(el)el.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
     if(isFriday()){
-      var b=document.getElementById('safetyFridayBadge');if(b)b.style.display='inline-block';
       var fn=document.getElementById('safetyFridayNotice');if(fn)fn.style.display='inline-block';
+      var on=document.getElementById('safetyOptionalNotice');if(on)on.style.display='none';
     } else {
+      var fn=document.getElementById('safetyFridayNotice');if(fn)fn.style.display='none';
       var on=document.getElementById('safetyOptionalNotice');if(on)on.style.display='inline-block';
     }
     var t=document.getElementById('ptpTime');if(t){var now=new Date();t.value=now.toTimeString().slice(0,5)}
@@ -6499,7 +6484,7 @@ renderCCRef();
     document.querySelectorAll('input[name="ptpHazChem"]').forEach(function(r){
       r.addEventListener('change',function(){var l=document.getElementById('ptpSdsLabel');if(l)l.style.display=this.value==='yes'?'flex':'none'});
     });
-    checkExistingSubmission();
+    checkSavedDocs();
   });
 
   window.toggleSafetySection=function(id){
@@ -6537,92 +6522,109 @@ renderCCRef();
     g.appendChild(d);
   };
 
-  function getChecked(name){var v=[];document.querySelectorAll('input[name="'+name+'"]:checked').forEach(function(c){v.push(c.value)});return v}
   function val(id){var e=document.getElementById(id);return e?e.value:''}
-  function getWjsiObs(){return Array.from(document.querySelectorAll('#wjsiObsTable .safety-obs-row')).map(function(r,i){var t=r.querySelectorAll('input[type="text"]'),cor=r.querySelector('input[value="yes"]:checked')?'yes':r.querySelector('input[value="no"]:checked')?'no':null;return{n:i+1,observation:t[0]?t[0].value:'',corrected:cor,responsible:t[1]?t[1].value:''}}).filter(function(r){return r.observation})}
+  function getChecked(name){var v=[];document.querySelectorAll('input[name="'+name+'"]:checked').forEach(function(c){v.push(c.value)});return v}
   function getJhaRows(){return Array.from(document.querySelectorAll('#jhaTableBody tr')).map(function(tr){var i=tr.querySelectorAll('input[type="text"]');return{step:i[0]?i[0].value:'',hazard:i[1]?i[1].value:'',control:i[2]?i[2].value:''}}).filter(function(r){return r.step||r.hazard})}
   function getPtpHazards(){return Array.from(document.querySelectorAll('#ptpHazardBody tr')).map(function(tr){var i=tr.querySelectorAll('input[type="text"]');return{hazard:i[0]?i[0].value:'',control:i[1]?i[1].value:''}}).filter(function(r){return r.hazard})}
   function getPtpSigs(){return Array.from(document.querySelectorAll('#ptpSigGrid .ptp-sig-entry')).map(function(d){var i=d.querySelectorAll('input');return{name:i[0]?i[0].value:'',msr:i[1]?i[1].value:''}}).filter(function(r){return r.name})}
+  function getWjsiObs(){return Array.from(document.querySelectorAll('#wjsiObsTable .safety-obs-row')).map(function(r,i){var t=r.querySelectorAll('input[type="text"]'),cor=r.querySelector('input[value="yes"]:checked')?'yes':r.querySelector('input[value="no"]:checked')?'no':null;return{n:i+1,observation:t[0]?t[0].value:'',corrected:cor,responsible:t[1]?t[1].value:''}}).filter(function(r){return r.observation})}
 
-  function updateStatusIcons(){
-    var wOk=document.querySelectorAll('input[name="wjsi"]:checked').length>0;
-    var jOk=getJhaRows().length>0;
-    var pOk=val('ptpTaskDesc').trim().length>0;
-    var m={wjsi:'wjsiStatus',jha:'jhaStatus',ptp:'ptpStatus'};
-    var v={wjsi:wOk,jha:jOk,ptp:pOk};
-    Object.keys(m).forEach(function(k){var e=document.getElementById(m[k]);if(e)e.textContent=v[k]?'✅':'—'});
+  function buildDocPayload(docType){
+    var base={job_id:getSafetyJobId(),doc_type:docType,week_ending:getWeekEnding(),friday_required:isFriday(),saved_at:new Date().toISOString()};
+    if(docType==='wjsi'){
+      base.data={checklist:(function(){var o={};document.querySelectorAll('input[name="wjsi"]').forEach(function(c){o[c.value]=c.checked});return o})(),observations:getWjsiObs(),field_rep:val('wjsiFieldRep'),field_rep_initials:val('wjsiFieldRepInitials'),mgmt_rep:val('wjsiMgmtRep'),mgmt_rep_initials:val('wjsiMgmtRepInitials')};
+    } else if(docType==='jha'){
+      base.data={position:val('jhaPosition'),division:val('jhaDivision'),supervisor:val('jhaSupervisor'),approved_by:val('jhaApprovedBy'),ppe:getChecked('jhaPPE'),tasks:getJhaRows()};
+    } else if(docType==='ptp'){
+      base.data={task_location:val('ptpTaskLocation'),weather:(function(){var b=document.querySelector('.weather-btn.active');return b?b.dataset.val:''})(),time:val('ptpTime'),task_description:val('ptpTaskDesc'),task_steps:Array.from(document.querySelectorAll('#ptpTaskSteps input')).map(function(i){return i.value}).filter(Boolean),hazards:getPtpHazards(),signatures:getPtpSigs(),supervisor_notes:val('ptpSupervisorNotes'),supervisor_name:val('ptpSupervisorName')};
+    } else if(docType==='tbt'){
+      base.data={note:'Toolbox Talk completed — see toolbox_talk_signoffs table for signatures.'};
+    }
+    return base;
   }
-  document.addEventListener('change',updateStatusIcons);
-  document.addEventListener('input',updateStatusIcons);
 
-  async function checkExistingSubmission(){
+  function markDocSaved(docType){
+    // Header checkmark
+    var statusMap={wjsi:'wjsiStatus',jha:'jhaStatus',ptp:'ptpStatus',tbtLibrary:'tbtLibraryStatus'};
+    var key=docType==='tbt'?'tbtLibrary':docType;
+    var statusEl=document.getElementById(statusMap[key]);
+    if(statusEl)statusEl.textContent='✅';
+    // Section badge
+    var badge=document.getElementById(docType+'SavedBadge');
+    if(badge)badge.style.display='inline-block';
+    // Summary grid
+    var iconMap={wjsi:'summaryWjsiIcon',jha:'summaryJhaIcon',ptp:'summaryPtpIcon',tbt:'summaryTbtIcon'};
+    var iconEl=document.getElementById(iconMap[docType]);
+    if(iconEl)iconEl.textContent='✅';
+  }
+
+  async function checkSavedDocs(){
     try{
-      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs?job_id=eq.'+getSafetyJobId()+'&week_ending=eq.'+getWeekEnding()+'&select=submitted_by,submitted_at&limit=1',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs?job_id=eq.'+getSafetyJobId()+'&week_ending=eq.'+getWeekEnding()+'&select=doc_type,saved_at',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
       var d=await r.json();
       if(d&&d.length>0){
-        var ban=document.getElementById('safetySubmittedBanner'),by=document.getElementById('safetySubmittedBy'),btn=document.getElementById('safetySubmitBtn');
+        d.forEach(function(row){if(row.doc_type)markDocSaved(row.doc_type);});
+        var ban=document.getElementById('safetySubmittedBanner');
         if(ban)ban.style.display='block';
-        if(by)by.textContent=d[0].submitted_by+' · '+new Date(d[0].submitted_at).toLocaleDateString();
-        if(btn)btn.textContent='Re-submit (Update)';
+        var byEl=document.getElementById('safetySubmittedBy');
+        if(byEl)byEl.textContent=d.length+' of 4 docs saved this week';
       }
     }catch(e){console.warn('Safety check:',e)}
   }
 
-  window.submitSafetyForms=async function(){
-    var by=val('safetySubmittedByInput').trim();
+  window.saveDocReport=async function(docType){
+    var btn=document.getElementById(docType+'SaveBtn');
     var statusEl=document.getElementById('safetySubmitStatus');
-    var btn=document.getElementById('safetySubmitBtn');
-    if(!by){if(statusEl){statusEl.textContent='Please enter your name before submitting.';statusEl.className='safety-submit-status error'}return}
-    if(btn){btn.disabled=true;btn.textContent='Submitting…'}
-    if(statusEl){statusEl.textContent='';statusEl.className='safety-submit-status'}
-    var payload={
-      job_id:getSafetyJobId(),submitted_by:by,week_ending:getWeekEnding(),friday_required:isFriday(),
-      wjsi:{checklist:(function(){var o={};document.querySelectorAll('input[name="wjsi"]').forEach(function(c){o[c.value]=c.checked});return o})(),observations:getWjsiObs(),field_rep:val('wjsiFieldRep'),field_rep_initials:val('wjsiFieldRepInitials'),mgmt_rep:val('wjsiMgmtRep'),mgmt_rep_initials:val('wjsiMgmtRepInitials')},
-      jha:{position:val('jhaPosition'),division:val('jhaDivision'),supervisor:val('jhaSupervisor'),approved_by:val('jhaApprovedBy'),ppe:getChecked('jhaPPE'),tasks:getJhaRows()},
-      ptp:{task_location:val('ptpTaskLocation'),weather:(function(){var b=document.querySelector('.weather-btn.active');return b?b.dataset.val:''})(),time:val('ptpTime'),task_description:val('ptpTaskDesc'),task_steps:Array.from(document.querySelectorAll('#ptpTaskSteps input')).map(function(i){return i.value}).filter(Boolean),tools:Array.from(document.querySelectorAll('.ptp-tools-grid input')).map(function(i){return i.value}).filter(Boolean),hazardous_chemicals:(function(){var r=document.querySelector('input[name="ptpHazChem"]:checked');return r?r.value:'no'})(),sds_available:(function(){var e=document.getElementById('ptpSdsAvail');return e?e.checked:false})(),certifications:getChecked('ptpCert'),additional_ppe:getChecked('ptpAddPPE'),hazards:getPtpHazards(),signatures:getPtpSigs(),supervisor_notes:val('ptpSupervisorNotes'),supervisor_name:val('ptpSupervisorName')}
-    };
+    if(btn){btn.disabled=true;btn.textContent='Saving…';}
     try{
-      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
-      if(r.ok||r.status===201){
-        if(statusEl){statusEl.textContent='✅ Safety forms submitted successfully.';statusEl.className='safety-submit-status success'}
-        if(btn){btn.disabled=false;btn.textContent='Re-submit (Update)'}
-        // Auto-email safety forms
+      var payload=buildDocPayload(docType);
+      // Upsert by job_id + doc_type + week_ending
+      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs',{
+        method:'POST',
+        headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+        body:JSON.stringify(payload)
+      });
+      if(r.ok||r.status===201||r.status===200){
+        markDocSaved(docType);
+        if(btn){btn.disabled=false;btn.textContent='🗂️ Save Doc — '+DOC_TYPES[docType]+' (Re-save)';}
+        if(statusEl){statusEl.textContent='✅ '+DOC_TYPES[docType]+' saved.';statusEl.className='safety-submit-status success';}
+        // Auto-email notification
         (function(){
-          var sJobId = getSafetyJobId();
-          var sEmails = getJobEmail(sJobId);
-          if(typeof emailjs !== 'undefined'){
-            try{ emailjs.init('HGciJDgZDCRS9v0Eo'); }catch(ei){}
-            var safDriveNote = (driveLinks && driveLinks['safety']) ? '\n\nView in Google Drive: ' + driveLinks['safety'] : '\n\nTip: Press Save to Drive first to include a Drive link.';
+          var sJobId=getSafetyJobId();
+          if(typeof emailjs!=='undefined'&&typeof getJobEmail!=='undefined'){
+            try{emailjs.init('HGciJDgZDCRS9v0Eo');}catch(ei){}
+            var emails=getJobEmail(sJobId);
             emailjs.send('service_q9t1mnk','template_tgzqipn',{
-              to_email: sEmails.to,
-              task_title: 'Safety Forms Submitted - ' + sJobId,
-              job: sJobId,
-              task_date: new Date().toLocaleDateString(),
-              task_time: new Date().toLocaleTimeString(),
-              task_notes: 'WJSI, JHA, and PTP submitted by ' + by + '.\nWeek ending: ' + getWeekEnding() + safDriveNote,
-              task_priority: 'completed',
-              calendar_link: ''
+              to_email:emails.to,
+              task_title:'Safety Report Saved: '+DOC_TYPES[docType]+' — '+sJobId,
+              job:sJobId,
+              task_date:new Date().toLocaleDateString(),
+              task_time:new Date().toLocaleTimeString(),
+              task_notes:'Document: '+DOC_TYPES[docType]+'\nWeek ending: '+getWeekEnding()+'\nFriday required: '+isFriday(),
+              task_priority:'completed',
+              calendar_link:''
             });
           }
         })();
-        var ban=document.getElementById('safetySubmittedBanner'),byEl=document.getElementById('safetySubmittedBy');
-        if(ban)ban.style.display='block';if(byEl)byEl.textContent=by+' · Today';
-        saveToDrive('safety', getSafetyJobId(), payload);
       } else {
         var err=await r.text();
-        if(statusEl){statusEl.textContent='Error: '+err;statusEl.className='safety-submit-status error'}
-        if(btn){btn.disabled=false;btn.textContent='Submit Safety Forms'}
+        if(statusEl){statusEl.textContent='Error saving '+DOC_TYPES[docType]+': '+err;statusEl.className='safety-submit-status error';}
+        if(btn){btn.disabled=false;btn.textContent='🗂️ Save Doc — '+DOC_TYPES[docType];}
       }
     }catch(e){
-      if(statusEl){statusEl.textContent='Network error — check connection and try again.';statusEl.className='safety-submit-status error'}
-      if(btn){btn.disabled=false;btn.textContent='Submit Safety Forms'}
+      if(statusEl){statusEl.textContent='Network error — check connection.';statusEl.className='safety-submit-status error';}
+      if(btn){btn.disabled=false;btn.textContent='🗂️ Save Doc — '+DOC_TYPES[docType];}
     }
   };
 
+  // Keep printSafetyForms accessible
+  window.submitSafetyForms=function(){
+    if(typeof toast!=='undefined')toast('Use the individual Save Doc buttons for each report.');
+  };
 
   window.printSafetyForms=function(){
     var jobName=typeof jobSlug!=='undefined'&&jobSlug?jobSlug:(typeof JOB_ID!=='undefined'&&JOB_ID?JOB_ID:(document.getElementById('sel-job')?document.getElementById('sel-job').value:'24010 - COMMONS'));
-    var submittedBy=document.getElementById('safetySubmittedByInput')?document.getElementById('safetySubmittedByInput').value:'';
+    var submittedBy='Safety Report';
     var dateStr=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
     var checkLabels={gc_fire:'Fire Protection Equipment',gc_firstaid:'First Aid & Emergency Equipment',gc_phone:'Emergency Phone Numbers Posted',gc_sanitary:'Sanitary Toilets & Wash Water',gc_water:'Drinking Water',gc_lighting:'Task Lighting',gc_cranes:'Cranes, Rigging, Forklifts, Scissor & Aerial Lifts',ae_access:'Safe access and egress to all work areas',ae_ladders:'Ladders and stairs safe and used correctly',ae_aisles:'Aisles and passageways free from hazards',ae_scaffolds:'Scaffolds - proper construction and free from hazards',fp_ppe:'PPE is safe',fp_rigging:'Rigging and Anchors are safe',fp_compliance:'Workers in compliance with fall protection rules',fp_guardrails:'Guardrails and Handrails are safe',fp_holes:'Floor holes and openings are covered or guarded',fp_walls:'Wall openings or open-sided floors are guarded',tc_electrical:'Electrical tools and cords',tc_pneumatic:'Pneumatic hoses and connections',tc_oxyacetylene:'Oxy-Acetylene gauges, cylinders, hoses & torch',ppe_clothing:'Proper work clothing and footwear',ppe_head:'Head Protection',ppe_eye:'Eye Protection',ppe_hearing:'Hearing Protection',ppe_task:'Task Specific PPE'};
     var wjsiChecks='';
@@ -7165,6 +7167,173 @@ async function saveToDrive(docType, job, data, statusElId) {
   }
 }
 /* === END GOOGLE DRIVE SAVE === */
+
+/* === DISPATCH CREW SYNC === */
+var _dispatchCrew = []; // [{name, role}] for this job
+
+async function loadCrewFromDispatch() {
+  var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
+  if (!jobEl) return;
+  var jobVal = jobEl.value; // e.g. "24001 - BIOLA"
+  var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+  if (!jobNum) return;
+  try {
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'crew_' + jobNum;
+    var resp = await fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    if (!resp.ok) return;
+    var data = await resp.json();
+    if (data && data.length > 0) {
+      _dispatchCrew = JSON.parse(data[0].value); // [{name, role}]
+    } else {
+      _dispatchCrew = [];
+    }
+  } catch(e) {
+    console.warn('Dispatch crew load failed:', e);
+    _dispatchCrew = [];
+  }
+  populateWorkerDropdowns();
+}
+
+function populateWorkerDropdowns() {
+  if (!_dispatchCrew.length) return;
+  var names = _dispatchCrew.map(function(w){ return w.name; }).sort();
+
+  // Log tab worker dropdown
+  var selWorker = document.getElementById('sel-worker');
+  if (selWorker) {
+    var current = selWorker.value;
+    selWorker.innerHTML = names.map(function(n){
+      return '<option value="' + n + '"' + (n === current ? ' selected' : '') + '>' + n + '</option>';
+    }).join('');
+  }
+
+  // Incident report employee dropdowns (existing rows)
+  document.querySelectorAll('.inc-emp-name').forEach(function(sel) {
+    var cur = sel.value;
+    sel.innerHTML = '<option value="">-- Select employee --</option>'
+      + names.map(function(n){ return '<option value="' + n + '"' + (n === cur ? ' selected' : '') + '>' + n + '</option>'; }).join('');
+  });
+}
+
+async function publishSignedIn() {
+  try {
+    var jobEl = document.getElementById('si-job');
+    var dateEl = document.getElementById('si-date');
+    if (!jobEl || !dateEl) return;
+    var jobVal = jobEl.value;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var date = dateEl.value;
+    if (!jobNum || !date) return;
+    var names = [];
+    // Use collectSIRows if available (most reliable)
+    if (typeof collectSIRows === 'function') {
+      collectSIRows().forEach(function(r){ if(r.name && r.name.trim()) names.push(r.name.trim()); });
+    }
+    // Fallback: check DOM directly — si-tbody is the correct tbody ID
+    if (!names.length) {
+      document.querySelectorAll('#si-tbody tr').forEach(function(tr) {
+        var nameEl = tr.querySelector('.si-emp-name');
+        if (nameEl && nameEl.value && nameEl.value.trim()) names.push(nameEl.value.trim());
+      });
+    }
+    // Also check siData in memory
+    var siKey = jobVal + '|' + date;
+    if (!names.length && typeof siData !== 'undefined' && siData[siKey] && siData[siKey].rows) {
+      siData[siKey].rows.forEach(function(r){ if(r.name && names.indexOf(r.name) === -1) names.push(r.name); });
+    }
+    if (!names.length) return;
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'signed_in_' + jobNum + '_' + date;
+    await fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ key: key, value: JSON.stringify(names) })
+    });
+  } catch(e) { console.warn('publishSignedIn failed:', e); }
+}
+
+function getWorkerOpts(selected) {
+  var names = _dispatchCrew.length
+    ? _dispatchCrew.map(function(w){ return w.name; }).sort()
+    : WORKERS.map(function(w){ return w.name; });
+  return '<option value="">-- Select --</option>'
+    + names.map(function(n){
+        return '<option value="' + n + '"' + (n === selected ? ' selected' : '') + '>' + n + '</option>';
+      }).join('');
+}
+
+function autoPublishTodaySignIn() {
+  try {
+    var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
+    if (!jobEl) return;
+    var jobVal = jobEl.value;
+    var today = new Date().toISOString().slice(0, 10);
+    var siKey = jobVal + '|' + today;
+    if (typeof siData === 'undefined' || !siData[siKey] || !siData[siKey].rows) return;
+    var names = siData[siKey].rows
+      .map(function(r){ return r.name; })
+      .filter(function(n){ return n && n.trim(); });
+    if (!names.length) return;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+      method: 'POST',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ key: 'signed_in_' + jobNum + '_' + today, value: JSON.stringify(names) })
+    }).catch(function(){});
+  } catch(e) {}
+}
+
+function publishSingleSignedIn(wid) {
+  try {
+    var jobEl = document.getElementById('si-job');
+    var dateEl = document.getElementById('si-date');
+    if (!jobEl || !dateEl) return;
+    var jobVal = jobEl.value;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var date = dateEl.value;
+    if (!jobNum || !date) return;
+    // Get the employee name from the row matching this wid
+    var rowIdx = parseInt(wid.replace('SI_', ''), 10);
+    var rows = document.querySelectorAll('#si-tbody tr');
+    if (!rows[rowIdx]) return;
+    var nameEl = rows[rowIdx].querySelector('.si-emp-name');
+    if (!nameEl || !nameEl.value.trim()) return;
+    var newName = nameEl.value.trim();
+    // Merge with any already-published names for today
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'signed_in_' + jobNum + '_' + date;
+    // Fetch existing, merge, re-save
+    fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    }).then(function(r){ return r.json(); }).then(function(data) {
+      var existing = [];
+      if (data && data.length > 0) {
+        try { existing = JSON.parse(data[0].value); } catch(e) {}
+      }
+      if (existing.indexOf(newName) === -1) existing.push(newName);
+      return fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+        method: 'POST',
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ key: key, value: JSON.stringify(existing) })
+      });
+    }).catch(function(){});
+  } catch(e) {}
+}
+/* === END DISPATCH CREW SYNC === */
+
 // DJR Yes/No question toggles
 (function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
 
@@ -7389,7 +7558,7 @@ async function saveToDrive(docType, job, data, statusElId) {
     w.document.close();w.focus();setTimeout(function(){w.print();},500);
   }
 
-  document.addEventListener('DOMContentLoaded',function(){ganttLoad(); loadEmployeesForJob();});
+  document.addEventListener('DOMContentLoaded',function(){ganttLoad();});
 
 </script>
 

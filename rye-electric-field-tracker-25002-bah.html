@@ -3674,6 +3674,8 @@ function initSignIn(){
   loadSIFromStorage();
   document.getElementById('si-empty').style.display='block';
   document.getElementById('si-forms').style.display='none';
+  // Auto-load today's sign-in sheet so date is set before signing
+  setTimeout(function(){ loadSignIn(); }, 300);
 }
 
 function showSIForm(which){

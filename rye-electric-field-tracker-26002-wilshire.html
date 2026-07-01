@@ -192,114 +192,6 @@ tbody tr:hover td{background:#f7fbfc}
 .sig-btn{padding:4px 12px;font-size:11px;font-weight:700;border-radius:5px;cursor:pointer;font-family:var(--font)}
 .sig-btn-clear{background:var(--red-light);border:1px solid var(--red);color:var(--red)}
 .sig-btn-done{background:var(--green-light);border:1px solid var(--green);color:var(--green)}
-/* ── Safety Tab ── */
-.safety-friday-badge{position:absolute;top:-6px;right:-6px;background:#e53e3e;color:#fff;font-size:9px;font-weight:700;padding:2px 5px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px}
-.safety-header{padding:16px 0 8px;border-bottom:2px solid #e2e8f0;margin-bottom:20px}
-.safety-header h2{margin:0 0 4px;font-size:20px;font-weight:700;color:#1a202c}
-.safety-meta{display:flex;align-items:center;gap:12px;font-size:13px;color:#718096;flex-wrap:wrap}
-.safety-required-badge{background:#fff5f5;border:1px solid #feb2b2;color:#c53030;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
-.safety-optional-badge{background:#f7fafc;border:1px solid #cbd5e0;color:#718096;padding:2px 8px;border-radius:6px;font-size:12px}
-.safety-submitted-banner{margin-top:10px;background:#f0fff4;border:1px solid #9ae6b4;color:#276749;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600}
-.safety-form-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:16px;overflow:hidden}
-.safety-form-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:#f7fafc;border-bottom:1px solid #e2e8f0;user-select:none}
-.safety-form-header:hover{background:#edf2f7}
-.safety-form-icon{font-size:20px;flex-shrink:0}
-.safety-form-title{font-size:15px;font-weight:700;color:#1a202c}
-.safety-form-subtitle{font-size:11px;color:#718096;margin-top:1px}
-.safety-check-status{margin-left:auto;font-size:18px;min-width:28px;text-align:center}
-.safety-chevron{font-size:12px;color:#a0aec0;flex-shrink:0;transition:transform .2s}
-.safety-chevron.open{transform:rotate(180deg)}
-.safety-form-body{padding:16px;display:none}
-.safety-form-body.open{display:block}
-.safety-checklist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:4px 20px;margin-top:8px}
-.safety-checklist-section{margin-bottom:12px}
-.safety-section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#4a5568;margin-bottom:6px}
-.safety-check-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#2d3748;padding:3px 0;cursor:pointer;line-height:1.3}
-.safety-check-item input[type="checkbox"]{flex-shrink:0;accent-color:#2b6cb0}
-.safety-obs-hint{font-size:12px;color:#718096;margin-bottom:10px}
-.safety-obs-row{display:grid;grid-template-columns:28px 1fr 100px 1fr;gap:6px;align-items:center;margin-bottom:6px}
-.safety-obs-num{font-size:12px;color:#718096;text-align:center;font-weight:600}
-.safety-yesno{display:flex;gap:6px;justify-content:center}
-.safety-yesno label{display:flex;align-items:center;gap:3px;font-size:12px;font-weight:600;cursor:pointer}
-.safety-yesno input[type="radio"]{accent-color:#2b6cb0}
-.safety-signatories{margin-top:20px;border-top:1px dashed #e2e8f0;padding-top:16px}
-.safety-sig-row{display:flex;gap:12px;margin-bottom:10px;align-items:flex-end;flex-wrap:wrap}
-.safety-sig-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
-.safety-sig-field label{font-size:12px;font-weight:600;color:#4a5568}
-.safety-sig-field input{font-size:13px;padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px}
-.safety-field-row{display:flex;flex-wrap:wrap;gap:12px}
-.safety-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
-.safety-field label{font-size:12px;font-weight:600;color:#4a5568}
-.safety-field input,.safety-field textarea{padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;color:#2d3748;background:#fff}
-.safety-field textarea{resize:vertical;font-family:inherit}
-.safety-weather-toggle{display:flex;gap:4px}
-.weather-btn{flex:1;padding:7px 6px;border:1px solid #cbd5e0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#4a5568;cursor:pointer;transition:all .15s}
-.weather-btn.active{background:#2b6cb0;color:#fff;border-color:#2b6cb0}
-.ptp-numbered-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.ptp-numbered-row span{font-size:12px;font-weight:700;color:#718096;width:18px;text-align:right;flex-shrink:0}
-.ptp-numbered-row input{flex:1;padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px}
-.ptp-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.ptp-tools-grid input{padding:7px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px}
-.safety-hz-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px}
-.safety-radio-item{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer}
-.jha-table-wrapper{overflow-x:auto;margin-top:10px}
-.jha-table{width:100%;border-collapse:collapse;font-size:13px}
-.jha-table th{background:#edf2f7;color:#4a5568;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;text-align:left;border-bottom:2px solid #e2e8f0}
-.jha-table td{padding:5px 6px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
-.jha-table input[type="text"]{width:100%;padding:5px 8px;border:1px solid #e2e8f0;border-radius:5px;font-size:13px;font-family:inherit}
-.jha-table input[type="text"]:focus{border-color:#63b3ed;outline:none}
-.jha-del-btn{background:none;border:none;color:#fc8181;cursor:pointer;font-size:16px;padding:2px 6px}
-.ptp-sig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-top:8px}
-.ptp-sig-entry{display:flex;flex-direction:column;gap:4px;background:#f7fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px}
-.ptp-sig-entry label{font-size:11px;font-weight:600;color:#718096}
-.ptp-sig-entry input{padding:5px 8px;border:1px solid #cbd5e0;border-radius:5px;font-size:13px}
-.safety-add-row-btn{background:none;border:1px dashed #a0aec0;color:#4a5568;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;margin-top:8px;transition:all .15s}
-.safety-add-row-btn:hover{border-color:#2b6cb0;color:#2b6cb0;background:#ebf8ff}
-.safety-submit-area{background:#f7fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-top:8px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
-.safety-submitter-row{display:flex;flex-direction:column;gap:4px;flex:1;min-width:180px}
-.safety-submitter-row label{font-size:12px;font-weight:600;color:#4a5568}
-.safety-submitter-row input{padding:8px 12px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px}
-.safety-submit-btn{background:#2b6cb0;color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s}
-.safety-submit-btn:hover{background:#2c5282}
-.safety-submit-btn:disabled{background:#90cdf4;cursor:not-allowed}
-.safety-submit-status{font-size:13px;font-weight:600;width:100%}
-.safety-submit-status.success{color:#276749}
-.safety-submit-status.error{color:#c53030}
-@media(max-width:600px){.safety-obs-row{grid-template-columns:28px 1fr}.ptp-tools-grid{grid-template-columns:1fr}}
-.safety-doc-status-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#2d3748;padding:6px 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;}
-.safety-doc-status-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center;}
-
-  /* TBT Library */
-  .tbt-intro{font-size:12px;color:#718096;margin-bottom:14px;padding:10px 12px;background:#f7fafc;border-radius:6px;border-left:3px solid #2b6cb0;}
-  .tbt-category{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden;}
-  .tbt-cat-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;background:#f7fafc;user-select:none;}
-  .tbt-cat-header:hover{background:#edf2f7;}
-  .tbt-cat-icon{font-size:18px;flex-shrink:0;}
-  .tbt-cat-title{font-size:14px;font-weight:700;color:#1a202c;flex:1;}
-  .tbt-cat-count{font-size:11px;color:#718096;background:#e2e8f0;padding:2px 8px;border-radius:10px;}
-  .tbt-cat-chevron{font-size:11px;color:#a0aec0;transition:transform .2s;}
-  .tbt-cat-chevron.open{transform:rotate(180deg);}
-  .tbt-cat-body{display:none;padding:6px 0;}
-  .tbt-cat-body.open{display:block;}
-  .tbt-item{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid #f0f0f0;}
-  .tbt-item:last-child{border-bottom:none;}
-  .tbt-item:hover{background:#fafafa;}
-  .tbt-item-info{display:flex;align-items:center;gap:8px;flex:1;}
-  .tbt-num{font-size:11px;font-weight:700;color:#718096;min-width:28px;}
-  .tbt-name{font-size:13px;color:#2d3748;}
-  .tbt-item-actions{display:flex;gap:6px;flex-shrink:0;}
-  .tbt-view-btn{padding:5px 10px;border:1px solid #cbd5e0;border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#4a5568;cursor:pointer;}
-  .tbt-view-btn:hover{border-color:#2b6cb0;color:#2b6cb0;}
-  .tbt-sign-btn{padding:5px 10px;border:1px solid #2b6cb0;border-radius:6px;background:#ebf8ff;font-size:12px;font-weight:600;color:#2b6cb0;cursor:pointer;}
-  .tbt-sign-btn:hover{background:#2b6cb0;color:#fff;}
-  .tbt-sign-btn.signed{border-color:#38a169;background:#f0fff4;color:#276749;}
-  .tbt-remaining-note{margin-top:12px;font-size:11px;color:#a0aec0;text-align:center;}
-  .tbt-remaining-note code{background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:11px;}
-
-  /* ── Gantt tab styles ── */
-  .gantt-zoom-btn{border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer}
-.safety-doc-status-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#2d3748;padding:6px 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;}
-.safety-doc-status-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center;}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -371,15 +263,6 @@ tbody tr:hover td{background:#f7fbfc}
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
       <span>Workers</span>
     </button>
-    <button class="tab safety-tab-btn" onclick="goTab(this,&#39;safety&#39;)" id="tab-btn-safety" style="position:relative;">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-    <span>Safety</span>
-              <span class="safety-friday-badge" style="display:block;position:absolute;top:-6px;right:-6px;">Weekly</span>
-    </button>
-    <button class="tab" onclick="goTab(this,&#39;gantt&#39;)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="3" rx="1"/><rect x="3" y="9" width="12" height="3" rx="1"/><rect x="3" y="14" width="15" height="3" rx="1"/><rect x="3" y="19" width="9" height="3" rx="1"/></svg>
-    <span>Schedule</span>
-    </button>
     <button class="tab" onclick="goTab(this,'jobs')">
       <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       <span>Jobs</span>
@@ -419,7 +302,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="sel-worker"><option value="">-- Loading crew... --</option></select>
+            <select id="sel-worker"><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Armando Lopez">Armando Lopez</option></select>
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
@@ -642,7 +525,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="wb-worker"><option value="">-- Loading crew... --</option></select>
+            <select id="wb-worker"><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Armando Lopez">Armando Lopez</option></select>
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job</div>
@@ -1394,493 +1277,7 @@ tbody tr:hover td{background:#f7fbfc}
     <div id="worker-cards"></div>
   </div>
 
-  <!-- ===== SAFETY TAB ===== -->
-<div class="pane" id="pane-safety">
-  <div class="safety-header">
-    <h2>Safety Documentation</h2>
-    <div class="safety-meta">
-      <span id="safetyDateDisplay">Friday, Jun 19, 2026</span>
-      <span id="safetyFridayNotice" class="safety-required-badge" style="display: inline-block;">📋 Friday — All 4 reports required</span>
-      <span id="safetyOptionalNotice" class="safety-optional-badge" style="display: inline-block;">Optional today — required on Fridays</span>
-    </div>
-    <div id="safetySubmittedBanner" class="safety-submitted-banner" style="display: block;">
-      ✅ Safety forms submitted for this week — <span id="safetySubmittedBy">Dennis Furst · 6/16/2026</span>
-    </div>
-  </div>
-
-  <!-- WJSI -->
-  <div class="safety-form-card">
-    <div class="safety-form-header" onclick="toggleSafetySection(&#39;wjsi&#39;)">
-      <span class="safety-form-icon">📋</span>
-      <div>
-        <div class="safety-form-title">Weekly Jobsite Safety Inspection</div>
-        <div class="safety-form-subtitle">WJSI · Required at start of job and weekly thereafter</div>
-      </div>
-      <span class="safety-check-status" id="wjsiStatus">—</span>
-      <span class="safety-chevron" id="wjsiChevron">▼</span>
-    </div>
-    <div class="safety-form-body" id="wjsiBody">
-      <div class="safety-checklist-grid">
-        <div class="safety-checklist-section">
-          <div class="safety-section-label">General Conditions</div>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_fire"> Fire Protection Equipment</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_firstaid"> First Aid &amp; Emergency Equipment</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_phone"> Emergency Phone Numbers Posted</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_sanitary"> Sanitary Toilets &amp; Wash Water</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_water"> Drinking Water</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_lighting"> Task Lighting</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="gc_cranes"> Cranes, Rigging, Forklifts, Scissor &amp; Aerial Lifts</label>
-        </div>
-        <div class="safety-checklist-section">
-          <div class="safety-section-label">Access, Egress &amp; Walking Surfaces</div>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_access"> Safe access and egress to all work areas</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_ladders"> Ladders and stairs safe and used correctly</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_aisles"> Aisles and passageways free from hazards</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ae_scaffolds"> Scaffolds — proper construction and free from hazards</label>
-        </div>
-        <div class="safety-checklist-section">
-          <div class="safety-section-label">Fall Protection</div>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_ppe"> Personal Protective Equipment is safe</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_rigging"> Rigging and Anchors are safe</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_compliance"> Workers in compliance with fall protection rules</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_guardrails"> Guardrails and Handrails are safe</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_holes"> Floor holes and openings are covered or guarded</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="fp_walls"> Wall openings or open-sided floors are guarded</label>
-        </div>
-        <div class="safety-checklist-section">
-          <div class="safety-section-label">Tools, Cords &amp; Hoses</div>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="tc_electrical"> Electrical tools and cords</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="tc_pneumatic"> Pneumatic (air) hoses and connections</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="tc_oxyacetylene"> Oxy-Acetylene gauges, cylinders, hoses &amp; torch</label>
-        </div>
-        <div class="safety-checklist-section">
-          <div class="safety-section-label">Personal Protective Equipment</div>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_clothing"> Proper work clothing and footwear</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_head"> Head Protection</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_eye"> Eye Protection</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_hearing"> Hearing Protection</label>
-          <label class="safety-check-item"><input type="checkbox" name="wjsi" value="ppe_task"> Task Specific PPE (gloves, face shield, respirator)</label>
-        </div>
-      </div>
-      <div class="safety-section-label" style="margin-top:20px;">Inspection Observations &amp; Findings</div>
-      <div class="safety-obs-hint">Include positive comments and note corrective action for any unsafe conditions.</div>
-      <div id="wjsiObsTable"><div class="safety-obs-row"><div class="safety-obs-num">1</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs1" value="yes"> YES</label><label><input type="radio" name="wjsiObs1" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">2</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs2" value="yes"> YES</label><label><input type="radio" name="wjsiObs2" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">3</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs3" value="yes"> YES</label><label><input type="radio" name="wjsiObs3" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">4</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs4" value="yes"> YES</label><label><input type="radio" name="wjsiObs4" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">5</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs5" value="yes"> YES</label><label><input type="radio" name="wjsiObs5" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">6</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs6" value="yes"> YES</label><label><input type="radio" name="wjsiObs6" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">7</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs7" value="yes"> YES</label><label><input type="radio" name="wjsiObs7" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">8</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs8" value="yes"> YES</label><label><input type="radio" name="wjsiObs8" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">9</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs9" value="yes"> YES</label><label><input type="radio" name="wjsiObs9" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">10</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs10" value="yes"> YES</label><label><input type="radio" name="wjsiObs10" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div></div>
-      <button class="safety-add-row-btn" onclick="addWjsiObsRow()">+ Add observation</button>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('wjsi')" id="wjsiSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; WJSI</button>
-        <span id="wjsiSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
-      </div>
-      <div class="safety-signatories">
-        <div class="safety-sig-row">
-          <div class="safety-sig-field"><label>Field Representative Name</label><input type="text" id="wjsiFieldRep" placeholder="Print name"></div>
-          <div class="safety-sig-field"><label>Initials</label><input type="text" id="wjsiFieldRepInitials" placeholder="Initials" maxlength="4" style="width:80px;"></div>
-        </div>
-        <div class="safety-sig-row">
-          <div class="safety-sig-field"><label>Management Representative Name</label><input type="text" id="wjsiMgmtRep" placeholder="Print name"></div>
-          <div class="safety-sig-field"><label>Initials</label><input type="text" id="wjsiMgmtRepInitials" placeholder="Initials" maxlength="4" style="width:80px;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- JHA -->
-  <div class="safety-form-card">
-    <div class="safety-form-header" onclick="toggleSafetySection(&#39;jha&#39;)">
-      <span class="safety-form-icon">⚠️</span>
-      <div>
-        <div class="safety-form-title">Job Hazard Analysis</div>
-        <div class="safety-form-subtitle">JHA · Identify task steps, hazards, and controls</div>
-      </div>
-      <span class="safety-check-status" id="jhaStatus">—</span>
-      <span class="safety-chevron" id="jhaChevron">▼</span>
-    </div>
-    <div class="safety-form-body" id="jhaBody">
-      <div class="safety-field-row">
-        <div class="safety-field"><label>Job Position</label><input type="text" id="jhaPosition" placeholder="e.g. Foreman, Electrician"></div>
-        <div class="safety-field"><label>Division</label><input type="text" id="jhaDivision" placeholder="e.g. Electrical"></div>
-        <div class="safety-field"><label>Supervisor</label><input type="text" id="jhaSupervisor" placeholder="Supervisor name"></div>
-        <div class="safety-field"><label>Approved By</label><input type="text" id="jhaApprovedBy" placeholder="Name"></div>
-      </div>
-      <div class="safety-section-label" style="margin-top:16px;">Required / Recommended PPE</div>
-      <div class="safety-checklist-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:8px;">
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="hard_hat"> Hard Hat</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="safety_glasses"> Safety Glasses</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="hi_vis"> Hi-Vis Vest</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="gloves"> Gloves</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="steel_toe"> Steel-Toe Boots</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="face_shield"> Face Shield</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="respirator"> Respirator</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="hearing_prot"> Hearing Protection</label>
-        <label class="safety-check-item"><input type="checkbox" name="jhaPPE" value="fall_arrest"> Fall Arrest Equipment</label>
-      </div>
-      <div class="safety-section-label" style="margin-top:20px;">Task Analysis</div>
-      <div class="safety-obs-hint">Break down each task step with its potential hazards and safety controls.</div>
-      <div class="jha-table-wrapper">
-        <table class="jha-table">
-          <thead><tr><th style="width:32px;">#</th><th>Job Task Step</th><th>Potential Hazards</th><th>Safety Controls</th><th style="width:32px;"></th></tr></thead>
-          <tbody id="jhaTableBody"><tr><td class="safety-obs-num">1</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">2</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">3</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">4</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">5</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">6</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">7</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">8</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">9</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">10</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">11</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">12</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">13</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">14</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">15</td><td><input type="text" placeholder="Task step..."></td><td><input type="text" placeholder="Potential hazard..."></td><td><input type="text" placeholder="Safety control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr></tbody>
-        </table>
-      </div>
-      <button class="safety-add-row-btn" onclick="addJhaRow()">+ Add task step</button>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('jha')" id="jhaSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; JHA</button>
-        <span id="jhaSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- PTP -->
-  <div class="safety-form-card">
-    <div class="safety-form-header" onclick="toggleSafetySection(&#39;ptp&#39;)">
-      <span class="safety-form-icon">📝</span>
-      <div>
-        <div class="safety-form-title">Pre-Task Plan</div>
-        <div class="safety-form-subtitle">PTP · Complete before starting work each day</div>
-      </div>
-      <span class="safety-check-status" id="ptpStatus">—</span>
-      <span class="safety-chevron" id="ptpChevron">▼</span>
-    </div>
-    <div class="safety-form-body" id="ptpBody">
-      <div class="safety-field-row">
-        <div class="safety-field"><label>Task Location</label><input type="text" id="ptpTaskLocation" placeholder="Floor, area, or unit"></div>
-        <div class="safety-field">
-          <label>Weather</label>
-          <div class="safety-weather-toggle">
-            <button class="weather-btn" data-val="under80" onclick="setWeather(this)">Under 80°</button>
-            <button class="weather-btn" data-val="80plus" onclick="setWeather(this)">80°+</button>
-            <button class="weather-btn" data-val="95plus" onclick="setWeather(this)">95°+</button>
-          </div>
-        </div>
-        <div class="safety-field"><label>Time</label><input type="time" id="ptpTime"></div>
-      </div>
-      <div class="safety-field" style="margin-top:12px;">
-        <label>Task Description</label>
-        <textarea id="ptpTaskDesc" rows="3" placeholder="Brief description of the task to be performed..."></textarea>
-      </div>
-      <div class="safety-section-label" style="margin-top:16px;">Task Steps</div>
-      <div id="ptpTaskSteps">
-        <div class="ptp-numbered-row"><span>1</span><input type="text" placeholder="Step 1"></div>
-        <div class="ptp-numbered-row"><span>2</span><input type="text" placeholder="Step 2"></div>
-        <div class="ptp-numbered-row"><span>3</span><input type="text" placeholder="Step 3"></div>
-        <div class="ptp-numbered-row"><span>4</span><input type="text" placeholder="Step 4"></div>
-        <div class="ptp-numbered-row"><span>5</span><input type="text" placeholder="Step 5"></div>
-      </div>
-      <div class="safety-section-label" style="margin-top:16px;">Tools, Equipment &amp; Material</div>
-      <div class="ptp-tools-grid">
-        <input type="text" placeholder="1."><input type="text" placeholder="6.">
-        <input type="text" placeholder="2."><input type="text" placeholder="7.">
-        <input type="text" placeholder="3."><input type="text" placeholder="8.">
-        <input type="text" placeholder="4."><input type="text" placeholder="9.">
-        <input type="text" placeholder="5."><input type="text" placeholder="10.">
-      </div>
-      <div class="safety-section-label" style="margin-top:16px;">Hazardous Chemicals</div>
-      <div class="safety-hz-row">
-        <label class="safety-radio-item"><input type="radio" name="ptpHazChem" value="no" checked=""> No</label>
-        <label class="safety-radio-item"><input type="radio" name="ptpHazChem" value="yes"> Yes</label>
-        <label class="safety-check-item" id="ptpSdsLabel" style="display:none;margin-left:16px;"><input type="checkbox" id="ptpSdsAvail"> SDS Sheet available for review</label>
-      </div>
-      <div class="safety-section-label" style="margin-top:16px;">Certifications, Inspections, Training &amp; Permits</div>
-      <div class="safety-checklist-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:8px;">
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="forklift_cert"> Forklift Operator Certification</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="forklift_pre"> Forklift Pre-Use Inspection</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="mewp_cert"> MEWP Certification</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="mewp_pre"> MEWP Pre-Use Inspection</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="fall_training"> Personal Fall Arrest Equipment Training</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="fall_pre"> Personal Fall Arrest Equipment Pre-Use Inspection</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="ladder_pre"> Portable Ladder Pre-Use Inspection</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="trench_training"> Trench &amp; Excavation Awareness Training</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="scaffold_training"> Scaffold User Training</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="silica_training"> Silica Awareness Training</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="loto_training"> LOTO Exposed Employee Training</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpCert" value="hot_work"> Hot Work Permit</label>
-      </div>
-      <div class="safety-section-label" style="margin-top:16px;">Additional PPE Required</div>
-      <div class="safety-checklist-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:8px;">
-        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="face_shield"> Face Shield or Goggles</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="fall_arrest"> Personal Fall Arrest Equipment</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="leather_gloves"> Leather Gloves</label>
-        <label class="safety-check-item"><input type="checkbox" name="ptpAddPPE" value="hearing"> Hearing Protection</label>
-      </div>
-      <div class="safety-section-label" style="margin-top:20px;">Hazards &amp; Controls</div>
-      <div class="safety-obs-hint">Identify hazards and a control for each. List highest-risk hazards first.</div>
-      <div class="jha-table-wrapper">
-        <table class="jha-table">
-          <thead><tr><th style="width:32px;">#</th><th>Hazard</th><th>Hazard Control</th><th style="width:32px;"></th></tr></thead>
-          <tbody id="ptpHazardBody"><tr><td class="safety-obs-num">1</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">2</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">3</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">4</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">5</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">6</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">7</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">8</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">9</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">10</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">11</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">12</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">13</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">14</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">15</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">16</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">17</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">18</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">19</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">20</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">21</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">22</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">23</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">24</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">25</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">26</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">27</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">28</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">29</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr><tr><td class="safety-obs-num">30</td><td><input type="text" placeholder="Hazard..."></td><td><input type="text" placeholder="Control..."></td><td><button class="jha-del-btn" onclick="this.closest(&#39;tr&#39;).remove()">×</button></td></tr></tbody>
-        </table>
-      </div>
-      <button class="safety-add-row-btn" onclick="addPtpHazardRow()">+ Add hazard</button>
-      <div class="safety-section-label" style="margin-top:20px;">Crew Signatures</div>
-      <div class="safety-obs-hint">All employees involved must sign before starting the task.</div>
-      <div class="ptp-sig-grid" id="ptpSigGrid"><div class="ptp-sig-entry"><label>Employee 1</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 2</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 3</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 4</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 5</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 6</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 7</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 8</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 9</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 10</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 11</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 12</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 13</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 14</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div><div class="ptp-sig-entry"><label>Employee 15</label><input type="text" placeholder="Full name"><label style="margin-top:4px;">MSR Initials</label><input type="text" placeholder="Mid-shift initials" maxlength="6"></div></div>
-      <button class="safety-add-row-btn" onclick="addPtpSigRow()">+ Add crew member</button>
-      <div class="safety-section-label" style="margin-top:20px;">Supervisor Review</div>
-      <div class="safety-field"><label>Supervisor Notes</label><textarea id="ptpSupervisorNotes" rows="2" placeholder="Review notes and feedback to the team..."></textarea></div>
-      <div class="safety-field" style="margin-top:8px;"><label>Supervisor Name</label><input type="text" id="ptpSupervisorName" placeholder="Supervisor name"></div>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('ptp')" id="ptpSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; Pre-Task Plan</button>
-        <span id="ptpSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOOLBOX TALK LIBRARY -->
-  <div class="safety-form-card" id="tbtLibraryCard" style="margin-top:8px;">
-    <div class="safety-form-header" onclick="toggleSafetySection(&#39;tbtLibrary&#39;)">
-      <span class="safety-form-icon">📚</span>
-      <div>
-        <div class="safety-form-title">Toolbox Talk Library</div>
-        <div class="safety-form-subtitle">Select a talk, review with crew, collect signatures</div>
-      </div>
-      <span class="safety-check-status" id="tbtLibraryStatus">—</span>
-      <span class="safety-chevron" id="tbtLibraryChevron">▼</span>
-    </div>
-    <div class="safety-form-body" id="tbtLibraryBody">
-
-      <div class="tbt-intro">Tap a category to expand, then choose a Toolbox Talk to review with your crew. After the discussion, collect crew signatures below each talk.</div>
-
-      <div class="tbt-category">
-        <div class="tbt-cat-header" onclick="toggleTBTCat(&#39;equip&#39;)">
-          <span class="tbt-cat-icon">🏗️</span>
-          <span class="tbt-cat-title">Equipment &amp; Operations</span>
-          <span class="tbt-cat-count">8 talks</span>
-          <span class="tbt-cat-chevron" id="tbt-chevron-equip">▼</span>
-        </div>
-        <div class="tbt-cat-body" id="tbt-cat-equip">
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#1</span><span class="tbt-name">Aerial Lift Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 1 Aerial Lift Safety.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 1 Aerial Lift Safety.pdf&#39;,&#39;#1 Aerial Lift Safety&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#2</span><span class="tbt-name">Buried Utilities</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 2 Buried Utilites.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 2 Buried Utilites.pdf&#39;,&#39;#2 Buried Utilities&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#7</span><span class="tbt-name">Cranes: Stability &amp; Tipping</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 7 Cranes Stability.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 7 Cranes Stability.pdf&#39;,&#39;#7 Cranes: Stability and Tipping&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#11</span><span class="tbt-name">Equipment Maintenance</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 11 Equipment Maintenance.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 11 Equipment Maintenance.pdf&#39;,&#39;#11 Equipment Maintenance&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#12</span><span class="tbt-name">Equipment: Falling Objects</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 12 Equipment Falling Objects.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 12 Equipment Falling Objects.pdf&#39;,&#39;#12 Equipment: Falling Objects&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#13</span><span class="tbt-name">Equipment: Getting On &amp; Off</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 13 Equipment Geting on and Off.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 13 Equipment Geting on and Off.pdf&#39;,&#39;#13 Equipment: Getting On and Off&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#27</span><span class="tbt-name">Overhead Power Lines</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 27 Overhead Power Lines.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 27 Overhead Power Lines.pdf&#39;,&#39;#27 Overhead Power Lines&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#29</span><span class="tbt-name">Power Saw Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 29 Power Saw Safety.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 29 Power Saw Safety.pdf&#39;,&#39;#29 Power Saw Safety&#39;)">✍️ Sign</button></div></div>
-        </div>
-      </div>
-
-      <div class="tbt-category">
-        <div class="tbt-cat-header" onclick="toggleTBTCat(&#39;electric&#39;)">
-          <span class="tbt-cat-icon">⚡</span>
-          <span class="tbt-cat-title">Electrical &amp; Fire</span>
-          <span class="tbt-cat-count">3 talks</span>
-          <span class="tbt-cat-chevron" id="tbt-chevron-electric">▼</span>
-        </div>
-        <div class="tbt-cat-body" id="tbt-cat-electric">
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#8</span><span class="tbt-name">Electrical Power</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 8 Electric Power.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 8 Electric Power.pdf&#39;,&#39;#8 Electrical Power&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#18</span><span class="tbt-name">Fire Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 18 Fire Safety.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 18 Fire Safety.pdf&#39;,&#39;#18 Fire Safety&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#3</span><span class="tbt-name">Carbon Monoxide Poisoning</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 3 Carbon Monoxide Poisoning.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 3 Carbon Monoxide Poisoning.pdf&#39;,&#39;#3 Carbon Monoxide Poisoning&#39;)">✍️ Sign</button></div></div>
-        </div>
-      </div>
-
-      <div class="tbt-category">
-        <div class="tbt-cat-header" onclick="toggleTBTCat(&#39;falls&#39;)">
-          <span class="tbt-cat-icon">🪜</span>
-          <span class="tbt-cat-title">Fall Protection</span>
-          <span class="tbt-cat-count">3 talks</span>
-          <span class="tbt-cat-chevron" id="tbt-chevron-falls">▼</span>
-        </div>
-        <div class="tbt-cat-body" id="tbt-cat-falls">
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#15</span><span class="tbt-name">Preventing Falls Through Holes</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 15 Preventing Falls Through Holes.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 15 Preventing Falls Through Holes.pdf&#39;,&#39;#15 Preventing Falls Through Holes&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#16</span><span class="tbt-name">Falls: Extension Ladders</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 16 Extension Ladders.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 16 Extension Ladders.pdf&#39;,&#39;#16 Falls: Extension Ladders&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#17</span><span class="tbt-name">Guardrails: General Fall Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 17 Guard Rails.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 17 Guard Rails.pdf&#39;,&#39;#17 Guardrails: General Fall Protection&#39;)">✍️ Sign</button></div></div>
-        </div>
-      </div>
-
-      <div class="tbt-category">
-        <div class="tbt-cat-header" onclick="toggleTBTCat(&#39;ppe&#39;)">
-          <span class="tbt-cat-icon">🦺</span>
-          <span class="tbt-cat-title">PPE &amp; Personal Safety</span>
-          <span class="tbt-cat-count">8 talks</span>
-          <span class="tbt-cat-chevron" id="tbt-chevron-ppe">▼</span>
-        </div>
-        <div class="tbt-cat-body" id="tbt-cat-ppe">
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#9</span><span class="tbt-name">Eye Protection (v1)</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 9 Eye Protection.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 9 Eye Protection.pdf&#39;,&#39;#9 Eye Protection&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#14</span><span class="tbt-name">Eye Protection (v2)</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 14 Eye Protection.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 14 Eye Protection.pdf&#39;,&#39;#14 Eye Protection&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#20</span><span class="tbt-name">Hammer Safety</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 20 Hammer Safety.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 20 Hammer Safety.pdf&#39;,&#39;#20 Hammer Safety&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#21</span><span class="tbt-name">Head Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 21 Head Protection.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 21 Head Protection.pdf&#39;,&#39;#21 Head Protection&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#4</span><span class="tbt-name">Carpal Tunnel Syndrome</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 4 Carpal Tunnel Syndrome.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 4 Carpal Tunnel Syndrome.pdf&#39;,&#39;#4 Carpal Tunnel Syndrome&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#5</span><span class="tbt-name">Cold Weather</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 5 Cold Weather.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 5 Cold Weather.pdf&#39;,&#39;#5 Cold Weather&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#22</span><span class="tbt-name">Hearing Protection</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 22 Hearing Protection.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 22 Hearing Protection.pdf&#39;,&#39;#22 Hearing Protection&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">Hot</span><span class="tbt-name">Working in Hot Weather</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;Toolbox-Talk-12-Working-in-Hot-Weather.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;Toolbox-Talk-12-Working-in-Hot-Weather.pdf&#39;,&#39;Working in Hot Weather&#39;)">✍️ Sign</button></div></div>
-        </div>
-      </div>
-
-      <div class="tbt-category">
-        <div class="tbt-cat-header" onclick="toggleTBTCat(&#39;awareness&#39;)">
-          <span class="tbt-cat-icon">🧠</span>
-          <span class="tbt-cat-title">Safety Awareness</span>
-          <span class="tbt-cat-count">6 talks</span>
-          <span class="tbt-cat-chevron" id="tbt-chevron-awareness">▼</span>
-        </div>
-        <div class="tbt-cat-body" id="tbt-cat-awareness">
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#6</span><span class="tbt-name">Confined Spaces</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 6 Confined Spaces.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 6 Confined Spaces.pdf&#39;,&#39;#6 Confined Spaces&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#47</span><span class="tbt-name">Horseplay</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 47 Horseplay.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 47 Horseplay.pdf&#39;,&#39;#47 Horseplay&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#48</span><span class="tbt-name">Why Accidents Occur</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 48 Why Incidents Occur.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 48 Why Incidents Occur.pdf&#39;,&#39;#48 Why Accidents Occur&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#49</span><span class="tbt-name">Near Misses</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 49 Near Misses.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 49 Near Misses.pdf&#39;,&#39;#49 Near Misses&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#50</span><span class="tbt-name">Cost of Incidents</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 50 Cost of Incidents.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 50 Cost of Incidents.pdf&#39;,&#39;#50 Cost of Incidents&#39;)">✍️ Sign</button></div></div>
-          <div class="tbt-item"><div class="tbt-item-info"><span class="tbt-num">#52</span><span class="tbt-name">The Deadly Dozen</span></div><div class="tbt-item-actions"><button class="tbt-view-btn" onclick="viewTBT(&#39;TBT 52 Deadly Dozen.pdf&#39;)">📄 View</button><button class="tbt-sign-btn" onclick="openTBTSign(&#39;TBT 52 Deadly Dozen.pdf&#39;,&#39;#52 The Deadly Dozen&#39;)">✍️ Sign</button></div></div>
-        </div>
-      </div>
-
-      <div class="tbt-remaining-note">📋 Have more Toolbox Talks to add? Upload remaining PDFs to the <code>toolbox-talks/</code> folder and they will appear here after the next update.</div>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('tbt')" id="tbtSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; Toolbox Talk</button>
-        <span id="tbtSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- TBT Sign Modal -->
-  <div id="tbtSignModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;">
-    <div style="background:#fff;border-radius:12px;max-width:640px;margin:30px auto;padding:24px;position:relative;">
-      <button onclick="closeTBTSign()" style="position:absolute;top:12px;right:14px;background:none;border:none;font-size:22px;cursor:pointer;color:#718096;">×</button>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#718096;margin-bottom:4px;">Toolbox Talk Sign-Off</div>
-      <div id="tbtSignTitle" style="font-size:17px;font-weight:700;color:#1a202c;margin-bottom:16px;"></div>
-      <div style="font-size:12px;color:#4a5568;margin-bottom:12px;">By signing below, employees confirm they attended this Toolbox Talk and had the opportunity to ask questions.</div>
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:6px;">Presented by</div>
-      <input type="text" id="tbtPresenter" placeholder="Presenter name" style="width:100%;padding:8px 10px;border:1px solid #cbd5e0;border-radius:6px;font-size:13px;margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#4a5568;margin-bottom:8px;">Crew Signatures</div>
-      <div id="tbtSignRows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:10px;"></div>
-      <button onclick="addTBTSignRow()" class="safety-add-row-btn" style="margin-bottom:16px;">+ Add employee</button>
-      <button onclick="submitTBTSignOff()" style="width:100%;background:#2b6cb0;color:#fff;border:none;padding:11px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">Save Sign-Off to Records</button>
-      <div id="tbtSignStatus" style="margin-top:10px;font-size:13px;font-weight:600;text-align:center;"></div>
-    </div>
-  </div>
-
-
-  <!-- Safety Reports Summary -->
-  <div class="safety-submit-area" id="safetyReportsSummary" style="flex-direction:column;gap:8px;">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#4a5568;margin-bottom:4px;">Weekly Safety Reports</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="safetyDocStatusGrid">
-      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryWjsiIcon">—</span><span>Weekly Jobsite Safety Inspection</span></div>
-      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryJhaIcon">—</span><span>Job Hazard Analysis</span></div>
-      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryPtpIcon">—</span><span>Pre-Task Plan</span></div>
-      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryTbtIcon">—</span><span>Toolbox Talk</span></div>
-    </div>
-    <div id="safetySubmitStatus" class="safety-submit-status" style="margin-top:4px;"></div>
-  </div>
-
-  <div style="margin-top:12px;padding:12px 16px;background:#f0f4ff;border:1px solid #c3d4f7;border-radius:10px;">
-    <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printSafetyForms()">&#x1F5A8;&#xFE0F; Print / PDF</button>
-  </div>
-</div>
-<!-- ===== END SAFETY TAB ===== -->
-
-  <!-- ===== GANTT / SCHEDULE TAB ===== -->
-  <div class="pane" id="pane-gantt">
-
-    <!-- ── Top toolbar ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
-      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
-      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
-        📂 Import Schedule
-        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
-      </label>
-      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
-      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
-      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrint()">🖨️ Print PDF</button>
-    </div>
-
-    <!-- ── View controls ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
-      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
-      <span style="flex:1"></span>
-      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
-      </label>
-      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
-      </label>
-    </div>
-
-    <!-- ── Critical Path Summary Panel ── -->
-    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
-      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
-      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
-    </div>
-
-    <!-- ── Import instructions ── -->
-    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
-      <div style="font-size:32px;margin-bottom:10px">📋</div>
-      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
-      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
-      <div style="font-size:11px;color:#999;line-height:1.6">
-        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
-        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
-      </div>
-    </div>
-
-    <!-- ── Main Gantt layout ── -->
-    <div id="gantt-main" style="display:none">
-
-      <!-- Stats bar -->
-      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
-
-      <!-- Gantt chart container -->
-      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
-        <!-- Header row -->
-        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
-          <div style="padding:8px 12px">Task Name</div>
-          <div style="padding:8px 6px;text-align:center">%</div>
-          <div style="padding:8px 6px;text-align:center">Start</div>
-          <div style="padding:8px 6px;text-align:center">Finish</div>
-          <div style="padding:8px 6px;text-align:center">Float</div>
-          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
-        </div>
-        <!-- Task rows -->
-        <div id="gantt-rows"></div>
-      </div>
-
-      <!-- Legend -->
-      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
-        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
-      </div>
-    </div>
-
-    <!-- ── Edit task modal ── -->
-    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
-      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
-        <div style="display:grid;gap:10px">
-          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
-            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
-          </div>
-          <div>
-            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
-            <div style="display:flex;align-items:center;gap:10px">
-              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
-              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
-            </div>
-          </div>
-          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
-            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:18px">
-          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
-          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
-          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /pane-gantt -->
-
-<!-- ===== JOBS TAB ===== -->
+  <!-- ===== JOBS TAB ===== -->
 
 <div class="pane" id="pane-jobs">
     <!-- Production report banner -->
@@ -3587,14 +2984,13 @@ function renderCCRef(){
 function goTab(btn,name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety','gantt'].forEach(n=>{
+  ['log','units','workers','jobs','whiteboard','djr','signin','tasks'].forEach(n=>{
     const el=document.getElementById('pane-'+n);
     if(el) el.className='pane'+(n===name?' on':'');
   });
   if(name==='units')     renderUnitsTab();
   if(name==='workers')   renderWorkers();
   if(name==='jobs')      renderJobsTab();
-  if(name==='gantt')     { ganttLoad(); ganttRender(); }
   if(name==='whiteboard') initWhiteboard();
   if(name==='djr')        initDJR();
   if(name==='signin')     initSignIn();
@@ -3693,47 +3089,6 @@ function getYNValue(fieldId){
   return yBtn.dataset.val==='yes' ? 'YES' : (document.getElementById(fieldId+'-no')?.dataset.val==='no'?'NO':'');
 }
 
-
-/* === AUTO WEATHER === */
-const JOB_COORDS = {
-  '24001 - BIOLA':                  {lat:33.9425,lon:-118.1339,name:'La Mirada, CA'},
-  '24002 - SEPULVEDA':              {lat:34.2206,lon:-118.4342,name:'Panorama City, CA'},
-  '24005 - VNV':                    {lat:34.1919,lon:-118.4515,name:'Van Nuys, CA'},
-  '24006 - VF':                     {lat:33.5539,lon:-117.2139,name:'Murrieta, CA'},
-  '24010 - COMMONS':                {lat:34.1575,lon:-118.6339,name:'Calabasas, CA'},
-  '25001 - DECENA':                 {lat:32.7157,lon:-117.1611,name:'San Diego, CA'},
-  '25002 - BAH':                    {lat:34.1467,lon:-118.7606,name:'Agoura Hills, CA'},
-  '26002 - WILSHIRE':               {lat:34.0614,lon:-118.3089,name:'Los Angeles, CA'},
-  '26003 - CARINA':                 {lat:33.7963,lon:-117.9271,name:'Santa Ana, CA'},
-  '26005 - MARINA SHORES':          {lat:34.0195,lon:-118.4912,name:'Marina del Rey, CA'},
-  'SP25018 - CDC PLAZA':            {lat:34.0522,lon:-118.2437,name:'Los Angeles, CA'},
-  'SP26006 - LOS ANGELES TIMES':    {lat:34.0414,lon:-118.2535,name:'Los Angeles, CA'},
-};
-const WMO_CODES = {
-  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
-  45:'Foggy',48:'Rime fog',51:'Light drizzle',53:'Moderate drizzle',
-  55:'Dense drizzle',61:'Slight rain',63:'Moderate rain',65:'Heavy rain',
-  71:'Slight snow',73:'Moderate snow',75:'Heavy snow',77:'Snow grains',
-  80:'Rain showers',81:'Moderate showers',82:'Violent showers',
-  95:'Thunderstorm',96:'Thunderstorm w/ hail',99:'Heavy thunderstorm'
-};
-async function fetchJobWeather(job) {
-  const coords = JOB_COORDS[job];
-  if (!coords) return null;
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,weathercode,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FLos_Angeles`;
-    const resp = await fetch(url);
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    const cur = data.current;
-    const temp = Math.round(cur.temperature_2m);
-    const wind = Math.round(cur.windspeed_10m);
-    const desc = WMO_CODES[cur.weathercode] || 'Variable conditions';
-    return { temp, desc: desc + (wind > 5 ? `, winds ${wind} mph` : ''), location: coords.name };
-  } catch(e) { return null; }
-}
-/* === END AUTO WEATHER === */
-
 function loadDJR(){
   const job  = document.getElementById('djr-job').value;
   const date = document.getElementById('djr-date').value;
@@ -3742,21 +3097,6 @@ function loadDJR(){
 
   document.getElementById('djr-empty').style.display = 'none';
   document.getElementById('djr-form').style.display  = 'block';
-
-  const _wJob = document.getElementById('djr-job').value;
-  const _wKey = _wJob + '|' + document.getElementById('djr-date').value;
-  const _hasSaved = djrReports[_wKey] && djrReports[_wKey].tempAM;
-  if (!_hasSaved) {
-    if (!document.getElementById('djr-temp-am').value && !document.getElementById('djr-weather').value) {
-      fetchJobWeather(_wJob).then(w => {
-        if (!w) return;
-        if (!document.getElementById('djr-temp-am').value) document.getElementById('djr-temp-am').value = w.temp;
-        if (!document.getElementById('djr-temp-pm').value) document.getElementById('djr-temp-pm').value = w.temp;
-        if (!document.getElementById('djr-weather').value) document.getElementById('djr-weather').value = w.desc;
-        toast('Weather auto-filled for ' + w.location);
-      });
-    }
-  }
 
   // Auto-populate workforce from dailyLogs for this job + date
   const entries = dailyLogs.filter(l=>l.job===job && l.date===date);
@@ -4334,7 +3674,8 @@ function initSignIn(){
   loadSIFromStorage();
   document.getElementById('si-empty').style.display='block';
   document.getElementById('si-forms').style.display='none';
-  loadCrewFromDispatch();
+  // Auto-load today's sign-in sheet so date is set before signing
+  setTimeout(function(){ loadSignIn(); }, 300);
 }
 
 function showSIForm(which){
@@ -4411,7 +3752,7 @@ function renderSIRows(rows){
   if(!tbody) return;
   tbody.innerHTML = rows.map(function(r,i){
     var wid = 'SI_'+i;
-    var opts = getWorkerOpts(r.name || '');
+    var opts = '<option value="">-- Select --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option>';
     if(r.name) opts = opts.replace('value="'+r.name+'"', 'value="'+r.name+'" selected');
     return '<tr style="border-bottom:1px solid #e2e2e2" id="si-row-'+i+'">'
       +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
@@ -4506,7 +3847,7 @@ function addIncidentRow(){
   var i = existing;
   var wid = 'INC_'+i;
   var workerOpts = '<option value="">-- Select employee --</option>'
-    + (_dispatchCrew.length ? _dispatchCrew.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }) : WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; })).join('');
+    + WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }).join('');
 
   var tr = document.createElement('tr');
   tr.id = 'inc-row-'+i;
@@ -4537,7 +3878,8 @@ function addSIRow(){
   var wid = 'SI_'+i;
   var tr = document.createElement('tr');
   tr.style.borderBottom = '1px solid var(--border)';
-  var workerOpts = getWorkerOpts('');
+  var workerOpts = '<option value="">-- Select --</option>'
++"<option value=\"Abiud Lopez\">Abiud Lopez</option>"+"<option value=\"Adrian Flores\">Adrian Flores</option>"+"<option value=\"Adrian Hernandez\">Adrian Hernandez</option>"+"<option value=\"Adrian Marquez\">Adrian Marquez</option>"+"<option value=\"Alberto Lopez Ruiz\">Alberto Lopez Ruiz</option>"+"<option value=\"Alejandro Lopez\">Alejandro Lopez</option>"+"<option value=\"Alex Osorio\">Alex Osorio</option>"+"<option value=\"Angel Hernandez\">Angel Hernandez</option>"+"<option value=\"Angel Ibanez\">Angel Ibanez</option>"+"<option value=\"Anthony Ibanez\">Anthony Ibanez</option>"+"<option value=\"Anthony Lyons\">Anthony Lyons</option>"+"<option value=\"Anthony Macias\">Anthony Macias</option>"+"<option value=\"Anthony Zetina\">Anthony Zetina</option>"+"<option value=\"Antonio Castillo\">Antonio Castillo</option>"+"<option value=\"Armando Lopez\">Armando Lopez</option>"+"<option value=\"Axel Salas\">Axel Salas</option>"+"<option value=\"Brandon Salazar\">Brandon Salazar</option>"+"<option value=\"Brenda Quijada\">Brenda Quijada</option>"+"<option value=\"Brian Campos\">Brian Campos</option>"+"<option value=\"Brian Flores\">Brian Flores</option>"+"<option value=\"Brian Kitajima\">Brian Kitajima</option>"+"<option value=\"Brian Ramirez\">Brian Ramirez</option>"+"<option value=\"Carla Quijada\">Carla Quijada</option>"+"<option value=\"Carlos Agapito\">Carlos Agapito</option>"+"<option value=\"Carlos Landaverde\">Carlos Landaverde</option>"+"<option value=\"Christian Moran\">Christian Moran</option>"+"<option value=\"Cristian Collin\">Cristian Collin</option>"+"<option value=\"Daniel Burleson\">Daniel Burleson</option>"+"<option value=\"Daniel Lopez\">Daniel Lopez</option>"+"<option value=\"Daniel Villegas\">Daniel Villegas</option>"+"<option value=\"David Casarez\">David Casarez</option>"+"<option value=\"David Smith\">David Smith</option>"+"<option value=\"Dillan Smith\">Dillan Smith</option>"+"<option value=\"Duvaldi Mazariegos\">Duvaldi Mazariegos</option>"+"<option value=\"Dyana Quijada\">Dyana Quijada</option>"+"<option value=\"Edgar Solis\">Edgar Solis</option>"+"<option value=\"Edith Del Carmen\">Edith Del Carmen</option>"+"<option value=\"Eduardo Echeverria\">Eduardo Echeverria</option>"+"<option value=\"Edwin Martinez\">Edwin Martinez</option>"+"<option value=\"Efrain Cornejo\">Efrain Cornejo</option>"+"<option value=\"Efren Hilario\">Efren Hilario</option>"+"<option value=\"Enrique Laguna\">Enrique Laguna</option>"+"<option value=\"Erik Lopez\">Erik Lopez</option>"+"<option value=\"Estevan Sandoval\">Estevan Sandoval</option>"+"<option value=\"Filiberto Ramos\">Filiberto Ramos</option>"+"<option value=\"Francisco Flores\">Francisco Flores</option>"+"<option value=\"Gabriel Flores\">Gabriel Flores</option>"+"<option value=\"Guillermo Silva\">Guillermo Silva</option>"+"<option value=\"Henri Sibrian\">Henri Sibrian</option>"+"<option value=\"Humberto Flores\">Humberto Flores</option>"+"<option value=\"Irvin Rivera\">Irvin Rivera</option>"+"<option value=\"Isaiah Ortiz Alvarado\">Isaiah Ortiz Alvarado</option>"+"<option value=\"Isidro Enciso\">Isidro Enciso</option>"+"<option value=\"Jaime Moya\">Jaime Moya</option>"+"<option value=\"Jaime Quintero\">Jaime Quintero</option>"+"<option value=\"James Marquez\">James Marquez</option>"+"<option value=\"Jayson Ortega\">Jayson Ortega</option>"+"<option value=\"Jeffrey Rivera\">Jeffrey Rivera</option>"+"<option value=\"Jerlin Mendoza\">Jerlin Mendoza</option>"+"<option value=\"Jerry Munoz\">Jerry Munoz</option>"+"<option value=\"Jesus Heredia\">Jesus Heredia</option>"+"<option value=\"Jimmy Cascio\">Jimmy Cascio</option>"+"<option value=\"Joaquin Garcia\">Joaquin Garcia</option>"+"<option value=\"Johnny Perez\">Johnny Perez</option>"+"<option value=\"Jonathan Jacobo\">Jonathan Jacobo</option>"+"<option value=\"Jorge Contreras\">Jorge Contreras</option>"+"<option value=\"Jose Luna\">Jose Luna</option>"+"<option value=\"Jose Preciado\">Jose Preciado</option>"+"<option value=\"Jose Ramirez\">Jose Ramirez</option>"+"<option value=\"Josue Villegas\">Josue Villegas</option>"+"<option value=\"Juan Mazariegos\">Juan Mazariegos</option>"+"<option value=\"Julio Munoz\">Julio Munoz</option>"+"<option value=\"Kenneth William\">Kenneth William</option>"+"<option value=\"Kevin Bautista\">Kevin Bautista</option>"+"<option value=\"Leonardo Mazariegos\">Leonardo Mazariegos</option>"+"<option value=\"Lizeth Marcos\">Lizeth Marcos</option>"+"<option value=\"Lorenzo Tanguma\">Lorenzo Tanguma</option>"+"<option value=\"Louis Aceves\">Louis Aceves</option>"+"<option value=\"Luis Ramirez\">Luis Ramirez</option>"+"<option value=\"Manuel Martinez\">Manuel Martinez</option>"+"<option value=\"Manuel Palacios\">Manuel Palacios</option>"+"<option value=\"Mario Arias\">Mario Arias</option>"+"<option value=\"Mario Lopez\">Mario Lopez</option>"+"<option value=\"Mathew Gonzalez\">Mathew Gonzalez</option>"+"<option value=\"Matthew Baciu\">Matthew Baciu</option>"+"<option value=\"Miguel Corral\">Miguel Corral</option>"+"<option value=\"Miguel Dominguez\">Miguel Dominguez</option>"+"<option value=\"Noah Villareal\">Noah Villareal</option>"+"<option value=\"Oliver Galicia\">Oliver Galicia</option>"+"<option value=\"Oscar Aguirre\">Oscar Aguirre</option>"+"<option value=\"Pedro Barrera\">Pedro Barrera</option>"+"<option value=\"Randdy De Paz\">Randdy De Paz</option>"+"<option value=\"Robert Stark\">Robert Stark</option>"+"<option value=\"Robert Welch\">Robert Welch</option>"+"<option value=\"Rusel Santiago\">Rusel Santiago</option>"+"<option value=\"Salvador Perez\">Salvador Perez</option>"+"<option value=\"Samuel Munoz\">Samuel Munoz</option>"+"<option value=\"Sergio Diaz\">Sergio Diaz</option>"+"<option value=\"Sergio Sandoval\">Sergio Sandoval</option>"+"<option value=\"Sotero Dominguez\">Sotero Dominguez</option>"+"<option value=\"Steven Sulewski\">Steven Sulewski</option>"+"<option value=\"Tony Broadnax\">Tony Broadnax</option>"+"<option value=\"Uriel Chavez\">Uriel Chavez</option>"+"<option value=\"Victor Armienta\">Victor Armienta</option>"+"<option value=\"Victor Carrillo\">Victor Carrillo</option>"+"<option value=\"Vincent Sopha\">Vincent Sopha</option>"+"<option value=\"Vincent Stancati\">Vincent Stancati</option>"+"<option value=\"Xavier Contreras\">Xavier Contreras</option>";
   tr.innerHTML = '<td style="padding:4px 6px;vertical-align:top"><input type="text" class="si-emp-num" value="" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
     +'<td style="padding:4px 6px;vertical-align:top"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px">'+workerOpts+'</select></td>'
     +'<td style="padding:4px 6px;vertical-align:middle">'
@@ -4611,7 +3953,6 @@ function saveSignIn(){
   saveSIToStorage();
   var siKey=document.getElementById("si-job").value+"|"+document.getElementById("si-date").value;
   if(siData[siKey]) saveSignInToCloud(siKey.split("|")[0], siKey.split("|")[1], siData[siKey]);
-  publishSignedIn();
 }
 
 function printSignIn(){
@@ -6078,106 +5419,6 @@ loadSigData();
 renderTodayLog();
 renderCCRef();
 
-
-
-/* === DISPATCH CREW SYNC === */
-var _dispatchCrew = [];
-
-async function loadCrewFromDispatch() {
-  var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
-  if (!jobEl) return;
-  var jobVal = jobEl.value;
-  var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
-  if (!jobNum) return;
-  try {
-    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
-    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
-    var key = 'crew_' + jobNum;
-    var resp = await fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
-      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
-    });
-    if (!resp.ok) return;
-    var data = await resp.json();
-    _dispatchCrew = (data && data.length > 0) ? JSON.parse(data[0].value) : [];
-  } catch(e) { _dispatchCrew = []; }
-  populateWorkerDropdowns();
-}
-
-function populateWorkerDropdowns() {
-  if (!_dispatchCrew.length) return;
-  var names = _dispatchCrew.map(function(w){ return w.name; }).sort();
-  // Log tab
-  var selWorker = document.getElementById('sel-worker');
-  if (selWorker) {
-    var cur = selWorker.value;
-    selWorker.innerHTML = names.map(function(n){
-      return '<option value="' + n + '"' + (n === cur ? ' selected' : '') + '>' + n + '</option>';
-    }).join('');
-  }
-  // Whiteboard tab
-  var wbWorker = document.getElementById('wb-worker');
-  if (wbWorker) {
-    var cur2 = wbWorker.value;
-    wbWorker.innerHTML = '<option value="">-- All workers --</option>'
-      + names.map(function(n){
-          return '<option value="' + n + '"' + (n === cur2 ? ' selected' : '') + '>' + n + '</option>';
-        }).join('');
-  }
-  // Incident report dropdowns
-  document.querySelectorAll('.inc-emp-name').forEach(function(sel) {
-    var cur = sel.value;
-    sel.innerHTML = '<option value="">-- Select employee --</option>'
-      + names.map(function(n){ return '<option value="' + n + '"' + (n === cur ? ' selected' : '') + '>' + n + '</option>'; }).join('');
-  });
-  // Sign-in sheet name dropdowns (already rendered rows)
-  document.querySelectorAll('.si-emp-name').forEach(function(sel) {
-    var cur = sel.value;
-    sel.innerHTML = '<option value="">-- Select --</option>'
-      + names.map(function(n){ return '<option value="' + n + '"' + (n === cur ? ' selected' : '') + '>' + n + '</option>'; }).join('');
-  });
-}
-
-async function publishSignedIn() {
-  try {
-    var jobEl = document.getElementById('si-job');
-    var dateEl = document.getElementById('si-date');
-    if (!jobEl || !dateEl) return;
-    var jobVal = jobEl.value;
-    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
-    var date = dateEl.value;
-    if (!jobNum || !date) return;
-    var names = [];
-    document.querySelectorAll('#si-signin-tbody tr').forEach(function(tr) {
-      var nameEl = tr.querySelector('.si-name');
-      if (nameEl && nameEl.value && nameEl.value.trim()) names.push(nameEl.value.trim());
-    });
-    if (typeof siData !== 'undefined') {
-      var siKey = jobVal + '|' + date;
-      if (siData[siKey] && siData[siKey].rows) {
-        siData[siKey].rows.forEach(function(r){ if(r.name && names.indexOf(r.name) === -1) names.push(r.name); });
-      }
-    }
-    if (!names.length) return;
-    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
-    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
-    await fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
-      method: 'POST',
-      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
-      body: JSON.stringify({ key: 'signed_in_' + jobNum + '_' + date, value: JSON.stringify(names) })
-    });
-  } catch(e) {}
-}
-
-function getWorkerOpts(selected) {
-  var names = _dispatchCrew.length
-    ? _dispatchCrew.map(function(w){ return w.name; }).sort()
-    : WORKERS.map(function(w){ return w.name; });
-  return '<option value="">-- Select --</option>'
-    + names.map(function(n){
-        return '<option value="' + n + '"' + (n === selected ? ' selected' : '') + '>' + n + '</option>';
-      }).join('');
-}
-/* === END DISPATCH CREW SYNC === */
 
 </script>
 </body>
