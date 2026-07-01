@@ -160,6 +160,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--dark); font
 .badge-green { background: var(--green-light); color: #1a6b3e; }
 .badge-gold { background: var(--gold-light); color: #8a6a1a; }
 .badge-blue { background: var(--blue-light); color: #1a5c8a; }
+.badge-purple { background: #f0e6fa; color: #6c3483; }
 .badge-gray { background: #f0f0f0; color: var(--mid); }
 .badge-orange { background: var(--orange-light); color: #a04a10; }
 
@@ -950,6 +951,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
               <option>In Progress</option>
               <option>Completed</option>
               <option>Invoiced</option>
+              <option>Partial</option>
             </select>
           </div>
         </div>
@@ -1356,10 +1358,113 @@ textarea.form-control { resize: vertical; min-height: 80px; }
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('viewTicketModal')">Close</button>
       <button class="btn btn-sm" id="btn-mark-paid" style="background:var(--green);color:#fff;display:none" onclick="markPaidFromModal()">✓ Mark Invoice Paid</button>
+      <button class="btn btn-sm" id="btn-partial-payment" style="background:#8e44ad;color:#fff;display:none" onclick="openPartialPayment()">💰 Collect Partial Payment</button>
       <button class="btn btn-gold btn-sm" onclick="printTicket()">🖨 Print / PDF</button>
       <button class="btn btn-green btn-sm" id="btn-gen-invoice" onclick="completeAndInvoice()">✅ Complete &amp; Email Invoice</button>
       <button class="btn btn-blue btn-sm" id="btn-foundation" onclick="exportToFoundation()">📊 Upload to Foundation</button>
       <button class="btn btn-sm" style="background:#8e44ad;color:#fff" onclick="pushToTimesheet()">📋 Push to Timesheet</button>
+    </div>
+  </div>
+</div>
+
+<!-- PARTIAL PAYMENT MODAL -->
+<div class="modal-overlay" id="partialPaymentModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header" style="background:var(--dark)">
+      <div>
+        <div class="ticket-num" id="partial-ticket-num">TICKET #</div>
+        <div class="modal-title" style="color:#fff">Collect Partial Payment</div>
+      </div>
+      <button class="modal-close" style="color:#aaa" onclick="closeModal('partialPaymentModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:var(--teal-light);border-radius:8px;padding:14px 16px;margin-bottom:18px">
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Invoice Total</div>
+          <div style="font-size:22px;font-weight:700;color:var(--dark)" id="partial-invoice-total">$0.00</div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Balance Remaining</div>
+          <div style="font-size:22px;font-weight:700;color:var(--red)" id="partial-balance">$0.00</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title red">Payment Details</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Amount Received $ <span style="color:var(--red)">*</span></label>
+            <div class="nte-field">
+              <span class="nte-prefix">$</span>
+              <input class="form-control" type="number" id="partial-amount" placeholder="0.00" min="0" step="0.01" oninput="updatePartialBalance()">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <select class="form-control" id="partial-method">
+              <option value="">Select...</option>
+              <option>Check</option>
+              <option>Cash</option>
+              <option>Credit Card</option>
+              <option>ACH / Wire</option>
+              <option>Zelle</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Check # / Reference</label>
+            <input class="form-control" id="partial-ref" placeholder="Check number or reference">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date Received</label>
+            <input class="form-control" type="date" id="partial-date">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Received By</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Payment Handed To <span style="color:var(--red)">*</span></label>
+            <select class="form-control" id="partial-received-by">
+              <option value="">— Select employee —</option>
+              <option>Mychal Kirschbaum</option>
+              <option>Guillermo Silva</option>
+              <option>Erik Lopez</option>
+              <option>James Marquez</option>
+              <option>Mario Arias</option>
+              <option>Dak Golden</option>
+              <option>Joey Java</option>
+              <option>Dennis Furst</option>
+              <option>Jonathan Jacobo</option>
+            </select>
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-end;gap:10px">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px">
+              <input type="checkbox" id="partial-ar-received" style="width:18px;height:18px;accent-color:var(--green)">
+              <span style="font-size:13px;font-weight:600;color:var(--dark)">Handed to Accounts Receivable (April)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-control" id="partial-notes" rows="2" placeholder="Any additional notes about this payment..."></textarea>
+      </div>
+
+      <div id="partial-new-balance-preview" style="display:none;background:var(--green-light);border:1.5px solid var(--green);border-radius:8px;padding:12px 16px;margin-top:12px">
+        <div style="font-size:12px;font-weight:700;color:var(--green)">After this payment:</div>
+        <div style="display:flex;gap:24px;margin-top:6px">
+          <div><span style="font-size:11px;color:var(--muted)">Amount paid</span><div style="font-size:16px;font-weight:700;color:var(--green)" id="partial-preview-paid">$0</div></div>
+          <div><span style="font-size:11px;color:var(--muted)">Balance remaining</span><div style="font-size:16px;font-weight:700;color:var(--red)" id="partial-preview-balance">$0</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('partialPaymentModal')">Cancel</button>
+      <button class="btn btn-green" id="partial-submit-btn" onclick="submitPartialPayment()">💰 Record Payment &amp; Email Invoice</button>
     </div>
   </div>
 </div>
@@ -1674,6 +1779,9 @@ async function sbGet() {
       paidAmount:    r.paid_amount,
       paidAt:        r.paid_at,
       invoiceNum:    r.invoice_num,
+      partialPayments: Array.isArray(r.partial_payments) ? r.partial_payments : (r.partial_payments ? JSON.parse(r.partial_payments) : []),
+      paidAt:        r.paid_at,
+      invoiceNum:    r.invoice_num,
       createdAt:     r.created_at,
     }));
   } catch(e) {
@@ -1718,7 +1826,8 @@ async function sbUpsert(ticket) {
     alt_date:     ticket.altDate,
     time_window:  ticket.timeWindow,
     extra_notes:  ticket.extraNotes,
-    attachments:  JSON.stringify(ticket.attachments || []),
+    attachments:        JSON.stringify(ticket.attachments || []),
+    partial_payments:   ticket.partialPayments || [],
   };
   try {
     const res = await fetch(SB_URL + '/rest/v1/service_tickets', {
@@ -2625,15 +2734,25 @@ function renderDashboard() {
   document.getElementById('stat-tasks').textContent = openTasks;
 
   // ── FINANCIAL STATS ──────────────────────────────────────────────────────
-  // Revenue produced = sum of all Invoiced OR Paid tickets
+  // Revenue produced = sum of all Invoiced OR Paid tickets + amounts paid on Partial tickets
   const revProduced = tickets
     .filter(t => t.status === 'Invoiced' || t.status === 'Paid')
-    .reduce((s, t) => s + calcTicketTotal(t), 0);
+    .reduce((s, t) => s + calcTicketTotal(t), 0)
+    + tickets
+    .filter(t => t.status === 'Partial')
+    .reduce((s, t) => s + (t.partialPayments||[]).reduce((ps,p) => ps + parseFloat(p.amount||0), 0), 0);
 
-  // Open invoices = sum of all Invoiced (not yet paid) tickets
+  // Open invoices = sum of all Invoiced (not yet paid) + remaining balance on Partial tickets
   const openInvoiceTotal = tickets
     .filter(t => t.status === 'Invoiced')
-    .reduce((s, t) => s + calcTicketTotal(t), 0);
+    .reduce((s, t) => s + calcTicketTotal(t), 0)
+    + tickets
+    .filter(t => t.status === 'Partial')
+    .reduce((s, t) => {
+      const total = calcTicketTotal(t);
+      const paid  = (t.partialPayments||[]).reduce((ps,p) => ps + parseFloat(p.amount||0), 0);
+      return s + Math.max(0, total - paid);
+    }, 0);
 
   // Ready to Invoice = sum of all Completed tickets that haven't been invoiced yet
   const readyTickets = tickets.filter(t => t.status === 'Completed');
@@ -2828,7 +2947,131 @@ function copySignLink(tsId) {
   });
 }
 
-// ── WEEKLY SCORECARD ──────────────────────────────────────────────────────────
+// ── PARTIAL PAYMENT ───────────────────────────────────────────────────────────
+function openPartialPayment() {
+  const t = tickets.find(x => x.id === currentViewTicketId);
+  if (!t) return;
+
+  const invoiceTotal = calcTicketTotal(t);
+  const totalPaid    = (t.partialPayments || []).reduce((s, p) => s + parseFloat(p.amount), 0);
+  const balance      = invoiceTotal - totalPaid;
+
+  document.getElementById('partial-ticket-num').textContent = 'TICKET #' + t.id;
+  document.getElementById('partial-invoice-total').textContent = '$' + invoiceTotal.toFixed(2);
+  document.getElementById('partial-balance').textContent = '$' + balance.toFixed(2);
+  document.getElementById('partial-amount').value = '';
+  document.getElementById('partial-method').value = '';
+  document.getElementById('partial-ref').value = '';
+  document.getElementById('partial-date').value = today();
+  document.getElementById('partial-received-by').value = '';
+  document.getElementById('partial-ar-received').checked = false;
+  document.getElementById('partial-notes').value = '';
+  document.getElementById('partial-new-balance-preview').style.display = 'none';
+
+  openModal('partialPaymentModal');
+}
+
+function updatePartialBalance() {
+  const t = tickets.find(x => x.id === currentViewTicketId);
+  if (!t) return;
+
+  const invoiceTotal = calcTicketTotal(t);
+  const totalPaid    = (t.partialPayments || []).reduce((s, p) => s + parseFloat(p.amount), 0);
+  const amount       = parseFloat(document.getElementById('partial-amount').value) || 0;
+  const newPaid      = totalPaid + amount;
+  const newBalance   = invoiceTotal - newPaid;
+
+  const preview = document.getElementById('partial-new-balance-preview');
+  if (amount > 0) {
+    preview.style.display = 'block';
+    document.getElementById('partial-preview-paid').textContent    = '$' + newPaid.toFixed(2);
+    document.getElementById('partial-preview-balance').textContent = '$' + Math.max(0, newBalance).toFixed(2);
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+async function submitPartialPayment() {
+  const t = tickets.find(x => x.id === currentViewTicketId);
+  if (!t) return;
+
+  const amount     = parseFloat(document.getElementById('partial-amount').value);
+  const receivedBy = document.getElementById('partial-received-by').value;
+  if (!amount || amount <= 0) { toast('Enter a payment amount', true); return; }
+  if (!receivedBy) { toast('Select who received the payment', true); return; }
+
+  const method   = document.getElementById('partial-method').value;
+  const ref      = document.getElementById('partial-ref').value;
+  const date     = document.getElementById('partial-date').value;
+  const arRcvd   = document.getElementById('partial-ar-received').checked;
+  const notes    = document.getElementById('partial-notes').value;
+
+  const payment = {
+    amount, method, ref, date, receivedBy,
+    handedToAR: arRcvd,
+    notes,
+    recordedAt: new Date().toISOString(),
+  };
+
+  if (!t.partialPayments) t.partialPayments = [];
+  t.partialPayments.push(payment);
+
+  const invoiceTotal = calcTicketTotal(t);
+  const totalPaid    = t.partialPayments.reduce((s, p) => s + parseFloat(p.amount), 0);
+  const balance      = invoiceTotal - totalPaid;
+
+  // Update status
+  t.status = balance <= 0 ? 'Paid' : 'Partial';
+  if (balance <= 0) t.paidAt = new Date().toISOString();
+
+  save();
+  sbUpsert(t);
+
+  // Send invoice email to accounting with partial payment details
+  const btn = document.getElementById('partial-submit-btn');
+  btn.disabled = true; btn.textContent = '⏳ Sending...';
+
+  const paymentHistory = t.partialPayments.map((p, i) =>
+    `Payment ${i+1}: $${parseFloat(p.amount).toFixed(2)} on ${fmtDate(p.date)} via ${p.method||'—'} — Received by ${p.receivedBy}`
+  ).join('\n');
+
+  const msg = `PARTIAL PAYMENT RECEIVED — ${t.id}
+
+Customer: ${t.customer}
+Address:  ${t.address || '—'}
+Invoice Total: $${invoiceTotal.toFixed(2)}
+Amount Received: $${amount.toFixed(2)}
+Balance Remaining: $${Math.max(0, balance).toFixed(2)}
+Status: ${t.status}
+
+Payment Details:
+  Method: ${method || '—'}
+  Reference: ${ref || '—'}
+  Date: ${fmtDate(date)}
+  Received By: ${receivedBy}
+  Handed to AR: ${arRcvd ? 'YES' : 'No'}
+  Notes: ${notes || '—'}
+
+Payment History:
+${paymentHistory}`;
+
+  try {
+    await emailjs.send('service_jbdjjoh', 'template_4daap5r', {
+      to_email: 'avanhorn@ryecompany.com',
+      to_name:  'April',
+      subject:  `Partial Payment — ${t.id} ${t.customer} | Paid: $${amount.toFixed(2)} | Balance: $${Math.max(0,balance).toFixed(2)}`,
+      message:  msg,
+    });
+    toast('✓ Payment recorded & invoice sent to April');
+  } catch(e) {
+    toast('Payment recorded — email failed: ' + e.message, true);
+  }
+
+  btn.disabled = false; btn.textContent = '💰 Record Payment & Email Invoice';
+  closeModal('partialPaymentModal');
+  renderAll();
+  viewTicket(t.id);
+}─
 const SCORECARD_PASS = '1234';
 
 function openScorecard() {
@@ -4372,13 +4615,49 @@ function viewTicket(id) {
       </div>` : ''}
 
       ${t.ratingNotes ? `<div><div class="form-label">Customer Comments</div><div style="font-size:14px">${t.ratingNotes}</div></div>` : ''}
+
+      ${(t.partialPayments && t.partialPayments.length) ? `
+      <div style="margin-top:16px">
+        <div class="form-section-title" style="color:#6c3483;margin-bottom:10px">💰 Payment History</div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead><tr style="background:#f0e6fa">
+            <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6c3483">Date</th>
+            <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6c3483">Amount</th>
+            <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6c3483">Method</th>
+            <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6c3483">Ref #</th>
+            <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6c3483">Received By</th>
+            <th style="padding:8px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6c3483">To AR</th>
+          </tr></thead>
+          <tbody>
+            ${t.partialPayments.map((p,i) => `
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:8px 12px">${fmtDate(p.date)}</td>
+              <td style="padding:8px 12px;font-weight:700;color:var(--green)">$${parseFloat(p.amount).toFixed(2)}</td>
+              <td style="padding:8px 12px">${p.method||'—'}</td>
+              <td style="padding:8px 12px">${p.ref||'—'}</td>
+              <td style="padding:8px 12px">${p.receivedBy||'—'}</td>
+              <td style="padding:8px 12px">${p.handedToAR ? '<span style="color:var(--green);font-weight:700">✓ Yes</span>' : '<span style="color:var(--muted)">No</span>'}</td>
+            </tr>`).join('')}
+          </tbody>
+          <tfoot>
+            <tr style="background:#f9f9f9;font-weight:700">
+              <td style="padding:8px 12px">Total Paid</td>
+              <td style="padding:8px 12px;color:var(--green)">$${t.partialPayments.reduce((s,p)=>s+parseFloat(p.amount||0),0).toFixed(2)}</td>
+              <td colspan="3"></td>
+              <td style="padding:8px 12px;color:var(--red)">Balance: $${Math.max(0,calcTicketTotal(t)-t.partialPayments.reduce((s,p)=>s+parseFloat(p.amount||0),0)).toFixed(2)}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>` : ''}
     </div>`;
 
   document.getElementById('view-ticket-content').innerHTML = html;
   currentViewTicketId = id;
   // Show/hide Mark Paid button based on status
-  const paidBtn = document.getElementById('btn-mark-paid');
-  if (paidBtn) paidBtn.style.display = (t.status === 'Invoiced') ? 'inline-flex' : 'none';
+  const paidBtn    = document.getElementById('btn-mark-paid');
+  const partialBtn = document.getElementById('btn-partial-payment');
+  if (paidBtn)    paidBtn.style.display    = (t.status === 'Invoiced' || t.status === 'Partial') ? 'inline-flex' : 'none';
+  if (partialBtn) partialBtn.style.display = (t.status === 'Invoiced' || t.status === 'Partial') ? 'inline-flex' : 'none';
   openModal('viewTicketModal');
 }
 
@@ -5283,7 +5562,7 @@ function fmtDate(d) {
 
 function statusBadge(s) {
   const map = {
-    'Open':'badge-red','In Progress':'badge-gold','Completed':'badge-green','Invoiced':'badge-blue','Paid':'badge-green'
+    'Open':'badge-red','In Progress':'badge-gold','Completed':'badge-green','Invoiced':'badge-blue','Partial':'badge-purple','Paid':'badge-green'
   };
   return `<span class="badge ${map[s]||'badge-gray'}"><span class="dot dot-${s==='Open'?'red':s==='In Progress'?'gold':s==='Completed'?'green':'blue'}"></span>${s}</span>`;
 }
