@@ -6376,12 +6376,21 @@ async function loadEmployeesForJob(){
   }
   var jobNum = job.split(' - ')[0].trim();
   var crewKey = 'crew_' + jobNum;
+  // Fallback: if this job was previously prefixed (e.g. SP26006), try that key too
+  var crewKeyFallback = jobNum === '26006' ? 'crew_SP26006' : null;
   try{
     var resp = await fetch(SUPABASE_URL+'/rest/v1/crew_dispatch?key=eq.'+encodeURIComponent(crewKey)+'&select=value&limit=1',{
       headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
     });
     if(!resp.ok) throw new Error('HTTP '+resp.status);
     var rows = await resp.json();
+    // If not found under new key, try old key
+    if((!rows.length||!rows[0].value) && crewKeyFallback){
+      var resp2 = await fetch(SUPABASE_URL+'/rest/v1/crew_dispatch?key=eq.'+encodeURIComponent(crewKeyFallback)+'&select=value&limit=1',{
+        headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+      });
+      if(resp2.ok) rows = await resp2.json();
+    }
     if(!rows.length||!rows[0].value) return;
     var crew = typeof rows[0].value==='string'?JSON.parse(rows[0].value):rows[0].value;
     if(!Array.isArray(crew)||!crew.length) return;
