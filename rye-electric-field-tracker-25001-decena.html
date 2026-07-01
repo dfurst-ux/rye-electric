@@ -7523,11 +7523,9 @@ function publishSingleSignedIn(wid) {
         r.readAsDataURL(file);
       });
 
-      // Truncate to ~300KB to stay under API rate limits (~8k tokens)
-      var MAX_B64 = 150000;
-      var base64Send = base64.length > MAX_B64 ? base64.slice(0, MAX_B64) : base64;
-      statusText.textContent = 'Extracting schedule with AI' + (base64.length > MAX_B64 ? ' (summary pages)...' : '...');
+      statusText.textContent = 'Extracting schedule with AI...';
 
+      // Send full PDF - haiku handles it efficiently
       var response = await fetch('https://rye-claude.dfurst.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -7540,11 +7538,11 @@ function publishSingleSignedIn(wid) {
             content: [
               {
                 type: 'document',
-                source: { type: 'base64', media_type: 'application/pdf', data: base64Send }
+                source: { type: 'base64', media_type: 'application/pdf', data: base64 }
               },
               {
                 type: 'text',
-                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones, 20-40 tasks max. Use the comparison table if present.'
+                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones from the FIRST PAGE comparison table, 20-30 tasks max.'
               }
             ]
           }]
