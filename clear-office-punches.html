@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rye Electric - Clear Office Punches</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Lato', Arial, sans-serif; 
+            background: #f5f5f5; 
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 { 
+            color: #2980b9; 
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .warning {
+            background: #FFF3CD;
+            border: 2px solid #FF6B6B;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .warning h3 {
+            color: #D32F2F;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .help-text {
+            color: #999;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-delete {
+            background: #D32F2F;
+            color: white;
+        }
+        .btn-delete:hover {
+            background: #B71C1C;
+        }
+        .btn-cancel {
+            background: #ddd;
+            color: #555;
+        }
+        .btn-cancel:hover {
+            background: #ccc;
+        }
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .message.success {
+            background: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+            display: block;
+        }
+        .message.error {
+            background: #F8D7DA;
+            color: #721C24;
+            border: 1px solid #F5C6CB;
+            display: block;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2980b9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗑 Clear Office Punches</h1>
+            <p>Delete badge clock entries</p>
+        </div>
+
+        <div class="warning">
+            <h3>⚠ Warning</h3>
+            <p>This will permanently delete office badge punch records. <strong>This action cannot be undone.</strong></p>
+        </div>
+
+        <form onsubmit="confirmDelete(event)">
+            <div class="form-group">
+                <label for="beforeDate">Delete punches BEFORE this date:</label>
+                <input type="date" id="beforeDate" required>
+                <p class="help-text">Only punches from BEFORE this date will be deleted. Punches from this date forward will be kept.</p>
+                <p class="help-text" style="margin-top: 10px; color: #D32F2F; font-weight: bold;">Example: Select 07/01/2026 to keep only today's punches and delete everything before.</p>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-delete">🗑 Delete Punches</button>
+                <button type="button" class="btn-cancel" onclick="resetForm()">Cancel</button>
+            </div>
+        </form>
+
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #666;">Deleting punch records...</p>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        // Set today's date as default
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('beforeDate').value = today;
+
+        function confirmDelete(event) {
+            event.preventDefault();
+            const beforeDate = document.getElementById('beforeDate').value;
+            
+            if (!confirm('Are you sure? Delete all punches BEFORE ' + beforeDate + '? This cannot be undone!')) {
+                return;
+            }
+            
+            deletePunches(beforeDate);
+        }
+
+        async function deletePunches(beforeDate) {
+            const loader = document.getElementById('loader');
+            const message = document.getElementById('message');
+            
+            loader.style.display = 'block';
+            message.style.display = 'none';
+
+            try {
+                // Fetch all punches
+                const fetchRes = await fetch(
+                    'https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/office_portal_punches?select=*',
+                    {
+                        headers: {
+                            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'
+                        }
+                    }
+                );
+
+                if (!fetchRes.ok) {
+                    throw new Error('Failed to fetch punches from database');
+                }
+
+                const punches = await fetchRes.json();
+                let deleted = 0;
+
+                // Delete each punch before the date
+                for (const punch of punches) {
+                    const punchDate = new Date(punch.punched_at).toISOString().split('T')[0];
+                    
+                    if (punchDate < beforeDate) {
+                        const deleteRes = await fetch(
+                            'https://okesnavkxmqucgvvhncx.supabase.co/rest/v1/office_portal_punches?id=eq.' + punch.id,
+                            {
+                                method: 'DELETE',
+                                headers: {
+                                    'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c'
+                                }
+                            }
+                        );
+                        
+                        if (deleteRes.ok) {
+                            deleted++;
+                        }
+                    }
+                }
+
+                loader.style.display = 'none';
+                message.className = 'message success';
+                message.innerHTML = '<strong>✓ Success!</strong><br>' + deleted + ' punch record(s) deleted.<br>Punches from ' + beforeDate + ' forward have been kept.';
+                
+                // Reset form
+                setTimeout(() => {
+                    resetForm();
+                }, 2000);
+
+            } catch (error) {
+                loader.style.display = 'none';
+                message.className = 'message error';
+                message.innerHTML = '<strong>✗ Error:</strong><br>' + error.message;
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('beforeDate').value = today;
+            document.getElementById('message').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
