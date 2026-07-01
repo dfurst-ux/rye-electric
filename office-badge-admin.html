@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --teal:#2980b9;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
+  --teal:#4E9DA8;--teal-dk:#357884;--teal-lt:#EAF5F7;--teal-dark:#1a6fa3;--teal-light:#e8f4fd;
   --dark:#1a1a1a;--mid:#444;--muted:#777;
   --border:#e2e2e2;--bg:#F4F8F9;--white:#fff;
   --green:#27ae60;--green-light:#eafaf1;
@@ -101,14 +101,15 @@ tfoot td{padding:10px 12px;border-top:2px solid var(--dark);font-weight:800;colo
 .muted-note{font-size:11px;color:var(--muted);margin-top:8px}
 
 /* ── TIMESHEET CARDS (service tracker style) ── */
-.ts-card{border:2px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)}
+.ts-card{border:2px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow)}
+.ts-card.approved{border-color:var(--green)}
 .ts-card-hdr{background:var(--dark);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .ts-name{font-size:17px;font-weight:700;color:#fff}
 .ts-week{font-size:12px;color:#888;margin-top:2px}
-.ts-stat{background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center;min-width:68px}
+.ts-stat{background:#1a1a1a;border-radius:6px;padding:6px 14px;text-align:center;min-width:72px}
 .ts-stat.tl{background:var(--teal)}
 .ts-stat-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.ts-stat-val{font-size:20px;font-weight:700;line-height:1.2}
+.ts-stat-val{font-size:20px;font-weight:700;line-height:1.2;margin-top:2px}
 .ts-tbl{width:100%;border-collapse:collapse}
 .ts-tbl th{padding:7px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#e8f4f6;border-bottom:1px solid var(--border);text-align:left}
 .ts-tbl td{padding:8px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;color:var(--mid)}
@@ -528,50 +529,50 @@ async function loadTimecard(){
     if(entryRows.length===0) continue;
 
     cards.push(`
-      <div class="ts-card">
-        <div class="ts-card-header">
-          <div>
-            <div class="ts-card-name">${name}</div>
-            <div class="ts-card-week">Week of ${fmtDate(tcWeekStart)} — ${fmtDate(weekEndDateOnly)}</div>
+      <div class="ts-card" id="tc-card-${empId}">
+        <div class="ts-card-hdr">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--teal);text-transform:uppercase">EMP #${empId}</div>
+              <div class="ts-name">${name}</div>
+              <div class="ts-week">Week ending ${fmtDate(weekEndDateOnly)}</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <div class="ts-stat">
+                <div class="ts-stat-lbl" style="color:var(--teal)">Reg</div>
+                <div class="ts-stat-val" style="color:var(--teal)">${weekReg.toFixed(2)}</div>
+              </div>
+              <div class="ts-stat">
+                <div class="ts-stat-lbl" style="color:var(--gold)">OT</div>
+                <div class="ts-stat-val" style="color:var(--gold)">${weekOT.toFixed(2)}</div>
+              </div>
+              <div class="ts-stat tl">
+                <div class="ts-stat-lbl" style="color:rgba(255,255,255,.7)">Total</div>
+                <div class="ts-stat-val" style="color:#fff">${weekTotal.toFixed(2)}</div>
+              </div>
+            </div>
           </div>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <div class="ts-stat-box">
-              <div class="ts-stat-label" style="color:#79B7F1">Reg</div>
-              <div class="ts-stat-val" style="color:#79B7F1">${weekReg.toFixed(2)}</div>
-            </div>
-            <div class="ts-stat-box">
-              <div class="ts-stat-label" style="color:var(--gold)">OT</div>
-              <div class="ts-stat-val" style="color:var(--gold)">${weekOT.toFixed(2)}</div>
-            </div>
-            <div class="ts-stat-box total">
-              <div class="ts-stat-label" style="color:rgba(255,255,255,.7)">Total</div>
-              <div class="ts-stat-val" style="color:#fff">${weekTotal.toFixed(2)}</div>
-            </div>
-            <button class="btn btn-g btn-sm" onclick="printOneTimecard(${empId})" style="background:#1a1a1a;border-color:#444;color:#aaa">🖨 Print</button>
+            <button class="btn btn-g btn-sm" style="background:#2a2a2a;border-color:#444;color:#aaa"
+              onclick="printOneCard(${empId},'${name.replace(/'/g,"\\'")}')">🖨 Print</button>
           </div>
         </div>
-        <table class="ts-entry-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time In / Out</th>
-              <th>Cost Code</th>
-              <th style="text-align:center;color:#2980b9">Reg Hrs</th>
-              <th style="text-align:center;color:var(--gold)">OT Hrs</th>
-              <th style="text-align:center">Total</th>
-              <th style="text-align:center">Status</th>
-            </tr>
-          </thead>
+        <table class="ts-tbl">
+          <thead><tr>
+            <th>Date</th><th>Time In / Out</th><th>Cost Code</th>
+            <th style="text-align:center;color:var(--teal)">Reg Hrs</th>
+            <th style="text-align:center;color:var(--gold)">OT Hrs</th>
+            <th style="text-align:center">Total</th>
+            <th style="text-align:center">Status</th>
+          </tr></thead>
           <tbody>${entryRows.join('')}</tbody>
-          <tfoot>
-            <tr class="ts-totals-row">
-              <td colspan="3">WEEK TOTALS</td>
-              <td style="text-align:center;color:#79B7F1">${weekReg.toFixed(2)}</td>
-              <td style="text-align:center;color:var(--gold)">${weekOT>0?weekOT.toFixed(2):'—'}</td>
-              <td style="text-align:center">${weekTotal.toFixed(2)}</td>
-              <td></td>
-            </tr>
-          </tfoot>
+          <tfoot><tr class="ts-totals">
+            <td colspan="3">WEEK TOTALS</td>
+            <td style="text-align:center;color:var(--teal)">${weekReg.toFixed(2)}</td>
+            <td style="text-align:center;color:var(--gold)">${weekOT>0?weekOT.toFixed(2):'—'}</td>
+            <td style="text-align:center">${weekTotal.toFixed(2)}</td>
+            <td></td>
+          </tr></tfoot>
         </table>
       </div>`);
   }
@@ -587,19 +588,18 @@ async function loadTimecard(){
 }
 
 // ── PRINT ONE TIMECARD ────────────────────────────────────────────────────────
-async function printOneTimecard(empId){
+function printOneCard(empId, name){
   const cardEl=document.querySelector('.ts-card');
   if(!cardEl){toast('No timecard to print');return;}
   // Find the card for this employee by re-querying
-  const emp=staffList.find(e=>e.employee_id===empId);
-  const name=emp?emp.first_name+' '+emp.last_name:'Employee '+empId;
+  if(!name) { const emp=staffList.find(e=>e.employee_id===empId); name=emp?emp.first_name+' '+emp.last_name:'Employee '+empId; }
   const weekEnd=new Date(tcWeekStart); weekEnd.setDate(weekEnd.getDate()+6);
 
   // Find the card HTML that belongs to this employee
   const allCards=document.querySelectorAll('.ts-card');
   let targetCard=null;
   allCards.forEach(c=>{
-    if(c.querySelector('.ts-card-name')?.textContent===name) targetCard=c;
+    if(c.querySelector('.ts-name')?.textContent===name) targetCard=c;
   });
   if(!targetCard){toast('Card not found');return;}
 
@@ -608,8 +608,8 @@ async function printOneTimecard(empId){
     body{font-family:Arial,sans-serif;color:#111}
     table{border-collapse:collapse;width:100%}
     td,th{border:1px solid #ccc;padding:6px 10px;font-size:11px}
-    .ts-card-header{background:#1a1a1a;color:#fff;padding:12px;margin-bottom:0}
-    .ts-totals-row td{background:#1a1a1a;color:#fff;font-weight:700}
+    .ts-card-hdr{background:#1a1a1a;color:#fff;padding:12px;margin-bottom:0}
+    .ts-totals td{background:#1a1a1a;color:#fff;font-weight:700}
     h2{font-family:Arial;margin-bottom:6px}
   </style>
   <h2>Rye Electric — Weekly Timecard</h2>
