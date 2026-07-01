@@ -978,6 +978,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
         <table class="ts-table" id="labor-table">
           <thead>
             <tr>
+              <th>Date</th>
               <th>Employee</th>
               <th>Time In</th>
               <th>Time Out</th>
@@ -1957,10 +1958,11 @@ function populateTaskTicketDropdown() {
 }
 
 // ── LABOR ROWS ──
-function addLaborRow() {
+function addLaborRow(entry) {
   const tbody = document.getElementById('labor-tbody');
   const tr = document.createElement('tr');
   tr.innerHTML = `
+    <td><input type="date" class="form-control labor-date" value="${entry?.date || today()}" style="width:130px"></td>
     <td><select class="form-control" style="min-width:150px">
       <option>Mychal Kirschbaum</option>
       <option>Guillermo Silva</option>
@@ -2362,17 +2364,16 @@ function resetCatRatings() {
 function collectLabor() {
   const rows = [];
   document.querySelectorAll('#labor-tbody tr').forEach(tr => {
-    const selects = tr.querySelectorAll('select');
-    const inputs  = tr.querySelectorAll('input');
     rows.push({
-      employee:  selects[0]?.value || '',
-      timeIn:    inputs[0]?.value  || '',
-      timeOut:   inputs[1]?.value  || '',
-      regHours:  inputs[2]?.value  || '',
-      otHours:   inputs[3]?.value  || '',
-      rate:      inputs[4]?.value  || '124.97',
-      lineTotal: inputs[5]?.value  || '',
-      jobRef:    selects[1]?.value || '',
+      date:      tr.querySelector('.labor-date')?.value     || today(),
+      employee:  tr.querySelector('select')?.value          || '',
+      timeIn:    tr.querySelector('.labor-in')?.value       || '',
+      timeOut:   tr.querySelector('.labor-out')?.value      || '',
+      regHours:  tr.querySelector('.labor-reg')?.value      || '',
+      otHours:   tr.querySelector('.labor-ot')?.value       || '',
+      rate:      tr.querySelector('.labor-rate')?.value     || '124.97',
+      lineTotal: tr.querySelector('.labor-line-total')?.value || '',
+      jobRef:    tr.querySelectorAll('select')[1]?.value    || '',
     });
   });
   return rows;
@@ -4110,16 +4111,26 @@ function editTicket(id) {
     (t.labor || []).forEach(r => {
       addLaborRow();
       const tr = laborTbody.lastElementChild;
+      // Date
+      const dateInput = tr.querySelector('.labor-date');
+      if (dateInput) dateInput.value = r.date || t.date || today();
+      // Employee
       const sel = tr.querySelector('select');
-      const inputs = tr.querySelectorAll('input');
       if (sel) { for (let o of sel.options) { if (o.value === r.employee || o.text === r.employee) { sel.value = o.value; break; } } }
-      if (inputs[0]) inputs[0].value = r.timeIn  || '';
-      if (inputs[1]) inputs[1].value = r.timeOut || '';
-      if (inputs[2]) inputs[2].value = r.regHours || '';
-      if (inputs[3]) inputs[3].value = r.otHours  || '';
-      if (inputs[4]) inputs[4].value = r.rate      || '124.97';
-      if (inputs[5]) inputs[5].value = r.lineTotal || '';
-      // Set billed to dropdown
+      // Time & hours
+      const inInput  = tr.querySelector('.labor-in');
+      const outInput = tr.querySelector('.labor-out');
+      const regInput = tr.querySelector('.labor-reg');
+      const otInput  = tr.querySelector('.labor-ot');
+      const rateInput= tr.querySelector('.labor-rate');
+      const lineInput= tr.querySelector('.labor-line-total');
+      if (inInput)   inInput.value   = r.timeIn   || '';
+      if (outInput)  outInput.value  = r.timeOut  || '';
+      if (regInput)  regInput.value  = r.regHours || '';
+      if (otInput)   otInput.value   = r.otHours  || '';
+      if (rateInput) rateInput.value = r.rate      || '124.97';
+      if (lineInput) lineInput.value = r.lineTotal || '';
+      // Billed to dropdown
       const jobSel = tr.querySelectorAll('select')[1];
       if (jobSel && r.jobRef) {
         for (let o of jobSel.options) { if (o.value === r.jobRef) { jobSel.value = r.jobRef; break; } }
@@ -4302,15 +4313,15 @@ function viewTicket(id) {
       ${t.labor?.length ? `
       <div class="form-section-title red" style="margin-bottom:10px">Labor</div>
       <table class="ticket-table" style="margin-bottom:16px">
-        <thead><tr><th>Employee</th><th>Time In</th><th>Time Out</th><th>Reg Hrs</th><th>OT Hrs</th><th>Rate</th><th>Line Total</th><th>Job Ref</th></tr></thead>
+        <thead><tr><th>Date</th><th>Employee</th><th>Time In</th><th>Time Out</th><th>Reg Hrs</th><th>OT Hrs</th><th>Rate</th><th>Line Total</th><th>Job Ref</th></tr></thead>
         <tbody>${t.labor.map(r => {
           const rate = parseFloat(r.rate) || 124.97;
           const reg  = parseFloat(r.regHours) || 0;
           const ot   = parseFloat(r.otHours)  || 0;
           const line = r.lineTotal ? parseFloat(r.lineTotal) : (reg * rate) + (ot * rate * 1.5);
-          return `<tr><td>${r.employee}</td><td>${r.timeIn||'—'}</td><td>${r.timeOut||'—'}</td><td>${r.regHours||'—'}</td><td>${r.otHours||'—'}</td><td>$${rate.toFixed(2)}/hr</td><td><strong>$${line.toFixed(2)}</strong></td><td>${r.jobRef||'—'}</td></tr>`;
+          return `<tr><td>${r.date ? fmtDate(r.date) : '—'}</td><td>${r.employee}</td><td>${r.timeIn||'—'}</td><td>${r.timeOut||'—'}</td><td>${r.regHours||'—'}</td><td>${r.otHours||'—'}</td><td>$${rate.toFixed(2)}/hr</td><td><strong>$${line.toFixed(2)}</strong></td><td>${r.jobRef||'—'}</td></tr>`;
         }).join('')}</tbody>
-        <tfoot><tr style="font-weight:700;background:#f9f9f9"><td colspan="6">Labor Total</td><td colspan="2">$${
+        <tfoot><tr style="font-weight:700;background:#f9f9f9"><td colspan="7">Labor Total</td><td colspan="2">$${
           t.labor.reduce((s,r) => {
             const rate = parseFloat(r.rate) || 124.97;
             const reg  = parseFloat(r.regHours) || 0;
