@@ -7524,7 +7524,7 @@ function publishSingleSignedIn(wid) {
       });
 
       // Truncate to ~300KB to stay under API rate limits (~8k tokens)
-      var MAX_B64 = 300000;
+      var MAX_B64 = 150000;
       var base64Send = base64.length > MAX_B64 ? base64.slice(0, MAX_B64) : base64;
       statusText.textContent = 'Extracting schedule with AI' + (base64.length > MAX_B64 ? ' (summary pages)...' : '...');
 
@@ -7533,8 +7533,8 @@ function publishSingleSignedIn(wid) {
         headers: { 'Content-Type': 'application/json' },
         signal: AbortSignal.timeout(120000),
         body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 4000,
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2000,
           messages: [{
             role: 'user',
             content: [
