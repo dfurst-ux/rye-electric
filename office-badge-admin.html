@@ -497,9 +497,12 @@ async function loadTimecard(){
       const dayPunches=(byDay[key]||[]).sort((a,b)=>new Date(a.punched_at)-new Date(b.punched_at));
       if(dayPunches.length===0) continue;
 
-      const code=codeByEmpDate[empId+'|'+key]||null;
-      const codeInfo=code?codesList.find(c=>c.code===code):null;
-      const codeText=code?code+(codeInfo?' — '+codeInfo.label:''):'—';
+      const dayData    = codeByEmpDate[empId+'|'+key] || null;
+      const code       = dayData?.code || null;
+      const codeInfo   = code ? codesList.find(c=>c.code===code) : null;
+      const codeText   = code ? code+(codeInfo?' — '+codeInfo.label:'') : '—';
+      const billedReg  = (dayData?.billedReg !== null && dayData?.billedReg !== undefined) ? parseFloat(dayData.billedReg) : null;
+      const billedOt   = (dayData?.billedOt  !== null && dayData?.billedOt  !== undefined) ? parseFloat(dayData.billedOt)  : null;
 
       const segs=[];
       let hours=0;
