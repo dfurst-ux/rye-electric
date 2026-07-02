@@ -7613,7 +7613,7 @@ function publishSingleSignedIn(wid) {
         signal: AbortSignal.timeout(120000),
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2000,
+          max_tokens: 4000,
           messages: [{ role: 'user', content: [
             { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
             { type: 'text', text: prompt }
@@ -7624,6 +7624,13 @@ function publishSingleSignedIn(wid) {
       var text = data.content && data.content[0] && data.content[0].text;
       if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
       var clean = text.replace(/```json|```/g,'').trim();
+      try { JSON.parse(clean); } catch(e) {
+        clean = clean.replace(/,\s*\{[^}]*$/, '');
+        var opens = (clean.match(/\[/g)||[]).length - (clean.match(/\]/g)||[]).length;
+        var openb = (clean.match(/\{/g)||[]).length - (clean.match(/\}/g)||[]).length;
+        for(var oi=0;oi<openb;oi++) clean += '}';
+        for(var oi=0;oi<opens;oi++) clean += ']';
+      }
       var parsed = JSON.parse(clean);
 
       if (type === 'gc') {
@@ -7749,7 +7756,7 @@ function publishSingleSignedIn(wid) {
         signal: AbortSignal.timeout(120000),
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2000,
+          max_tokens: 4000,
           messages: [{
             role: 'user',
             content: [
@@ -7763,6 +7770,13 @@ function publishSingleSignedIn(wid) {
       var text = data.content && data.content[0] && data.content[0].text;
       if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
       var clean = text.replace(/```json|```/g,'').trim();
+      try { JSON.parse(clean); } catch(e) {
+        clean = clean.replace(/,\s*\{[^}]*$/, '');
+        var opens = (clean.match(/\[/g)||[]).length - (clean.match(/\]/g)||[]).length;
+        var openb = (clean.match(/\{/g)||[]).length - (clean.match(/\}/g)||[]).length;
+        for(var oi=0;oi<openb;oi++) clean += '}';
+        for(var oi=0;oi<opens;oi++) clean += ']';
+      }
       var parsed = JSON.parse(clean);
       var baselineTasks = Array.isArray(parsed) ? [] : (parsed.baseline || []);
       var currentTasks = Array.isArray(parsed) ? parsed : (parsed.current || []);
