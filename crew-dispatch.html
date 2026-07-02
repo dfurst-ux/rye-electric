@@ -386,7 +386,17 @@
 <div class="modal-overlay" id="authModal">
   <div class="modal">
     <h2>Admin Access</h2>
-    <p>Enter the admin password to enable drag-and-drop crew management.</p>
+    <p>Select your name and enter your password to make changes.</p>
+    <div class="form-group">
+      <label>Who are you?</label>
+      <select id="authUser" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;font-size:14px">
+        <option value="">-- Select --</option>
+        <option value="furst">Dennis Furst</option>
+        <option value="jacobo">Jonathan Jacobo</option>
+        <option value="java">Joey Java</option>
+        <option value="contreras">Xavier Contreras</option>
+      </select>
+    </div>
     <div class="form-group">
       <label>Password</label>
       <input type="password" id="authInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')submitAuth()">
@@ -497,7 +507,29 @@
 // ─────────────────────────────────────────────
 const SUPABASE_URL = 'https://okesnavkxmqucgvvhncx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
-const ADMIN_PASSWORD = '1234';
+const ADMIN_PASSWORD = '1234'; // legacy - replaced by USERS below
+
+// ── Named admin users ──
+let USERS = [
+  { id: 'furst',     name: 'Dennis Furst',    password: 'Furst'     },
+  { id: 'jacobo',   name: 'Jonathan Jacobo',  password: 'Jacobo'    },
+  { id: 'java',     name: 'Joey Java',         password: 'Java'      },
+  { id: 'contreras',name: 'Xavier Contreras',  password: 'Contreras' },
+];
+let currentUser = null; // { id, name } when logged in
+
+// ── Audit log ──
+let auditLog = [];
+function logAudit(action) {
+  if (!currentUser) return;
+  auditLog.unshift({ user: currentUser.name, action, ts: new Date().toLocaleString() });
+  if (auditLog.length > 200) auditLog.pop();
+  try { localStorage.setItem('rye_dispatch_audit', JSON.stringify(auditLog)); } catch {}
+  renderAuditLog();
+}
+function loadAuditLog() {
+  try { var s = localStorage.getItem('rye_dispatch_audit'); if(s) auditLog = JSON.parse(s); } catch {}
+}
 
 // ─────────────────────────────────────────────
 // STATE
@@ -1394,6 +1426,37 @@ function applySignedInHighlights() {
   });
 }
 
+
+function toggleAuditPanel() {
+  var panel = document.getElementById('audit-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+  if (panel.style.display === 'block') renderAuditLog();
+}
+
+function renderAuditLog() {
+  var el = document.getElementById('audit-log-content');
+  if (!el) return;
+  if (!auditLog.length) {
+    el.innerHTML = '<div style="color:#718096;text-align:center;padding:20px">No activity yet</div>';
+    return;
+  }
+  el.innerHTML = auditLog.map(function(e) {
+    return '<div style="border-bottom:1px solid #2d3748;padding:8px 0">'
+      + '<div style="color:#5bc8f5;font-weight:700">' + e.user + '</div>'
+      + '<div>' + e.action + '</div>'
+      + '<div style="color:#718096;font-size:11px">' + e.ts + '</div>'
+      + '</div>';
+  }).join('');
+}
+
 </script>
+
+<div id="audit-panel" style="display:none;position:fixed;top:0;right:0;width:380px;height:100%;background:#1a202c;color:#fff;z-index:9999;overflow-y:auto;padding:20px;box-shadow:-4px 0 20px rgba(0,0,0,.5)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div style="font-size:16px;font-weight:800">📋 Audit Log</div>
+    <button onclick="toggleAuditPanel()" style="background:none;border:none;color:#fff;font-size:20px;cursor:pointer">✕</button>
+  </div>
+  <div id="audit-log-content" style="font-size:12px;line-height:1.8"></div>
+</div>
 </body>
 </html>
