@@ -7573,172 +7573,14 @@ function publishSingleSignedIn(wid) {
     } catch(e){}
   }
 
-  var _ganttHTMLTemplate = `
-
-    <!-- ── Top toolbar ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
-      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
-
-      <!-- Schedule view toggle -->
-      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
-        <button id="sched-btn-gc" onclick="setSchedView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">GC Schedule</button>
-        <button id="sched-btn-rye" onclick="setSchedView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Rye Schedule</button>
-        <button id="sched-btn-compare" onclick="setSchedView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Compare</button>
-      </div>
-
-      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
-        📂 Import Schedule
-        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
-      </label>
-      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
-        🤖 Upload GC Schedule (PDF)
-        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
-      </label>
-      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
-        🤖 Upload Rye Schedule (PDF)
-        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
-      </label>
-      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
-        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
-        <span id="gantt-pdf-status-text">Reading PDF...</span>
-      </div>
-      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
-      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
-      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
-    </div>
-      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
-        🤖 Upload GC Schedule (PDF)
-        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
-      </label>
-      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
-        🤖 Upload Rye Schedule (PDF)
-        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
-      </label>
-      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
-        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
-        <span id="gantt-pdf-status-text">Reading PDF...</span>
-      </div>
-    </div>
-
-    <!-- ── View controls ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
-      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
-      <span style="flex:1"></span>
-      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
-      </label>
-      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
-      </label>
-    </div>
-
-    <!-- ── Activity Filter Bar ── -->
-    <div id="gantt-filter-bar" style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Filter:</span>
-      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2980b9;cursor:pointer;background:#ebf8ff;border:1px solid #bee3f8;padding:3px 10px;border-radius:20px">
-        <input type="checkbox" id="filter-electrical" checked onchange="ganttApplyFilter()"> ⚡ Electrical
-      </label>
-      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
-        <input type="checkbox" id="filter-others" onchange="ganttApplyFilter()"> All Other Trades
-      </label>
-      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
-        <input type="checkbox" id="filter-baseline" checked onchange="ganttApplyFilter()"> Show Baseline
-      </label>
-      <button onclick="ganttResetFilter()" style="font-size:11px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:3px 10px;cursor:pointer;color:#666">Reset</button>
-      <span id="gantt-filter-count" style="font-size:11px;color:#a0aec0;margin-left:auto"></span>
-    </div>
-
-    <!-- ── Critical Path Summary Panel ── -->
-    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
-      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
-      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
-    </div>
-
-    <!-- ── Import instructions ── -->
-    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
-      <div style="font-size:32px;margin-bottom:10px">📋</div>
-      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
-      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
-      <div style="font-size:11px;color:#999;line-height:1.6">
-        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
-        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
-      </div>
-    </div>
-
-    <!-- ── Main Gantt layout ── -->
-    <div id="gantt-main" style="display:none">
-
-      <!-- Stats bar -->
-      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
-
-      <!-- Gantt chart container -->
-      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
-        <!-- Header row -->
-        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
-          <div style="padding:8px 12px">Task Name</div>
-          <div style="padding:8px 6px;text-align:center">%</div>
-          <div style="padding:8px 6px;text-align:center">Start</div>
-          <div style="padding:8px 6px;text-align:center">Finish</div>
-          <div style="padding:8px 6px;text-align:center">Float</div>
-          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
-        </div>
-        <!-- Task rows -->
-        <div id="gantt-rows"></div>
-      </div>
-
-      <!-- Legend -->
-      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
-        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
-      </div>
-    </div>
-
-    <!-- ── Edit task modal ── -->
-    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
-      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
-        <div style="display:grid;gap:10px">
-          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
-            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
-          </div>
-          <div>
-            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
-            <div style="display:flex;align-items:center;gap:10px">
-              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
-              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
-            </div>
-          </div>
-          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
-            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:18px">
-          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
-          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
-          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-  `;
   var _ganttInitialized = false;
   
   function initGanttPane() {
     if (_ganttInitialized) return;
-    document.getElementById('gantt-inner').innerHTML = _ganttHTMLTemplate;
+    var tmpl = document.getElementById('gantt-template');
+    if (tmpl) {
+      document.getElementById('gantt-inner').appendChild(tmpl.content.cloneNode(true));
+    }
     _ganttInitialized = true;
     ganttLoad();
   }
@@ -8000,3 +7842,165 @@ function publishSingleSignedIn(wid) {
 </script>
 
 </body></html>
+
+<template id="gantt-template">
+
+    <!-- ── Top toolbar ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
+      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
+
+      <!-- Schedule view toggle -->
+      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
+        <button id="sched-btn-gc" onclick="setSchedView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">GC Schedule</button>
+        <button id="sched-btn-rye" onclick="setSchedView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Rye Schedule</button>
+        <button id="sched-btn-compare" onclick="setSchedView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Compare</button>
+      </div>
+
+      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+        📂 Import Schedule
+        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
+      </label>
+      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
+      </label>
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
+      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
+      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
+    </div>
+      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
+      </label>
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
+    </div>
+
+    <!-- ── View controls ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
+      <span style="flex:1"></span>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
+      </label>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
+      </label>
+    </div>
+
+    <!-- ── Activity Filter Bar ── -->
+    <div id="gantt-filter-bar" style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Filter:</span>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2980b9;cursor:pointer;background:#ebf8ff;border:1px solid #bee3f8;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-electrical" checked onchange="ganttApplyFilter()"> ⚡ Electrical
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-others" onchange="ganttApplyFilter()"> All Other Trades
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-baseline" checked onchange="ganttApplyFilter()"> Show Baseline
+      </label>
+      <button onclick="ganttResetFilter()" style="font-size:11px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:3px 10px;cursor:pointer;color:#666">Reset</button>
+      <span id="gantt-filter-count" style="font-size:11px;color:#a0aec0;margin-left:auto"></span>
+    </div>
+
+    <!-- ── Critical Path Summary Panel ── -->
+    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
+      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
+    </div>
+
+    <!-- ── Import instructions ── -->
+    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
+      <div style="font-size:32px;margin-bottom:10px">📋</div>
+      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
+      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
+      <div style="font-size:11px;color:#999;line-height:1.6">
+        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
+        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
+      </div>
+    </div>
+
+    <!-- ── Main Gantt layout ── -->
+    <div id="gantt-main" style="display:none">
+
+      <!-- Stats bar -->
+      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
+
+      <!-- Gantt chart container -->
+      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
+        <!-- Header row -->
+        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
+          <div style="padding:8px 12px">Task Name</div>
+          <div style="padding:8px 6px;text-align:center">%</div>
+          <div style="padding:8px 6px;text-align:center">Start</div>
+          <div style="padding:8px 6px;text-align:center">Finish</div>
+          <div style="padding:8px 6px;text-align:center">Float</div>
+          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
+        </div>
+        <!-- Task rows -->
+        <div id="gantt-rows"></div>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
+        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
+      </div>
+    </div>
+
+    <!-- ── Edit task modal ── -->
+    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
+      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
+        <div style="display:grid;gap:10px">
+          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
+              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
+            </div>
+          </div>
+          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
+            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:18px">
+          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
+          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
+          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+</template>
