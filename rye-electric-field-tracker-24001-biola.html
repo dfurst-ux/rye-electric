@@ -1479,17 +1479,19 @@ tbody tr:hover td{background:#f7fbfc}
       <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
       <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
       <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
-    </div> extract tasks into the Gantt">
+    </div>
+      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
         🤖 Upload GC Schedule (PDF)
         <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
       </label>
       <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
         <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
         <span id="gantt-pdf-status-text">Reading PDF...</span>
       </div>
-      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
-      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
-      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
     </div>
 
     <!-- ── View controls ── -->
