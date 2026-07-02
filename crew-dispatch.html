@@ -1063,18 +1063,20 @@ function handleModeClick() {
 }
 
 function submitAuth() {
-  const pw = document.getElementById('authInput').value;
-  if (pw === ADMIN_PASSWORD) {
+  const uid = document.getElementById('authUser').value;
+  const pw  = document.getElementById('authInput').value;
+  const user = USERS.find(u => u.id === uid && u.password === pw);
+  if (user) {
     isAdmin = true;
+    currentUser = { id: user.id, name: user.name };
     document.getElementById('authInput').value = '';
     document.getElementById('authError').classList.remove('show');
     closeModal('authModal');
     applyMode();
-    showToast('Admin mode unlocked');
+    showToast('Admin mode — logged in as ' + user.name);
+    logAudit('Logged in');
   } else {
     document.getElementById('authError').classList.add('show');
-    document.getElementById('authInput').value = '';
-    document.getElementById('authInput').focus();
   }
 }
 
@@ -1370,6 +1372,7 @@ function uid() { return Math.random().toString(36).slice(2,10); }
 // ─────────────────────────────────────────────
 // BOOT
 // ─────────────────────────────────────────────
+loadAuditLog();
 init().then(function() {
   // Load signed-in status after board is rendered, then poll every 60s
   loadSignedInStatus();
