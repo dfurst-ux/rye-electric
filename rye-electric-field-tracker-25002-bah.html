@@ -1518,6 +1518,7 @@ tbody tr:hover td{background:#f7fbfc}
       <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
       <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
       <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrint()">🖨️ Print PDF</button>
+      <button style="background:#718096;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttClearSchedule()" title="Clear the current schedule">🗑️ Clear</button>
     </div>
 
     <!-- ── View controls ── -->
@@ -7468,6 +7469,26 @@ function publishSingleSignedIn(wid) {
     ganttRender();
   }
   function ganttSave(){try{localStorage.setItem(GANTT_KEY,JSON.stringify(ganttTasks));if(typeof toast==='function')toast('Schedule saved');}catch(e){}}
+
+  function ganttClearSchedule() {
+    var view = typeof _schedView !== 'undefined' ? _schedView : 'gc';
+    var what = view === 'rye' ? 'Rye Schedule' : view === 'gc' ? 'GC Schedule' : 'all schedules';
+    if (!confirm('Clear ' + what + '? This cannot be undone.')) return;
+    if (view === 'rye' || view === 'compare') {
+      _ryeTasks = [];
+      localStorage.removeItem(GANTT_KEY + '_rye');
+    }
+    if (view === 'gc' || view === 'compare') {
+      _gcCurrentTasks = [];
+      _gcPreviousTasks = [];
+      localStorage.removeItem(GANTT_KEY + '_gc');
+      localStorage.removeItem(GANTT_KEY + '_gc_prev');
+    }
+    ganttTasks = [];
+    ganttRender();
+    if (typeof toast === 'function') toast(what + ' cleared');
+  }
+
   function ganttLoad(){
     try{
       var gc = localStorage.getItem(GANTT_KEY+'_gc'); if(gc){ _gcCurrentTasks=JSON.parse(gc); }
