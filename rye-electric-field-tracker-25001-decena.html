@@ -7994,10 +7994,7 @@ function publishSingleSignedIn(wid) {
   }
 
   document.addEventListener('DOMContentLoaded',function(){
-    ganttLoad();
-    // Force hide gantt pane regardless of HTML structure
-    var pg = document.getElementById('pane-gantt');
-    if(pg){ pg.style.cssText='display:none!important'; pg.className='pane'; }
+    // gantt loads only when Schedule tab is opened via initGanttPane()
   });
 
 </script>
