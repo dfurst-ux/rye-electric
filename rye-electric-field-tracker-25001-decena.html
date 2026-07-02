@@ -1488,29 +1488,36 @@ tbody tr:hover td{background:#f7fbfc}
     <!-- ── Top toolbar ── -->
     <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
       <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
-      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
-        📂 Import Schedule
-        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
-      </label>
-      <label style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
+
+      <!-- GC Schedule upload -->
+      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload GC schedule PDF — AI extracts tasks and compares to previous version">
         🤖 Upload GC Schedule (PDF)
-        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportGCPDF(this)">
       </label>
+
+      <!-- Rye Schedule upload -->
+      <label style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
+      </label>
+
+      <!-- Status indicator -->
       <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
         <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
         <span id="gantt-pdf-status-text">Reading PDF...</span>
       </div>
+
+      <!-- View toggle -->
+      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
+        <button id="sched-view-gc" onclick="schedSetView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">GC Schedule</button>
+        <button id="sched-view-rye" onclick="schedSetView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">Rye Schedule</button>
+        <button id="sched-view-compare" onclick="schedSetView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">Compare</button>
+        <button id="sched-view-changes" onclick="schedSetView('changes')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">GC Changes</button>
+      </div>
+
       <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
       <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
       <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrint()">🖨️ Print PDF</button>
-      <label style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload GC PDF schedule">
-        🤖 Upload GC Schedule (PDF)
-        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
-      </label>
-      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
-        <span style="display:inline-block">⏳</span>
-        <span id="gantt-pdf-status-text">Reading PDF...</span>
-      </div>
     </div>
 
     <!-- ── View controls ── -->
@@ -7461,7 +7468,15 @@ function publishSingleSignedIn(wid) {
     ganttRender();
   }
   function ganttSave(){try{localStorage.setItem(GANTT_KEY,JSON.stringify(ganttTasks));if(typeof toast==='function')toast('Schedule saved');}catch(e){}}
-  function ganttLoad(){try{var s=localStorage.getItem(GANTT_KEY);if(s){ganttTasks=JSON.parse(s);ganttRender();}}catch(e){}}
+  function ganttLoad(){
+    try{
+      var gc = localStorage.getItem(GANTT_KEY+'_gc'); if(gc){ _gcCurrentTasks=JSON.parse(gc); }
+      var gcp = localStorage.getItem(GANTT_KEY+'_gc_prev'); if(gcp){ _gcPreviousTasks=JSON.parse(gcp); }
+      var rye = localStorage.getItem(GANTT_KEY+'_rye'); if(rye){ _ryeTasks=JSON.parse(rye); }
+      if(_gcCurrentTasks.length){ ganttTasks=_gcCurrentTasks.slice(); ganttRender(); }
+      else if(_ryeTasks.length){ ganttTasks=_ryeTasks.slice(); ganttRender(); }
+    }catch(e){}
+  }
 
   function ganttAddTask(){
     ganttEditIdx=-1;
@@ -7512,28 +7527,86 @@ function publishSingleSignedIn(wid) {
   }
 
 
-  async function ganttImportPDF(input) {
+  // ── Schedule data stores ──
+  var _gcCurrentTasks = [];   // latest GC schedule
+  var _gcPreviousTasks = [];  // previous GC schedule for comparison
+  var _ryeTasks = [];         // Rye's own schedule
+  var _schedView = 'gc';
+
+  function schedSetView(view) {
+    _schedView = view;
+    ['gc','rye','compare','changes'].forEach(function(v) {
+      var btn = document.getElementById('sched-view-' + v);
+      if (btn) { btn.style.background = v === view ? '#2980b9' : 'transparent'; btn.style.color = v === view ? '#fff' : '#666'; }
+    });
+    if (view === 'gc') {
+      ganttTasks = _gcCurrentTasks.slice();
+    } else if (view === 'rye') {
+      ganttTasks = _ryeTasks.slice();
+    } else if (view === 'compare') {
+      ganttTasks = _gcCurrentTasks.slice();
+      if (_ryeTasks.length) {
+        ganttTasks.push({id:'RYE_SEP',name:'━━━ RYE ELECTRIC SCHEDULE ━━━',start:'',finish:'',pct:0,assigned:'',preds:[],summary:true,indent:0});
+        ganttTasks = ganttTasks.concat(_ryeTasks);
+      }
+    } else if (view === 'changes') {
+      if (!_gcPreviousTasks.length) { toast('Upload a second GC schedule to compare versions'); return; }
+      ganttTasks = [];
+      // Find tasks that changed between previous and current GC
+      _gcCurrentTasks.forEach(function(curr) {
+        var prev = _gcPreviousTasks.find(function(p) { return p.name && curr.name && p.name.toLowerCase().trim() === curr.name.toLowerCase().trim(); });
+        if (!prev) {
+          ganttTasks.push(Object.assign({}, curr, {name: '🆕 NEW: ' + curr.name}));
+        } else {
+          var startDiff = prev.start && curr.start ? Math.round((new Date(curr.start) - new Date(prev.start)) / 86400000) : 0;
+          var finishDiff = prev.finish && curr.finish ? Math.round((new Date(curr.finish) - new Date(prev.finish)) / 86400000) : 0;
+          if (startDiff !== 0 || finishDiff !== 0) {
+            var delta = [];
+            if (startDiff) delta.push('Start ' + (startDiff > 0 ? '+' : '') + startDiff + 'd');
+            if (finishDiff) delta.push('Finish ' + (finishDiff > 0 ? '+' : '') + finishDiff + 'd');
+            ganttTasks.push(Object.assign({}, curr, {name: curr.name + ' [' + delta.join(', ') + ']'}));
+          }
+        }
+      });
+      if (!ganttTasks.length) { toast('No changes found between GC schedules'); ganttTasks = _gcCurrentTasks.slice(); }
+    }
+    ganttRender();
+  }
+
+  async function ganttImportGCPDF(input) {
     var file = input.files[0];
     if (!file) return;
     input.value = '';
+    // Save current as previous before loading new
+    if (_gcCurrentTasks.length) {
+      _gcPreviousTasks = _gcCurrentTasks.slice();
+      localStorage.setItem(GANTT_KEY + '_gc_prev', JSON.stringify(_gcPreviousTasks));
+    }
+    await _importPDF(file, 'gc');
+  }
 
+  async function ganttImportRyePDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+    await _importPDF(file, 'rye');
+  }
+
+  async function _importPDF(file, type) {
     var statusBar = document.getElementById('gantt-pdf-status');
     var statusText = document.getElementById('gantt-pdf-status-text');
     statusBar.style.display = 'flex';
-    statusText.textContent = 'Reading PDF...';
-
+    statusText.textContent = 'Extracting ' + (type === 'gc' ? 'GC' : 'Rye') + ' schedule with AI...';
     try {
-      // Convert PDF to base64
       var base64 = await new Promise(function(res, rej) {
         var r = new FileReader();
         r.onload = function() { res(r.result.split(',')[1]); };
         r.onerror = function() { rej(new Error('Read failed')); };
         r.readAsDataURL(file);
       });
-
-      statusText.textContent = 'Extracting schedule with AI...';
-
-      // Send full PDF - haiku handles it efficiently
+      var prompt = type === 'gc'
+        ? 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object, no markdown: { "baseline": [...tasks], "current": [...tasks] }. If one schedule, put in "current", empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Top-level milestones only, 20-30 max.'
+        : 'Extract the schedule from this PDF. Return ONLY a JSON array, no markdown: [...tasks]. Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Top-level milestones only, 20-30 max.';
       var response = await fetch('https://rye-claude.dfurst.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -7541,101 +7614,52 @@ function publishSingleSignedIn(wid) {
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
           max_tokens: 2000,
-          messages: [{
-            role: 'user',
-            content: [
-              {
-                type: 'document',
-                source: { type: 'base64', media_type: 'application/pdf', data: base64 }
-              },
-              {
-                type: 'text',
-                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones from the FIRST PAGE comparison table, 20-30 tasks max.'
-              }
-            ]
-          }]
+          messages: [{ role: 'user', content: [
+            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+            { type: 'text', text: prompt }
+          ]}]
         })
       });
-
       var data = await response.json();
       var text = data.content && data.content[0] && data.content[0].text;
-      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0, 300));
-
-      statusText.textContent = 'Parsing tasks...';
-
-      var clean = text.replace(/```json|```/g, '').trim();
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
+      var clean = text.replace(/```json|```/g,'').trim();
       var parsed = JSON.parse(clean);
 
-      var baselineTasks = [];
-      var currentTasks = [];
-      if (Array.isArray(parsed)) {
-        currentTasks = parsed;
-      } else {
-        baselineTasks = parsed.baseline || [];
-        currentTasks = parsed.current || parsed.tasks || [];
-      }
-
-      if (currentTasks.length === 0) throw new Error('No tasks found in schedule');
-
-      ganttTasks = [];
-
-      if (baselineTasks.length > 0) {
-        baselineTasks.forEach(function(t, i) {
-          ganttTasks.push({
-            id: 'B' + String(t.id || i),
-            name: '📋 BASELINE: ' + (t.name || 'Task ' + i),
-            start: t.start || '',
-            finish: t.finish || '',
-            pct: 0,
-            assigned: 'Baseline',
-            preds: [],
-            summary: true,
-            indent: 0
-          });
-        });
-        ganttTasks.push({
-          id: 'SEP1',
-          name: '━━━ CURRENT SCHEDULE ━━━',
-          start: currentTasks[0] ? currentTasks[0].start : '',
-          finish: currentTasks[currentTasks.length-1] ? currentTasks[currentTasks.length-1].finish : '',
-          pct: 0, assigned: '', preds: [], summary: true, indent: 0
-        });
-      }
-
-      currentTasks.forEach(function(t, i) {
-        var base = baselineTasks.find(function(b) {
-          return b.name && t.name && b.name.toLowerCase().trim() === t.name.toLowerCase().trim();
-        });
-        var delta = '';
-        if (base && base.start && t.start) {
-          var days = Math.round((new Date(t.start) - new Date(base.start)) / 86400000);
-          if (days !== 0) delta = ' [' + (days > 0 ? '+' : '') + days + 'd]';
+      if (type === 'gc') {
+        var baselineTasks = Array.isArray(parsed) ? [] : (parsed.baseline || []);
+        var currentTasks = Array.isArray(parsed) ? parsed : (parsed.current || []);
+        var tasks = [];
+        if (baselineTasks.length) {
+          baselineTasks.forEach(function(t,i){ tasks.push({id:'B'+i,name:'BASELINE: '+t.name,start:t.start||'',finish:t.finish||'',pct:0,assigned:'Baseline',preds:[],summary:true,indent:0}); });
+          tasks.push({id:'SEP1',name:'━━━ CURRENT ━━━',start:'',finish:'',pct:0,assigned:'',preds:[],summary:true,indent:0});
         }
-        ganttTasks.push({
-          id: 'C' + String(t.id || i),
-          name: (t.name || 'Task ' + i) + delta,
-          start: t.start || '',
-          finish: t.finish || '',
-          pct: parseInt(t.pct) || 0,
-          assigned: t.assigned || '',
-          preds: Array.isArray(t.preds) ? t.preds.map(String) : [],
-          summary: false,
-          indent: 0
+        currentTasks.forEach(function(t,i){
+          var base = baselineTasks.find(function(b){ return b.name && t.name && b.name.toLowerCase()===t.name.toLowerCase(); });
+          var delta = '';
+          if (base && base.start && t.start) { var d=Math.round((new Date(t.start)-new Date(base.start))/86400000); if(d) delta=' ['+(d>0?'+':'')+d+'d]'; }
+          tasks.push({id:'C'+i,name:t.name+delta,start:t.start||'',finish:t.finish||'',pct:parseInt(t.pct)||0,assigned:t.assigned||'',preds:[],summary:false,indent:0});
         });
-      });
-
-      ganttRender();
-      ganttSave();
+        _gcCurrentTasks = tasks;
+        localStorage.setItem(GANTT_KEY + '_gc', JSON.stringify(_gcCurrentTasks));
+        ganttTasks = _gcCurrentTasks.slice();
+        schedSetView('gc');
+        toast('GC Schedule imported — ' + currentTasks.length + ' tasks' + (_gcPreviousTasks.length ? ' (click GC Changes to compare versions)' : ''));
+      } else {
+        var ryeList = Array.isArray(parsed) ? parsed : (parsed.current || parsed.tasks || []);
+        _ryeTasks = ryeList.map(function(t,i){ return {id:'R'+i,name:t.name||'Task '+i,start:t.start||'',finish:t.finish||'',pct:parseInt(t.pct)||0,assigned:t.assigned||'',preds:[],summary:false,indent:0}; });
+        localStorage.setItem(GANTT_KEY + '_rye', JSON.stringify(_ryeTasks));
+        ganttTasks = _ryeTasks.slice();
+        schedSetView('rye');
+        toast('Rye Schedule imported — ' + _ryeTasks.length + ' tasks');
+      }
       statusBar.style.display = 'none';
-      if (typeof toast === 'function') toast('Imported ' + ganttTasks.length + ' tasks from GC schedule PDF');
-
     } catch(e) {
       statusBar.style.display = 'none';
-      console.error('PDF import error:', e);
-      if (typeof toast === 'function') toast('PDF import failed: ' + e.message);
-      alert('Could not extract schedule: ' + e.message + '\n\nTip: Make sure the PDF contains a text-based schedule, not a scanned image.');
+      alert('Could not extract schedule: ' + e.message);
     }
   }
+
 
   function ganttImport(input){
     var file=input.files[0];if(!file)return;

@@ -3,7 +3,7 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rye Electric - Field Tracker - 24002 - SEPULVEDA</title>
+<title>Rye Electric - Field Tracker - 25001 - DECENA</title>
 <link href="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/css2" rel="stylesheet">
 <style>
 :root{
@@ -424,7 +424,7 @@ tbody tr:hover td{background:#f7fbfc}
 
   <!-- ===== LOG UNIT TAB ===== -->
   
-<div class="pane on" id="pane-log">
+<div class="pane" id="pane-log">
     <div class="card">
       <div class="ch">
         <div class="ct">
@@ -1154,7 +1154,7 @@ tbody tr:hover td{background:#f7fbfc}
 
   <!-- ===== SIGN IN TAB ===== -->
 
-<div class="pane" id="pane-signin">
+<div class="pane on" id="pane-signin">
 
     <!-- Controls -->
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:flex-end">
@@ -1445,36 +1445,9 @@ tbody tr:hover td{background:#f7fbfc}
 
 <div class="pane" id="pane-workers">
     <div id="worker-cards"></div>
-</div>
-
-<div class="pane" id="pane-gantt" style="display:none">
-  <div id="gantt-inner"></div>
-</div><!-- /pane-gantt -->
-
-  <!-- ===== WHITEBOARD TAB ===== -->
-
-<div id="ios-print-frame" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:99999;overflow:auto;padding:20px;box-sizing:border-box"><button onclick="closePrintFrame()" style="position:fixed;top:10px;right:14px;z-index:100000;background:#c00;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer">✕ Close</button><div id="ios-print-content"></div></div>
-<div id="sig-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:99998;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
-  <div style="background:#1a1f2e;border:2px solid #2a3545;border-radius:12px;padding:20px;width:100%;max-width:500px;box-sizing:border-box">
-    <div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:4px" id="sig-overlay-name">Employee Signature</div>
-    <div style="font-size:11px;color:#777;margin-bottom:12px">Sign in the white box below</div>
-    <div style="background:#fff;border-radius:8px;position:relative;margin-bottom:12px;overflow:hidden">
-      <canvas id="sig-overlay-canvas" width="460" height="160" style="width:100%;height:160px;display:block;touch-action:none;cursor:crosshair" onmousedown="event.stopPropagation();sigStart(event,this)" ontouchstart="event.stopPropagation();sigStart(event,this)"></canvas>
-      <div id="sig-overlay-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;color:#ccc;pointer-events:none">Sign here</div>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button onclick="sigOverlayClear()" style="flex:1;padding:10px;background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:8px;font-size:13px;cursor:pointer">Clear</button>
-      <button onclick="sigOverlayCancel()" style="flex:1;padding:10px;background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:8px;font-size:13px;cursor:pointer">Cancel</button>
-      <button onclick="sigOverlayAccept()" style="flex:2;padding:10px;background:#2980b9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Accept</button>
-    </div>
   </div>
-</div>
-
-
-  <!-- TASKS & CALENDAR -->
 
   <!-- ===== JOBS TAB ===== -->
-
 
 <div class="pane" id="pane-jobs">
     <!-- Production report banner -->
@@ -1510,7 +1483,165 @@ tbody tr:hover td{background:#f7fbfc}
 
 
   <!-- ===== GANTT / SCHEDULE TAB ===== -->
+  <div class="pane" id="pane-gantt">
 
+    <!-- ── Top toolbar ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
+      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
+
+      <!-- GC Schedule upload -->
+      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload GC schedule PDF — AI extracts tasks and compares to previous version">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportGCPDF(this)">
+      </label>
+
+      <!-- Rye Schedule upload -->
+      <label style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
+      </label>
+
+      <!-- Status indicator -->
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
+
+      <!-- View toggle -->
+      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
+        <button id="sched-view-gc" onclick="schedSetView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">GC Schedule</button>
+        <button id="sched-view-rye" onclick="schedSetView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">Rye Schedule</button>
+        <button id="sched-view-compare" onclick="schedSetView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">Compare</button>
+        <button id="sched-view-changes" onclick="schedSetView('changes')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer">GC Changes</button>
+      </div>
+
+      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
+      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrint()">🖨️ Print PDF</button>
+    </div>
+
+    <!-- ── View controls ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
+      <span style="flex:1"></span>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
+      </label>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
+      </label>
+    </div>
+
+    <!-- ── Critical Path Summary Panel ── -->
+    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
+      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
+    </div>
+
+    <!-- ── Import instructions ── -->
+    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
+      <div style="font-size:32px;margin-bottom:10px">📋</div>
+      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
+      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
+      <div style="font-size:11px;color:#999;line-height:1.6">
+        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
+        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
+      </div>
+    </div>
+
+    <!-- ── Main Gantt layout ── -->
+    <div id="gantt-main" style="display:none">
+
+      <!-- Stats bar -->
+      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
+
+      <!-- Gantt chart container -->
+      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
+        <!-- Header row -->
+        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
+          <div style="padding:8px 12px">Task Name</div>
+          <div style="padding:8px 6px;text-align:center">%</div>
+          <div style="padding:8px 6px;text-align:center">Start</div>
+          <div style="padding:8px 6px;text-align:center">Finish</div>
+          <div style="padding:8px 6px;text-align:center">Float</div>
+          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
+        </div>
+        <!-- Task rows -->
+        <div id="gantt-rows"></div>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
+        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
+      </div>
+    </div>
+
+    <!-- ── Edit task modal ── -->
+    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
+      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
+        <div style="display:grid;gap:10px">
+          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
+              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
+            </div>
+          </div>
+          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
+            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:18px">
+          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
+          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
+          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane-gantt -->
+
+  <!-- ===== WHITEBOARD TAB ===== -->
+</div><!-- /shell -->
+
+
+<div id="ios-print-frame" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:99999;overflow:auto;padding:20px;box-sizing:border-box"><button onclick="closePrintFrame()" style="position:fixed;top:10px;right:14px;z-index:100000;background:#c00;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer">✕ Close</button><div id="ios-print-content"></div></div>
+<div id="sig-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.9);z-index:99998;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
+  <div style="background:#1a1f2e;border:2px solid #2a3545;border-radius:12px;padding:20px;width:100%;max-width:500px;box-sizing:border-box">
+    <div style="font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:4px" id="sig-overlay-name">Employee Signature</div>
+    <div style="font-size:11px;color:#777;margin-bottom:12px">Sign in the white box below</div>
+    <div style="background:#fff;border-radius:8px;position:relative;margin-bottom:12px;overflow:hidden">
+      <canvas id="sig-overlay-canvas" width="460" height="160" style="width:100%;height:160px;display:block;touch-action:none;cursor:crosshair" onmousedown="event.stopPropagation();sigStart(event,this)" ontouchstart="event.stopPropagation();sigStart(event,this)"></canvas>
+      <div id="sig-overlay-ph" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;color:#ccc;pointer-events:none">Sign here</div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button onclick="sigOverlayClear()" style="flex:1;padding:10px;background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:8px;font-size:13px;cursor:pointer">Clear</button>
+      <button onclick="sigOverlayCancel()" style="flex:1;padding:10px;background:#fff;border:1px solid #e2e2e2;color:#1a1a1a;border-radius:8px;font-size:13px;cursor:pointer">Cancel</button>
+      <button onclick="sigOverlayAccept()" style="flex:2;padding:10px;background:#2980b9;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Accept</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- TASKS & CALENDAR -->
   <div class="pane" id="pane-tasks">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div style="font-size:14px;font-weight:700;color:#1a1a1a;display:flex;align-items:center;gap:8px">
@@ -2149,7 +2280,6 @@ tbody tr:hover td{background:#f7fbfc}
 </div>
 <!-- ===== END SAFETY TAB ===== -->
 
-</div><!-- /shell -->
 <div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"></polyline></svg><span id="toast-txt"></span></div>
 
 <script>
@@ -2178,7 +2308,7 @@ const REPORT_DATA = [
   {key:"24002 - SEPULVEDA",name:"Sepulveda",week:"May 11-17, 2026",laborRate:44.4,projLG:-134227.42,lastWkHrs:457,lastWkDollars:20292.43,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:-1528,hrsbudget:25302.0,totalBudget:3336122.0,hrsPct:0,unitsPct:106.0,laborActual:1931419.84,laborBudget:1773746.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:1500.0,qtyActual:520.0,projLG:2410.92},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:185.0,qtyActual:57.0,projLG:5822.71},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:5500.0,qtyActual:4495.0,projLG:2591.6},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:210.0,qtyActual:210.0,projLG:-6088.36},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:59.0,qtyActual:59.0,projLG:18374.47},{code:"2500",desc:"UPS & PDUs",unit:"EA",qtyBudget:32.0,qtyActual:1446.07,projLG:-1446.07},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:60.0,qtyActual:0,projLG:0},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:110000.0,qtyActual:93280.0,projLG:-17387.72},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:3000.0,qtyActual:2739.0,projLG:-4352.45},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:13.0,qtyActual:23.0,projLG:-487.16},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:176.0,qtyActual:1708.0,projLG:-5891.16},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1135.0,qtyActual:1057.0,projLG:-27576.11},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:112.0,qtyActual:1088.0,projLG:-27123.84},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:930.0,qtyActual:315.0,projLG:-13482.12},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:210.19},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:13.0,qtyActual:910.82,projLG:910.82},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-910.82},{code:"7400",desc:"Common Area Rough",unit:"EA",qtyBudget:30.0,qtyActual:30.0,projLG:-18315.82},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-738.52},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-3697.15},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:176.0,qtyActual:176.0,projLG:-5662.24},{code:"7800",desc:"Common Area Trim",unit:"EA",qtyBudget:30.0,qtyActual:28.0,projLG:14640.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:176.0,qtyActual:156.0,projLG:-25217.55},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:91.0,qtyActual:91.0,projLG:-5960.85}]},
   {key:"24005 - VNV",name:"Van Nuys & Vose",week:"May 11-17, 2026",laborRate:48.69,projLG:26196.6,lastWkHrs:465,lastWkDollars:16943.52,budgetPct:0,manpower:0,hrsSpent:0,hrsRemaining:-76,hrsbudget:6330.0,totalBudget:0,hrsPct:0,unitsPct:100.2,laborActual:2581052.07,laborBudget:2310016.75,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:20502.0,qtyActual:21173.0,projLG:-19203.24},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:6530.0,qtyActual:5625.0,projLG:16199.9},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:32807.0,qtyActual:7402.0,projLG:16791.64},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:1590.0,qtyActual:144.0,projLG:-6623.86},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:78.0,qtyActual:78.0,projLG:415.77},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:54.0,qtyActual:54.0,projLG:14101.57},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:217945.0,qtyActual:95866.0,projLG:44245.76},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:26683.0,qtyActual:26640.0,projLG:-36102.46},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:32942.0,qtyActual:34456.0,projLG:-61947.65},{code:"3400",desc:"Feeder Cable",unit:"LF",qtyBudget:8185.0,qtyActual:8174.0,projLG:-2456.69},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-55390.96},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1677.0,qtyActual:684.0,projLG:92421.96},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:54.0,qtyActual:122.0,projLG:787.37},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:538.0,qtyActual:179.0,projLG:96.92},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:2788.95},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:2419.65},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-33505.99},{code:"7300",desc:"Unit Shear Walls",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:8990.81},{code:"7320",desc:"Unit Drilling",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:17108.75},{code:"7330",desc:"Unit Pulling",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:-208.26},{code:"7340",desc:"Unit Stab & Makeup",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:28431.84},{code:"7370",desc:"Unit Strap & Plate",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:20718.94},{code:"7380",desc:"Unit Fireproofing",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:1434.77},{code:"7500",desc:"HR to AC",unit:"UN",qtyBudget:332.0,qtyActual:332.0,projLG:8560.24},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:332.0,qtyActual:317.0,projLG:3899.27},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:332.0,qtyActual:306.0,projLG:-9023.16},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:332.0,qtyActual:317.0,projLG:-29774.41},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:996.0,qtyActual:423.0,projLG:14132.21},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:105.0,qtyActual:84.0,projLG:-9720.06}]},
   {key:"24006 - VF",name:"Vintage Farms",week:"May 11-17, 2026",laborRate:47.61,projLG:253134.22,lastWkHrs:796,lastWkDollars:37894.41,budgetPct:0,manpower:19.9,hrsSpent:2887,hrsRemaining:34883,hrsbudget:6697.0,totalBudget:0,hrsPct:0,unitsPct:92.9,laborActual:2417868.11,laborBudget:2463044.0,costCodes:[]},
-  {key:"25001 - DECENA",name:"Mission Gorge",week:"May 11-17, 2026",laborRate:40.58,projLG:0,lastWkHrs:280,lastWkDollars:11361.29,budgetPct:0,manpower:7.0,hrsSpent:19522,hrsRemaining:9240,hrsbudget:1617.0,totalBudget:7.0,hrsPct:0,unitsPct:32.1,laborActual:909455.86,laborBudget:1795495.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:10130.0,qtyActual:13860.0,projLG:156030.5},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:2278.0,qtyActual:15286.0,projLG:69691.6},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:41780.0,qtyActual:1660.0,projLG:419476.59},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:22280.0,qtyActual:2174.0,projLG:231390.35},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:142.0,qtyActual:119.0,projLG:54444.05},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:24.0,qtyActual:1081.02,projLG:1081.02},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:261880.0,qtyActual:65030.0,projLG:71789.5},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:108700.0,qtyActual:72490.0,projLG:60343.15},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:30715.0,qtyActual:5550.0,projLG:110399.32},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:483.0,qtyActual:12.0,projLG:618014.23},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1296.0,qtyActual:52.0,projLG:154717.65},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:100.0,qtyActual:80.0,projLG:3600.0},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:766.0,qtyActual:184.0,projLG:8280.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:483.0,qtyActual:1932.0,projLG:86940.0},{code:"8200",desc:"Gnd Grid and Lighting Protec",unit:"EA",qtyBudget:200.0,qtyActual:50.0,projLG:2250.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:95.0,qtyActual:38.0,projLG:52255.66}]},
+  {key:"24002 - SEPULVEDA",name:"Mission Gorge",week:"May 11-17, 2026",laborRate:40.58,projLG:0,lastWkHrs:280,lastWkDollars:11361.29,budgetPct:0,manpower:7.0,hrsSpent:19522,hrsRemaining:9240,hrsbudget:1617.0,totalBudget:7.0,hrsPct:0,unitsPct:32.1,laborActual:909455.86,laborBudget:1795495.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:10130.0,qtyActual:13860.0,projLG:156030.5},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:2278.0,qtyActual:15286.0,projLG:69691.6},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:41780.0,qtyActual:1660.0,projLG:419476.59},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:22280.0,qtyActual:2174.0,projLG:231390.35},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:142.0,qtyActual:119.0,projLG:54444.05},{code:"3000",desc:"Electrical Conductors and Cabl",unit:"LF",qtyBudget:24.0,qtyActual:1081.02,projLG:1081.02},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:261880.0,qtyActual:65030.0,projLG:71789.5},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:108700.0,qtyActual:72490.0,projLG:60343.15},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:30715.0,qtyActual:5550.0,projLG:110399.32},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:483.0,qtyActual:12.0,projLG:618014.23},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:1296.0,qtyActual:52.0,projLG:154717.65},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:100.0,qtyActual:80.0,projLG:3600.0},{code:"5000",desc:"Finish Devices and Trim",unit:"EA",qtyBudget:766.0,qtyActual:184.0,projLG:8280.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:483.0,qtyActual:1932.0,projLG:86940.0},{code:"8200",desc:"Gnd Grid and Lighting Protec",unit:"EA",qtyBudget:200.0,qtyActual:50.0,projLG:2250.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:95.0,qtyActual:38.0,projLG:52255.66}]},
   {key:"25002 - BAH",name:"Bellamy Agoura Hills",week:"May 11-17, 2026",laborRate:44.99,projLG:464128.96,lastWkHrs:485,lastWkDollars:21818.03,budgetPct:0,manpower:12.13,hrsSpent:31615,hrsRemaining:5836,hrsbudget:408.0,totalBudget:0,hrsPct:0,unitsPct:15.6,laborActual:582078.85,laborBudget:2579213.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:31055.0,qtyActual:30265.0,projLG:99988.06},{code:"1200",desc:"Feeder Conduit UG",unit:"LF",qtyBudget:8830.0,qtyActual:13820.0,projLG:9285.51},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:3777.0,qtyActual:389.06,projLG:-420.31},{code:"1400",desc:"Feeder Conduit OH",unit:"LF",qtyBudget:1865.0,qtyActual:450.37,projLG:-424.01},{code:"2000",desc:"Electrical Power Distribution",unit:"EA",qtyBudget:45.0,qtyActual:859.0,projLG:-3608.47},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:135200.0,qtyActual:130715.0,projLG:37061.94},{code:"3200",desc:"Feeder Wire",unit:"LF",qtyBudget:67165.0,qtyActual:130.0,projLG:68839.84},{code:"3300",desc:"Branch Cable",unit:"LF",qtyBudget:28565.0,qtyActual:1000.0,projLG:54132.47},{code:"3400",desc:"Feeder Cable",unit:"LF",qtyBudget:620.0,qtyActual:515.0,projLG:23948.0},{code:"3410",desc:"Unit Feeder Cable",unit:"UN",qtyBudget:278.0,qtyActual:1946.0,projLG:-1330.97},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:2677.0,qtyActual:585.0,projLG:115647.28},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:436.0,qtyActual:1754.0,projLG:-1047.21},{code:"7010",desc:"Unit Layout",unit:"UN",qtyBudget:278.0,qtyActual:9.0,projLG:26348.66},{code:"7100",desc:"Unit Boxing",unit:"UN",qtyBudget:278.0,qtyActual:10.0,projLG:49759.87},{code:"7200",desc:"Unit Drops",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-420.31},{code:"7300",desc:"Unit Shear Walls",unit:"UN",qtyBudget:278.0,qtyActual:556.0,projLG:-420.31},{code:"7320",desc:"Unit Drilling",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-2310.42},{code:"7330",desc:"Unit Pulling",unit:"UN",qtyBudget:278.0,qtyActual:1946.0,projLG:-3292.44},{code:"7340",desc:"Unit Stab & Makeup",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-3075.43},{code:"7370",desc:"Unit Strap & Plate",unit:"UN",qtyBudget:278.0,qtyActual:1668.0,projLG:-2456.25},{code:"7380",desc:"Unit Fireproofing",unit:"UN",qtyBudget:278.0,qtyActual:0,projLG:278.0},{code:"7400",desc:"Common Area Rough",unit:"EA",qtyBudget:769.0,qtyActual:1538.0,projLG:-6588.21},{code:"7500",desc:"HR to AC",unit:"UN",qtyBudget:278.0,qtyActual:1112.0,projLG:-210.15},{code:"7550",desc:"Hookup AC",unit:"UN",qtyBudget:278.0,qtyActual:556.0,projLG:-210.15},{code:"7600",desc:"Unit Fixtures",unit:"UN",qtyBudget:278.0,qtyActual:1390.0,projLG:-210.15},{code:"7700",desc:"Unit Finish & Trim",unit:"UN",qtyBudget:278.0,qtyActual:834.0,projLG:-210.15},{code:"7800",desc:"Common Area Trim",unit:"EA",qtyBudget:769.0,qtyActual:769.0,projLG:35759.0},{code:"7900",desc:"Test and Check",unit:"UN",qtyBudget:278.0,qtyActual:1112.0,projLG:51708.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:85.0,qtyActual:31.0,projLG:29300.27}]},
   {key:"SP25018 - CDC PLAZA",name:"CDC Plaza",week:"May 11-17, 2026",laborRate:54.54,projLG:-37838.68,lastWkHrs:12,lastWkDollars:0,budgetPct:0,manpower:0.3,hrsSpent:832,hrsRemaining:-568,hrsbudget:832.0,totalBudget:377268.0,hrsPct:0,unitsPct:315.2,laborActual:74426.34,laborBudget:35912.0,costCodes:[{code:"1100",desc:"Branch Conduit UG",unit:"LF",qtyBudget:600.0,qtyActual:24.0,projLG:1116.0},{code:"1300",desc:"Branch Conduit OH",unit:"LF",qtyBudget:74.0,qtyActual:3873.57,projLG:-3873.57},{code:"1700",desc:"Fire Stop",unit:"EA",qtyBudget:8.0,qtyActual:372.0,projLG:372.0},{code:"3100",desc:"Branch Wire",unit:"LF",qtyBudget:650.0,qtyActual:8.0,projLG:372.0},{code:"4000",desc:"Light Fixtures",unit:"EA",qtyBudget:368.0,qtyActual:100.0,projLG:4650.0},{code:"4100",desc:"Lighting Controls",unit:"EA",qtyBudget:8.0,qtyActual:372.0,projLG:372.0},{code:"8800",desc:"Temporary Power",unit:"WK",qtyBudget:116.0,qtyActual:758.0,projLG:-34709.11}]}
 ];
@@ -2189,7 +2319,7 @@ const JOBS_CONFIG = {
   '24005 - VNV':                { buildings: ["Bldg North","Bldg South","Bldg East"], unitsPerBldg: 20 },
   '24006 - VF':                 { buildings: ["Bldg A","Bldg B"], unitsPerBldg: 24 },
   '24002 - SEPULVEDA':            { buildings: ["Bldg A","Bldg B","Bldg C"], unitsPerBldg: 24 },
-  '25001 - DECENA':             { buildings: ["Bldg 1","Bldg 2"], unitsPerBldg: 18 },
+  '24002 - SEPULVEDA':             { buildings: ["Bldg 1","Bldg 2"], unitsPerBldg: 18 },
   '25002 - BAH':                { buildings: ["Segment 1","Segment 2","Segment 3","Segment 4","Segment 5","Segment 6","Segment 7","Common Area - Courtyard A","Common Area - Courtyard B","Amenity / Leasing Level","Parking"], unitsPerBldg: 20 },
   '26002 - WILSHIRE':           { buildings: ["Bldg 1","Bldg 2","Bldg 3"], unitsPerBldg: 20 },
   'SP25018 - CDC PLAZA':        { buildings: ["Tower A","Tower B"], unitsPerBldg: 30 },
@@ -3678,7 +3808,6 @@ function goTab(btn,name){
   if(name==='whiteboard') initWhiteboard();
   if(name==='djr')        initDJR();
   if(name==='signin')     initSignIn();
-  if(name==='gantt')      initGanttPane();
   if(name==='tasks'){  renderTaskCalendar(); renderTasks(); }
 }
 
@@ -3782,7 +3911,7 @@ const JOB_COORDS = {
   '24005 - VNV':                    {lat:34.1919,lon:-118.4515,name:'Van Nuys, CA'},
   '24006 - VF':                     {lat:33.5539,lon:-117.2139,name:'Murrieta, CA'},
   '24002 - SEPULVEDA':                {lat:34.1575,lon:-118.6339,name:'Calabasas, CA'},
-  '25001 - DECENA':                 {lat:32.7157,lon:-117.1611,name:'San Diego, CA'},
+  '24002 - SEPULVEDA':                 {lat:32.7157,lon:-117.1611,name:'San Diego, CA'},
   '25002 - BAH':                    {lat:34.1467,lon:-118.7606,name:'Agoura Hills, CA'},
   '26002 - WILSHIRE':               {lat:34.0614,lon:-118.3089,name:'Los Angeles, CA'},
   '26003 - CARINA':                 {lat:33.7963,lon:-117.9271,name:'Santa Ana, CA'},
@@ -5905,7 +6034,7 @@ const JOB_EMAILS = {
   '24005 - VNV':                     {to:'vannuys24005@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '24006 - VF':                      {to:'vintagefarms24006@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '24002 - SEPULVEDA':                 {to:'sepulveda24002@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
-  '25001 - DECENA':                  {to:'decena25001@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '24002 - SEPULVEDA':                  {to:'sepulveda24002@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '25002 - BAH':                     {to:'bellamyagourahills25002@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26002 - WILSHIRE':                {to:'wilshire26002@ryecompany.com',           cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26003 - CARINA MAIN PLACE MALL':  {to:'carina26003@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
@@ -6175,7 +6304,7 @@ function saveTask(){
           '24005 - VNV':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html',
           '24006 - VF':          'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html',
           '24002 - SEPULVEDA':     'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html',
-          '25001 - DECENA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html',
+          '24002 - SEPULVEDA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html',
           '25002 - BAH':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html',
           '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
           'SP25018 - CDC PLAZA': 'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-sp25018-cdc.html',
@@ -7235,7 +7364,7 @@ function publishSingleSignedIn(wid) {
 
   /* ══ GANTT ENGINE ══════════════════════════════════════════════════════════ */
   var ganttTasks=[];var ganttZoom='week';var ganttEditIdx=-1;
-  var GANTT_KEY='gantt_24002_SEPULVEDA';
+  var GANTT_KEY='gantt_'+(typeof JOB_ID!=='undefined'?JOB_ID:'default');
   function gDate(s){var d=new Date(s+'T12:00:00');return isNaN(d)?null:d;}
   function gFmt(d){return d?d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'}):''}
   function gISO(d){return d?d.toISOString().slice(0,10):''}
@@ -7333,264 +7462,20 @@ function publishSingleSignedIn(wid) {
     var rowsEl=document.getElementById('gantt-rows');if(rowsEl)rowsEl.innerHTML=rowsHtml;
   }
 
-
-  /* ── SCHEDULE VIEW MANAGEMENT ── */
-  var schedView = 'gc'; // gc | rye | compare
-  var ryeTasks = []; // Rye's own schedule
-  var gcTasks = [];  // GC imported tasks
-  var ELECTRICAL_KEYWORDS = ['electric','electrical','lighting','power','panel','switchgear','meter','energize','conduit','wire','wiring','feeder','branch','fixture','outlet','circuit','voltage','transformer','mep','low voltage','fire alarm','das','temp power'];
-
-  function isElectricalTask(name) {
-    if (!name) return false;
-    var lower = name.toLowerCase();
-    return ELECTRICAL_KEYWORDS.some(function(k){ return lower.indexOf(k) !== -1; });
-  }
-
-  function setSchedView(view) {
-    schedView = view;
-    ['gc','rye','compare'].forEach(function(v){
-      var btn = document.getElementById('sched-btn-' + v);
-      if (btn) btn.style.cssText = v === view
-        ? 'background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer'
-        : 'background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer';
-    });
-
-    // Show/hide context buttons
-    var gcPdf = document.getElementById('gc-pdf-label');
-    var ryePdf = document.getElementById('rye-pdf-label');
-    if (gcPdf) gcPdf.style.display = view === 'rye' ? 'none' : 'inline-flex';
-    if (ryePdf) ryePdf.style.display = view === 'rye' ? 'inline-flex' : 'none';
-
-    if (view === 'rye') {
-      if (gcTasks.length === 0 && ganttTasks.length > 0) gcTasks = ganttTasks.slice();
-      ganttTasks = ryeTasks.slice();
-    } else if (view === 'gc') {
-      if (ryeTasks.length === 0 && schedView === 'rye') ryeTasks = ganttTasks.slice();
-      if (gcTasks.length > 0) ganttTasks = gcTasks.slice();
-    } else if (view === 'compare') {
-      if (gcTasks.length === 0 && ganttTasks.length > 0) gcTasks = ganttTasks.slice();
-      var gc = gcTasks.slice();
-      var rye = ryeTasks.slice();
-      ganttTasks = gc.concat(rye.length > 0 ? [{
-        id:'RYESEP', name:'━━━ RYE ELECTRIC SCHEDULE ━━━',
-        start: rye[0]?rye[0].start:'', finish: rye[rye.length-1]?rye[rye.length-1].finish:'',
-        pct:0, assigned:'', preds:[], summary:true, indent:0
-      }].concat(rye) : []);
-    }
-    ganttApplyFilter();
-  }
-
-  async function ganttImportRyePDF(input) {
-    var file = input.files[0];
-    if (!file) return;
-    input.value = '';
-    var statusBar = document.getElementById('gantt-pdf-status');
-    var statusText = document.getElementById('gantt-pdf-status-text');
-    statusBar.style.display = 'flex';
-    statusText.textContent = 'Reading Rye schedule PDF...';
-    try {
-      var base64 = await new Promise(function(res, rej) {
-        var r = new FileReader();
-        r.onload = function() { res(r.result.split(',')[1]); };
-        r.onerror = function() { rej(new Error('Read failed')); };
-        r.readAsDataURL(file);
-      });
-      statusText.textContent = 'Extracting Rye schedule with AI...';
-      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: AbortSignal.timeout(120000),
-        body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2000,
-          messages: [{
-            role: 'user',
-            content: [
-              { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
-              { type: 'text', text: 'Extract the schedule from this PDF. Return ONLY a JSON array with no markdown, no backticks: [...tasks]. Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract top-level milestones only, 20-30 max.' }
-            ]
-          }]
-        })
-      });
-      var data = await response.json();
-      var text = data.content && data.content[0] && data.content[0].text;
-      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
-      var clean = text.replace(/```json|```/g,'').trim();
-      var tasks = JSON.parse(clean);
-      if (!Array.isArray(tasks) || tasks.length === 0) throw new Error('No tasks found');
-      ryeTasks = tasks.map(function(t,i){
-        return { id:'R'+String(t.id||i), name:t.name||'Task '+i, start:t.start||'', finish:t.finish||'',
-          pct:parseInt(t.pct)||0, assigned:t.assigned||'', preds:[], summary:false, indent:0 };
-      });
-      ganttTasks = ryeTasks.slice();
-      localStorage.setItem(GANTT_KEY+'_rye', JSON.stringify(ryeTasks));
-      ganttRender();
-      statusBar.style.display = 'none';
-      if(typeof toast==='function') toast('Imported '+ryeTasks.length+' tasks into Rye Schedule');
-    } catch(e) {
-      statusBar.style.display = 'none';
-      if(typeof toast==='function') toast('Import failed: '+e.message);
-      alert('Could not extract schedule: '+e.message);
-    }
-  }
-
-  function ganttApplyFilter() {
-    var showElec = document.getElementById('filter-electrical') && document.getElementById('filter-electrical').checked;
-    var showOthers = document.getElementById('filter-others') && document.getElementById('filter-others').checked;
-    var showBaseline = document.getElementById('filter-baseline') && document.getElementById('filter-baseline').checked;
-
-    var source = schedView === 'rye' ? ryeTasks : (gcTasks.length > 0 ? gcTasks : ganttTasks);
-    if (schedView === 'compare') {
-      source = (gcTasks.length > 0 ? gcTasks : []).concat(ryeTasks);
-    }
-
-    var filtered = source.filter(function(t) {
-      // Always show separators and summaries
-      if (t.id === 'SEP1' || t.id === 'RYESEP') return true;
-      // Baseline rows
-      if (t.id && t.id.toString().startsWith('B')) return showBaseline;
-      // Electrical tasks
-      if (isElectricalTask(t.name)) return showElec;
-      // Everything else
-      return showOthers;
-    });
-
-    ganttTasks = filtered;
-    var countEl = document.getElementById('gantt-filter-count');
-    if (countEl) countEl.textContent = filtered.length + ' tasks shown';
-    ganttRender();
-  }
-
-  function ganttResetFilter() {
-    var elec = document.getElementById('filter-electrical');
-    var others = document.getElementById('filter-others');
-    var base = document.getElementById('filter-baseline');
-    if (elec) elec.checked = true;
-    if (others) others.checked = false;
-    if (base) base.checked = true;
-    ganttApplyFilter();
-  }
-
-  /* ── PRINT PDF ── */
-  function ganttPrintPDF() {
-    if (!ganttTasks.length) { if(typeof toast==='function') toast('No schedule to print'); return; }
-    ganttCPM();
-    var dr = ganttDateRange();
-    var totalDays = Math.max(1, gDiff(dr.start, dr.end));
-    var today = new Date(); today.setHours(12,0,0,0);
-    var todayPct = (Math.max(0, gDiff(dr.start, today)) / totalDays * 100).toFixed(2) + '%';
-
-    var jobEl = document.querySelector('.jb-num');
-    var nameEl = document.querySelector('.jb-name');
-    var jobNum = jobEl ? jobEl.textContent.trim() : '';
-    var jobName = nameEl ? nameEl.textContent.trim() : '';
-
-    var rows = ganttTasks.map(function(t, idx) {
-      var s = t.es || gDate(t.start), f = t.ef || gDate(t.finish), pct = parseInt(t.pct) || 0;
-      var isBaseline = t.id && t.id.toString().startsWith('B');
-      var isSep = t.id === 'SEP1' || t.id === 'RYESEP';
-      var isElec = isElectricalTask(t.name);
-      var isCrit = t.critical;
-      var barColor = isBaseline ? '#718096' : t.summary ? '#4a5568' : pct >= 100 ? '#276749' : isCrit ? '#e53e3e' : isElec ? '#2980b9' : '#a0aec0';
-      var bg = isSep ? '#1a202c' : isBaseline ? '#f7fafc' : isElec ? '#ebf8ff' : idx % 2 === 0 ? '#fff' : '#f9f9f9';
-      var textColor = isSep ? '#fff' : isBaseline ? '#718096' : '#111';
-      var bL = '0%', bW = '0%';
-      if (s && f) {
-        var sl = gDiff(dr.start, s), dur = Math.max(1, gDiff(s, f));
-        bL = (sl / totalDays * 100).toFixed(3) + '%';
-        bW = (dur / totalDays * 100).toFixed(3) + '%';
-      }
-      return '<tr style="background:' + bg + ';color:' + textColor + ';page-break-inside:avoid">'
-        + '<td style="padding:4px 8px;border:1px solid #e2e8f0;font-size:10px;font-weight:' + (t.summary||isSep?700:500) + ';white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis">'
-          + (isElec && !isBaseline ? '⚡ ' : '') + t.name + '</td>'
-        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + (isSep ? '' : pct + '%') + '</td>'
-        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + gFmt(s) + '</td>'
-        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + gFmt(f) + '</td>'
-        + '<td style="padding:4px 0;border:1px solid #e2e8f0;position:relative;min-width:180px">'
-          + '<div style="position:absolute;left:' + todayPct + ';top:0;bottom:0;width:1.5px;background:#e53e3e;opacity:.7"></div>'
-          + (bW !== '0%' ? '<div style="position:absolute;left:' + bL + ';width:' + bW + ';top:3px;bottom:3px;background:' + barColor + ';border-radius:2px;min-width:3px"></div>' : '')
-        + '</td>'
-      + '</tr>';
-    }).join('');
-
-    var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Schedule - ' + jobNum + ' ' + jobName + '</title>'
-      + '<style>body{font-family:Arial,sans-serif;margin:0;padding:16px;color:#111}'
-      + 'table{border-collapse:collapse;width:100%}th{background:#1a202c;color:#fff;padding:6px 8px;font-size:9px;text-align:left;border:1px solid #1a202c}'
-      + '.legend{display:flex;gap:16px;margin-bottom:10px;font-size:10px;align-items:center}'
-      + '.leg-item{display:flex;align-items:center;gap:5px}'
-      + '.leg-box{width:14px;height:10px;border-radius:2px}'
-      + '@media print{@page{size:landscape;margin:.4in}}</style>'
-      + '</head><body>'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #2980b9;padding-bottom:10px;margin-bottom:12px">'
-        + '<div><div style="font-size:20px;font-weight:900">rye <span style="color:#2980b9">electric</span></div>'
-        + '<div style="font-size:14px;font-weight:700;margin-top:2px">Project Schedule — ' + jobNum + ' ' + jobName + '</div></div>'
-        + '<div style="text-align:right;font-size:11px;color:#666">'
-          + 'Printed: ' + new Date().toLocaleDateString() + '<br>'
-          + 'View: ' + schedView.toUpperCase()
-        + '</div>'
-      + '</div>'
-      + '<div class="legend">'
-        + '<div class="leg-item"><div class="leg-box" style="background:#718096"></div> Baseline</div>'
-        + '<div class="leg-item"><div class="leg-box" style="background:#2980b9"></div> ⚡ Electrical</div>'
-        + '<div class="leg-item"><div class="leg-box" style="background:#a0aec0"></div> Other Trades</div>'
-        + '<div class="leg-item"><div class="leg-box" style="background:#276749"></div> Complete</div>'
-        + '<div class="leg-item"><div class="leg-box" style="background:#e53e3e"></div> Critical</div>'
-        + '<div style="margin-left:auto;font-size:10px;color:#666">Red line = Today (' + new Date().toLocaleDateString() + ')</div>'
-      + '</div>'
-      + '<table><thead><tr>'
-        + '<th style="width:220px">Task Name</th><th style="width:36px">%</th>'
-        + '<th style="width:70px">Start</th><th style="width:70px">Finish</th>'
-        + '<th>Timeline →</th>'
-      + '</tr></thead><tbody>' + rows + '</tbody></table>'
-      + '<div style="font-size:9px;color:#aaa;text-align:center;margin-top:12px;padding-top:8px;border-top:1px solid #eee">'
-        + 'Rye Electric, Inc. | 75 Doppler, Irvine CA 92618 | CA Lic. 980345 | ' + jobNum + ' ' + jobName
-      + '</div>'
-      + '</body></html>';
-
-    var w = window.open('', '_blank');
-    if (!w) { alert('Pop-up blocked — please allow pop-ups.'); return; }
-    w.document.write(html);
-    w.document.close();
-    w.focus();
-    setTimeout(function(){ w.print(); }, 500);
-  }
-
   function ganttSetZoom(z){
     ganttZoom=z;
     document.querySelectorAll('.gantt-zoom-btn').forEach(function(b){var m=b.textContent.trim().toLowerCase()===z;b.style.background=m?'#2980b9':'#eee';b.style.color=m?'#fff':'#333';});
     ganttRender();
   }
-  function ganttSave(){
-    try{
-      if(schedView === 'rye'){
-        ryeTasks = ganttTasks.slice();
-        localStorage.setItem(GANTT_KEY + '_rye', JSON.stringify(ryeTasks));
-      } else {
-        gcTasks = ganttTasks.slice();
-        localStorage.setItem(GANTT_KEY, JSON.stringify(ganttTasks));
-      }
-      if(typeof toast==='function') toast('Schedule saved');
-    } catch(e){}
-  }
-
-  var _ganttInitialized = false;
-  
-  function initGanttPane() {
-    if (_ganttInitialized) return;
-    var tmpl = document.getElementById('gantt-template');
-    if (tmpl) {
-      document.getElementById('gantt-inner').appendChild(tmpl.content.cloneNode(true));
-    }
-    _ganttInitialized = true;
-    ganttLoad();
-  }
+  function ganttSave(){try{localStorage.setItem(GANTT_KEY,JSON.stringify(ganttTasks));if(typeof toast==='function')toast('Schedule saved');}catch(e){}}
   function ganttLoad(){
     try{
-      var s = localStorage.getItem(GANTT_KEY);
-      if(s){ gcTasks = JSON.parse(s); ganttTasks = gcTasks.slice(); ganttRender(); }
-      var r = localStorage.getItem(GANTT_KEY + '_rye');
-      if(r){ ryeTasks = JSON.parse(r); }
-    } catch(e){}
+      var gc = localStorage.getItem(GANTT_KEY+'_gc'); if(gc){ _gcCurrentTasks=JSON.parse(gc); }
+      var gcp = localStorage.getItem(GANTT_KEY+'_gc_prev'); if(gcp){ _gcPreviousTasks=JSON.parse(gcp); }
+      var rye = localStorage.getItem(GANTT_KEY+'_rye'); if(rye){ _ryeTasks=JSON.parse(rye); }
+      if(_gcCurrentTasks.length){ ganttTasks=_gcCurrentTasks.slice(); ganttRender(); }
+      else if(_ryeTasks.length){ ganttTasks=_ryeTasks.slice(); ganttRender(); }
+    }catch(e){}
   }
 
   function ganttAddTask(){
@@ -7629,11 +7514,9 @@ function publishSingleSignedIn(wid) {
       summary:document.getElementById('gm-summary').checked,
       indent:ganttEditIdx>=0?(ganttTasks[ganttEditIdx].indent||0):0
     };
-    if(ganttEditIdx>=0) ganttTasks[ganttEditIdx]=task; else ganttTasks.push(task);
-    if(schedView === 'rye') ryeTasks = ganttTasks.slice();
-    else gcTasks = ganttTasks.slice();
+    if(ganttEditIdx>=0)ganttTasks[ganttEditIdx]=task;else ganttTasks.push(task);
     document.getElementById('gantt-modal').style.display='none';
-    ganttRender(); ganttSave();
+    ganttRender();ganttSave();
   }
   function ganttModalDelete(){
     if(ganttEditIdx>=0&&confirm('Delete this task?')){
@@ -7644,28 +7527,86 @@ function publishSingleSignedIn(wid) {
   }
 
 
-  async function ganttImportPDF(input) {
+  // ── Schedule data stores ──
+  var _gcCurrentTasks = [];   // latest GC schedule
+  var _gcPreviousTasks = [];  // previous GC schedule for comparison
+  var _ryeTasks = [];         // Rye's own schedule
+  var _schedView = 'gc';
+
+  function schedSetView(view) {
+    _schedView = view;
+    ['gc','rye','compare','changes'].forEach(function(v) {
+      var btn = document.getElementById('sched-view-' + v);
+      if (btn) { btn.style.background = v === view ? '#2980b9' : 'transparent'; btn.style.color = v === view ? '#fff' : '#666'; }
+    });
+    if (view === 'gc') {
+      ganttTasks = _gcCurrentTasks.slice();
+    } else if (view === 'rye') {
+      ganttTasks = _ryeTasks.slice();
+    } else if (view === 'compare') {
+      ganttTasks = _gcCurrentTasks.slice();
+      if (_ryeTasks.length) {
+        ganttTasks.push({id:'RYE_SEP',name:'━━━ RYE ELECTRIC SCHEDULE ━━━',start:'',finish:'',pct:0,assigned:'',preds:[],summary:true,indent:0});
+        ganttTasks = ganttTasks.concat(_ryeTasks);
+      }
+    } else if (view === 'changes') {
+      if (!_gcPreviousTasks.length) { toast('Upload a second GC schedule to compare versions'); return; }
+      ganttTasks = [];
+      // Find tasks that changed between previous and current GC
+      _gcCurrentTasks.forEach(function(curr) {
+        var prev = _gcPreviousTasks.find(function(p) { return p.name && curr.name && p.name.toLowerCase().trim() === curr.name.toLowerCase().trim(); });
+        if (!prev) {
+          ganttTasks.push(Object.assign({}, curr, {name: '🆕 NEW: ' + curr.name}));
+        } else {
+          var startDiff = prev.start && curr.start ? Math.round((new Date(curr.start) - new Date(prev.start)) / 86400000) : 0;
+          var finishDiff = prev.finish && curr.finish ? Math.round((new Date(curr.finish) - new Date(prev.finish)) / 86400000) : 0;
+          if (startDiff !== 0 || finishDiff !== 0) {
+            var delta = [];
+            if (startDiff) delta.push('Start ' + (startDiff > 0 ? '+' : '') + startDiff + 'd');
+            if (finishDiff) delta.push('Finish ' + (finishDiff > 0 ? '+' : '') + finishDiff + 'd');
+            ganttTasks.push(Object.assign({}, curr, {name: curr.name + ' [' + delta.join(', ') + ']'}));
+          }
+        }
+      });
+      if (!ganttTasks.length) { toast('No changes found between GC schedules'); ganttTasks = _gcCurrentTasks.slice(); }
+    }
+    ganttRender();
+  }
+
+  async function ganttImportGCPDF(input) {
     var file = input.files[0];
     if (!file) return;
     input.value = '';
+    // Save current as previous before loading new
+    if (_gcCurrentTasks.length) {
+      _gcPreviousTasks = _gcCurrentTasks.slice();
+      localStorage.setItem(GANTT_KEY + '_gc_prev', JSON.stringify(_gcPreviousTasks));
+    }
+    await _importPDF(file, 'gc');
+  }
 
+  async function ganttImportRyePDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+    await _importPDF(file, 'rye');
+  }
+
+  async function _importPDF(file, type) {
     var statusBar = document.getElementById('gantt-pdf-status');
     var statusText = document.getElementById('gantt-pdf-status-text');
     statusBar.style.display = 'flex';
-    statusText.textContent = 'Reading PDF...';
-
+    statusText.textContent = 'Extracting ' + (type === 'gc' ? 'GC' : 'Rye') + ' schedule with AI...';
     try {
-      // Convert PDF to base64
       var base64 = await new Promise(function(res, rej) {
         var r = new FileReader();
         r.onload = function() { res(r.result.split(',')[1]); };
         r.onerror = function() { rej(new Error('Read failed')); };
         r.readAsDataURL(file);
       });
-
-      statusText.textContent = 'Extracting schedule with AI...';
-
-      // Send full PDF - haiku handles it efficiently
+      var prompt = type === 'gc'
+        ? 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object, no markdown: { "baseline": [...tasks], "current": [...tasks] }. If one schedule, put in "current", empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Top-level milestones only, 20-30 max.'
+        : 'Extract the schedule from this PDF. Return ONLY a JSON array, no markdown: [...tasks]. Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Top-level milestones only, 20-30 max.';
       var response = await fetch('https://rye-claude.dfurst.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -7673,103 +7614,52 @@ function publishSingleSignedIn(wid) {
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
           max_tokens: 2000,
-          messages: [{
-            role: 'user',
-            content: [
-              {
-                type: 'document',
-                source: { type: 'base64', media_type: 'application/pdf', data: base64 }
-              },
-              {
-                type: 'text',
-                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones from the FIRST PAGE comparison table, 20-30 tasks max.'
-              }
-            ]
-          }]
+          messages: [{ role: 'user', content: [
+            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+            { type: 'text', text: prompt }
+          ]}]
         })
       });
-
       var data = await response.json();
       var text = data.content && data.content[0] && data.content[0].text;
-      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0, 300));
-
-      statusText.textContent = 'Parsing tasks...';
-
-      var clean = text.replace(/```json|```/g, '').trim();
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
+      var clean = text.replace(/```json|```/g,'').trim();
       var parsed = JSON.parse(clean);
 
-      var baselineTasks = [];
-      var currentTasks = [];
-      if (Array.isArray(parsed)) {
-        currentTasks = parsed;
-      } else {
-        baselineTasks = parsed.baseline || [];
-        currentTasks = parsed.current || parsed.tasks || [];
-      }
-
-      if (currentTasks.length === 0) throw new Error('No tasks found in schedule');
-
-      ganttTasks = [];
-
-      if (baselineTasks.length > 0) {
-        baselineTasks.forEach(function(t, i) {
-          ganttTasks.push({
-            id: 'B' + String(t.id || i),
-            name: '📋 BASELINE: ' + (t.name || 'Task ' + i),
-            start: t.start || '',
-            finish: t.finish || '',
-            pct: 0,
-            assigned: 'Baseline',
-            preds: [],
-            summary: true,
-            indent: 0
-          });
-        });
-        ganttTasks.push({
-          id: 'SEP1',
-          name: '━━━ CURRENT SCHEDULE ━━━',
-          start: currentTasks[0] ? currentTasks[0].start : '',
-          finish: currentTasks[currentTasks.length-1] ? currentTasks[currentTasks.length-1].finish : '',
-          pct: 0, assigned: '', preds: [], summary: true, indent: 0
-        });
-      }
-
-      currentTasks.forEach(function(t, i) {
-        var base = baselineTasks.find(function(b) {
-          return b.name && t.name && b.name.toLowerCase().trim() === t.name.toLowerCase().trim();
-        });
-        var delta = '';
-        if (base && base.start && t.start) {
-          var days = Math.round((new Date(t.start) - new Date(base.start)) / 86400000);
-          if (days !== 0) delta = ' [' + (days > 0 ? '+' : '') + days + 'd]';
+      if (type === 'gc') {
+        var baselineTasks = Array.isArray(parsed) ? [] : (parsed.baseline || []);
+        var currentTasks = Array.isArray(parsed) ? parsed : (parsed.current || []);
+        var tasks = [];
+        if (baselineTasks.length) {
+          baselineTasks.forEach(function(t,i){ tasks.push({id:'B'+i,name:'BASELINE: '+t.name,start:t.start||'',finish:t.finish||'',pct:0,assigned:'Baseline',preds:[],summary:true,indent:0}); });
+          tasks.push({id:'SEP1',name:'━━━ CURRENT ━━━',start:'',finish:'',pct:0,assigned:'',preds:[],summary:true,indent:0});
         }
-        ganttTasks.push({
-          id: 'C' + String(t.id || i),
-          name: (t.name || 'Task ' + i) + delta,
-          start: t.start || '',
-          finish: t.finish || '',
-          pct: parseInt(t.pct) || 0,
-          assigned: t.assigned || '',
-          preds: Array.isArray(t.preds) ? t.preds.map(String) : [],
-          summary: false,
-          indent: 0
+        currentTasks.forEach(function(t,i){
+          var base = baselineTasks.find(function(b){ return b.name && t.name && b.name.toLowerCase()===t.name.toLowerCase(); });
+          var delta = '';
+          if (base && base.start && t.start) { var d=Math.round((new Date(t.start)-new Date(base.start))/86400000); if(d) delta=' ['+(d>0?'+':'')+d+'d]'; }
+          tasks.push({id:'C'+i,name:t.name+delta,start:t.start||'',finish:t.finish||'',pct:parseInt(t.pct)||0,assigned:t.assigned||'',preds:[],summary:false,indent:0});
         });
-      });
-
-      gcTasks = ganttTasks.slice();
-      ganttRender();
-      ganttSave();
+        _gcCurrentTasks = tasks;
+        localStorage.setItem(GANTT_KEY + '_gc', JSON.stringify(_gcCurrentTasks));
+        ganttTasks = _gcCurrentTasks.slice();
+        schedSetView('gc');
+        toast('GC Schedule imported — ' + currentTasks.length + ' tasks' + (_gcPreviousTasks.length ? ' (click GC Changes to compare versions)' : ''));
+      } else {
+        var ryeList = Array.isArray(parsed) ? parsed : (parsed.current || parsed.tasks || []);
+        _ryeTasks = ryeList.map(function(t,i){ return {id:'R'+i,name:t.name||'Task '+i,start:t.start||'',finish:t.finish||'',pct:parseInt(t.pct)||0,assigned:t.assigned||'',preds:[],summary:false,indent:0}; });
+        localStorage.setItem(GANTT_KEY + '_rye', JSON.stringify(_ryeTasks));
+        ganttTasks = _ryeTasks.slice();
+        schedSetView('rye');
+        toast('Rye Schedule imported — ' + _ryeTasks.length + ' tasks');
+      }
       statusBar.style.display = 'none';
-      ganttApplyFilter();
-      if (typeof toast === 'function') toast('Imported ' + ganttTasks.length + ' tasks from GC schedule PDF');
-
     } catch(e) {
       statusBar.style.display = 'none';
-      console.error('PDF import error:', e);
-      if (typeof toast === 'function') toast('PDF import failed: ' + e.message);
-      alert('Could not extract schedule: ' + e.message + '\n\nTip: Make sure the PDF contains a text-based schedule, not a scanned image.');
+      alert('Could not extract schedule: ' + e.message);
     }
   }
+
 
   function ganttImport(input){
     var file=input.files[0];if(!file)return;
@@ -7815,7 +7705,7 @@ function publishSingleSignedIn(wid) {
     else alert('Could not parse CSV. Columns needed: ID, Name, Start, Finish, %Complete, Predecessors, Assigned To');
   }
 
-  function ganttPrintLegacy(){
+  function ganttPrint(){
     if(!ganttTasks.length){if(typeof toast==='function')toast('No schedule to print');return;}
     ganttCPM();var dr=ganttDateRange();var totalDays=Math.max(1,gDiff(dr.start,dr.end));
     var today=new Date();today.setHours(12,0,0,0);
@@ -7835,172 +7725,73 @@ function publishSingleSignedIn(wid) {
     w.document.close();w.focus();setTimeout(function(){w.print();},500);
   }
 
-  document.addEventListener('DOMContentLoaded',function(){
-    // gantt loads only when Schedule tab is opened via initGanttPane()
-  });
+  document.addEventListener('DOMContentLoaded',function(){ganttLoad();});
+
+
+  async function ganttImportPDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+    var statusBar = document.getElementById('gantt-pdf-status');
+    var statusText = document.getElementById('gantt-pdf-status-text');
+    statusBar.style.display = 'flex';
+    statusText.textContent = 'Extracting schedule with AI...';
+    try {
+      var base64 = await new Promise(function(res, rej) {
+        var r = new FileReader();
+        r.onload = function() { res(r.result.split(',')[1]); };
+        r.onerror = function() { rej(new Error('Read failed')); };
+        r.readAsDataURL(file);
+      });
+      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(120000),
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2000,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+              { type: 'text', text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object, no markdown: { "baseline": [...tasks], "current": [...tasks] }. If one schedule, put in "current", empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Top-level milestones only, 20-30 max.' }
+            ]
+          }]
+        })
+      });
+      var data = await response.json();
+      var text = data.content && data.content[0] && data.content[0].text;
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
+      var clean = text.replace(/```json|```/g,'').trim();
+      var parsed = JSON.parse(clean);
+      var baselineTasks = Array.isArray(parsed) ? [] : (parsed.baseline || []);
+      var currentTasks = Array.isArray(parsed) ? parsed : (parsed.current || []);
+      if (!currentTasks.length) throw new Error('No tasks found');
+      ganttTasks = [];
+      if (baselineTasks.length) {
+        baselineTasks.forEach(function(t,i){
+          ganttTasks.push({id:'B'+i,name:'BASELINE: '+(t.name||'Task '+i),start:t.start||'',finish:t.finish||'',pct:0,assigned:'Baseline',preds:[],summary:true,indent:0});
+        });
+        ganttTasks.push({id:'SEP1',name:'--- CURRENT SCHEDULE ---',start:currentTasks[0]?currentTasks[0].start:'',finish:'',pct:0,assigned:'',preds:[],summary:true,indent:0});
+      }
+      currentTasks.forEach(function(t,i){
+        var base = baselineTasks.find(function(b){ return b.name && t.name && b.name.toLowerCase()===t.name.toLowerCase(); });
+        var delta = '';
+        if (base && base.start && t.start) {
+          var days = Math.round((new Date(t.start)-new Date(base.start))/86400000);
+          if (days) delta = ' ['+(days>0?'+':'')+days+'d]';
+        }
+        ganttTasks.push({id:'C'+i,name:(t.name||'Task '+i)+delta,start:t.start||'',finish:t.finish||'',pct:parseInt(t.pct)||0,assigned:t.assigned||'',preds:[],summary:false,indent:0});
+      });
+      ganttRender(); ganttSave();
+      statusBar.style.display = 'none';
+      toast('Imported '+ganttTasks.length+' tasks from GC PDF');
+    } catch(e) {
+      statusBar.style.display = 'none';
+      alert('Could not extract schedule: '+e.message);
+    }
+  }
 
 </script>
 
 </body></html>
-
-<template id="gantt-template">
-
-    <!-- ── Top toolbar ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
-      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
-
-      <!-- Schedule view toggle -->
-      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
-        <button id="sched-btn-gc" onclick="setSchedView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">GC Schedule</button>
-        <button id="sched-btn-rye" onclick="setSchedView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Rye Schedule</button>
-        <button id="sched-btn-compare" onclick="setSchedView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Compare</button>
-      </div>
-
-      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
-        📂 Import Schedule
-        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
-      </label>
-      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
-        🤖 Upload GC Schedule (PDF)
-        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
-      </label>
-      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
-        🤖 Upload Rye Schedule (PDF)
-        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
-      </label>
-      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
-        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
-        <span id="gantt-pdf-status-text">Reading PDF...</span>
-      </div>
-      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
-      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
-      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
-    </div>
-      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
-        🤖 Upload GC Schedule (PDF)
-        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
-      </label>
-      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
-        🤖 Upload Rye Schedule (PDF)
-        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
-      </label>
-      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
-        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
-        <span id="gantt-pdf-status-text">Reading PDF...</span>
-      </div>
-    </div>
-
-    <!-- ── View controls ── -->
-    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
-      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
-      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
-      <span style="flex:1"></span>
-      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
-      </label>
-      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
-        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
-      </label>
-    </div>
-
-    <!-- ── Activity Filter Bar ── -->
-    <div id="gantt-filter-bar" style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
-      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Filter:</span>
-      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2980b9;cursor:pointer;background:#ebf8ff;border:1px solid #bee3f8;padding:3px 10px;border-radius:20px">
-        <input type="checkbox" id="filter-electrical" checked onchange="ganttApplyFilter()"> ⚡ Electrical
-      </label>
-      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
-        <input type="checkbox" id="filter-others" onchange="ganttApplyFilter()"> All Other Trades
-      </label>
-      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
-        <input type="checkbox" id="filter-baseline" checked onchange="ganttApplyFilter()"> Show Baseline
-      </label>
-      <button onclick="ganttResetFilter()" style="font-size:11px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:3px 10px;cursor:pointer;color:#666">Reset</button>
-      <span id="gantt-filter-count" style="font-size:11px;color:#a0aec0;margin-left:auto"></span>
-    </div>
-
-    <!-- ── Critical Path Summary Panel ── -->
-    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
-      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
-      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
-    </div>
-
-    <!-- ── Import instructions ── -->
-    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
-      <div style="font-size:32px;margin-bottom:10px">📋</div>
-      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
-      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
-      <div style="font-size:11px;color:#999;line-height:1.6">
-        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
-        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
-      </div>
-    </div>
-
-    <!-- ── Main Gantt layout ── -->
-    <div id="gantt-main" style="display:none">
-
-      <!-- Stats bar -->
-      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
-
-      <!-- Gantt chart container -->
-      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
-        <!-- Header row -->
-        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
-          <div style="padding:8px 12px">Task Name</div>
-          <div style="padding:8px 6px;text-align:center">%</div>
-          <div style="padding:8px 6px;text-align:center">Start</div>
-          <div style="padding:8px 6px;text-align:center">Finish</div>
-          <div style="padding:8px 6px;text-align:center">Float</div>
-          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
-        </div>
-        <!-- Task rows -->
-        <div id="gantt-rows"></div>
-      </div>
-
-      <!-- Legend -->
-      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
-        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
-      </div>
-    </div>
-
-    <!-- ── Edit task modal ── -->
-    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
-      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
-        <div style="display:grid;gap:10px">
-          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
-            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
-          </div>
-          <div>
-            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
-            <div style="display:flex;align-items:center;gap:10px">
-              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
-              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
-            </div>
-          </div>
-          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
-            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:18px">
-          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
-          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
-          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-</template>
