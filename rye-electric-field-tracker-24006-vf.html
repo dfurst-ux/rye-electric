@@ -7978,7 +7978,12 @@ function publishSingleSignedIn(wid) {
     w.document.close();w.focus();setTimeout(function(){w.print();},500);
   }
 
-  document.addEventListener('DOMContentLoaded',function(){ganttLoad();});
+  document.addEventListener('DOMContentLoaded',function(){
+    ganttLoad();
+    // Force hide gantt pane regardless of HTML structure
+    var pg = document.getElementById('pane-gantt');
+    if(pg){ pg.style.cssText='display:none!important'; pg.className='pane'; }
+  });
 
 </script>
 
