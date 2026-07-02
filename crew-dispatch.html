@@ -1042,7 +1042,9 @@ function moveWorker(workerId, targetJobId) {
   if (!w || w.jobId === targetJobId) return;
   const fromJob = state.jobs.find(j => j.id === w.jobId);
   const toJob = state.jobs.find(j => j.id === targetJobId);
+  const prevJob = state.jobs.find(j => j.id === w.jobId);
   w.jobId = targetJobId;
+  logAudit('Moved ' + w.name + ' from ' + (prevJob ? prevJob.name : 'Unassigned') + ' → ' + toJob.name);
   render();
   scheduleSave();
   showToast(`${w.name} moved to ${toJob.name}`);
