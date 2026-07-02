@@ -310,6 +310,7 @@ tbody tr:hover td{background:#f7fbfc}
 
   /* ── Gantt tab styles ── */
   .gantt-zoom-btn{border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer}
+  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   .gantt-row{display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;border-bottom:1px solid #f0f0f0;align-items:stretch;min-height:36px}
   .gantt-row:hover{background:#f7fafc}
   .gantt-row.summary-row{background:#edf2f7}
@@ -1487,13 +1488,44 @@ tbody tr:hover td{background:#f7fbfc}
     <!-- ── Top toolbar ── -->
     <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
       <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
+
+      <!-- Schedule view toggle -->
+      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
+        <button id="sched-btn-gc" onclick="setSchedView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">GC Schedule</button>
+        <button id="sched-btn-rye" onclick="setSchedView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Rye Schedule</button>
+        <button id="sched-btn-compare" onclick="setSchedView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Compare</button>
+      </div>
+
       <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
         📂 Import Schedule
         <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
       </label>
+      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
+      </label>
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
       <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
       <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
-      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrint()">🖨️ Print PDF</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
+    </div> extract tasks into the Gantt">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
+      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
+      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
     </div>
 
     <!-- ── View controls ── -->
@@ -1509,6 +1541,22 @@ tbody tr:hover td{background:#f7fbfc}
       <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
         <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
       </label>
+    </div>
+
+    <!-- ── Activity Filter Bar ── -->
+    <div id="gantt-filter-bar" style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Filter:</span>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2980b9;cursor:pointer;background:#ebf8ff;border:1px solid #bee3f8;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-electrical" checked onchange="ganttApplyFilter()"> ⚡ Electrical
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-others" onchange="ganttApplyFilter()"> All Other Trades
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-baseline" checked onchange="ganttApplyFilter()"> Show Baseline
+      </label>
+      <button onclick="ganttResetFilter()" style="font-size:11px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:3px 10px;cursor:pointer;color:#666">Reset</button>
+      <span id="gantt-filter-count" style="font-size:11px;color:#a0aec0;margin-left:auto"></span>
     </div>
 
     <!-- ── Critical Path Summary Panel ── -->
@@ -7438,13 +7486,253 @@ function publishSingleSignedIn(wid) {
     var rowsEl=document.getElementById('gantt-rows');if(rowsEl)rowsEl.innerHTML=rowsHtml;
   }
 
+
+  /* ── SCHEDULE VIEW MANAGEMENT ── */
+  var schedView = 'gc'; // gc | rye | compare
+  var ryeTasks = []; // Rye's own schedule
+  var gcTasks = [];  // GC imported tasks
+  var ELECTRICAL_KEYWORDS = ['electric','electrical','lighting','power','panel','switchgear','meter','energize','conduit','wire','wiring','feeder','branch','fixture','outlet','circuit','voltage','transformer','mep','low voltage','fire alarm','das','temp power'];
+
+  function isElectricalTask(name) {
+    if (!name) return false;
+    var lower = name.toLowerCase();
+    return ELECTRICAL_KEYWORDS.some(function(k){ return lower.indexOf(k) !== -1; });
+  }
+
+  function setSchedView(view) {
+    schedView = view;
+    ['gc','rye','compare'].forEach(function(v){
+      var btn = document.getElementById('sched-btn-' + v);
+      if (btn) btn.style.cssText = v === view
+        ? 'background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer'
+        : 'background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer';
+    });
+
+    // Show/hide context buttons
+    var gcPdf = document.getElementById('gc-pdf-label');
+    var ryePdf = document.getElementById('rye-pdf-label');
+    if (gcPdf) gcPdf.style.display = view === 'rye' ? 'none' : 'inline-flex';
+    if (ryePdf) ryePdf.style.display = view === 'rye' ? 'inline-flex' : 'none';
+
+    if (view === 'rye') {
+      if (gcTasks.length === 0 && ganttTasks.length > 0) gcTasks = ganttTasks.slice();
+      ganttTasks = ryeTasks.slice();
+    } else if (view === 'gc') {
+      if (ryeTasks.length === 0 && schedView === 'rye') ryeTasks = ganttTasks.slice();
+      if (gcTasks.length > 0) ganttTasks = gcTasks.slice();
+    } else if (view === 'compare') {
+      if (gcTasks.length === 0 && ganttTasks.length > 0) gcTasks = ganttTasks.slice();
+      var gc = gcTasks.slice();
+      var rye = ryeTasks.slice();
+      ganttTasks = gc.concat(rye.length > 0 ? [{
+        id:'RYESEP', name:'━━━ RYE ELECTRIC SCHEDULE ━━━',
+        start: rye[0]?rye[0].start:'', finish: rye[rye.length-1]?rye[rye.length-1].finish:'',
+        pct:0, assigned:'', preds:[], summary:true, indent:0
+      }].concat(rye) : []);
+    }
+    ganttApplyFilter();
+  }
+
+  async function ganttImportRyePDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+    var statusBar = document.getElementById('gantt-pdf-status');
+    var statusText = document.getElementById('gantt-pdf-status-text');
+    statusBar.style.display = 'flex';
+    statusText.textContent = 'Reading Rye schedule PDF...';
+    try {
+      var base64 = await new Promise(function(res, rej) {
+        var r = new FileReader();
+        r.onload = function() { res(r.result.split(',')[1]); };
+        r.onerror = function() { rej(new Error('Read failed')); };
+        r.readAsDataURL(file);
+      });
+      statusText.textContent = 'Extracting Rye schedule with AI...';
+      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(120000),
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2000,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+              { type: 'text', text: 'Extract the schedule from this PDF. Return ONLY a JSON array with no markdown, no backticks: [...tasks]. Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract top-level milestones only, 20-30 max.' }
+            ]
+          }]
+        })
+      });
+      var data = await response.json();
+      var text = data.content && data.content[0] && data.content[0].text;
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
+      var clean = text.replace(/```json|```/g,'').trim();
+      var tasks = JSON.parse(clean);
+      if (!Array.isArray(tasks) || tasks.length === 0) throw new Error('No tasks found');
+      ryeTasks = tasks.map(function(t,i){
+        return { id:'R'+String(t.id||i), name:t.name||'Task '+i, start:t.start||'', finish:t.finish||'',
+          pct:parseInt(t.pct)||0, assigned:t.assigned||'', preds:[], summary:false, indent:0 };
+      });
+      ganttTasks = ryeTasks.slice();
+      localStorage.setItem(GANTT_KEY+'_rye', JSON.stringify(ryeTasks));
+      ganttRender();
+      statusBar.style.display = 'none';
+      if(typeof toast==='function') toast('Imported '+ryeTasks.length+' tasks into Rye Schedule');
+    } catch(e) {
+      statusBar.style.display = 'none';
+      if(typeof toast==='function') toast('Import failed: '+e.message);
+      alert('Could not extract schedule: '+e.message);
+    }
+  }
+
+  function ganttApplyFilter() {
+    var showElec = document.getElementById('filter-electrical') && document.getElementById('filter-electrical').checked;
+    var showOthers = document.getElementById('filter-others') && document.getElementById('filter-others').checked;
+    var showBaseline = document.getElementById('filter-baseline') && document.getElementById('filter-baseline').checked;
+
+    var source = schedView === 'rye' ? ryeTasks : (gcTasks.length > 0 ? gcTasks : ganttTasks);
+    if (schedView === 'compare') {
+      source = (gcTasks.length > 0 ? gcTasks : []).concat(ryeTasks);
+    }
+
+    var filtered = source.filter(function(t) {
+      // Always show separators and summaries
+      if (t.id === 'SEP1' || t.id === 'RYESEP') return true;
+      // Baseline rows
+      if (t.id && t.id.toString().startsWith('B')) return showBaseline;
+      // Electrical tasks
+      if (isElectricalTask(t.name)) return showElec;
+      // Everything else
+      return showOthers;
+    });
+
+    ganttTasks = filtered;
+    var countEl = document.getElementById('gantt-filter-count');
+    if (countEl) countEl.textContent = filtered.length + ' tasks shown';
+    ganttRender();
+  }
+
+  function ganttResetFilter() {
+    var elec = document.getElementById('filter-electrical');
+    var others = document.getElementById('filter-others');
+    var base = document.getElementById('filter-baseline');
+    if (elec) elec.checked = true;
+    if (others) others.checked = false;
+    if (base) base.checked = true;
+    ganttApplyFilter();
+  }
+
+  /* ── PRINT PDF ── */
+  function ganttPrintPDF() {
+    if (!ganttTasks.length) { if(typeof toast==='function') toast('No schedule to print'); return; }
+    ganttCPM();
+    var dr = ganttDateRange();
+    var totalDays = Math.max(1, gDiff(dr.start, dr.end));
+    var today = new Date(); today.setHours(12,0,0,0);
+    var todayPct = (Math.max(0, gDiff(dr.start, today)) / totalDays * 100).toFixed(2) + '%';
+
+    var jobEl = document.querySelector('.jb-num');
+    var nameEl = document.querySelector('.jb-name');
+    var jobNum = jobEl ? jobEl.textContent.trim() : '';
+    var jobName = nameEl ? nameEl.textContent.trim() : '';
+
+    var rows = ganttTasks.map(function(t, idx) {
+      var s = t.es || gDate(t.start), f = t.ef || gDate(t.finish), pct = parseInt(t.pct) || 0;
+      var isBaseline = t.id && t.id.toString().startsWith('B');
+      var isSep = t.id === 'SEP1' || t.id === 'RYESEP';
+      var isElec = isElectricalTask(t.name);
+      var isCrit = t.critical;
+      var barColor = isBaseline ? '#718096' : t.summary ? '#4a5568' : pct >= 100 ? '#276749' : isCrit ? '#e53e3e' : isElec ? '#2980b9' : '#a0aec0';
+      var bg = isSep ? '#1a202c' : isBaseline ? '#f7fafc' : isElec ? '#ebf8ff' : idx % 2 === 0 ? '#fff' : '#f9f9f9';
+      var textColor = isSep ? '#fff' : isBaseline ? '#718096' : '#111';
+      var bL = '0%', bW = '0%';
+      if (s && f) {
+        var sl = gDiff(dr.start, s), dur = Math.max(1, gDiff(s, f));
+        bL = (sl / totalDays * 100).toFixed(3) + '%';
+        bW = (dur / totalDays * 100).toFixed(3) + '%';
+      }
+      return '<tr style="background:' + bg + ';color:' + textColor + ';page-break-inside:avoid">'
+        + '<td style="padding:4px 8px;border:1px solid #e2e8f0;font-size:10px;font-weight:' + (t.summary||isSep?700:500) + ';white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis">'
+          + (isElec && !isBaseline ? '⚡ ' : '') + t.name + '</td>'
+        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + (isSep ? '' : pct + '%') + '</td>'
+        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + gFmt(s) + '</td>'
+        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + gFmt(f) + '</td>'
+        + '<td style="padding:4px 0;border:1px solid #e2e8f0;position:relative;min-width:180px">'
+          + '<div style="position:absolute;left:' + todayPct + ';top:0;bottom:0;width:1.5px;background:#e53e3e;opacity:.7"></div>'
+          + (bW !== '0%' ? '<div style="position:absolute;left:' + bL + ';width:' + bW + ';top:3px;bottom:3px;background:' + barColor + ';border-radius:2px;min-width:3px"></div>' : '')
+        + '</td>'
+      + '</tr>';
+    }).join('');
+
+    var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Schedule - ' + jobNum + ' ' + jobName + '</title>'
+      + '<style>body{font-family:Arial,sans-serif;margin:0;padding:16px;color:#111}'
+      + 'table{border-collapse:collapse;width:100%}th{background:#1a202c;color:#fff;padding:6px 8px;font-size:9px;text-align:left;border:1px solid #1a202c}'
+      + '.legend{display:flex;gap:16px;margin-bottom:10px;font-size:10px;align-items:center}'
+      + '.leg-item{display:flex;align-items:center;gap:5px}'
+      + '.leg-box{width:14px;height:10px;border-radius:2px}'
+      + '@media print{@page{size:landscape;margin:.4in}}</style>'
+      + '</head><body>'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #2980b9;padding-bottom:10px;margin-bottom:12px">'
+        + '<div><div style="font-size:20px;font-weight:900">rye <span style="color:#2980b9">electric</span></div>'
+        + '<div style="font-size:14px;font-weight:700;margin-top:2px">Project Schedule — ' + jobNum + ' ' + jobName + '</div></div>'
+        + '<div style="text-align:right;font-size:11px;color:#666">'
+          + 'Printed: ' + new Date().toLocaleDateString() + '<br>'
+          + 'View: ' + schedView.toUpperCase()
+        + '</div>'
+      + '</div>'
+      + '<div class="legend">'
+        + '<div class="leg-item"><div class="leg-box" style="background:#718096"></div> Baseline</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#2980b9"></div> ⚡ Electrical</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#a0aec0"></div> Other Trades</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#276749"></div> Complete</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#e53e3e"></div> Critical</div>'
+        + '<div style="margin-left:auto;font-size:10px;color:#666">Red line = Today (' + new Date().toLocaleDateString() + ')</div>'
+      + '</div>'
+      + '<table><thead><tr>'
+        + '<th style="width:220px">Task Name</th><th style="width:36px">%</th>'
+        + '<th style="width:70px">Start</th><th style="width:70px">Finish</th>'
+        + '<th>Timeline →</th>'
+      + '</tr></thead><tbody>' + rows + '</tbody></table>'
+      + '<div style="font-size:9px;color:#aaa;text-align:center;margin-top:12px;padding-top:8px;border-top:1px solid #eee">'
+        + 'Rye Electric, Inc. | 75 Doppler, Irvine CA 92618 | CA Lic. 980345 | ' + jobNum + ' ' + jobName
+      + '</div>'
+      + '</body></html>';
+
+    var w = window.open('', '_blank');
+    if (!w) { alert('Pop-up blocked — please allow pop-ups.'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(function(){ w.print(); }, 500);
+  }
+
   function ganttSetZoom(z){
     ganttZoom=z;
     document.querySelectorAll('.gantt-zoom-btn').forEach(function(b){var m=b.textContent.trim().toLowerCase()===z;b.style.background=m?'#2980b9':'#eee';b.style.color=m?'#fff':'#333';});
     ganttRender();
   }
-  function ganttSave(){try{localStorage.setItem(GANTT_KEY,JSON.stringify(ganttTasks));if(typeof toast==='function')toast('Schedule saved');}catch(e){}}
-  function ganttLoad(){try{var s=localStorage.getItem(GANTT_KEY);if(s){ganttTasks=JSON.parse(s);ganttRender();}}catch(e){}}
+  function ganttSave(){
+    try{
+      if(schedView === 'rye'){
+        ryeTasks = ganttTasks.slice();
+        localStorage.setItem(GANTT_KEY + '_rye', JSON.stringify(ryeTasks));
+      } else {
+        gcTasks = ganttTasks.slice();
+        localStorage.setItem(GANTT_KEY, JSON.stringify(ganttTasks));
+      }
+      if(typeof toast==='function') toast('Schedule saved');
+    } catch(e){}
+  }
+  function ganttLoad(){
+    try{
+      var s = localStorage.getItem(GANTT_KEY);
+      if(s){ gcTasks = JSON.parse(s); ganttTasks = gcTasks.slice(); ganttRender(); }
+      var r = localStorage.getItem(GANTT_KEY + '_rye');
+      if(r){ ryeTasks = JSON.parse(r); }
+    } catch(e){}
+  }
 
   function ganttAddTask(){
     ganttEditIdx=-1;
@@ -7482,15 +7770,145 @@ function publishSingleSignedIn(wid) {
       summary:document.getElementById('gm-summary').checked,
       indent:ganttEditIdx>=0?(ganttTasks[ganttEditIdx].indent||0):0
     };
-    if(ganttEditIdx>=0)ganttTasks[ganttEditIdx]=task;else ganttTasks.push(task);
+    if(ganttEditIdx>=0) ganttTasks[ganttEditIdx]=task; else ganttTasks.push(task);
+    if(schedView === 'rye') ryeTasks = ganttTasks.slice();
+    else gcTasks = ganttTasks.slice();
     document.getElementById('gantt-modal').style.display='none';
-    ganttRender();ganttSave();
+    ganttRender(); ganttSave();
   }
   function ganttModalDelete(){
     if(ganttEditIdx>=0&&confirm('Delete this task?')){
       ganttTasks.splice(ganttEditIdx,1);
       document.getElementById('gantt-modal').style.display='none';
       ganttRender();ganttSave();
+    }
+  }
+
+
+  async function ganttImportPDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+
+    var statusBar = document.getElementById('gantt-pdf-status');
+    var statusText = document.getElementById('gantt-pdf-status-text');
+    statusBar.style.display = 'flex';
+    statusText.textContent = 'Reading PDF...';
+
+    try {
+      // Convert PDF to base64
+      var base64 = await new Promise(function(res, rej) {
+        var r = new FileReader();
+        r.onload = function() { res(r.result.split(',')[1]); };
+        r.onerror = function() { rej(new Error('Read failed')); };
+        r.readAsDataURL(file);
+      });
+
+      statusText.textContent = 'Extracting schedule with AI...';
+
+      // Send full PDF - haiku handles it efficiently
+      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(120000),
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2000,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'document',
+                source: { type: 'base64', media_type: 'application/pdf', data: base64 }
+              },
+              {
+                type: 'text',
+                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones from the FIRST PAGE comparison table, 20-30 tasks max.'
+              }
+            ]
+          }]
+        })
+      });
+
+      var data = await response.json();
+      var text = data.content && data.content[0] && data.content[0].text;
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0, 300));
+
+      statusText.textContent = 'Parsing tasks...';
+
+      var clean = text.replace(/```json|```/g, '').trim();
+      var parsed = JSON.parse(clean);
+
+      var baselineTasks = [];
+      var currentTasks = [];
+      if (Array.isArray(parsed)) {
+        currentTasks = parsed;
+      } else {
+        baselineTasks = parsed.baseline || [];
+        currentTasks = parsed.current || parsed.tasks || [];
+      }
+
+      if (currentTasks.length === 0) throw new Error('No tasks found in schedule');
+
+      ganttTasks = [];
+
+      if (baselineTasks.length > 0) {
+        baselineTasks.forEach(function(t, i) {
+          ganttTasks.push({
+            id: 'B' + String(t.id || i),
+            name: '📋 BASELINE: ' + (t.name || 'Task ' + i),
+            start: t.start || '',
+            finish: t.finish || '',
+            pct: 0,
+            assigned: 'Baseline',
+            preds: [],
+            summary: true,
+            indent: 0
+          });
+        });
+        ganttTasks.push({
+          id: 'SEP1',
+          name: '━━━ CURRENT SCHEDULE ━━━',
+          start: currentTasks[0] ? currentTasks[0].start : '',
+          finish: currentTasks[currentTasks.length-1] ? currentTasks[currentTasks.length-1].finish : '',
+          pct: 0, assigned: '', preds: [], summary: true, indent: 0
+        });
+      }
+
+      currentTasks.forEach(function(t, i) {
+        var base = baselineTasks.find(function(b) {
+          return b.name && t.name && b.name.toLowerCase().trim() === t.name.toLowerCase().trim();
+        });
+        var delta = '';
+        if (base && base.start && t.start) {
+          var days = Math.round((new Date(t.start) - new Date(base.start)) / 86400000);
+          if (days !== 0) delta = ' [' + (days > 0 ? '+' : '') + days + 'd]';
+        }
+        ganttTasks.push({
+          id: 'C' + String(t.id || i),
+          name: (t.name || 'Task ' + i) + delta,
+          start: t.start || '',
+          finish: t.finish || '',
+          pct: parseInt(t.pct) || 0,
+          assigned: t.assigned || '',
+          preds: Array.isArray(t.preds) ? t.preds.map(String) : [],
+          summary: false,
+          indent: 0
+        });
+      });
+
+      gcTasks = ganttTasks.slice();
+      ganttRender();
+      ganttSave();
+      statusBar.style.display = 'none';
+      ganttApplyFilter();
+      if (typeof toast === 'function') toast('Imported ' + ganttTasks.length + ' tasks from GC schedule PDF');
+
+    } catch(e) {
+      statusBar.style.display = 'none';
+      console.error('PDF import error:', e);
+      if (typeof toast === 'function') toast('PDF import failed: ' + e.message);
+      alert('Could not extract schedule: ' + e.message + '\n\nTip: Make sure the PDF contains a text-based schedule, not a scanned image.');
     }
   }
 
@@ -7538,7 +7956,7 @@ function publishSingleSignedIn(wid) {
     else alert('Could not parse CSV. Columns needed: ID, Name, Start, Finish, %Complete, Predecessors, Assigned To');
   }
 
-  function ganttPrint(){
+  function ganttPrintLegacy(){
     if(!ganttTasks.length){if(typeof toast==='function')toast('No schedule to print');return;}
     ganttCPM();var dr=ganttDateRange();var totalDays=Math.max(1,gDiff(dr.start,dr.end));
     var today=new Date();today.setHours(12,0,0,0);
