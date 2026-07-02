@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- saved from url=(0144)file:///C:/Users/denni/AppData/Local/Temp/e8026187-75ca-42d0-9119-f3483a576ac9_files%20(13).zip.ac9/rye-electric-field-tracker-26003-carina.html -->
+<!-- saved from url=(0145)file:///C:/Users/denni/AppData/Local/Temp/9b859ac5-f709-49b5-902b-1c7076b4091e_files%20(13).zip.91e/rye-electric-field-tracker-26003-carina.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rye Electric - Field Tracker - 26003 - CARINA MAIN PLACE MALL</title>
+<title>Rye Electric - Field Tracker - 26003 - CARINA</title>
 <link href="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/css2" rel="stylesheet">
 <style>
 :root{
@@ -308,6 +308,27 @@ tbody tr:hover td{background:#f7fbfc}
   .tbt-remaining-note{margin-top:12px;font-size:11px;color:#a0aec0;text-align:center;}
   .tbt-remaining-note code{background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:11px;}
 
+  /* ── Gantt tab styles ── */
+  .gantt-zoom-btn{border:none;border-radius:6px;font-size:11px;font-weight:700;padding:5px 12px;cursor:pointer}
+  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  .gantt-row{display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;border-bottom:1px solid #f0f0f0;align-items:stretch;min-height:36px}
+  .gantt-row:hover{background:#f7fafc}
+  .gantt-row.summary-row{background:#edf2f7}
+  .gantt-row.critical-row{background:#fff5f5}
+  .gantt-cell{padding:5px 8px;font-size:11px;display:flex;align-items:center;overflow:hidden}
+  .gantt-bar-wrap{padding:4px 0;position:relative;display:flex;align-items:center}
+  .gantt-bar{height:18px;border-radius:3px;position:relative;min-width:3px;cursor:pointer;transition:opacity .15s}
+  .gantt-bar:hover{opacity:.85}
+  .gantt-progress{height:100%;border-radius:3px;background:rgba(255,255,255,.35)}
+  .gantt-float-bar{height:10px;border-radius:2px;margin-top:4px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px)}
+  .gantt-today-line{position:absolute;top:0;bottom:0;width:2px;background:#e53e3e;opacity:.7;pointer-events:none;z-index:2}
+  .gantt-stat-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px}
+  .gantt-stat-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:2px}
+  .gantt-stat-val{font-size:18px;font-weight:800;color:#1a202c}
+  .gantt-header-date{font-size:9px;color:#555;text-align:center;border-left:1px solid #e2e8f0;padding:6px 2px;white-space:nowrap;overflow:hidden}
+  .gantt-header-date.weekend{background:#f7f7f7;color:#bbb}
+  .gantt-header-date.today{background:#fff5f5;color:#e53e3e;font-weight:700}
+
 </style>
   <script src="file:///C:/Users/Dennis%20Furst/AppData/Local/Temp/584e6bae-c6e9-4c55-914b-2bf00810fd64_files.zip.d64/Rye%20Electric%20-%20Field%20Tracker%20Marina_files/email.min.js.download"></script>
 </head>
@@ -391,6 +412,10 @@ tbody tr:hover td{background:#f7fbfc}
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
     <span>Units</span>
     </button>
+    <button class="tab" onclick="goTab(this,&#39;gantt&#39;)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="3" rx="1"/><rect x="3" y="9" width="12" height="3" rx="1"/><rect x="3" y="14" width="15" height="3" rx="1"/><rect x="3" y="19" width="9" height="3" rx="1"/></svg>
+    <span>Schedule</span>
+    </button>
     <button class="tab" onclick="goTab(this,&#39;jobs&#39;)">
     <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
     <span>Jobs</span>
@@ -426,116 +451,7 @@ tbody tr:hover td{background:#f7fbfc}
         <div class="form-grid">
           <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="sel-worker">
-              <option value="">-- Select employee --</option>
-              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo - Dofo</option>
-              <option value="34 - Anthony Zetina">34 - Anthony Zetina - Electrician</option>
-              <option value="63 - Xavier Contreras">63 - Xavier Contreras - General</option>
-              <option value="69 - Brian Kitajima">69 - Brian Kitajima - Foreman</option>
-              <option value="76 - David Smith">76 - David Smith - Electrician</option>
-              <option value="77 - Dillan Smith">77 - Dillan Smith - Foreman</option>
-              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz - Electrician</option>
-              <option value="86 - Efren Hilario">86 - Efren Hilario - Electrician</option>
-              <option value="92 - Jorge Contreras">92 - Jorge Contreras - Foreman</option>
-              <option value="106 - Johnny Perez">106 - Johnny Perez - Foreman</option>
-              <option value="123 - Armando Lopez">123 - Armando Lopez - Electrician</option>
-              <option value="138 - Francisco Flores">138 - Francisco Flores - Electrician</option>
-              <option value="140 - Adrian Flores">140 - Adrian Flores - Foreman</option>
-              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez - Electrician</option>
-              <option value="152 - Brian Campos">152 - Brian Campos - Electrician</option>
-              <option value="177 - Pedro Barrera">177 - Pedro Barrera - Electrician</option>
-              <option value="204 - Kenneth William">204 - Kenneth William - Foreman</option>
-              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos - Electrician</option>
-              <option value="231 - Gabriel Flores">231 - Gabriel Flores - Apprentice</option>
-              <option value="235 - Louis Aceves">235 - Louis Aceves - Electrician</option>
-              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos - Electrician</option>
-              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos - Foreman</option>
-              <option value="263 - Manuel Palacios">263 - Manuel Palacios - Electrician</option>
-              <option value="269 - Anthony Lyons">269 - Anthony Lyons - Electrician</option>
-              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos - Foreman</option>
-              <option value="388 - Jose Ramirez">388 - Jose Ramirez - Lv</option>
-              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera - Lv</option>
-              <option value="395 - Irvin Rivera">395 - Irvin Rivera - Apprentice</option>
-              <option value="455 - Edgar Solis">455 - Edgar Solis - Electrician</option>
-              <option value="531 - Vincent Sopha">531 - Vincent Sopha - Electrician</option>
-              <option value="536 - Anthony Macias">536 - Anthony Macias - Electrician</option>
-              <option value="587 - Enrique Laguna">587 - Enrique Laguna - Electrician</option>
-              <option value="613 - Matthew Baciu">613 - Matthew Baciu - Electrician</option>
-              <option value="628 - Humberto Flores">628 - Humberto Flores - Foreman</option>
-              <option value="630 - Jaime Moya">630 - Jaime Moya - Electrician</option>
-              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen - Lv</option>
-              <option value="651 - Daniel Villegas">651 - Daniel Villegas - Electrician</option>
-              <option value="660 - Carla Quijada">660 - Carla Quijada - Electrician</option>
-              <option value="666 - Jose Preciado">666 - Jose Preciado - Foreman</option>
-              <option value="671 - Brian Flores">671 - Brian Flores - Apprentice</option>
-              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde - Electrician</option>
-              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio - Electrician</option>
-              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval - Electrician</option>
-              <option value="791 - Brenda Quijada">791 - Brenda Quijada - Electrician</option>
-              <option value="792 - Dyana Quijada">792 - Dyana Quijada - Electrician</option>
-              <option value="807 - Oliver Galicia">807 - Oliver Galicia - Electrician</option>
-              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez - Electrician</option>
-              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez - Electrician</option>
-              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo - Electrician</option>
-              <option value="820 - Rusel Santiago">820 - Rusel Santiago - Electrician</option>
-              <option value="822 - Kevin Bautista">822 - Kevin Bautista - Electrician</option>
-              <option value="823 - Luis Ramirez">823 - Luis Ramirez - Electrician</option>
-              <option value="825 - Josue Villegas">825 - Josue Villegas - Electrician</option>
-              <option value="831 - Salvador Perez">831 - Salvador Perez - Electrician</option>
-              <option value="832 - David Casarez">832 - David Casarez - Electrician</option>
-              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos - Electrician</option>
-              <option value="835 - Randdy De Paz">835 - Randdy De Paz - Electrician</option>
-              <option value="836 - Angel Ibanez">836 - Angel Ibanez - Electrician</option>
-              <option value="844 - Robert Stark">844 - Robert Stark - Electrician</option>
-              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez - Electrician</option>
-              <option value="849 - Daniel Burleson">849 - Daniel Burleson - Electrician</option>
-              <option value="850 - Abiud Lopez">850 - Abiud Lopez - Electrician</option>
-              <option value="855 - Mario Arias">855 - Mario Arias - Electrician</option>
-              <option value="856 - Jaime Quintero">856 - Jaime Quintero - Electrician</option>
-              <option value="858 - Mario Lopez">858 - Mario Lopez - Electrician</option>
-              <option value="859 - Steven Sulewski">859 - Steven Sulewski - Electrician</option>
-              <option value="861 - Cristian Collin">861 - Cristian Collin - Electrician</option>
-              <option value="862 - Jesus Heredia">862 - Jesus Heredia - Electrician</option>
-              <option value="865 - Daniel Lopez">865 - Daniel Lopez - Electrician</option>
-              <option value="866 - Axel Salas">866 - Axel Salas - Electrician</option>
-              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre - Apprentice</option>
-              <option value="870 - Alex Osorio">870 - Alex Osorio - Electrician</option>
-              <option value="872 - Julio Munoz">872 - Julio Munoz - Apprentice</option>
-              <option value="873 - Angel Hernandez">873 - Angel Hernandez - Electrician</option>
-              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez - Electrician</option>
-              <option value="877 - Samuel Munoz">877 - Samuel Munoz - Iw</option>
-              <option value="878 - Antonio Castillo">878 - Antonio Castillo - Iw</option>
-              <option value="879 - Jerry Munoz">879 - Jerry Munoz - Iw</option>
-              <option value="880 - Noah Villareal">880 - Noah Villareal - Electrician</option>
-              <option value="882 - Jayson Ortega">882 - Jayson Ortega - Electrician</option>
-              <option value="883 - Carlos Agapito">883 - Carlos Agapito - Electrician</option>
-              <option value="884 - Jose Luna">884 - Jose Luna - Electrician</option>
-              <option value="886 - Manuel Martinez">886 - Manuel Martinez - Electrician</option>
-              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez - Electrician</option>
-              <option value="888 - Sergio Diaz">888 - Sergio Diaz - Electrician</option>
-              <option value="889 - Tony Broadnax">889 - Tony Broadnax - Electrician</option>
-              <option value="892 - Isidro Enciso">892 - Isidro Enciso - Electrician</option>
-              <option value="893 - Brian Ramirez">893 - Brian Ramirez - Electrician</option>
-              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza - Apprentice</option>
-              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval - Electrician</option>
-              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma - Electrician</option>
-              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria - Electrician</option>
-              <option value="899 - Victor Armienta">899 - Victor Armienta - Apprentice</option>
-              <option value="901 - Guillermo Silva">901 - Guillermo Silva - Electrician</option>
-              <option value="902 - Erik Lopez">902 - Erik Lopez - Electrician</option>
-              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado - Apprentice</option>
-              <option value="905 - James Marquez">905 - James Marquez - Apprentice</option>
-              <option value="906 - Henri Sibrian">906 - Henri Sibrian - Electrician</option>
-              <option value="908 - Vincent Stancati">908 - Vincent Stancati - Electrician</option>
-              <option value="909 - Christian Moran">909 - Christian Moran - Electrician</option>
-              <option value="910 - Edwin Martinez">910 - Edwin Martinez - Electrician</option>
-              <option value="911 - Adrian Marquez">911 - Adrian Marquez - Electrician</option>
-              <option value="912 - Victor Carrillo">912 - Victor Carrillo - Field</option>
-              <option value="914 - Miguel Corral">914 - Miguel Corral - Field</option>
-              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia - Journeyman</option>
-              <option value="917 - Uriel Chavez">917 - Uriel Chavez - Foreman</option>
-              <option value="918 - Brandon Salazar">918 - Brandon Salazar - Field</option>
-            </select>
+            <select id="sel-worker"><option value="">-- Loading crew... --</option></select>
           </div>
           <div class="fgroup" style="display:none">
             <div class="flbl">Job / Project</div>
@@ -736,118 +652,9 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
       <div class="cb">
         <div class="form-grid">
-<div class="fgroup">
+          <div class="fgroup">
             <div class="flbl">Employee</div>
-            <select id="wb-worker">
-              <option value="">-- Select employee --</option>
-              <option value="5 - Jonathan Jacobo">5 - Jonathan Jacobo</option>
-              <option value="34 - Anthony Zetina">34 - Anthony Zetina</option>
-              <option value="63 - Xavier Contreras">63 - Xavier Contreras</option>
-              <option value="69 - Brian Kitajima">69 - Brian Kitajima</option>
-              <option value="76 - David Smith">76 - David Smith</option>
-              <option value="77 - Dillan Smith">77 - Dillan Smith</option>
-              <option value="85 - Alberto Lopez Ruiz">85 - Alberto Lopez Ruiz</option>
-              <option value="86 - Efren Hilario">86 - Efren Hilario</option>
-              <option value="92 - Jorge Contreras">92 - Jorge Contreras</option>
-              <option value="106 - Johnny Perez">106 - Johnny Perez</option>
-              <option value="123 - Armando Lopez">123 - Armando Lopez</option>
-              <option value="138 - Francisco Flores">138 - Francisco Flores</option>
-              <option value="140 - Adrian Flores">140 - Adrian Flores</option>
-              <option value="145 - Alejandro Lopez">145 - Alejandro Lopez</option>
-              <option value="152 - Brian Campos">152 - Brian Campos</option>
-              <option value="177 - Pedro Barrera">177 - Pedro Barrera</option>
-              <option value="204 - Kenneth William">204 - Kenneth William</option>
-              <option value="222 - Duvaldi Mazariegos">222 - Duvaldi Mazariegos</option>
-              <option value="231 - Gabriel Flores">231 - Gabriel Flores</option>
-              <option value="235 - Louis Aceves">235 - Louis Aceves</option>
-              <option value="261 - Juan Mazariegos">261 - Juan Mazariegos</option>
-              <option value="262 - Leonardo Mazariegos">262 - Leonardo Mazariegos</option>
-              <option value="263 - Manuel Palacios">263 - Manuel Palacios</option>
-              <option value="269 - Anthony Lyons">269 - Anthony Lyons</option>
-              <option value="287 - Filiberto Ramos">287 - Filiberto Ramos</option>
-              <option value="388 - Jose Ramirez">388 - Jose Ramirez</option>
-              <option value="393 - Jeffrey Rivera">393 - Jeffrey Rivera</option>
-              <option value="395 - Irvin Rivera">395 - Irvin Rivera</option>
-              <option value="455 - Edgar Solis">455 - Edgar Solis</option>
-              <option value="531 - Vincent Sopha">531 - Vincent Sopha</option>
-              <option value="536 - Anthony Macias">536 - Anthony Macias</option>
-              <option value="587 - Enrique Laguna">587 - Enrique Laguna</option>
-              <option value="613 - Matthew Baciu">613 - Matthew Baciu</option>
-              <option value="628 - Humberto Flores">628 - Humberto Flores</option>
-              <option value="630 - Jaime Moya">630 - Jaime Moya</option>
-              <option value="640 - Edith Del Carmen">640 - Edith Del Carmen</option>
-              <option value="651 - Daniel Villegas">651 - Daniel Villegas</option>
-              <option value="660 - Carla Quijada">660 - Carla Quijada</option>
-              <option value="666 - Jose Preciado">666 - Jose Preciado</option>
-              <option value="671 - Brian Flores">671 - Brian Flores</option>
-              <option value="737 - Carlos Landaverde">737 - Carlos Landaverde</option>
-              <option value="770 - Jimmy Cascio">770 - Jimmy Cascio</option>
-              <option value="788 - Sergio Sandoval">788 - Sergio Sandoval</option>
-              <option value="791 - Brenda Quijada">791 - Brenda Quijada</option>
-              <option value="792 - Dyana Quijada">792 - Dyana Quijada</option>
-              <option value="807 - Oliver Galicia">807 - Oliver Galicia</option>
-              <option value="816 - Sotero Dominguez">816 - Sotero Dominguez</option>
-              <option value="817 - Miguel Dominguez">817 - Miguel Dominguez</option>
-              <option value="819 - Efrain Cornejo">819 - Efrain Cornejo</option>
-              <option value="820 - Rusel Santiago">820 - Rusel Santiago</option>
-              <option value="822 - Kevin Bautista">822 - Kevin Bautista</option>
-              <option value="823 - Luis Ramirez">823 - Luis Ramirez</option>
-              <option value="825 - Josue Villegas">825 - Josue Villegas</option>
-              <option value="831 - Salvador Perez">831 - Salvador Perez</option>
-              <option value="832 - David Casarez">832 - David Casarez</option>
-              <option value="834 - Lizeth Marcos">834 - Lizeth Marcos</option>
-              <option value="835 - Randdy De Paz">835 - Randdy De Paz</option>
-              <option value="836 - Angel Ibanez">836 - Angel Ibanez</option>
-              <option value="844 - Robert Stark">844 - Robert Stark</option>
-              <option value="848 - Anthony Ibanez">848 - Anthony Ibanez</option>
-              <option value="849 - Daniel Burleson">849 - Daniel Burleson</option>
-              <option value="850 - Abiud Lopez">850 - Abiud Lopez</option>
-              <option value="855 - Mario Arias">855 - Mario Arias</option>
-              <option value="856 - Jaime Quintero">856 - Jaime Quintero</option>
-              <option value="858 - Mario Lopez">858 - Mario Lopez</option>
-              <option value="859 - Steven Sulewski">859 - Steven Sulewski</option>
-              <option value="861 - Cristian Collin">861 - Cristian Collin</option>
-              <option value="862 - Jesus Heredia">862 - Jesus Heredia</option>
-              <option value="865 - Daniel Lopez">865 - Daniel Lopez</option>
-              <option value="866 - Axel Salas">866 - Axel Salas</option>
-              <option value="868 - Oscar Aguirre">868 - Oscar Aguirre</option>
-              <option value="870 - Alex Osorio">870 - Alex Osorio</option>
-              <option value="872 - Julio Munoz">872 - Julio Munoz</option>
-              <option value="873 - Angel Hernandez">873 - Angel Hernandez</option>
-              <option value="876 - Adrian Hernandez">876 - Adrian Hernandez</option>
-              <option value="877 - Samuel Munoz">877 - Samuel Munoz</option>
-              <option value="878 - Antonio Castillo">878 - Antonio Castillo</option>
-              <option value="879 - Jerry Munoz">879 - Jerry Munoz</option>
-              <option value="880 - Noah Villareal">880 - Noah Villareal</option>
-              <option value="882 - Jayson Ortega">882 - Jayson Ortega</option>
-              <option value="883 - Carlos Agapito">883 - Carlos Agapito</option>
-              <option value="884 - Jose Luna">884 - Jose Luna</option>
-              <option value="886 - Manuel Martinez">886 - Manuel Martinez</option>
-              <option value="887 - Mathew Gonzalez">887 - Mathew Gonzalez</option>
-              <option value="888 - Sergio Diaz">888 - Sergio Diaz</option>
-              <option value="889 - Tony Broadnax">889 - Tony Broadnax</option>
-              <option value="892 - Isidro Enciso">892 - Isidro Enciso</option>
-              <option value="893 - Brian Ramirez">893 - Brian Ramirez</option>
-              <option value="894 - Jerlin Mendoza">894 - Jerlin Mendoza</option>
-              <option value="896 - Estevan Sandoval">896 - Estevan Sandoval</option>
-              <option value="897 - Lorenzo Tanguma">897 - Lorenzo Tanguma</option>
-              <option value="898 - Eduardo Echeverria">898 - Eduardo Echeverria</option>
-              <option value="899 - Victor Armienta">899 - Victor Armienta</option>
-              <option value="901 - Guillermo Silva">901 - Guillermo Silva</option>
-              <option value="902 - Erik Lopez">902 - Erik Lopez</option>
-              <option value="903 - Isaiah Ortiz Alvarado">903 - Isaiah Ortiz Alvarado</option>
-              <option value="905 - James Marquez">905 - James Marquez</option>
-              <option value="906 - Henri Sibrian">906 - Henri Sibrian</option>
-              <option value="908 - Vincent Stancati">908 - Vincent Stancati</option>
-              <option value="909 - Christian Moran">909 - Christian Moran</option>
-              <option value="910 - Edwin Martinez">910 - Edwin Martinez</option>
-              <option value="911 - Adrian Marquez">911 - Adrian Marquez</option>
-              <option value="912 - Victor Carrillo">912 - Victor Carrillo</option>
-              <option value="914 - Miguel Corral">914 - Miguel Corral</option>
-              <option value="915 - Joaquin Garcia">915 - Joaquin Garcia</option>
-              <option value="917 - Uriel Chavez">917 - Uriel Chavez</option>
-              <option value="918 - Brandon Salazar">918 - Brandon Salazar</option>
-            </select>
+            <select id="wb-worker"><option value="">-- Loading crew... --</option></select>
           </div>
           <input type="hidden" id="wb-job" value="26003 - CARINA MAIN PLACE MALL">
         </div>
@@ -1138,15 +945,15 @@ tbody tr:hover td{background:#f7fbfc}
           <div class="form-grid four">
             <div class="fgroup">
               <div class="flbl">AM Temp (°F)</div>
-              <input type="text" id="djr-temp-am" placeholder="e.g. 62">
+              <input type="text" id="djr-temp-am" placeholder="Auto-filling...">
             </div>
             <div class="fgroup">
               <div class="flbl">PM Temp (°F)</div>
-              <input type="text" id="djr-temp-pm" placeholder="e.g. 75">
+              <input type="text" id="djr-temp-pm" placeholder="Auto-filling...">
             </div>
             <div class="fgroup" style="grid-column:span 2">
               <div class="flbl">Weather description</div>
-              <input type="text" id="djr-weather" placeholder="e.g. Cold in morning, hot afternoon">
+              <input type="text" id="djr-weather" placeholder="Auto-filling...">
             </div>
           </div>
         </div>
@@ -1674,6 +1481,168 @@ tbody tr:hover td{background:#f7fbfc}
     </div>
   </div>
 
+
+  <!-- ===== GANTT / SCHEDULE TAB ===== -->
+  <div class="pane" id="pane-gantt">
+
+    <!-- ── Top toolbar ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
+      <div style="font-size:14px;font-weight:800;color:#1a202c;flex:1;min-width:120px">📅 Project Schedule</div>
+
+      <!-- Schedule view toggle -->
+      <div style="display:flex;gap:3px;background:#f0f0f0;border-radius:8px;padding:3px">
+        <button id="sched-btn-gc" onclick="setSchedView('gc')" style="background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">GC Schedule</button>
+        <button id="sched-btn-rye" onclick="setSchedView('rye')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Rye Schedule</button>
+        <button id="sched-btn-compare" onclick="setSchedView('compare')" style="background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer">Compare</button>
+      </div>
+
+      <label style="background:#2980b9;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+        📂 Import Schedule
+        <input type="file" id="gantt-import-file" accept=".csv,.xlsx,.xml" style="display:none" onchange="ganttImport(this)">
+      </label>
+      <label id="gc-pdf-label" style="background:#7b2d8b;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px" title="Upload a GC schedule PDF and AI will extract tasks into the Gantt">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <label id="rye-pdf-label" style="background:#276749;color:#fff;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer;display:none;align-items:center;gap:6px" title="Upload Rye Electric schedule PDF">
+        🤖 Upload Rye Schedule (PDF)
+        <input type="file" id="gantt-rye-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportRyePDF(this)">
+      </label>
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
+      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
+      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
+    </div> extract tasks into the Gantt">
+        🤖 Upload GC Schedule (PDF)
+        <input type="file" id="gantt-pdf-file" accept=".pdf" style="display:none" onchange="ganttImportPDF(this)">
+      </label>
+      <div id="gantt-pdf-status" style="font-size:11px;color:#2980b9;font-weight:600;display:none;align-items:center;gap:6px">
+        <span style="animation:spin 1s linear infinite;display:inline-block">⏳</span>
+        <span id="gantt-pdf-status-text">Reading PDF...</span>
+      </div>
+      <button style="background:#276749;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttAddTask()">+ Add Task</button>
+      <button style="background:#1a202c;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttSave()">💾 Save</button>
+      <button style="background:#e53e3e;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;padding:8px 14px;cursor:pointer" onclick="ganttPrintPDF()">🖨️ Print PDF</button>
+    </div>
+
+    <!-- ── View controls ── -->
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Zoom:</span>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('week')" style="background:#2980b9;color:#fff">Week</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('month')" style="background:#eee;color:#333">Month</button>
+      <button class="gantt-zoom-btn" onclick="ganttSetZoom('quarter')" style="background:#eee;color:#333">Quarter</button>
+      <span style="flex:1"></span>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-critical" checked onchange="ganttRender()"> Show critical path
+      </label>
+      <label style="font-size:12px;font-weight:600;color:#444;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="gantt-show-float" checked onchange="ganttRender()"> Show float
+      </label>
+    </div>
+
+    <!-- ── Activity Filter Bar ── -->
+    <div id="gantt-filter-bar" style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+      <span style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em">Filter:</span>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2980b9;cursor:pointer;background:#ebf8ff;border:1px solid #bee3f8;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-electrical" checked onchange="ganttApplyFilter()"> ⚡ Electrical
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-others" onchange="ganttApplyFilter()"> All Other Trades
+      </label>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#555;cursor:pointer;background:#f7fafc;border:1px solid #e2e8f0;padding:3px 10px;border-radius:20px">
+        <input type="checkbox" id="filter-baseline" checked onchange="ganttApplyFilter()"> Show Baseline
+      </label>
+      <button onclick="ganttResetFilter()" style="font-size:11px;background:none;border:1px solid #cbd5e0;border-radius:6px;padding:3px 10px;cursor:pointer;color:#666">Reset</button>
+      <span id="gantt-filter-count" style="font-size:11px;color:#a0aec0;margin-left:auto"></span>
+    </div>
+
+    <!-- ── Critical Path Summary Panel ── -->
+    <div id="gantt-cp-panel" style="display:none;background:#fff5f5;border:1.5px solid #e53e3e;border-radius:10px;padding:12px 16px;margin-bottom:10px">
+      <div style="font-size:12px;font-weight:800;color:#e53e3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">⚠️ Critical Path Summary</div>
+      <div id="gantt-cp-content" style="font-size:12px;color:#1a202c;line-height:1.7"></div>
+    </div>
+
+    <!-- ── Import instructions ── -->
+    <div id="gantt-empty" style="text-align:center;padding:40px 20px;color:#777;font-size:13px;border:2px dashed #ddd;border-radius:10px;margin-bottom:10px">
+      <div style="font-size:32px;margin-bottom:10px">📋</div>
+      <div style="font-weight:700;margin-bottom:6px;color:#444">No schedule loaded</div>
+      <div style="margin-bottom:14px">Import an MS Project export (.xml), CSV, or Excel file — or add tasks manually using the button above.</div>
+      <div style="font-size:11px;color:#999;line-height:1.6">
+        <strong>CSV/Excel columns:</strong> ID, Name, Start, Finish, Duration, %Complete, Predecessors, Assigned To, WBS<br>
+        <strong>MS Project XML:</strong> File → Save As → XML Format in MS Project
+      </div>
+    </div>
+
+    <!-- ── Main Gantt layout ── -->
+    <div id="gantt-main" style="display:none">
+
+      <!-- Stats bar -->
+      <div id="gantt-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
+
+      <!-- Gantt chart container -->
+      <div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">
+        <!-- Header row -->
+        <div style="display:grid;grid-template-columns:280px 60px 80px 80px 60px 1fr;background:#1a202c;color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">
+          <div style="padding:8px 12px">Task Name</div>
+          <div style="padding:8px 6px;text-align:center">%</div>
+          <div style="padding:8px 6px;text-align:center">Start</div>
+          <div style="padding:8px 6px;text-align:center">Finish</div>
+          <div style="padding:8px 6px;text-align:center">Float</div>
+          <div style="padding:8px 12px" id="gantt-timeline-header">Timeline</div>
+        </div>
+        <!-- Task rows -->
+        <div id="gantt-rows"></div>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:#555;align-items:center">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#2980b9;border-radius:2px"></div> Normal</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#e53e3e;border-radius:2px"></div> Critical path</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#276749;border-radius:2px"></div> Complete</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:repeating-linear-gradient(45deg,#f6ad55,#f6ad55 3px,#fef3c7 3px,#fef3c7 6px);border-radius:2px"></div> Float</div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:16px;height:10px;background:#718096;border-radius:2px"></div> Summary</div>
+        <div style="margin-left:auto;font-size:10px;color:#aaa">Today line = red dashed</div>
+      </div>
+    </div>
+
+    <!-- ── Edit task modal ── -->
+    <div id="gantt-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;padding:20px">
+      <div style="background:#fff;border-radius:14px;max-width:480px;margin:40px auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+        <div style="font-size:16px;font-weight:800;margin-bottom:16px;color:#1a202c">Edit Task</div>
+        <div style="display:grid;gap:10px">
+          <input id="gm-name" placeholder="Task name" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-wbs" placeholder="WBS (e.g. 1.2.3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><label style="font-size:11px;font-weight:700;color:#666">Start</label><input type="date" id="gm-start" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+            <div><label style="font-size:11px;font-weight:700;color:#666">Finish</label><input type="date" id="gm-finish" style="padding:9px 10px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box"></div>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:#666">% Complete</label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <input type="range" id="gm-pct" min="0" max="100" value="0" oninput="document.getElementById('gm-pct-val').textContent=this.value+'%'" style="flex:1">
+              <span id="gm-pct-val" style="font-size:13px;font-weight:700;min-width:36px">0%</span>
+            </div>
+          </div>
+          <input id="gm-assigned" placeholder="Assigned to (foreman/crew)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <input id="gm-preds" placeholder="Predecessors (comma-sep IDs, e.g. 2,3)" style="padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:7px;font-size:13px;width:100%;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="gm-summary" style="width:16px;height:16px">
+            <label for="gm-summary" style="font-size:13px;font-weight:600">Summary / milestone row</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:18px">
+          <button onclick="ganttModalSave()" style="flex:1;background:#2980b9;color:#fff;border:none;border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer">Save Task</button>
+          <button onclick="ganttModalDelete()" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Delete</button>
+          <button onclick="document.getElementById('gantt-modal').style.display='none'" style="background:#eee;color:#333;border:none;border-radius:8px;padding:11px 16px;font-size:13px;font-weight:700;cursor:pointer">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pane-gantt -->
+
   <!-- ===== WHITEBOARD TAB ===== -->
 </div><!-- /shell -->
 
@@ -2035,7 +2004,10 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="safety-obs-hint">Include positive comments and note corrective action for any unsafe conditions.</div>
       <div id="wjsiObsTable"><div class="safety-obs-row"><div class="safety-obs-num">1</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs1" value="yes"> YES</label><label><input type="radio" name="wjsiObs1" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">2</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs2" value="yes"> YES</label><label><input type="radio" name="wjsiObs2" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">3</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs3" value="yes"> YES</label><label><input type="radio" name="wjsiObs3" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">4</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs4" value="yes"> YES</label><label><input type="radio" name="wjsiObs4" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">5</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs5" value="yes"> YES</label><label><input type="radio" name="wjsiObs5" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">6</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs6" value="yes"> YES</label><label><input type="radio" name="wjsiObs6" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">7</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs7" value="yes"> YES</label><label><input type="radio" name="wjsiObs7" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">8</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs8" value="yes"> YES</label><label><input type="radio" name="wjsiObs8" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">9</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs9" value="yes"> YES</label><label><input type="radio" name="wjsiObs9" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div><div class="safety-obs-row"><div class="safety-obs-num">10</div><input type="text" placeholder="Observation..."><div class="safety-yesno"><label><input type="radio" name="wjsiObs10" value="yes"> YES</label><label><input type="radio" name="wjsiObs10" value="no"> NO</label></div><input type="text" placeholder="Person responsible (if NO)"></div></div>
       <button class="safety-add-row-btn" onclick="addWjsiObsRow()">+ Add observation</button>
-      <div id="wjsiSaveStatus" style="font-size:12px;font-weight:600;margin-top:8px;min-height:18px;"></div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
+        <button class="safety-submit-btn" onclick="saveDocReport('wjsi')" id="wjsiSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; WJSI</button>
+        <span id="wjsiSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
+      </div>
       <div class="safety-signatories">
         <div class="safety-sig-row">
           <div class="safety-sig-field"><label>Field Representative Name</label><input type="text" id="wjsiFieldRep" placeholder="Print name"></div>
@@ -2045,10 +2017,6 @@ tbody tr:hover td{background:#f7fbfc}
           <div class="safety-sig-field"><label>Management Representative Name</label><input type="text" id="wjsiMgmtRep" placeholder="Print name"></div>
           <div class="safety-sig-field"><label>Initials</label><input type="text" id="wjsiMgmtRepInitials" placeholder="Initials" maxlength="4" style="width:80px;"></div>
         </div>
-      </div>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('wjsi')" id="wjsiSaveBtn" style="padding:9px 20px;font-size:13px;">🗂️ Save Doc — WJSI</button>
-        <span id="wjsiSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">✅ Saved this week</span>
       </div>
     </div>
   </div>
@@ -2093,8 +2061,8 @@ tbody tr:hover td{background:#f7fbfc}
       </div>
       <button class="safety-add-row-btn" onclick="addJhaRow()">+ Add task step</button>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('jha')" id="jhaSaveBtn" style="padding:9px 20px;font-size:13px;">🗂️ Save Doc — JHA</button>
-        <span id="jhaSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">✅ Saved this week</span>
+        <button class="safety-submit-btn" onclick="saveDocReport('jha')" id="jhaSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; JHA</button>
+        <span id="jhaSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
       </div>
     </div>
   </div>
@@ -2188,8 +2156,8 @@ tbody tr:hover td{background:#f7fbfc}
       <div class="safety-field"><label>Supervisor Notes</label><textarea id="ptpSupervisorNotes" rows="2" placeholder="Review notes and feedback to the team..."></textarea></div>
       <div class="safety-field" style="margin-top:8px;"><label>Supervisor Name</label><input type="text" id="ptpSupervisorName" placeholder="Supervisor name"></div>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('ptp')" id="ptpSaveBtn" style="padding:9px 20px;font-size:13px;">🗂️ Save Doc — Pre-Task Plan</button>
-        <span id="ptpSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">✅ Saved this week</span>
+        <button class="safety-submit-btn" onclick="saveDocReport('ptp')" id="ptpSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; Pre-Task Plan</button>
+        <span id="ptpSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
       </div>
     </div>
   </div>
@@ -2294,8 +2262,8 @@ tbody tr:hover td{background:#f7fbfc}
 
       <div class="tbt-remaining-note">📋 Have more Toolbox Talks to add? Upload remaining PDFs to the <code>toolbox-talks/</code> folder and they will appear here after the next update.</div>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;">
-        <button class="safety-submit-btn" onclick="saveDocReport('tbt')" id="tbtSaveBtn" style="padding:9px 20px;font-size:13px;">🗂️ Save Doc — Toolbox Talk</button>
-        <span id="tbtSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">✅ Saved this week</span>
+        <button class="safety-submit-btn" onclick="saveDocReport('tbt')" id="tbtSaveBtn" style="padding:9px 20px;font-size:13px;">&#x1F5C2;&#xFE0F; Save Doc &mdash; Toolbox Talk</button>
+        <span id="tbtSavedBadge" style="display:none;color:#276749;font-size:13px;font-weight:700;">&#x2705; Saved this week</span>
       </div>
     </div>
   </div>
@@ -2322,22 +2290,10 @@ tbody tr:hover td{background:#f7fbfc}
   <div class="safety-submit-area" id="safetyReportsSummary" style="flex-direction:column;gap:8px;">
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#4a5568;margin-bottom:4px;">Weekly Safety Reports</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="safetyDocStatusGrid">
-      <div class="safety-doc-status-item" id="summaryWjsi">
-        <span class="safety-doc-status-icon" id="summaryWjsiIcon">—</span>
-        <span>Weekly Jobsite Safety Inspection</span>
-      </div>
-      <div class="safety-doc-status-item" id="summaryJha">
-        <span class="safety-doc-status-icon" id="summaryJhaIcon">—</span>
-        <span>Job Hazard Analysis</span>
-      </div>
-      <div class="safety-doc-status-item" id="summaryPtp">
-        <span class="safety-doc-status-icon" id="summaryPtpIcon">—</span>
-        <span>Pre-Task Plan</span>
-      </div>
-      <div class="safety-doc-status-item" id="summaryTbt">
-        <span class="safety-doc-status-icon" id="summaryTbtIcon">—</span>
-        <span>Toolbox Talk</span>
-      </div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryWjsiIcon">—</span><span>Weekly Jobsite Safety Inspection</span></div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryJhaIcon">—</span><span>Job Hazard Analysis</span></div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryPtpIcon">—</span><span>Pre-Task Plan</span></div>
+      <div class="safety-doc-status-item"><span class="safety-doc-status-icon" id="summaryTbtIcon">—</span><span>Toolbox Talk</span></div>
     </div>
     <div id="safetySubmitStatus" class="safety-submit-status" style="margin-top:4px;"></div>
   </div>
@@ -2345,6 +2301,7 @@ tbody tr:hover td{background:#f7fbfc}
   <div style="margin-top:12px;padding:12px 16px;background:#f0f4ff;border:1px solid #c3d4f7;border-radius:10px;">
     <button style="background:#1a73e8;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 16px;width:100%;" onclick="printSafetyForms()">&#x1F5A8;&#xFE0F; Print / PDF</button>
   </div>
+</div>
 <!-- ===== END SAFETY TAB ===== -->
 
 <div id="toast"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"></polyline></svg><span id="toast-txt"></span></div>
@@ -2385,7 +2342,7 @@ const JOBS_CONFIG = {
   '24002 - SEPULVEDA':          { buildings: ["Bldg 1","Bldg 2","Bldg 3"], unitsPerBldg: 20 },
   '24005 - VNV':                { buildings: ["Bldg North","Bldg South","Bldg East"], unitsPerBldg: 20 },
   '24006 - VF':                 { buildings: ["Bldg A","Bldg B"], unitsPerBldg: 24 },
-  '24010 - COMMONS':            { buildings: ["Bldg A","Bldg B","Bldg C"], unitsPerBldg: 24 },
+  '26003 - CARINA MAIN PLACE MALL':            { buildings: ["Bldg A","Bldg B","Bldg C"], unitsPerBldg: 24 },
   '25001 - DECENA':             { buildings: ["Bldg 1","Bldg 2"], unitsPerBldg: 18 },
   '25002 - BAH':                { buildings: ["Segment 1","Segment 2","Segment 3","Segment 4","Segment 5","Segment 6","Segment 7","Common Area - Courtyard A","Common Area - Courtyard B","Amenity / Leasing Level","Parking"], unitsPerBldg: 20 },
   '26002 - WILSHIRE':           { buildings: ["Bldg 1","Bldg 2","Bldg 3"], unitsPerBldg: 20 },
@@ -2781,10 +2738,13 @@ function logUnit(){
       hrs:parseFloat(hrs), notes
     });
     const [ccCode,ccDesc]=costcode?costcode.split(' - '):[currentPhase==='rough'?'7100':'7700',currentPhase==='rough'?'Residential Boxing':'Finish Devices Trim'];
-    dailyLogs.push({
+    const logEmpMatch = worker.match(/^(\d+)\s*-\s*/);
+  const logEmpNum = logEmpMatch ? logEmpMatch[1] : '';
+  const logWorkerName = logEmpMatch ? worker.replace(/^\d+\s*-\s*/, '') : worker;
+  dailyLogs.push({
       id:dlNextId++,
       date:now.toISOString().slice(0,10),
-      worker, job:job_val,
+      worker:logWorkerName, empNum:logEmpNum, job:job_val,
       phaseCode:ccCode,
       phaseDesc:ccDesc||(currentPhase==='rough'?'Residential Boxing':'Finish Devices Trim'),
       hours:parseFloat(hrs),
@@ -3862,7 +3822,7 @@ function renderCCRef(){
 function goTab(btn,name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   btn.classList.add('on');
-  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety'].forEach(n=>{
+  ['log','units','workers','jobs','whiteboard','djr','signin','tasks','safety','gantt'].forEach(n=>{
     const el=document.getElementById('pane-'+n);
     if(el) el.className='pane'+(n===name?' on':'');
   });
@@ -3967,6 +3927,55 @@ function getYNValue(fieldId){
   return yBtn.dataset.val==='yes' ? 'YES' : (document.getElementById(fieldId+'-no')?.dataset.val==='no'?'NO':'');
 }
 
+
+/* === AUTO WEATHER === */
+const JOB_COORDS = {
+  '24001 - BIOLA':                  {lat:33.9425,lon:-118.1339,name:'La Mirada, CA'},
+  '24002 - SEPULVEDA':              {lat:34.2206,lon:-118.4342,name:'Panorama City, CA'},
+  '24005 - VNV':                    {lat:34.1919,lon:-118.4515,name:'Van Nuys, CA'},
+  '24006 - VF':                     {lat:33.5539,lon:-117.2139,name:'Murrieta, CA'},
+  '26003 - CARINA MAIN PLACE MALL':                {lat:34.1575,lon:-118.6339,name:'Calabasas, CA'},
+  '25001 - DECENA':                 {lat:32.7157,lon:-117.1611,name:'San Diego, CA'},
+  '25002 - BAH':                    {lat:34.1467,lon:-118.7606,name:'Agoura Hills, CA'},
+  '26002 - WILSHIRE':               {lat:34.0614,lon:-118.3089,name:'Los Angeles, CA'},
+  '26003 - CARINA':                 {lat:33.7963,lon:-117.9271,name:'Santa Ana, CA'},
+  '26005 - MARINA SHORES':          {lat:34.0195,lon:-118.4912,name:'Marina del Rey, CA'},
+  'SP25018 - CDC PLAZA':            {lat:34.0522,lon:-118.2437,name:'Los Angeles, CA'},
+  'SP26006 - LOS ANGELES TIMES':    {lat:34.0414,lon:-118.2535,name:'Los Angeles, CA'},
+};
+
+const WMO_CODES = {
+  0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+  45:'Foggy', 48:'Rime fog', 51:'Light drizzle', 53:'Moderate drizzle',
+  55:'Dense drizzle', 61:'Slight rain', 63:'Moderate rain', 65:'Heavy rain',
+  71:'Slight snow', 73:'Moderate snow', 75:'Heavy snow', 77:'Snow grains',
+  80:'Rain showers', 81:'Moderate showers', 82:'Violent showers',
+  85:'Slight snow showers', 86:'Heavy snow showers',
+  95:'Thunderstorm', 96:'Thunderstorm w/ hail', 99:'Heavy thunderstorm'
+};
+
+async function fetchJobWeather(job) {
+  const coords = JOB_COORDS[job];
+  if (!coords) return null;
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current=temperature_2m,weathercode,windspeed_10m&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FLos_Angeles`;
+    const resp = await fetch(url);
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    const cur = data.current;
+    const temp = Math.round(cur.temperature_2m);
+    const code = cur.weathercode;
+    const wind = Math.round(cur.windspeed_10m);
+    const desc = WMO_CODES[code] || 'Variable conditions';
+    const windStr = wind > 5 ? `, winds ${wind} mph` : '';
+    return { temp, desc: desc + windStr, location: coords.name };
+  } catch(e) {
+    console.warn('Weather fetch failed:', e);
+    return null;
+  }
+}
+/* === END AUTO WEATHER === */
+
 function loadDJR(){
   const job  = document.getElementById('djr-job').value;
   const date = document.getElementById('djr-date').value;
@@ -3975,6 +3984,27 @@ function loadDJR(){
 
   document.getElementById('djr-empty').style.display = 'none';
   document.getElementById('djr-form').style.display  = 'block';
+
+  // Auto-fill weather if fields are empty and no saved report
+  const _weatherJob = document.getElementById('djr-job').value;
+  const _weatherKey = _weatherJob + '|' + document.getElementById('djr-date').value;
+  const _hasSaved = djrReports[_weatherKey] && djrReports[_weatherKey].tempAM;
+  if (!_hasSaved) {
+    const _tempAmEl = document.getElementById('djr-temp-am');
+    const _weatherEl = document.getElementById('djr-weather');
+    if (!_tempAmEl.value && !_weatherEl.value) {
+      fetchJobWeather(_weatherJob).then(w => {
+        if (!w) return;
+        if (!document.getElementById('djr-temp-am').value)
+          document.getElementById('djr-temp-am').value = w.temp;
+        if (!document.getElementById('djr-temp-pm').value)
+          document.getElementById('djr-temp-pm').value = w.temp;
+        if (!document.getElementById('djr-weather').value)
+          document.getElementById('djr-weather').value = w.desc;
+        toast('Weather auto-filled for ' + w.location);
+      });
+    }
+  }
 
   // Auto-populate workforce from dailyLogs for this job + date
   const entries = dailyLogs.filter(l=>l.job===job && l.date===date);
@@ -4389,6 +4419,10 @@ function sigEnd(e){
         if(tsEl){ tsEl.textContent='Signed: '+sigTs; tsEl.style.display='block'; }
         var st = document.getElementById('sig-status-'+wid);
         if(st){ st.textContent='v'; st.style.color='#2e7d32'; }
+        // If this is an IN signature on the sign-in sheet, publish to crew dispatch immediately
+        if(wid.match(/^SI_\d+$/) && typeof publishSingleSignedIn === 'function'){
+          publishSingleSignedIn(wid);
+        }
       }
     }
   }
@@ -4573,6 +4607,7 @@ function initSignIn(){
   loadSIFromStorage();
   document.getElementById('si-empty').style.display='block';
   document.getElementById('si-forms').style.display='none';
+  loadCrewFromDispatch();
   // Auto-load today's sign-in sheet so date is set before signing
   setTimeout(function(){ loadSignIn(); }, 300);
 }
@@ -4651,7 +4686,7 @@ function renderSIRows(rows){
   if(!tbody) return;
   tbody.innerHTML = rows.map(function(r,i){
     var wid = 'SI_'+i;
-    var opts = '<option value="">-- Select --</option><option value="Abiud Lopez">Abiud Lopez</option><option value="Adrian Flores">Adrian Flores</option><option value="Adrian Hernandez">Adrian Hernandez</option><option value="Adrian Marquez">Adrian Marquez</option><option value="Alberto Lopez Ruiz">Alberto Lopez Ruiz</option><option value="Alejandro Lopez">Alejandro Lopez</option><option value="Alex Osorio">Alex Osorio</option><option value="Angel Hernandez">Angel Hernandez</option><option value="Angel Ibanez">Angel Ibanez</option><option value="Anthony Ibanez">Anthony Ibanez</option><option value="Anthony Lyons">Anthony Lyons</option><option value="Anthony Macias">Anthony Macias</option><option value="Anthony Zetina">Anthony Zetina</option><option value="Antonio Castillo">Antonio Castillo</option><option value="Armando Lopez">Armando Lopez</option><option value="Axel Salas">Axel Salas</option><option value="Brandon Salazar">Brandon Salazar</option><option value="Brenda Quijada">Brenda Quijada</option><option value="Brian Campos">Brian Campos</option><option value="Brian Flores">Brian Flores</option><option value="Brian Kitajima">Brian Kitajima</option><option value="Brian Ramirez">Brian Ramirez</option><option value="Carla Quijada">Carla Quijada</option><option value="Carlos Agapito">Carlos Agapito</option><option value="Carlos Landaverde">Carlos Landaverde</option><option value="Christian Moran">Christian Moran</option><option value="Cristian Collin">Cristian Collin</option><option value="Daniel Burleson">Daniel Burleson</option><option value="Daniel Lopez">Daniel Lopez</option><option value="Daniel Villegas">Daniel Villegas</option><option value="David Casarez">David Casarez</option><option value="David Smith">David Smith</option><option value="Dillan Smith">Dillan Smith</option><option value="Duvaldi Mazariegos">Duvaldi Mazariegos</option><option value="Dyana Quijada">Dyana Quijada</option><option value="Edgar Solis">Edgar Solis</option><option value="Edith Del Carmen">Edith Del Carmen</option><option value="Eduardo Echeverria">Eduardo Echeverria</option><option value="Edwin Martinez">Edwin Martinez</option><option value="Efrain Cornejo">Efrain Cornejo</option><option value="Efren Hilario">Efren Hilario</option><option value="Enrique Laguna">Enrique Laguna</option><option value="Erik Lopez">Erik Lopez</option><option value="Estevan Sandoval">Estevan Sandoval</option><option value="Filiberto Ramos">Filiberto Ramos</option><option value="Francisco Flores">Francisco Flores</option><option value="Gabriel Flores">Gabriel Flores</option><option value="Guillermo Silva">Guillermo Silva</option><option value="Henri Sibrian">Henri Sibrian</option><option value="Humberto Flores">Humberto Flores</option><option value="Irvin Rivera">Irvin Rivera</option><option value="Isaiah Ortiz Alvarado">Isaiah Ortiz Alvarado</option><option value="Isidro Enciso">Isidro Enciso</option><option value="Jaime Moya">Jaime Moya</option><option value="Jaime Quintero">Jaime Quintero</option><option value="James Marquez">James Marquez</option><option value="Jayson Ortega">Jayson Ortega</option><option value="Jeffrey Rivera">Jeffrey Rivera</option><option value="Jerlin Mendoza">Jerlin Mendoza</option><option value="Jerry Munoz">Jerry Munoz</option><option value="Jesus Heredia">Jesus Heredia</option><option value="Jimmy Cascio">Jimmy Cascio</option><option value="Joaquin Garcia">Joaquin Garcia</option><option value="Johnny Perez">Johnny Perez</option><option value="Jonathan Jacobo">Jonathan Jacobo</option><option value="Jorge Contreras">Jorge Contreras</option><option value="Jose Luna">Jose Luna</option><option value="Jose Preciado">Jose Preciado</option><option value="Jose Ramirez">Jose Ramirez</option><option value="Josue Villegas">Josue Villegas</option><option value="Juan Mazariegos">Juan Mazariegos</option><option value="Julio Munoz">Julio Munoz</option><option value="Kenneth William">Kenneth William</option><option value="Kevin Bautista">Kevin Bautista</option><option value="Leonardo Mazariegos">Leonardo Mazariegos</option><option value="Lizeth Marcos">Lizeth Marcos</option><option value="Lorenzo Tanguma">Lorenzo Tanguma</option><option value="Louis Aceves">Louis Aceves</option><option value="Luis Ramirez">Luis Ramirez</option><option value="Manuel Martinez">Manuel Martinez</option><option value="Manuel Palacios">Manuel Palacios</option><option value="Mario Arias">Mario Arias</option><option value="Mario Lopez">Mario Lopez</option><option value="Mathew Gonzalez">Mathew Gonzalez</option><option value="Matthew Baciu">Matthew Baciu</option><option value="Miguel Corral">Miguel Corral</option><option value="Miguel Dominguez">Miguel Dominguez</option><option value="Noah Villareal">Noah Villareal</option><option value="Oliver Galicia">Oliver Galicia</option><option value="Oscar Aguirre">Oscar Aguirre</option><option value="Pedro Barrera">Pedro Barrera</option><option value="Randdy De Paz">Randdy De Paz</option><option value="Robert Stark">Robert Stark</option><option value="Robert Welch">Robert Welch</option><option value="Rusel Santiago">Rusel Santiago</option><option value="Salvador Perez">Salvador Perez</option><option value="Samuel Munoz">Samuel Munoz</option><option value="Sergio Diaz">Sergio Diaz</option><option value="Sergio Sandoval">Sergio Sandoval</option><option value="Sotero Dominguez">Sotero Dominguez</option><option value="Steven Sulewski">Steven Sulewski</option><option value="Tony Broadnax">Tony Broadnax</option><option value="Uriel Chavez">Uriel Chavez</option><option value="Victor Armienta">Victor Armienta</option><option value="Victor Carrillo">Victor Carrillo</option><option value="Vincent Sopha">Vincent Sopha</option><option value="Vincent Stancati">Vincent Stancati</option><option value="Xavier Contreras">Xavier Contreras</option>';
+    var opts = getWorkerOpts(r.name || '');
     if(r.name) opts = opts.replace('value="'+r.name+'"', 'value="'+r.name+'" selected');
     return '<tr style="border-bottom:1px solid #e2e2e2" id="si-row-'+i+'">'
       +'<td style="padding:4px 6px"><input class="si-emp-num" value="'+(r.empNum||'')+'" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
@@ -4746,7 +4781,7 @@ function addIncidentRow(){
   var i = existing;
   var wid = 'INC_'+i;
   var workerOpts = '<option value="">-- Select employee --</option>'
-    + WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }).join('');
+    + (_dispatchCrew.length ? _dispatchCrew.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; }) : WORKERS.map(function(w){ return '<option value="'+w.name+'">'+w.name+'</option>'; })).join('');
 
   var tr = document.createElement('tr');
   tr.id = 'inc-row-'+i;
@@ -4777,8 +4812,7 @@ function addSIRow(){
   var wid = 'SI_'+i;
   var tr = document.createElement('tr');
   tr.style.borderBottom = '1px solid var(--border)';
-  var workerOpts = '<option value="">-- Select --</option>'
-+"<option value=\"Abiud Lopez\">Abiud Lopez</option>"+"<option value=\"Adrian Flores\">Adrian Flores</option>"+"<option value=\"Adrian Hernandez\">Adrian Hernandez</option>"+"<option value=\"Adrian Marquez\">Adrian Marquez</option>"+"<option value=\"Alberto Lopez Ruiz\">Alberto Lopez Ruiz</option>"+"<option value=\"Alejandro Lopez\">Alejandro Lopez</option>"+"<option value=\"Alex Osorio\">Alex Osorio</option>"+"<option value=\"Angel Hernandez\">Angel Hernandez</option>"+"<option value=\"Angel Ibanez\">Angel Ibanez</option>"+"<option value=\"Anthony Ibanez\">Anthony Ibanez</option>"+"<option value=\"Anthony Lyons\">Anthony Lyons</option>"+"<option value=\"Anthony Macias\">Anthony Macias</option>"+"<option value=\"Anthony Zetina\">Anthony Zetina</option>"+"<option value=\"Antonio Castillo\">Antonio Castillo</option>"+"<option value=\"Armando Lopez\">Armando Lopez</option>"+"<option value=\"Axel Salas\">Axel Salas</option>"+"<option value=\"Brandon Salazar\">Brandon Salazar</option>"+"<option value=\"Brenda Quijada\">Brenda Quijada</option>"+"<option value=\"Brian Campos\">Brian Campos</option>"+"<option value=\"Brian Flores\">Brian Flores</option>"+"<option value=\"Brian Kitajima\">Brian Kitajima</option>"+"<option value=\"Brian Ramirez\">Brian Ramirez</option>"+"<option value=\"Carla Quijada\">Carla Quijada</option>"+"<option value=\"Carlos Agapito\">Carlos Agapito</option>"+"<option value=\"Carlos Landaverde\">Carlos Landaverde</option>"+"<option value=\"Christian Moran\">Christian Moran</option>"+"<option value=\"Cristian Collin\">Cristian Collin</option>"+"<option value=\"Daniel Burleson\">Daniel Burleson</option>"+"<option value=\"Daniel Lopez\">Daniel Lopez</option>"+"<option value=\"Daniel Villegas\">Daniel Villegas</option>"+"<option value=\"David Casarez\">David Casarez</option>"+"<option value=\"David Smith\">David Smith</option>"+"<option value=\"Dillan Smith\">Dillan Smith</option>"+"<option value=\"Duvaldi Mazariegos\">Duvaldi Mazariegos</option>"+"<option value=\"Dyana Quijada\">Dyana Quijada</option>"+"<option value=\"Edgar Solis\">Edgar Solis</option>"+"<option value=\"Edith Del Carmen\">Edith Del Carmen</option>"+"<option value=\"Eduardo Echeverria\">Eduardo Echeverria</option>"+"<option value=\"Edwin Martinez\">Edwin Martinez</option>"+"<option value=\"Efrain Cornejo\">Efrain Cornejo</option>"+"<option value=\"Efren Hilario\">Efren Hilario</option>"+"<option value=\"Enrique Laguna\">Enrique Laguna</option>"+"<option value=\"Erik Lopez\">Erik Lopez</option>"+"<option value=\"Estevan Sandoval\">Estevan Sandoval</option>"+"<option value=\"Filiberto Ramos\">Filiberto Ramos</option>"+"<option value=\"Francisco Flores\">Francisco Flores</option>"+"<option value=\"Gabriel Flores\">Gabriel Flores</option>"+"<option value=\"Guillermo Silva\">Guillermo Silva</option>"+"<option value=\"Henri Sibrian\">Henri Sibrian</option>"+"<option value=\"Humberto Flores\">Humberto Flores</option>"+"<option value=\"Irvin Rivera\">Irvin Rivera</option>"+"<option value=\"Isaiah Ortiz Alvarado\">Isaiah Ortiz Alvarado</option>"+"<option value=\"Isidro Enciso\">Isidro Enciso</option>"+"<option value=\"Jaime Moya\">Jaime Moya</option>"+"<option value=\"Jaime Quintero\">Jaime Quintero</option>"+"<option value=\"James Marquez\">James Marquez</option>"+"<option value=\"Jayson Ortega\">Jayson Ortega</option>"+"<option value=\"Jeffrey Rivera\">Jeffrey Rivera</option>"+"<option value=\"Jerlin Mendoza\">Jerlin Mendoza</option>"+"<option value=\"Jerry Munoz\">Jerry Munoz</option>"+"<option value=\"Jesus Heredia\">Jesus Heredia</option>"+"<option value=\"Jimmy Cascio\">Jimmy Cascio</option>"+"<option value=\"Joaquin Garcia\">Joaquin Garcia</option>"+"<option value=\"Johnny Perez\">Johnny Perez</option>"+"<option value=\"Jonathan Jacobo\">Jonathan Jacobo</option>"+"<option value=\"Jorge Contreras\">Jorge Contreras</option>"+"<option value=\"Jose Luna\">Jose Luna</option>"+"<option value=\"Jose Preciado\">Jose Preciado</option>"+"<option value=\"Jose Ramirez\">Jose Ramirez</option>"+"<option value=\"Josue Villegas\">Josue Villegas</option>"+"<option value=\"Juan Mazariegos\">Juan Mazariegos</option>"+"<option value=\"Julio Munoz\">Julio Munoz</option>"+"<option value=\"Kenneth William\">Kenneth William</option>"+"<option value=\"Kevin Bautista\">Kevin Bautista</option>"+"<option value=\"Leonardo Mazariegos\">Leonardo Mazariegos</option>"+"<option value=\"Lizeth Marcos\">Lizeth Marcos</option>"+"<option value=\"Lorenzo Tanguma\">Lorenzo Tanguma</option>"+"<option value=\"Louis Aceves\">Louis Aceves</option>"+"<option value=\"Luis Ramirez\">Luis Ramirez</option>"+"<option value=\"Manuel Martinez\">Manuel Martinez</option>"+"<option value=\"Manuel Palacios\">Manuel Palacios</option>"+"<option value=\"Mario Arias\">Mario Arias</option>"+"<option value=\"Mario Lopez\">Mario Lopez</option>"+"<option value=\"Mathew Gonzalez\">Mathew Gonzalez</option>"+"<option value=\"Matthew Baciu\">Matthew Baciu</option>"+"<option value=\"Miguel Corral\">Miguel Corral</option>"+"<option value=\"Miguel Dominguez\">Miguel Dominguez</option>"+"<option value=\"Noah Villareal\">Noah Villareal</option>"+"<option value=\"Oliver Galicia\">Oliver Galicia</option>"+"<option value=\"Oscar Aguirre\">Oscar Aguirre</option>"+"<option value=\"Pedro Barrera\">Pedro Barrera</option>"+"<option value=\"Randdy De Paz\">Randdy De Paz</option>"+"<option value=\"Robert Stark\">Robert Stark</option>"+"<option value=\"Robert Welch\">Robert Welch</option>"+"<option value=\"Rusel Santiago\">Rusel Santiago</option>"+"<option value=\"Salvador Perez\">Salvador Perez</option>"+"<option value=\"Samuel Munoz\">Samuel Munoz</option>"+"<option value=\"Sergio Diaz\">Sergio Diaz</option>"+"<option value=\"Sergio Sandoval\">Sergio Sandoval</option>"+"<option value=\"Sotero Dominguez\">Sotero Dominguez</option>"+"<option value=\"Steven Sulewski\">Steven Sulewski</option>"+"<option value=\"Tony Broadnax\">Tony Broadnax</option>"+"<option value=\"Uriel Chavez\">Uriel Chavez</option>"+"<option value=\"Victor Armienta\">Victor Armienta</option>"+"<option value=\"Victor Carrillo\">Victor Carrillo</option>"+"<option value=\"Vincent Sopha\">Vincent Sopha</option>"+"<option value=\"Vincent Stancati\">Vincent Stancati</option>"+"<option value=\"Xavier Contreras\">Xavier Contreras</option>";
+  var workerOpts = getWorkerOpts('');
   tr.innerHTML = '<td style="padding:4px 6px;vertical-align:top"><input type="text" class="si-emp-num" value="" style="width:50px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px"></td>'
     +'<td style="padding:4px 6px;vertical-align:top"><select class="si-emp-name" onchange="autoFillSIEmpNum(this)" style="width:160px;background:#fff;border:1.5px solid #e2e2e2;border-radius:5px;color:#1a1a1a;font-size:11px;padding:4px 6px;height:30px">'+workerOpts+'</select></td>'
     +'<td style="padding:4px 6px;vertical-align:middle">'
@@ -5503,6 +5537,8 @@ function saveWBEntry(){
   if(!phase) { toast('Select a cost code'); return; }
   if(!hours) { toast('Select hours'); return; }
 
+
+
   const [code, desc] = phase.split('|');
   const dateInp = document.getElementById('dl-date');
   const entryDate = dateInp&&dateInp.value ? dateInp.value : new Date().toISOString().slice(0,10);
@@ -5510,7 +5546,7 @@ function saveWBEntry(){
   dailyLogs.push({
     id: dlNextId++,
     date: entryDate,
-    worker, empNum, job,
+    worker: worker, empNum, job,
     phaseCode: code,
     phaseDesc: desc,
     hours: parseFloat(hours),
@@ -5527,7 +5563,7 @@ function saveWBEntry(){
   // Show confirmation
   const conf = document.getElementById('wb-confirm');
   conf.style.display = 'block';
-  conf.textContent = 'v Saved -- ' + worker + ' . ' + code + ' ' + desc + ' . ' + hours + 'h';
+  conf.textContent = 'v Saved -- ' + (empNum ? empNum + ' - ' : '') + worker + ' . ' + code + ' ' + desc + ' . ' + hours + 'h';
   setTimeout(()=>{ conf.style.display='none'; }, 3000);
 
   // Reset
@@ -5658,6 +5694,8 @@ async function syncFromSupabase(){
     renderDLStats();
     if(JOB_MODE) filterEmployeesToJob(JOB_MODE);
     toast('Synced from cloud - ' + (dailyLogs.length + unitLogs.length) + ' entries');
+    // Auto-publish today's sign-in to crew dispatch on load
+    autoPublishTodaySignIn();
   } catch(e){
     console.error('Sync error:', e);
     toast('Sync failed - working offline');
@@ -6019,7 +6057,7 @@ const JOB_EMAILS = {
   '24002 - SEPULVEDA':               {to:'sepulveda24002@ryecompany.com',          cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '24005 - VNV':                     {to:'vannuys24005@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '24006 - VF':                      {to:'vintagefarms24006@ryecompany.com',       cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
-  '24010 - COMMONS':                 {to:'commons24010@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
+  '26003 - CARINA MAIN PLACE MALL':                 {to:'carina26003@ryecompany.com',            cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '25001 - DECENA':                  {to:'decena25001@ryecompany.com',             cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '25002 - BAH':                     {to:'bellamyagourahills25002@ryecompany.com', cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
   '26002 - WILSHIRE':                {to:'wilshire26002@ryecompany.com',           cc:'dfurst@ryecompany.com,jjava@ryecompany.com,jjacobo@ryecompany.com'},
@@ -6289,7 +6327,7 @@ function saveTask(){
           '24002 - SEPULVEDA':   'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24002-sepulveda.html',
           '24005 - VNV':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24005-vnv.html',
           '24006 - VF':          'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24006-vf.html',
-          '24010 - COMMONS':     'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-24010-commons.html',
+          '26003 - CARINA MAIN PLACE MALL':     'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26003-carina.html',
           '25001 - DECENA':      'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25001-decena.html',
           '25002 - BAH':         'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-25002-bah.html',
           '26002 - WILSHIRE':    'https://dfurst-ux.github.io/rye-electric/rye-electric-field-tracker-26002-wilshire.html',
@@ -7144,14 +7182,7 @@ renderCCRef();
 
   window.getSafetyStatusForReport=async function(){
     if(!isFriday())return{submitted:false,required:false};
-    try{
-      var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs?job_id=eq.'+getSafetyJobId()+'&week_ending=eq.'+getWeekEnding()+'&select=doc_type',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
-      var d=await r.json();
-      var saved=(d||[]).map(function(x){return x.doc_type;});
-      var required=['wjsi','jha','ptp','tbt'];
-      var allDone=required.every(function(t){return saved.indexOf(t)!==-1;});
-      return{submitted:allDone,required:true,saved:saved,total:required.length,count:saved.length};
-    }catch(e){return{submitted:false,required:true,error:true}}
+    try{var r=await fetch(SUPABASE_URL+'/rest/v1/safety_logs?job_id=eq.'+getSafetyJobId()+'&week_ending=eq.'+getWeekEnding()+'&select=submitted_by&limit=1',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});var d=await r.json();return{submitted:d&&d.length>0,required:true,by:d&&d.length>0?d[0].submitted_by:null}}catch(e){return{submitted:false,required:true,error:true}}
   };
 })();
 /* === END SAFETY TAB === */
@@ -7184,8 +7215,768 @@ async function saveToDrive(docType, job, data, statusElId) {
   }
 }
 /* === END GOOGLE DRIVE SAVE === */
+
+/* === DISPATCH CREW SYNC === */
+var _dispatchCrew = []; // [{name, role}] for this job
+
+async function loadCrewFromDispatch() {
+  var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
+  if (!jobEl) return;
+  var jobVal = jobEl.value; // e.g. "24001 - BIOLA"
+  var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+  if (!jobNum) return;
+  try {
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'crew_' + jobNum;
+    var resp = await fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    if (!resp.ok) return;
+    var data = await resp.json();
+    if (data && data.length > 0) {
+      _dispatchCrew = JSON.parse(data[0].value); // [{name, role}]
+    } else {
+      _dispatchCrew = [];
+    }
+  } catch(e) {
+    console.warn('Dispatch crew load failed:', e);
+    _dispatchCrew = [];
+  }
+  populateWorkerDropdowns();
+}
+
+function populateWorkerDropdowns() {
+  if (!_dispatchCrew.length) return;
+  var names = _dispatchCrew.map(function(w){ return w.name; }).sort();
+
+  // Log tab worker dropdown
+  var selWorker = document.getElementById('sel-worker');
+  if (selWorker) {
+    var current = selWorker.value;
+    selWorker.innerHTML = names.map(function(n){
+      return '<option value="' + n + '"' + (n === current ? ' selected' : '') + '>' + n + '</option>';
+    }).join('');
+  }
+
+  // Incident report employee dropdowns (existing rows)
+  document.querySelectorAll('.inc-emp-name').forEach(function(sel) {
+    var cur = sel.value;
+    sel.innerHTML = '<option value="">-- Select employee --</option>'
+      + names.map(function(n){ return '<option value="' + n + '"' + (n === cur ? ' selected' : '') + '>' + n + '</option>'; }).join('');
+  });
+}
+
+async function publishSignedIn() {
+  try {
+    var jobEl = document.getElementById('si-job');
+    var dateEl = document.getElementById('si-date');
+    if (!jobEl || !dateEl) return;
+    var jobVal = jobEl.value;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var date = dateEl.value;
+    if (!jobNum || !date) return;
+    var names = [];
+    // Use collectSIRows if available (most reliable)
+    if (typeof collectSIRows === 'function') {
+      collectSIRows().forEach(function(r){ if(r.name && r.name.trim()) names.push(r.name.trim()); });
+    }
+    // Fallback: check DOM directly — si-tbody is the correct tbody ID
+    if (!names.length) {
+      document.querySelectorAll('#si-tbody tr').forEach(function(tr) {
+        var nameEl = tr.querySelector('.si-emp-name');
+        if (nameEl && nameEl.value && nameEl.value.trim()) names.push(nameEl.value.trim());
+      });
+    }
+    // Also check siData in memory
+    var siKey = jobVal + '|' + date;
+    if (!names.length && typeof siData !== 'undefined' && siData[siKey] && siData[siKey].rows) {
+      siData[siKey].rows.forEach(function(r){ if(r.name && names.indexOf(r.name) === -1) names.push(r.name); });
+    }
+    if (!names.length) return;
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'signed_in_' + jobNum + '_' + date;
+    await fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal'
+      },
+      body: JSON.stringify({ key: key, value: JSON.stringify(names) })
+    });
+  } catch(e) { console.warn('publishSignedIn failed:', e); }
+}
+
+function getWorkerOpts(selected) {
+  var names = _dispatchCrew.length
+    ? _dispatchCrew.map(function(w){ return w.name; }).sort()
+    : WORKERS.map(function(w){ return w.name; });
+  return '<option value="">-- Select --</option>'
+    + names.map(function(n){
+        return '<option value="' + n + '"' + (n === selected ? ' selected' : '') + '>' + n + '</option>';
+      }).join('');
+}
+
+function autoPublishTodaySignIn() {
+  try {
+    var jobEl = document.getElementById('si-job') || document.getElementById('sel-job');
+    if (!jobEl) return;
+    var jobVal = jobEl.value;
+    var today = new Date().toISOString().slice(0, 10);
+    var siKey = jobVal + '|' + today;
+    if (typeof siData === 'undefined' || !siData[siKey] || !siData[siKey].rows) return;
+    var names = siData[siKey].rows
+      .map(function(r){ return r.name; })
+      .filter(function(n){ return n && n.trim(); });
+    if (!names.length) return;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+      method: 'POST',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ key: 'signed_in_' + jobNum + '_' + today, value: JSON.stringify(names) })
+    }).catch(function(){});
+  } catch(e) {}
+}
+
+function publishSingleSignedIn(wid) {
+  try {
+    var jobEl = document.getElementById('si-job');
+    var dateEl = document.getElementById('si-date');
+    if (!jobEl || !dateEl) return;
+    var jobVal = jobEl.value;
+    var jobNum = jobVal.split(' - ')[0].trim().split(' ')[0].trim();
+    var date = dateEl.value;
+    if (!jobNum || !date) return;
+    // Get the employee name from the row matching this wid
+    var rowIdx = parseInt(wid.replace('SI_', ''), 10);
+    var rows = document.querySelectorAll('#si-tbody tr');
+    if (!rows[rowIdx]) return;
+    var nameEl = rows[rowIdx].querySelector('.si-emp-name');
+    if (!nameEl || !nameEl.value.trim()) return;
+    var newName = nameEl.value.trim();
+    // Merge with any already-published names for today
+    var SUPA_URL = typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'https://okesnavkxmqucgvvhncx.supabase.co';
+    var SUPA_KEY = typeof SUPABASE_KEY !== 'undefined' ? SUPABASE_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZXNuYXZreG1xdWNndnZobmN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3MzY2ODUsImV4cCI6MjA5NTMxMjY4NX0.-FCoWt0B7Eb60bcGzTMhT0TRIsqd6Vk-2XfVhbsEK7c';
+    var key = 'signed_in_' + jobNum + '_' + date;
+    // Fetch existing, merge, re-save
+    fetch(SUPA_URL + '/rest/v1/crew_dispatch?key=eq.' + encodeURIComponent(key) + '&select=value', {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    }).then(function(r){ return r.json(); }).then(function(data) {
+      var existing = [];
+      if (data && data.length > 0) {
+        try { existing = JSON.parse(data[0].value); } catch(e) {}
+      }
+      if (existing.indexOf(newName) === -1) existing.push(newName);
+      return fetch(SUPA_URL + '/rest/v1/crew_dispatch', {
+        method: 'POST',
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ key: key, value: JSON.stringify(existing) })
+      });
+    }).catch(function(){});
+  } catch(e) {}
+}
+/* === END DISPATCH CREW SYNC === */
+
 // DJR Yes/No question toggles
 (function(){['incidents','meetings','visitors','shortage','deliveries','inspections','extrawork','gcdirection'].forEach(function(q){var y=document.getElementById('djr-'+q+'-yes');var n=document.getElementById('djr-'+q+'-no');var d=document.getElementById('djr-'+q+'-detail');if(!y||!d)return;y.addEventListener('change',function(){if(this.checked)d.style.display='block';});if(n)n.addEventListener('change',function(){if(this.checked)d.style.display='none';});});})();
+
+
+  /* ══ GANTT ENGINE ══════════════════════════════════════════════════════════ */
+  var ganttTasks=[];var ganttZoom='week';var ganttEditIdx=-1;
+  var GANTT_KEY='gantt_26003_CARINA';
+  function gDate(s){var d=new Date(s+'T12:00:00');return isNaN(d)?null:d;}
+  function gFmt(d){return d?d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'2-digit'}):''}
+  function gISO(d){return d?d.toISOString().slice(0,10):''}
+  function gDiff(a,b){return Math.round((b-a)/86400000);}
+  function gAddDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
+
+  function ganttCPM(){
+    var byId={};ganttTasks.forEach(function(t){byId[t.id]=t;});
+    ganttTasks.forEach(function(t){t.es=gDate(t.start);t.ef=gDate(t.finish);});
+    ganttTasks.slice().sort(function(a,b){return(a.preds||[]).length-(b.preds||[]).length;}).forEach(function(t){
+      (t.preds||[]).forEach(function(pid){var p=byId[pid];if(p&&p.ef&&t.es&&p.ef>t.es)t.es=new Date(p.ef);});
+      if(t.es&&gDate(t.finish)&&t.es>gDate(t.start)){var dur=gDiff(gDate(t.start),gDate(t.finish));t.ef=gAddDays(t.es,dur);}
+    });
+    var projEnd=null;ganttTasks.forEach(function(t){if(t.ef&&(!projEnd||t.ef>projEnd))projEnd=t.ef;});
+    if(!projEnd)projEnd=new Date();
+    ganttTasks.forEach(function(t){t.lf=new Date(projEnd);var dur=Math.max(1,gDiff(gDate(t.start)||new Date(),gDate(t.finish)||new Date()));t.ls=gAddDays(t.lf,-dur);});
+    ganttTasks.slice().reverse().forEach(function(t){
+      ganttTasks.forEach(function(s){if((s.preds||[]).indexOf(t.id)!==-1&&s.ls&&s.ls<t.lf)t.lf=new Date(s.ls);});
+      t.ls=gAddDays(t.lf,-Math.max(1,gDiff(gDate(t.start)||new Date(),gDate(t.finish)||new Date())));
+    });
+    ganttTasks.forEach(function(t){t.totalFloat=t.es&&t.ls?gDiff(t.es,t.ls):0;t.critical=(t.totalFloat<=0&&!t.summary);});
+  }
+
+  function ganttDateRange(){
+    var mn=null,mx=null;
+    ganttTasks.forEach(function(t){var s=gDate(t.start),f=gDate(t.finish);if(s&&(!mn||s<mn))mn=new Date(s);if(f&&(!mx||f>mx))mx=new Date(f);});
+    if(!mn){mn=new Date();mx=gAddDays(mn,60);}
+    mn=gAddDays(mn,-7);mx=gAddDays(mx,14);
+    while(mn.getDay()!==1)mn=gAddDays(mn,-1);
+    return{start:mn,end:mx};
+  }
+
+  function ganttRender(){
+    var empty=document.getElementById('gantt-empty'),main=document.getElementById('gantt-main');
+    if(!ganttTasks.length){if(empty)empty.style.display='block';if(main)main.style.display='none';return;}
+    if(empty)empty.style.display='none';if(main)main.style.display='block';
+    ganttCPM();
+    var showCrit=document.getElementById('gantt-show-critical').checked;
+    var showFloat=document.getElementById('gantt-show-float').checked;
+    var dr=ganttDateRange();var totalDays=Math.max(1,gDiff(dr.start,dr.end));
+    var today=new Date();today.setHours(12,0,0,0);
+    var done=ganttTasks.filter(function(t){return t.pct>=100;}).length;
+    var crit=ganttTasks.filter(function(t){return t.critical;}).length;
+    var overdue=ganttTasks.filter(function(t){var f=gDate(t.finish);return f&&f<today&&t.pct<100;}).length;
+    var statsEl=document.getElementById('gantt-stats');
+    if(statsEl)statsEl.innerHTML='<div class="gantt-stat-card"><div class="gantt-stat-label">Total Tasks</div><div class="gantt-stat-val">'+ganttTasks.length+'</div></div>'+'<div class="gantt-stat-card"><div class="gantt-stat-label">Complete</div><div class="gantt-stat-val" style="color:#276749">'+done+'</div></div>'+'<div class="gantt-stat-card"><div class="gantt-stat-label">Critical</div><div class="gantt-stat-val" style="color:#e53e3e">'+crit+'</div></div>'+'<div class="gantt-stat-card"><div class="gantt-stat-label">Overdue</div><div class="gantt-stat-val" style="color:#e53e3e">'+overdue+'</div></div>';
+    var cpPanel=document.getElementById('gantt-cp-panel');
+    if(cpPanel){
+      var critTasks=ganttTasks.filter(function(t){return t.critical;});
+      if(critTasks.length&&showCrit){
+        var projEnd=null;ganttTasks.forEach(function(t){var f=t.ef||gDate(t.finish);if(f&&(!projEnd||f>projEnd))projEnd=f;});
+        var cpEl=document.getElementById('gantt-cp-content');
+        if(cpEl)cpEl.innerHTML='<strong>Project End:</strong> '+(projEnd?gFmt(projEnd):'—')+'&nbsp;&nbsp;<strong>Critical tasks ('+critTasks.length+'):</strong> '+critTasks.map(function(t){return'<span style="background:#e53e3e;color:#fff;border-radius:4px;padding:1px 7px;font-size:11px;margin:2px;display:inline-block">'+t.name+'</span>';}).join(' ');
+        cpPanel.style.display='block';
+      } else cpPanel.style.display='none';
+    }
+    var step=ganttZoom==='week'?1:ganttZoom==='month'?7:14;
+    var tlHead='',cur=new Date(dr.start),dayN=0;
+    while(cur<=dr.end){
+      var isToday=gISO(cur)===gISO(today),isWk=cur.getDay()===0||cur.getDay()===6;
+      if(ganttZoom==='week'||(ganttZoom==='month'&&dayN%7===0)||(ganttZoom==='quarter'&&dayN%14===0)){
+        tlHead+='<div class="gantt-header-date'+(isWk?' weekend':'')+(isToday?' today':'')+'" style="flex:'+step+'">'+cur.toLocaleDateString('en-US',{month:'short',day:'numeric'})+'</div>';
+      }
+      cur=gAddDays(cur,1);dayN++;
+    }
+    var tlH=document.getElementById('gantt-timeline-header');
+    if(tlH){tlH.innerHTML='<div style="display:flex;width:100%;overflow:hidden">'+tlHead+'</div>';tlH.style.padding='0';}
+    var todayPct=(Math.max(0,gDiff(dr.start,today))/totalDays*100).toFixed(2)+'%';
+    var rowsHtml='';
+    ganttTasks.forEach(function(t,idx){
+      var s=t.es||gDate(t.start),f=t.ef||gDate(t.finish);
+      var isCrit=t.critical&&showCrit,pct=parseInt(t.pct)||0;
+      var barColor=t.summary?'#718096':pct>=100?'#276749':isCrit?'#e53e3e':'#2980b9';
+      var fDays=Math.max(0,t.totalFloat||0),indent=(t.indent||0)*12;
+      var bL='0%',bW='0%',fL='0%',fW='0%';
+      if(s&&f){var sl=gDiff(dr.start,s),dur=Math.max(1,gDiff(s,f));bL=(sl/totalDays*100).toFixed(3)+'%';bW=(dur/totalDays*100).toFixed(3)+'%';if(fDays>0&&showFloat){fL=((sl+dur)/totalDays*100).toFixed(3)+'%';fW=(fDays/totalDays*100).toFixed(3)+'%';}}
+      rowsHtml+='<div class="gantt-row'+(t.summary?' summary-row':'')+(isCrit&&!t.summary?' critical-row':'')+'">'
+        +'<div class="gantt-cell" style="padding-left:'+(12+indent)+'px;cursor:pointer" onclick="ganttEditTask('+idx+')">'
+          +'<div><span style="font-size:11px;font-weight:'+(t.summary?700:600)+';color:#1a202c">'+(isCrit?'<span style="color:#e53e3e;font-size:9px">\u25cf </span>':'')+t.name+'</span>'
+          +(t.assigned?'<span style="font-size:9px;color:#666;display:block">'+t.assigned+'</span>':'')+'</div></div>'
+        +'<div class="gantt-cell" style="justify-content:center;flex-direction:column;gap:2px">'
+          +'<span style="font-size:11px;font-weight:700;color:'+(pct>=100?'#276749':isCrit?'#e53e3e':'#2980b9')+'">'+pct+'%</span>'
+          +'<div style="width:36px;height:4px;background:#e2e8f0;border-radius:2px"><div style="width:'+pct+'%;height:100%;background:'+barColor+';border-radius:2px"></div></div>'
+        +'</div>'
+        +'<div class="gantt-cell" style="font-size:10px;justify-content:center">'+gFmt(s)+'</div>'
+        +'<div class="gantt-cell" style="font-size:10px;justify-content:center;color:'+(f&&f<today&&pct<100?'#e53e3e':'inherit')+'">'+gFmt(f)+'</div>'
+        +'<div class="gantt-cell" style="font-size:11px;font-weight:700;justify-content:center;color:'+(fDays===0?'#e53e3e':fDays<5?'#d97706':'#276749')+'">'+fDays+'d</div>'
+        +'<div class="gantt-bar-wrap" style="position:relative;overflow:hidden">'
+          +'<div class="gantt-today-line" style="left:'+todayPct+'"></div>'
+          +'<div style="position:absolute;left:'+bL+';width:'+bW+';top:9px"><div class="gantt-bar" style="background:'+barColor+';width:100%" onclick="ganttEditTask('+idx+')"><div class="gantt-progress" style="width:'+pct+'%"></div></div></div>'
+          +(fW!=='0%'?'<div style="position:absolute;left:'+fL+';width:'+fW+';top:22px"><div class="gantt-float-bar" style="width:100%"></div></div>':'')
+        +'</div>'
+      +'</div>';
+    });
+    var rowsEl=document.getElementById('gantt-rows');if(rowsEl)rowsEl.innerHTML=rowsHtml;
+  }
+
+
+  /* ── SCHEDULE VIEW MANAGEMENT ── */
+  var schedView = 'gc'; // gc | rye | compare
+  var ryeTasks = []; // Rye's own schedule
+  var gcTasks = [];  // GC imported tasks
+  var ELECTRICAL_KEYWORDS = ['electric','electrical','lighting','power','panel','switchgear','meter','energize','conduit','wire','wiring','feeder','branch','fixture','outlet','circuit','voltage','transformer','mep','low voltage','fire alarm','das','temp power'];
+
+  function isElectricalTask(name) {
+    if (!name) return false;
+    var lower = name.toLowerCase();
+    return ELECTRICAL_KEYWORDS.some(function(k){ return lower.indexOf(k) !== -1; });
+  }
+
+  function setSchedView(view) {
+    schedView = view;
+    ['gc','rye','compare'].forEach(function(v){
+      var btn = document.getElementById('sched-btn-' + v);
+      if (btn) btn.style.cssText = v === view
+        ? 'background:#2980b9;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer'
+        : 'background:transparent;color:#666;border:none;border-radius:6px;font-size:11px;font-weight:700;padding:6px 12px;cursor:pointer';
+    });
+
+    // Show/hide context buttons
+    var gcPdf = document.getElementById('gc-pdf-label');
+    var ryePdf = document.getElementById('rye-pdf-label');
+    if (gcPdf) gcPdf.style.display = view === 'rye' ? 'none' : 'inline-flex';
+    if (ryePdf) ryePdf.style.display = view === 'rye' ? 'inline-flex' : 'none';
+
+    if (view === 'rye') {
+      if (gcTasks.length === 0 && ganttTasks.length > 0) gcTasks = ganttTasks.slice();
+      ganttTasks = ryeTasks.slice();
+    } else if (view === 'gc') {
+      if (ryeTasks.length === 0 && schedView === 'rye') ryeTasks = ganttTasks.slice();
+      if (gcTasks.length > 0) ganttTasks = gcTasks.slice();
+    } else if (view === 'compare') {
+      if (gcTasks.length === 0 && ganttTasks.length > 0) gcTasks = ganttTasks.slice();
+      var gc = gcTasks.slice();
+      var rye = ryeTasks.slice();
+      ganttTasks = gc.concat(rye.length > 0 ? [{
+        id:'RYESEP', name:'━━━ RYE ELECTRIC SCHEDULE ━━━',
+        start: rye[0]?rye[0].start:'', finish: rye[rye.length-1]?rye[rye.length-1].finish:'',
+        pct:0, assigned:'', preds:[], summary:true, indent:0
+      }].concat(rye) : []);
+    }
+    ganttApplyFilter();
+  }
+
+  async function ganttImportRyePDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+    var statusBar = document.getElementById('gantt-pdf-status');
+    var statusText = document.getElementById('gantt-pdf-status-text');
+    statusBar.style.display = 'flex';
+    statusText.textContent = 'Reading Rye schedule PDF...';
+    try {
+      var base64 = await new Promise(function(res, rej) {
+        var r = new FileReader();
+        r.onload = function() { res(r.result.split(',')[1]); };
+        r.onerror = function() { rej(new Error('Read failed')); };
+        r.readAsDataURL(file);
+      });
+      statusText.textContent = 'Extracting Rye schedule with AI...';
+      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(120000),
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2000,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+              { type: 'text', text: 'Extract the schedule from this PDF. Return ONLY a JSON array with no markdown, no backticks: [...tasks]. Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract top-level milestones only, 20-30 max.' }
+            ]
+          }]
+        })
+      });
+      var data = await response.json();
+      var text = data.content && data.content[0] && data.content[0].text;
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0,200));
+      var clean = text.replace(/```json|```/g,'').trim();
+      var tasks = JSON.parse(clean);
+      if (!Array.isArray(tasks) || tasks.length === 0) throw new Error('No tasks found');
+      ryeTasks = tasks.map(function(t,i){
+        return { id:'R'+String(t.id||i), name:t.name||'Task '+i, start:t.start||'', finish:t.finish||'',
+          pct:parseInt(t.pct)||0, assigned:t.assigned||'', preds:[], summary:false, indent:0 };
+      });
+      ganttTasks = ryeTasks.slice();
+      localStorage.setItem(GANTT_KEY+'_rye', JSON.stringify(ryeTasks));
+      ganttRender();
+      statusBar.style.display = 'none';
+      if(typeof toast==='function') toast('Imported '+ryeTasks.length+' tasks into Rye Schedule');
+    } catch(e) {
+      statusBar.style.display = 'none';
+      if(typeof toast==='function') toast('Import failed: '+e.message);
+      alert('Could not extract schedule: '+e.message);
+    }
+  }
+
+  function ganttApplyFilter() {
+    var showElec = document.getElementById('filter-electrical') && document.getElementById('filter-electrical').checked;
+    var showOthers = document.getElementById('filter-others') && document.getElementById('filter-others').checked;
+    var showBaseline = document.getElementById('filter-baseline') && document.getElementById('filter-baseline').checked;
+
+    var source = schedView === 'rye' ? ryeTasks : (gcTasks.length > 0 ? gcTasks : ganttTasks);
+    if (schedView === 'compare') {
+      source = (gcTasks.length > 0 ? gcTasks : []).concat(ryeTasks);
+    }
+
+    var filtered = source.filter(function(t) {
+      // Always show separators and summaries
+      if (t.id === 'SEP1' || t.id === 'RYESEP') return true;
+      // Baseline rows
+      if (t.id && t.id.toString().startsWith('B')) return showBaseline;
+      // Electrical tasks
+      if (isElectricalTask(t.name)) return showElec;
+      // Everything else
+      return showOthers;
+    });
+
+    ganttTasks = filtered;
+    var countEl = document.getElementById('gantt-filter-count');
+    if (countEl) countEl.textContent = filtered.length + ' tasks shown';
+    ganttRender();
+  }
+
+  function ganttResetFilter() {
+    var elec = document.getElementById('filter-electrical');
+    var others = document.getElementById('filter-others');
+    var base = document.getElementById('filter-baseline');
+    if (elec) elec.checked = true;
+    if (others) others.checked = false;
+    if (base) base.checked = true;
+    ganttApplyFilter();
+  }
+
+  /* ── PRINT PDF ── */
+  function ganttPrintPDF() {
+    if (!ganttTasks.length) { if(typeof toast==='function') toast('No schedule to print'); return; }
+    ganttCPM();
+    var dr = ganttDateRange();
+    var totalDays = Math.max(1, gDiff(dr.start, dr.end));
+    var today = new Date(); today.setHours(12,0,0,0);
+    var todayPct = (Math.max(0, gDiff(dr.start, today)) / totalDays * 100).toFixed(2) + '%';
+
+    var jobEl = document.querySelector('.jb-num');
+    var nameEl = document.querySelector('.jb-name');
+    var jobNum = jobEl ? jobEl.textContent.trim() : '';
+    var jobName = nameEl ? nameEl.textContent.trim() : '';
+
+    var rows = ganttTasks.map(function(t, idx) {
+      var s = t.es || gDate(t.start), f = t.ef || gDate(t.finish), pct = parseInt(t.pct) || 0;
+      var isBaseline = t.id && t.id.toString().startsWith('B');
+      var isSep = t.id === 'SEP1' || t.id === 'RYESEP';
+      var isElec = isElectricalTask(t.name);
+      var isCrit = t.critical;
+      var barColor = isBaseline ? '#718096' : t.summary ? '#4a5568' : pct >= 100 ? '#276749' : isCrit ? '#e53e3e' : isElec ? '#2980b9' : '#a0aec0';
+      var bg = isSep ? '#1a202c' : isBaseline ? '#f7fafc' : isElec ? '#ebf8ff' : idx % 2 === 0 ? '#fff' : '#f9f9f9';
+      var textColor = isSep ? '#fff' : isBaseline ? '#718096' : '#111';
+      var bL = '0%', bW = '0%';
+      if (s && f) {
+        var sl = gDiff(dr.start, s), dur = Math.max(1, gDiff(s, f));
+        bL = (sl / totalDays * 100).toFixed(3) + '%';
+        bW = (dur / totalDays * 100).toFixed(3) + '%';
+      }
+      return '<tr style="background:' + bg + ';color:' + textColor + ';page-break-inside:avoid">'
+        + '<td style="padding:4px 8px;border:1px solid #e2e8f0;font-size:10px;font-weight:' + (t.summary||isSep?700:500) + ';white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis">'
+          + (isElec && !isBaseline ? '⚡ ' : '') + t.name + '</td>'
+        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + (isSep ? '' : pct + '%') + '</td>'
+        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + gFmt(s) + '</td>'
+        + '<td style="padding:4px 6px;border:1px solid #e2e8f0;font-size:10px;text-align:center">' + gFmt(f) + '</td>'
+        + '<td style="padding:4px 0;border:1px solid #e2e8f0;position:relative;min-width:180px">'
+          + '<div style="position:absolute;left:' + todayPct + ';top:0;bottom:0;width:1.5px;background:#e53e3e;opacity:.7"></div>'
+          + (bW !== '0%' ? '<div style="position:absolute;left:' + bL + ';width:' + bW + ';top:3px;bottom:3px;background:' + barColor + ';border-radius:2px;min-width:3px"></div>' : '')
+        + '</td>'
+      + '</tr>';
+    }).join('');
+
+    var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Schedule - ' + jobNum + ' ' + jobName + '</title>'
+      + '<style>body{font-family:Arial,sans-serif;margin:0;padding:16px;color:#111}'
+      + 'table{border-collapse:collapse;width:100%}th{background:#1a202c;color:#fff;padding:6px 8px;font-size:9px;text-align:left;border:1px solid #1a202c}'
+      + '.legend{display:flex;gap:16px;margin-bottom:10px;font-size:10px;align-items:center}'
+      + '.leg-item{display:flex;align-items:center;gap:5px}'
+      + '.leg-box{width:14px;height:10px;border-radius:2px}'
+      + '@media print{@page{size:landscape;margin:.4in}}</style>'
+      + '</head><body>'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #2980b9;padding-bottom:10px;margin-bottom:12px">'
+        + '<div><div style="font-size:20px;font-weight:900">rye <span style="color:#2980b9">electric</span></div>'
+        + '<div style="font-size:14px;font-weight:700;margin-top:2px">Project Schedule — ' + jobNum + ' ' + jobName + '</div></div>'
+        + '<div style="text-align:right;font-size:11px;color:#666">'
+          + 'Printed: ' + new Date().toLocaleDateString() + '<br>'
+          + 'View: ' + schedView.toUpperCase()
+        + '</div>'
+      + '</div>'
+      + '<div class="legend">'
+        + '<div class="leg-item"><div class="leg-box" style="background:#718096"></div> Baseline</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#2980b9"></div> ⚡ Electrical</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#a0aec0"></div> Other Trades</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#276749"></div> Complete</div>'
+        + '<div class="leg-item"><div class="leg-box" style="background:#e53e3e"></div> Critical</div>'
+        + '<div style="margin-left:auto;font-size:10px;color:#666">Red line = Today (' + new Date().toLocaleDateString() + ')</div>'
+      + '</div>'
+      + '<table><thead><tr>'
+        + '<th style="width:220px">Task Name</th><th style="width:36px">%</th>'
+        + '<th style="width:70px">Start</th><th style="width:70px">Finish</th>'
+        + '<th>Timeline →</th>'
+      + '</tr></thead><tbody>' + rows + '</tbody></table>'
+      + '<div style="font-size:9px;color:#aaa;text-align:center;margin-top:12px;padding-top:8px;border-top:1px solid #eee">'
+        + 'Rye Electric, Inc. | 75 Doppler, Irvine CA 92618 | CA Lic. 980345 | ' + jobNum + ' ' + jobName
+      + '</div>'
+      + '</body></html>';
+
+    var w = window.open('', '_blank');
+    if (!w) { alert('Pop-up blocked — please allow pop-ups.'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(function(){ w.print(); }, 500);
+  }
+
+  function ganttSetZoom(z){
+    ganttZoom=z;
+    document.querySelectorAll('.gantt-zoom-btn').forEach(function(b){var m=b.textContent.trim().toLowerCase()===z;b.style.background=m?'#2980b9':'#eee';b.style.color=m?'#fff':'#333';});
+    ganttRender();
+  }
+  function ganttSave(){
+    try{
+      if(schedView === 'rye'){
+        ryeTasks = ganttTasks.slice();
+        localStorage.setItem(GANTT_KEY + '_rye', JSON.stringify(ryeTasks));
+      } else {
+        gcTasks = ganttTasks.slice();
+        localStorage.setItem(GANTT_KEY, JSON.stringify(ganttTasks));
+      }
+      if(typeof toast==='function') toast('Schedule saved');
+    } catch(e){}
+  }
+  function ganttLoad(){
+    try{
+      var s = localStorage.getItem(GANTT_KEY);
+      if(s){ gcTasks = JSON.parse(s); ganttTasks = gcTasks.slice(); ganttRender(); }
+      var r = localStorage.getItem(GANTT_KEY + '_rye');
+      if(r){ ryeTasks = JSON.parse(r); }
+    } catch(e){}
+  }
+
+  function ganttAddTask(){
+    ganttEditIdx=-1;
+    ['gm-name','gm-wbs','gm-assigned','gm-preds'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    var sd=document.getElementById('gm-start'),fd=document.getElementById('gm-finish');
+    if(sd)sd.value=gISO(new Date());if(fd)fd.value=gISO(gAddDays(new Date(),5));
+    var pr=document.getElementById('gm-pct'),pv=document.getElementById('gm-pct-val'),sm=document.getElementById('gm-summary');
+    if(pr)pr.value=0;if(pv)pv.textContent='0%';if(sm)sm.checked=false;
+    var m=document.getElementById('gantt-modal');if(m)m.style.display='block';
+  }
+  function ganttEditTask(idx){
+    ganttEditIdx=idx;var t=ganttTasks[idx];
+    document.getElementById('gm-name').value=t.name||'';
+    document.getElementById('gm-wbs').value=t.wbs||'';
+    document.getElementById('gm-start').value=t.start||'';
+    document.getElementById('gm-finish').value=t.finish||'';
+    document.getElementById('gm-pct').value=t.pct||0;
+    document.getElementById('gm-pct-val').textContent=(t.pct||0)+'%';
+    document.getElementById('gm-assigned').value=t.assigned||'';
+    document.getElementById('gm-preds').value=(t.preds||[]).join(',');
+    document.getElementById('gm-summary').checked=!!t.summary;
+    var m=document.getElementById('gantt-modal');if(m)m.style.display='block';
+  }
+  function ganttModalSave(){
+    var name=document.getElementById('gm-name').value.trim();if(!name){alert('Task name required');return;}
+    var predsRaw=document.getElementById('gm-preds').value.trim();
+    var task={
+      id:ganttEditIdx>=0?ganttTasks[ganttEditIdx].id:('T'+(Date.now()%100000)),
+      name:name,wbs:document.getElementById('gm-wbs').value.trim(),
+      start:document.getElementById('gm-start').value,
+      finish:document.getElementById('gm-finish').value,
+      pct:parseInt(document.getElementById('gm-pct').value)||0,
+      assigned:document.getElementById('gm-assigned').value.trim(),
+      preds:predsRaw?predsRaw.split(',').map(function(x){return x.trim();}).filter(Boolean):[],
+      summary:document.getElementById('gm-summary').checked,
+      indent:ganttEditIdx>=0?(ganttTasks[ganttEditIdx].indent||0):0
+    };
+    if(ganttEditIdx>=0) ganttTasks[ganttEditIdx]=task; else ganttTasks.push(task);
+    if(schedView === 'rye') ryeTasks = ganttTasks.slice();
+    else gcTasks = ganttTasks.slice();
+    document.getElementById('gantt-modal').style.display='none';
+    ganttRender(); ganttSave();
+  }
+  function ganttModalDelete(){
+    if(ganttEditIdx>=0&&confirm('Delete this task?')){
+      ganttTasks.splice(ganttEditIdx,1);
+      document.getElementById('gantt-modal').style.display='none';
+      ganttRender();ganttSave();
+    }
+  }
+
+
+  async function ganttImportPDF(input) {
+    var file = input.files[0];
+    if (!file) return;
+    input.value = '';
+
+    var statusBar = document.getElementById('gantt-pdf-status');
+    var statusText = document.getElementById('gantt-pdf-status-text');
+    statusBar.style.display = 'flex';
+    statusText.textContent = 'Reading PDF...';
+
+    try {
+      // Convert PDF to base64
+      var base64 = await new Promise(function(res, rej) {
+        var r = new FileReader();
+        r.onload = function() { res(r.result.split(',')[1]); };
+        r.onerror = function() { rej(new Error('Read failed')); };
+        r.readAsDataURL(file);
+      });
+
+      statusText.textContent = 'Extracting schedule with AI...';
+
+      // Send full PDF - haiku handles it efficiently
+      var response = await fetch('https://rye-claude.dfurst.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(120000),
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2000,
+          messages: [{
+            role: 'user',
+            content: [
+              {
+                type: 'document',
+                source: { type: 'base64', media_type: 'application/pdf', data: base64 }
+              },
+              {
+                type: 'text',
+                text: 'Extract the construction schedule from this PDF. If there are TWO schedules (baseline vs updated), extract BOTH. Return ONLY a JSON object with no markdown, no backticks, no preamble: { "baseline": [...tasks], "current": [...tasks] }. If only one schedule, put tasks in "current" and use empty array for "baseline". Each task: id (string), name (string), start (YYYY-MM-DD), finish (YYYY-MM-DD), pct (0-100), assigned (string), preds (array). Extract only top-level summary milestones from the FIRST PAGE comparison table, 20-30 tasks max.'
+              }
+            ]
+          }]
+        })
+      });
+
+      var data = await response.json();
+      var text = data.content && data.content[0] && data.content[0].text;
+      if (!text) throw new Error('API error: ' + JSON.stringify(data).slice(0, 300));
+
+      statusText.textContent = 'Parsing tasks...';
+
+      var clean = text.replace(/```json|```/g, '').trim();
+      var parsed = JSON.parse(clean);
+
+      var baselineTasks = [];
+      var currentTasks = [];
+      if (Array.isArray(parsed)) {
+        currentTasks = parsed;
+      } else {
+        baselineTasks = parsed.baseline || [];
+        currentTasks = parsed.current || parsed.tasks || [];
+      }
+
+      if (currentTasks.length === 0) throw new Error('No tasks found in schedule');
+
+      ganttTasks = [];
+
+      if (baselineTasks.length > 0) {
+        baselineTasks.forEach(function(t, i) {
+          ganttTasks.push({
+            id: 'B' + String(t.id || i),
+            name: '📋 BASELINE: ' + (t.name || 'Task ' + i),
+            start: t.start || '',
+            finish: t.finish || '',
+            pct: 0,
+            assigned: 'Baseline',
+            preds: [],
+            summary: true,
+            indent: 0
+          });
+        });
+        ganttTasks.push({
+          id: 'SEP1',
+          name: '━━━ CURRENT SCHEDULE ━━━',
+          start: currentTasks[0] ? currentTasks[0].start : '',
+          finish: currentTasks[currentTasks.length-1] ? currentTasks[currentTasks.length-1].finish : '',
+          pct: 0, assigned: '', preds: [], summary: true, indent: 0
+        });
+      }
+
+      currentTasks.forEach(function(t, i) {
+        var base = baselineTasks.find(function(b) {
+          return b.name && t.name && b.name.toLowerCase().trim() === t.name.toLowerCase().trim();
+        });
+        var delta = '';
+        if (base && base.start && t.start) {
+          var days = Math.round((new Date(t.start) - new Date(base.start)) / 86400000);
+          if (days !== 0) delta = ' [' + (days > 0 ? '+' : '') + days + 'd]';
+        }
+        ganttTasks.push({
+          id: 'C' + String(t.id || i),
+          name: (t.name || 'Task ' + i) + delta,
+          start: t.start || '',
+          finish: t.finish || '',
+          pct: parseInt(t.pct) || 0,
+          assigned: t.assigned || '',
+          preds: Array.isArray(t.preds) ? t.preds.map(String) : [],
+          summary: false,
+          indent: 0
+        });
+      });
+
+      gcTasks = ganttTasks.slice();
+      ganttRender();
+      ganttSave();
+      statusBar.style.display = 'none';
+      ganttApplyFilter();
+      if (typeof toast === 'function') toast('Imported ' + ganttTasks.length + ' tasks from GC schedule PDF');
+
+    } catch(e) {
+      statusBar.style.display = 'none';
+      console.error('PDF import error:', e);
+      if (typeof toast === 'function') toast('PDF import failed: ' + e.message);
+      alert('Could not extract schedule: ' + e.message + '\n\nTip: Make sure the PDF contains a text-based schedule, not a scanned image.');
+    }
+  }
+
+  function ganttImport(input){
+    var file=input.files[0];if(!file)return;
+    var ext=file.name.split('.').pop().toLowerCase();
+    var reader=new FileReader();
+    if(ext==='xml'){reader.onload=function(e){ganttParseXML(e.target.result);};reader.readAsText(file);}
+    else{reader.onload=function(e){ganttParseCSV(e.target.result);};reader.readAsText(file);}
+    input.value='';
+  }
+  function ganttParseXML(xml){
+    try{
+      var doc=(new DOMParser()).parseFromString(xml,'application/xml');
+      var tasks=[];
+      doc.querySelectorAll('Task').forEach(function(el){
+        var uid=el.querySelector('UID');if(!uid||uid.textContent==='0')return;
+        var name=el.querySelector('Name');if(!name||!name.textContent.trim())return;
+        var start=el.querySelector('Start'),finish=el.querySelector('Finish'),pct=el.querySelector('PercentComplete'),wbs=el.querySelector('WBS'),outline=el.querySelector('OutlineLevel'),summary=el.querySelector('Summary');
+        var preds=[].slice.call(el.querySelectorAll('PredecessorLink PredecessorUID')).map(function(p){return'X'+p.textContent;});
+        tasks.push({id:'X'+uid.textContent,name:name.textContent.trim(),wbs:wbs?wbs.textContent:'',start:start?start.textContent.slice(0,10):'',finish:finish?finish.textContent.slice(0,10):'',pct:pct?parseInt(pct.textContent):0,assigned:'',preds:preds,summary:summary?summary.textContent==='1':false,indent:outline?Math.max(0,parseInt(outline.textContent)-1):0});
+      });
+      if(tasks.length){ganttTasks=tasks;ganttRender();ganttSave();if(typeof toast==='function')toast('Imported '+tasks.length+' tasks from MS Project XML');}
+      else alert('No tasks found. Use File \u2192 Save As \u2192 XML in MS Project.');
+    }catch(e){alert('XML parse error: '+e.message);}
+  }
+  function ganttNormalizeDate(s){
+    s=s.trim();if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);
+    var m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if(m){var y=m[3].length===2?'20'+m[3]:m[3];return y+'-'+('0'+m[1]).slice(-2)+'-'+('0'+m[2]).slice(-2);}
+    return s;
+  }
+  function ganttParseCSV(text){
+    var lines=text.split(/\r?\n/).filter(function(l){return l.trim();});if(lines.length<2){alert('CSV appears empty');return;}
+    var headers=lines[0].split(',').map(function(h){return h.trim().toLowerCase().replace(/[\s%]+/g,'_').replace(/[^a-z0-9_]/g,'');});
+    var col=function(h){return headers.indexOf(h);};
+    var tasks=[];
+    for(var i=1;i<lines.length;i++){
+      var cols=lines[i].split(',').map(function(c){return c.replace(/^"|"$/g,'').trim();});
+      var get=function(h){var ci=col(h);return ci>=0?(cols[ci]||''):'';};
+      var name=get('name')||get('task_name')||get('task');if(!name)continue;
+      tasks.push({id:get('id')||('C'+i),name:name,wbs:get('wbs')||'',start:ganttNormalizeDate(get('start')||get('start_date')),finish:ganttNormalizeDate(get('finish')||get('end')||get('end_date')),pct:parseInt(get('_complete')||get('percent_complete')||get('pct'))||0,assigned:get('assigned_to')||get('resource')||get('assigned')||'',preds:(get('predecessors')||get('preds')||'').split(/[;,]/).map(function(p){return p.trim();}).filter(Boolean),summary:false,indent:0});
+    }
+    if(tasks.length){ganttTasks=tasks;ganttRender();ganttSave();if(typeof toast==='function')toast('Imported '+tasks.length+' tasks');}
+    else alert('Could not parse CSV. Columns needed: ID, Name, Start, Finish, %Complete, Predecessors, Assigned To');
+  }
+
+  function ganttPrintLegacy(){
+    if(!ganttTasks.length){if(typeof toast==='function')toast('No schedule to print');return;}
+    ganttCPM();var dr=ganttDateRange();var totalDays=Math.max(1,gDiff(dr.start,dr.end));
+    var today=new Date();today.setHours(12,0,0,0);
+    var todayPct=(Math.max(0,gDiff(dr.start,today))/totalDays*100).toFixed(2)+'%';
+    var rows=ganttTasks.map(function(t,idx){
+      var s=t.es||gDate(t.start),f=t.ef||gDate(t.finish),pct=parseInt(t.pct)||0;
+      var isCrit=t.critical&&document.getElementById('gantt-show-critical').checked;
+      var barColor=t.summary?'#718096':pct>=100?'#276749':isCrit?'#e53e3e':'#2980b9';
+      var bL='0%',bW='0%';
+      if(s&&f){var sl=gDiff(dr.start,s),dur=Math.max(1,gDiff(s,f));bL=(sl/totalDays*100).toFixed(3)+'%';bW=(dur/totalDays*100).toFixed(3)+'%';}
+      var bg=idx%2===0?'#fff':'#f9f9f9';if(isCrit&&!t.summary)bg='#fff5f5';if(t.summary)bg='#edf2f7';
+      var fDays=Math.max(0,t.totalFloat||0);
+      return'<tr style="background:'+bg+';page-break-inside:avoid"><td style="padding:5px 8px;border:1px solid #e2e8f0;font-size:10px;font-weight:'+(t.summary?700:500)+'">'+(isCrit?'\u25cf ':'')+t.name+(t.assigned?'<br><span style="color:#999;font-size:9px">'+t.assigned+'</span>':'')+'</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center">'+pct+'%</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center">'+gFmt(s)+'</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center">'+gFmt(f)+'</td><td style="padding:5px;border:1px solid #e2e8f0;font-size:10px;text-align:center;color:'+(fDays===0?'#e53e3e':fDays<5?'#d97706':'#276749')+'">'+fDays+'d</td><td style="padding:3px 0;border:1px solid #e2e8f0;position:relative;min-width:200px"><div style="position:absolute;left:'+todayPct+';top:0;bottom:0;width:1px;background:#e53e3e;opacity:.6"></div><div style="position:absolute;left:'+bL+';width:'+bW+';top:3px;bottom:3px;background:'+barColor+';border-radius:2px;min-width:3px"><div style="width:'+pct+'%;height:100%;background:rgba(255,255,255,.3);border-radius:2px"></div></div></td></tr>';
+    }).join('');
+    var w=window.open('','_blank');if(!w){alert('Pop-up blocked.');return;}
+    w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Project Schedule</title><style>body{font-family:Arial,sans-serif;padding:20px;color:#1a202c}table{border-collapse:collapse;width:100%}th{background:#1a202c;color:#fff;padding:7px 8px;font-size:10px;text-align:left;border:1px solid #1a202c}td{vertical-align:middle}@media print{@page{size:landscape;margin:.4in}}</style></head><body><div style="display:flex;justify-content:space-between;border-bottom:3px solid #2980b9;padding-bottom:10px;margin-bottom:14px"><div style="font-size:20px;font-weight:900">rye <span style="color:#2980b9">electric</span></div><div style="text-align:right;font-size:11px;color:#718096">Project Schedule<br>'+new Date().toLocaleDateString()+'</div></div><table><thead><tr><th style="width:200px">Task</th><th style="width:40px">%</th><th style="width:75px">Start</th><th style="width:75px">Finish</th><th style="width:45px">Float</th><th>Timeline \u2192</th></tr></thead><tbody>'+rows+'</tbody></table><div style="font-size:10px;color:#aaa;text-align:center;margin-top:14px;border-top:1px solid #eee;padding-top:8px">Rye Electric, Inc. | 75 Doppler, Irvine CA 92618 | CA Lic. 980345 | \u25cf = Critical Path | Red line = Today</div></body></html>');
+    w.document.close();w.focus();setTimeout(function(){w.print();},500);
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){ganttLoad();});
 
 </script>
 
